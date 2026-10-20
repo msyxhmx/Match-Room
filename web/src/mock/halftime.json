@@ -1,0 +1,207 @@
+{
+  "match_id": "SIM-2026-00001",
+  "generated_at": "2026-10-20T16:06:39.524489Z",
+  "home": {
+    "id": "HAR",
+    "name": "Harbour Athletic",
+    "short_name": "HAR"
+  },
+  "away": {
+    "id": "KST",
+    "name": "Kingston Vale",
+    "short_name": "KST"
+  },
+  "score": {
+    "home": 0,
+    "away": 2
+  },
+  "stats": [
+    {
+      "key": "goals",
+      "label": "Goals",
+      "home": 0.0,
+      "away": 2.0
+    },
+    {
+      "key": "xg",
+      "label": "Expected goals (xG)",
+      "home": 1.12,
+      "away": 0.91
+    },
+    {
+      "key": "shots",
+      "label": "Shots",
+      "home": 11.0,
+      "away": 8.0
+    },
+    {
+      "key": "sot",
+      "label": "Shots on target",
+      "home": 4.0,
+      "away": 4.0
+    },
+    {
+      "key": "possession",
+      "label": "Possession %",
+      "home": 58.0,
+      "away": 42.0
+    },
+    {
+      "key": "pass_acc",
+      "label": "Pass accuracy %",
+      "home": 84.0,
+      "away": 80.0
+    },
+    {
+      "key": "corners",
+      "label": "Corners",
+      "home": 4.0,
+      "away": 3.0
+    },
+    {
+      "key": "fouls",
+      "label": "Fouls",
+      "home": 0.0,
+      "away": 6.0
+    },
+    {
+      "key": "yellow",
+      "label": "Yellow cards",
+      "home": 0.0,
+      "away": 0.0
+    },
+    {
+      "key": "red",
+      "label": "Red cards",
+      "home": 0.0,
+      "away": 0.0
+    }
+  ],
+  "momentum": [
+    {
+      "start_minute": 1,
+      "end_minute": 15,
+      "home_share": 0.645
+    },
+    {
+      "start_minute": 16,
+      "end_minute": 30,
+      "home_share": 0.625
+    },
+    {
+      "start_minute": 31,
+      "end_minute": 45,
+      "home_share": 0.485
+    }
+  ],
+  "story": [
+    {
+      "id": "scoreline",
+      "title": "Kingston Vale lead 2-0",
+      "body": "Goals: 1' L. Jensen (KST) scores, 0.25 xG; 27' B. Barros (KST) scores, 0.12 xG. Shots 11-8, xG 1.12-0.91.",
+      "evidence": [
+        {
+          "event_id": "SIM-2026-00001-0001",
+          "minute": 1,
+          "description": "1' L. Jensen (KST) scores, 0.25 xG"
+        },
+        {
+          "event_id": "SIM-2026-00001-0247",
+          "minute": 27,
+          "description": "27' B. Barros (KST) scores, 0.12 xG"
+        }
+      ]
+    },
+    {
+      "id": "chance-quality",
+      "title": "Little between them",
+      "body": "Chance quality is close (1.12 vs 0.91 xG).",
+      "evidence": [
+        {
+          "event_id": "SIM-2026-00001-0157",
+          "minute": 16,
+          "description": "16' R. Adeyemi (HAR) has a shot blocked, 0.32 xG"
+        },
+        {
+          "event_id": "SIM-2026-00001-0001",
+          "minute": 1,
+          "description": "1' L. Jensen (KST) scores, 0.25 xG"
+        }
+      ]
+    },
+    {
+      "id": "territory",
+      "title": "HAR own the territory",
+      "body": "Harbour Athletic had 58% of the play in the final third. Momentum swung toward Kingston Vale as the half went on.",
+      "evidence": [
+        {
+          "event_id": "SIM-2026-00001-0301",
+          "minute": 33,
+          "description": "33' R. Mensah (HAR) has a shot blocked, 0.14 xG"
+        },
+        {
+          "event_id": "SIM-2026-00001-0335",
+          "minute": 36,
+          "description": "36' G. Novak (HAR) forces a save, 0.13 xG"
+        }
+      ]
+    }
+  ],
+  "prediction": {
+    "result": {
+      "home_win": 0.019,
+      "draw": 0.115,
+      "away_win": 0.866
+    },
+    "next_goal": {
+      "home": 0.441,
+      "away": 0.218,
+      "none": 0.341
+    },
+    "factors": [
+      {
+        "feature": "goal_diff",
+        "label": "Half-time goal difference",
+        "value": -2.0,
+        "impact": -4.5752,
+        "favours": "away"
+      },
+      {
+        "feature": "strength_diff",
+        "label": "Pre-match strength gap",
+        "value": 0.15,
+        "impact": 0.5403,
+        "favours": "home"
+      },
+      {
+        "feature": "possession_home",
+        "label": "Home possession share",
+        "value": 0.58,
+        "impact": -0.086,
+        "favours": "away"
+      }
+    ]
+  },
+  "what_to_watch": [
+    {
+      "id": "hold-the-lead",
+      "title": "Can Kingston Vale hold on?",
+      "detail": "Harbour Athletic had 58% of final-third play. If that rises, their next-goal chances climb from 44%."
+    },
+    {
+      "id": "momentum",
+      "title": "Kingston Vale's momentum",
+      "detail": "They finished the half on top. If the first 10 minutes after the break go the same way, the prediction shifts toward them."
+    },
+    {
+      "id": "top-factor",
+      "title": "Watch: half-time goal difference",
+      "detail": "This is the biggest driver of the prediction right now (favours Kingston Vale). A swing here changes the odds most."
+    }
+  ],
+  "meta": {
+    "model_version": "xgb-20261020-1559",
+    "story_source": "template",
+    "synthetic": true
+  }
+}

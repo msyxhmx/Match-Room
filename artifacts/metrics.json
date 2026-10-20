@@ -1,0 +1,25 @@
+{
+  "version": "xgb-20261020-1559",
+  "n_matches": 10000,
+  "result": {
+    "baseline_score_only": {
+      "log_loss": 0.7477,
+      "accuracy": 0.6475
+    },
+    "xgboost": {
+      "log_loss": 0.6894,
+      "accuracy": 0.6835
+    }
+  },
+  "next_goal": {
+    "xgboost": {
+      "log_loss": 1.0058,
+      "accuracy": 0.513
+    }
+  },
+  "class_balance": {
+    "home_win": 0.445,
+    "away_win": 0.34,
+    "draw": 0.215
+  }
+}

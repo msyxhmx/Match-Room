@@ -1,0 +1,377 @@
+{
+  "$defs": {
+    "EvidenceRef": {
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "minute",
+        "description"
+      ],
+      "title": "EvidenceRef",
+      "type": "object"
+    },
+    "Factor": {
+      "properties": {
+        "feature": {
+          "title": "Feature",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "number"
+        },
+        "impact": {
+          "description": "Signed contribution toward a home win (SHAP or heuristic).",
+          "title": "Impact",
+          "type": "number"
+        },
+        "favours": {
+          "enum": [
+            "home",
+            "away"
+          ],
+          "title": "Favours",
+          "type": "string"
+        }
+      },
+      "required": [
+        "feature",
+        "label",
+        "value",
+        "impact",
+        "favours"
+      ],
+      "title": "Factor",
+      "type": "object"
+    },
+    "InsightCard": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "body": {
+          "title": "Body",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "body"
+      ],
+      "title": "InsightCard",
+      "type": "object"
+    },
+    "MomentumBlock": {
+      "description": "Who was on top in each 15-minute block, as home share 0-1 of field tilt.",
+      "properties": {
+        "start_minute": {
+          "title": "Start Minute",
+          "type": "integer"
+        },
+        "end_minute": {
+          "title": "End Minute",
+          "type": "integer"
+        },
+        "home_share": {
+          "title": "Home Share",
+          "type": "number"
+        }
+      },
+      "required": [
+        "start_minute",
+        "end_minute",
+        "home_share"
+      ],
+      "title": "MomentumBlock",
+      "type": "object"
+    },
+    "NextGoalProbs": {
+      "properties": {
+        "home": {
+          "title": "Home",
+          "type": "number"
+        },
+        "away": {
+          "title": "Away",
+          "type": "number"
+        },
+        "none": {
+          "title": "None",
+          "type": "number"
+        }
+      },
+      "required": [
+        "home",
+        "away",
+        "none"
+      ],
+      "title": "NextGoalProbs",
+      "type": "object"
+    },
+    "Prediction": {
+      "properties": {
+        "result": {
+          "$ref": "#/$defs/ResultProbs"
+        },
+        "next_goal": {
+          "$ref": "#/$defs/NextGoalProbs"
+        },
+        "factors": {
+          "items": {
+            "$ref": "#/$defs/Factor"
+          },
+          "title": "Factors",
+          "type": "array"
+        }
+      },
+      "required": [
+        "result",
+        "next_goal",
+        "factors"
+      ],
+      "title": "Prediction",
+      "type": "object"
+    },
+    "ReportMeta": {
+      "properties": {
+        "model_version": {
+          "title": "Model Version",
+          "type": "string"
+        },
+        "story_source": {
+          "enum": [
+            "llm",
+            "template"
+          ],
+          "title": "Story Source",
+          "type": "string"
+        },
+        "synthetic": {
+          "default": true,
+          "title": "Synthetic",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "model_version",
+        "story_source"
+      ],
+      "title": "ReportMeta",
+      "type": "object"
+    },
+    "ResultProbs": {
+      "properties": {
+        "home_win": {
+          "title": "Home Win",
+          "type": "number"
+        },
+        "draw": {
+          "title": "Draw",
+          "type": "number"
+        },
+        "away_win": {
+          "title": "Away Win",
+          "type": "number"
+        }
+      },
+      "required": [
+        "home_win",
+        "draw",
+        "away_win"
+      ],
+      "title": "ResultProbs",
+      "type": "object"
+    },
+    "Score": {
+      "properties": {
+        "home": {
+          "title": "Home",
+          "type": "integer"
+        },
+        "away": {
+          "title": "Away",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home",
+        "away"
+      ],
+      "title": "Score",
+      "type": "object"
+    },
+    "StatLine": {
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "home": {
+          "title": "Home",
+          "type": "number"
+        },
+        "away": {
+          "title": "Away",
+          "type": "number"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "home",
+        "away"
+      ],
+      "title": "StatLine",
+      "type": "object"
+    },
+    "Team": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "short_name": {
+          "title": "Short Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "short_name"
+      ],
+      "title": "Team",
+      "type": "object"
+    },
+    "WatchItem": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "detail"
+      ],
+      "title": "WatchItem",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "match_id": {
+      "title": "Match Id",
+      "type": "string"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "home": {
+      "$ref": "#/$defs/Team"
+    },
+    "away": {
+      "$ref": "#/$defs/Team"
+    },
+    "score": {
+      "$ref": "#/$defs/Score"
+    },
+    "stats": {
+      "items": {
+        "$ref": "#/$defs/StatLine"
+      },
+      "title": "Stats",
+      "type": "array"
+    },
+    "momentum": {
+      "items": {
+        "$ref": "#/$defs/MomentumBlock"
+      },
+      "title": "Momentum",
+      "type": "array"
+    },
+    "story": {
+      "items": {
+        "$ref": "#/$defs/InsightCard"
+      },
+      "title": "Story",
+      "type": "array"
+    },
+    "prediction": {
+      "$ref": "#/$defs/Prediction"
+    },
+    "what_to_watch": {
+      "items": {
+        "$ref": "#/$defs/WatchItem"
+      },
+      "title": "What To Watch",
+      "type": "array"
+    },
+    "meta": {
+      "$ref": "#/$defs/ReportMeta"
+    }
+  },
+  "required": [
+    "match_id",
+    "generated_at",
+    "home",
+    "away",
+    "score",
+    "stats",
+    "momentum",
+    "story",
+    "prediction",
+    "what_to_watch",
+    "meta"
+  ],
+  "title": "HalftimeReport",
+  "type": "object"
+}

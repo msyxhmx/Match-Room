@@ -1,0 +1,27 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Data and models (regenerate with `make train`)
+data/
+artifacts/*
+# the trained model is small and committed so the demo works out of the box
+!artifacts/model.joblib
+!artifacts/metrics.json
+
+# Secrets
+.env
+.env.local
+
+# Web
+web/node_modules/
+web/dist/
+
+# OS / editors
+.DS_Store
+.idea/
+web/*.tsbuildinfo
