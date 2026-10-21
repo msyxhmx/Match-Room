@@ -1,3 +1,6 @@
+import copy
+
+import pandas as pd
 import pytest
 
 from contract import HalftimeReport
@@ -13,13 +16,25 @@ def match():
 
 
 def test_features_use_first_half_only(match):
-    f = match_features(match)
-    assert set(f) == set(FEATURE_COLUMNS)
-    late_goal_removed = match.events[match.events["minute"] <= 45]
-    fh_goals = late_goal_removed[(late_goal_removed["type"] == "shot")
-                                 & (late_goal_removed["outcome"] == "goal")]
-    diff = (fh_goals["side"] == "home").sum() - (fh_goals["side"] == "away").sum()
-    assert f["goal_diff"] == diff
+    baseline = match_features(match)
+    assert set(baseline) == set(FEATURE_COLUMNS)
+
+    # Dropping every event after minute 45 must not change the features.
+    dropped = copy.deepcopy(match)
+    dropped.events = dropped.events[dropped.events["minute"] <= 45].reset_index(drop=True)
+    assert match_features(dropped) == baseline
+
+    # Adding extra goals after minute 45 must not change the features.
+    with_extra = copy.deepcopy(match)
+    extra = match.events.iloc[[0]].copy()
+    extra["event_id"] = "EXTRA-GOAL"
+    extra["minute"] = 90
+    extra["type"] = "shot"
+    extra["outcome"] = "goal"
+    extra["xg"] = 0.8
+    extra["side"] = "home"
+    with_extra.events = pd.concat([match.events, extra], ignore_index=True).reset_index(drop=True)
+    assert match_features(with_extra) == baseline
 
 
 def test_labels(match):
