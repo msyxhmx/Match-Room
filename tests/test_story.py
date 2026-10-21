@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 from sim import LEAGUE, simulate_match
 from model.features import match_features, side_stats
 from model.predict import HeuristicPredictor
-from model.story import llm_story
+from model.story import llm_story, possessive
 
 
 def _env(monkeypatch):
@@ -55,3 +55,8 @@ def test_llm_story_sends_temperature_when_set(monkeypatch):
         llm_story(match, f, stats, prediction)
 
     assert client.chat.completions.create.call_args.kwargs["temperature"] == 0.2
+
+
+def test_possessive():
+    assert possessive("Riverside Rovers") == "Riverside Rovers'"
+    assert possessive("Harbour Athletic") == "Harbour Athletic's"

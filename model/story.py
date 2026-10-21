@@ -42,6 +42,11 @@ def _ref(ev: pd.Series, teams: dict[str, str]) -> EvidenceRef:
                        description=_describe(ev, teams))
 
 
+def possessive(name: str) -> str:
+    """Possessive form, handling names that already end in 's'."""
+    return f"{name}'" if name.endswith("s") else f"{name}'s"
+
+
 def key_events(match: SimulatedMatch) -> pd.DataFrame:
     """Goals, big chances (xG >= 0.15) and cards from the first half."""
     fh = match.first_half()
@@ -87,7 +92,7 @@ def template_story(match: SimulatedMatch, f: dict[str, float], stats: dict) -> l
                 f"more) but the scoreline does not reflect it yet.")
         title = f"{teams[xg_lead]} deserve more"
     elif abs(f["xg_diff"]) >= 0.4:
-        body = (f"{names[xg_lead]}'s lead is backed by chance quality: "
+        body = (f"{possessive(names[xg_lead])} lead is backed by chance quality: "
                 f"{abs(f['xg_diff']):.2f} xG more than their opponents.")
         title = "The lead is earned"
     else:
@@ -217,7 +222,7 @@ def what_to_watch(match: SimulatedMatch, f: dict[str, float],
     if abs(f["momentum_trend"]) >= 0.12:
         side = "home" if f["momentum_trend"] > 0 else "away"
         items.append(WatchItem(
-            id="momentum", title=f"{names[side]}'s momentum",
+            id="momentum", title=f"{possessive(names[side])} momentum",
             detail="They finished the half on top. If the first 10 minutes after the break go "
                    "the same way, the prediction shifts toward them.",
         ))
