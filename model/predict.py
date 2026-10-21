@@ -127,5 +127,9 @@ def load_predictor(path: Path = ARTIFACT_PATH) -> Predictor:
 
             return TrainedPredictor(joblib.load(path))
         except Exception as exc:  # noqa: BLE001 - never break half-time on a bad artifact
-            log.warning("Could not load model artifact %s (%s); using heuristic predictor.", path, exc)
+            log.warning(
+                "Could not load model artifact %s (%s); using heuristic predictor.",
+                path,
+                exc,
+            )
     return HeuristicPredictor()

@@ -1,13 +1,11 @@
 import json
-
 from unittest.mock import MagicMock, patch
 
-from sim import LEAGUE, simulate_match, simulate_season
 from model.features import match_features, side_stats
-from model.predict import HeuristicPredictor
 from model.halftime import build_report
-from model.predict import load_predictor
-from model.story import llm_story, possessive, what_to_watch
+from model.predict import HeuristicPredictor, load_predictor
+from model.story import llm_story, possessive
+from sim import LEAGUE, simulate_match, simulate_season
 
 
 def _env(monkeypatch):
