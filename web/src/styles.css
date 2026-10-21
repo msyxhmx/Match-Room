@@ -136,6 +136,7 @@ p { margin: 0; }
 .replay-pip.away { background: var(--away); }
 .replay-feed { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; min-height: 14rem; }
 .replay-feed li { display: grid; grid-template-columns: 3rem 3.5rem 1fr; color: var(--chalk-dim); }
+.replay-feed li.feed-empty { grid-column: 1 / -1; }
 .replay-feed li.is-goal { color: var(--chalk); font-weight: 600; }
 .feed-min { font-variant-numeric: tabular-nums; }
 .feed-team { font-family: var(--display); font-weight: 600; font-size: var(--step-1); line-height: 1.3; }
