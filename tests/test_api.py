@@ -25,3 +25,13 @@ def test_matches_events_and_halftime():
 
 def test_unknown_match_404():
     assert client.get("/api/matches/NOPE/halftime").status_code == 404
+
+
+def test_matches_sorted_by_closest_game():
+    matches = client.get("/api/matches").json()
+    tops = []
+    for m in matches:
+        report = client.get(f"/api/matches/{m['match_id']}/halftime").json()
+        tops.append(max(report["prediction"]["result"].values()))
+    assert tops[0] == min(tops)
+    assert tops == sorted(tops)

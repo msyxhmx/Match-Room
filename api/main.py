@@ -62,8 +62,17 @@ def health() -> dict:
 
 @app.get("/api/matches", response_model=list[MatchSummary])
 def list_matches() -> list[MatchSummary]:
-    return [MatchSummary(match_id=m.match_id, home=_team(m.home), away=_team(m.away))
-            for m in demo_matches().values()]
+    summaries = [MatchSummary(match_id=m.match_id, home=_team(m.home), away=_team(m.away))
+                 for m in demo_matches().values()]
+
+    def top_result_prob(summary: MatchSummary) -> float:
+        report = _cached_report(summary.match_id)
+        return max(report.prediction.result.home_win,
+                   report.prediction.result.draw,
+                   report.prediction.result.away_win)
+
+    summaries.sort(key=lambda s: (top_result_prob(s), s.match_id))
+    return summaries
 
 
 @app.get("/api/matches/{match_id}/events", response_model=list[Event])

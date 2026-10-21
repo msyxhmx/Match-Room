@@ -11,6 +11,10 @@ Three outputs at half-time:
 2. **Second-half prediction**: win / draw / loss and next-goal probabilities, with the top factors behind them.
 3. **What to watch**: things that would change the prediction.
 
+## Pitch
+
+Halftime Insights is a half-time match analysis engine that turns a synthetic first half into a readable story and a second-half prediction. It addresses the 15-minute half-time window where fans, analysts and studios need to understand what happened and what is likely to happen next. The app replays the first half, generates 3-5 evidence-linked insight cards, forecasts result and next-goal probabilities, and lists the factors that would change the prediction. It is built with Python, FastAPI, React and XGBoost with SHAP explanations, on synthetic match data only. Azure OpenAI is integrated as an optional story generator with a template fallback, and Azure deployment is planned but not yet live.
+
 ## Quick start
 
 Needs Python 3.11+ and Node 20+.

@@ -8,6 +8,7 @@ from minute one, before any training has happened.
 
 from __future__ import annotations
 
+import logging
 import math
 import os
 from dataclasses import dataclass
@@ -19,6 +20,8 @@ import pandas as pd
 
 from contract import Factor, NextGoalProbs, Prediction, ResultProbs
 from model.features import FEATURE_COLUMNS, FEATURE_LABELS
+
+log = logging.getLogger(__name__)
 
 ARTIFACT_PATH = Path(os.getenv("MODEL_ARTIFACT", "artifacts/model.joblib"))
 RESULT_CLASSES = ["home_win", "draw", "away_win"]
@@ -119,7 +122,14 @@ class TrainedPredictor:
 
 def load_predictor(path: Path = ARTIFACT_PATH) -> Predictor:
     if path.exists():
-        import joblib
+        try:
+            import joblib
 
-        return TrainedPredictor(joblib.load(path))
+            return TrainedPredictor(joblib.load(path))
+        except Exception as exc:  # noqa: BLE001 - never break half-time on a bad artifact
+            log.warning(
+                "Could not load model artifact %s (%s); using heuristic predictor.",
+                path,
+                exc,
+            )
     return HeuristicPredictor()

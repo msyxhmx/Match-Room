@@ -42,6 +42,11 @@ def _ref(ev: pd.Series, teams: dict[str, str]) -> EvidenceRef:
                        description=_describe(ev, teams))
 
 
+def possessive(name: str) -> str:
+    """Possessive form, handling names that already end in 's'."""
+    return f"{name}'" if name.endswith("s") else f"{name}'s"
+
+
 def key_events(match: SimulatedMatch) -> pd.DataFrame:
     """Goals, big chances (xG >= 0.15) and cards from the first half."""
     fh = match.first_half()
@@ -87,7 +92,7 @@ def template_story(match: SimulatedMatch, f: dict[str, float], stats: dict) -> l
                 f"more) but the scoreline does not reflect it yet.")
         title = f"{teams[xg_lead]} deserve more"
     elif abs(f["xg_diff"]) >= 0.4:
-        body = (f"{names[xg_lead]}'s lead is backed by chance quality: "
+        body = (f"{possessive(names[xg_lead])} lead is backed by chance quality: "
                 f"{abs(f['xg_diff']):.2f} xG more than their opponents.")
         title = "The lead is earned"
     else:
@@ -161,15 +166,17 @@ def llm_story(match: SimulatedMatch, f: dict[str, float], stats: dict,
         api_key=os.environ["AZURE_OPENAI_API_KEY"],
         api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-10-21"),
     )
-    resp = client.chat.completions.create(
-        model=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-        temperature=0.4,
-        response_format={"type": "json_object"},
-        messages=[
+    create_kwargs = {
+        "model": os.environ["AZURE_OPENAI_DEPLOYMENT"],
+        "response_format": {"type": "json_object"},
+        "messages": [
             {"role": "system", "content": PROMPT_PATH.read_text()},
             {"role": "user", "content": json.dumps(facts, default=float)},
         ],
-    )
+    }
+    if os.getenv("AZURE_OPENAI_TEMPERATURE") is not None:
+        create_kwargs["temperature"] = float(os.environ["AZURE_OPENAI_TEMPERATURE"])
+    resp = client.chat.completions.create(**create_kwargs)
     data = json.loads(resp.choices[0].message.content)
     by_id = {e["event_id"]: e for _, e in events.iterrows()}
     cards = []
@@ -215,11 +222,12 @@ def what_to_watch(match: SimulatedMatch, f: dict[str, float],
     if abs(f["momentum_trend"]) >= 0.12:
         side = "home" if f["momentum_trend"] > 0 else "away"
         items.append(WatchItem(
-            id="momentum", title=f"{names[side]}'s momentum",
+            id="momentum", title=f"{possessive(names[side])} momentum",
             detail="They finished the half on top. If the first 10 minutes after the break go "
                    "the same way, the prediction shifts toward them.",
         ))
-    top = prediction.factors[0] if prediction.factors else None
+    top = next((factor for factor in prediction.factors
+                if factor.feature not in {"goal_diff", "strength_diff"}), None)
     if top and len(items) < 3:
         items.append(WatchItem(
             id="top-factor", title=f"Watch: {top.label.lower()}",
