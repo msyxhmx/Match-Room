@@ -3,7 +3,7 @@ import pytest
 from contract import HalftimeReport
 from model.features import FEATURE_COLUMNS, build_dataset, labels, match_features
 from model.halftime import build_report
-from model.predict import HeuristicPredictor
+from model.predict import HeuristicPredictor, load_predictor
 from sim import LEAGUE, simulate_match, simulate_season
 
 
@@ -47,3 +47,11 @@ def test_report_matches_contract(match):
     event_ids = set(match.events["event_id"])
     for card in report.story:
         assert all(e.event_id in event_ids for e in card.evidence)
+
+
+def test_load_predictor_falls_back_on_corrupt_artifact(tmp_path):
+    bad = tmp_path / "model.joblib"
+    bad.write_text("not a valid joblib artifact")
+    predictor = load_predictor(bad)
+    assert isinstance(predictor, HeuristicPredictor)
+    assert predictor.version == "heuristic-v0"
