@@ -161,15 +161,17 @@ def llm_story(match: SimulatedMatch, f: dict[str, float], stats: dict,
         api_key=os.environ["AZURE_OPENAI_API_KEY"],
         api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-10-21"),
     )
-    resp = client.chat.completions.create(
-        model=os.environ["AZURE_OPENAI_DEPLOYMENT"],
-        temperature=0.4,
-        response_format={"type": "json_object"},
-        messages=[
+    create_kwargs = {
+        "model": os.environ["AZURE_OPENAI_DEPLOYMENT"],
+        "response_format": {"type": "json_object"},
+        "messages": [
             {"role": "system", "content": PROMPT_PATH.read_text()},
             {"role": "user", "content": json.dumps(facts, default=float)},
         ],
-    )
+    }
+    if os.getenv("AZURE_OPENAI_TEMPERATURE") is not None:
+        create_kwargs["temperature"] = float(os.environ["AZURE_OPENAI_TEMPERATURE"])
+    resp = client.chat.completions.create(**create_kwargs)
     data = json.loads(resp.choices[0].message.content)
     by_id = {e["event_id"]: e for _, e in events.iterrows()}
     cards = []
