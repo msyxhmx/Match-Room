@@ -226,7 +226,8 @@ def what_to_watch(match: SimulatedMatch, f: dict[str, float],
             detail="They finished the half on top. If the first 10 minutes after the break go "
                    "the same way, the prediction shifts toward them.",
         ))
-    top = prediction.factors[0] if prediction.factors else None
+    top = next((factor for factor in prediction.factors
+                if factor.feature not in {"goal_diff", "strength_diff"}), None)
     if top and len(items) < 3:
         items.append(WatchItem(
             id="top-factor", title=f"Watch: {top.label.lower()}",
