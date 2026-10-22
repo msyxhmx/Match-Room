@@ -1,19 +1,35 @@
-# Halftime Insights
+# Match-Room Live
 
-At the half-time break, explain what happened in the first half and predict how the second half will go.
+Explain the match, don't just score it: live, evidence-checked match intelligence from the
+first whistle to the season table, in the viewer's language and at their depth.
 
 Our entry for the Microsoft × Premier League **Inside the Game** developer hackathon
 (*The Synthetic Match Insights Engine for Premier League Studio*). All match data is **synthetic**.
 
-Three outputs at half-time:
+What it produces from a stream of synthetic events:
 
-1. **Half-time story**: 3–5 insight cards on what happened and why it mattered, each linked to the events that prove it.
-2. **Second-half prediction**: win / draw / loss and next-goal probabilities, with the top factors behind them.
-3. **What to watch**: things that would change the prediction.
+1. **Live cards**: "why it matters" insights as they happen (a goal against the run of play, a
+   momentum flip, a pressing spike, a chaos phase), each with the facts and events that prove it.
+2. **Control vs chaos**: our own transparent composite of who is dictating the game and how
+   wild it is, minute by minute, plus momentum, PPDA, xT and an explained win projection.
+3. **Broadcast overlays**: timed, machine-readable graphics messages for a studio or stream.
+4. **Roll-ups**: half-time brief, full-time story with turning points, "I just joined"
+   catch-up, and a season table with storylines.
+5. **Personalisation**: casual or analyst, favourite team, focus player, English / Malay /
+   Spanish. Same facts, different experience.
 
 ## Pitch
 
-Halftime Insights is a half-time match analysis engine that turns a synthetic first half into a readable story and a second-half prediction. It addresses the 15-minute half-time window where fans, analysts and studios need to understand what happened and what is likely to happen next. The app replays the first half, generates 3-5 evidence-linked insight cards, forecasts result and next-goal probabilities, and lists the factors that would change the prediction. It is built with Python, FastAPI, React and XGBoost with SHAP explanations, on synthetic match data only. Azure OpenAI is integrated as an optional story generator with a template fallback, and Azure deployment is planned but not yet live.
+Match-Room Live is an explained-match engine for Premier League Studios and its fans. It ingests
+synthetic events minute by minute, turns them into named, defined metrics (xG, xT, PPDA, field
+tilt, momentum and a "control vs chaos" index), detects the moments that matter and explains why,
+then renders them as cards, broadcast overlay messages and half-time / full-time briefs. Every
+number on screen is traceable: templates contain no digits, a validator rejects any number or name
+not backed by the insight's facts, and every card links to the events behind it. The same insight
+log is personalised for casual and analyst viewers, a favourite team, a focus player and three
+languages including Malay. Built with Python, FastAPI (REST + websocket), React, XGBoost + SHAP
+for the half-time model, and Azure OpenAI as an optional, validated rewriter with a template
+fallback. Azure deployment is planned but not yet live.
 
 ## Quick start
 
@@ -37,20 +53,30 @@ make train     # 10,000 matches, ~7 min
 Azure OpenAI is optional: copy `.env.example` to `.env` and fill in the keys to get
 LLM-written stories. Without keys the story uses templates and everything still works.
 
+Try the live engine with the API running:
+
+```bash
+curl "localhost:8000/api/scenarios"
+curl "localhost:8000/api/matches/SCN-comeback/live?minute=67&lang=ms&persona=casual&team=NGC"
+curl "localhost:8000/api/matches/SCN-comeback/brief/fulltime?persona=analyst"
+# websocket: ws://localhost:8000/api/matches/SCN-comeback/stream?speed=60
+```
+
 ## Repo layout
 
 ```
-contract/   the API contract (Pydantic) + JSON schema + sample report   ← both
-sim/        synthetic match simulator                                  ← Ingest
-model/      features, XGBoost + SHAP, story, report builder            ← Interpret, Explain
-api/        FastAPI backend                                            ← Render
-web/        React + Vite half-time page                                ← Render
+contract/   API contracts (Pydantic) + JSON schemas + real samples          ← both
+sim/        synthetic match simulator + scripted scenarios                 ← Ingest
+live/       metrics, insights, narration + validator, engine, season       ← Interpret, Explain, Personalise
+model/      half-time features, XGBoost + SHAP, half-time story            ← Interpret, Explain
+api/        FastAPI backend: REST + websocket stream                       ← Render
+web/        React + Vite site                                              ← Render
 tests/      pytest suite
-scripts/    export_contract.py (schema + mock JSON)
-docs/       architecture, API contract, workflow, Azure deploy, demo script
+scripts/    export_contract.py (schemas + mocks), calibrate_live.py
+docs/       live engine, frontend guide, architecture, API contract, workflow, deploy, demo
 ```
 
-## Model performance
+## Model performance (half-time model)
 
 Trained on 10,000 synthetic matches, evaluated on a held-out 20%
 (from `artifacts/metrics.json`; regenerate with `make train`):
@@ -65,6 +91,8 @@ Simulated outcomes: 44.5% home wins, 21.5% draws, 34.0% away wins, ~2.9 goals pe
 
 ## Docs
 
+- [How the live engine works: every metric, threshold and rule](docs/live-engine.md)
+- [Frontend guide: which endpoint powers which screen](docs/frontend-guide.md)
 - [Architecture and the five challenge stages](docs/architecture.md)
 - [API contract](docs/api-contract.md)
 - [Team workflow](docs/workflow.md)
@@ -73,4 +101,4 @@ Simulated outcomes: 44.5% home wins, 21.5% draws, 34.0% away wins, ~2.9 goals pe
 
 ## Team
 
-Syahmi (data science, modelling, AI analysis) and Ilham (web, API, deployment).
+Syahmi (backend: simulator, live engine, model, API) and Ilham (frontend: web, deployment).

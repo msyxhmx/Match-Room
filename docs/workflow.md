@@ -9,14 +9,16 @@
 
 ## Who owns what
 
+Split agreed 23 Oct: Syahmi owns the backend, Ilham owns the frontend.
+
 | Area | Owner | Folder |
 |---|---|---|
-| Simulator | Syahmi | `sim/` |
-| Features, model, SHAP | Syahmi | `model/features.py`, `model/predict.py`, `model/train.py` |
-| Half-time story (prompt, RAG) | Syahmi (Ilham: Azure OpenAI setup) | `model/story.py`, `model/prompts/` |
-| Contract | Both | `contract/` |
-| API | Ilham | `api/` |
-| Website | Ilham | `web/` |
+| Simulator + scenarios | Syahmi | `sim/` |
+| Live engine (metrics, insights, narration, roll-ups, season) | Syahmi | `live/` |
+| Half-time model, SHAP, story | Syahmi (Ilham: Azure OpenAI setup) | `model/` |
+| API (REST + websocket) | Syahmi | `api/` |
+| Contract | Both | `contract/`, `web/src/types/` |
+| Website, overlay page, typed client | Ilham | `web/` |
 | Azure deployment | Ilham (pair with Syahmi) | `Dockerfile`, `docs/deploy-azure.md` |
 | Demo video, README, write-up | Syahmi | `docs/` |
 

@@ -8,6 +8,7 @@ COPY pyproject.toml README.md ./
 COPY contract ./contract
 COPY sim ./sim
 COPY model ./model
+COPY live ./live
 COPY api ./api
 RUN pip install --no-cache-dir ".[model,api,llm]"
 COPY artifacts ./artifacts

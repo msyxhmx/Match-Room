@@ -27,9 +27,18 @@ class Score(BaseModel):
     away: int
 
 
+EventType = Literal["pass", "shot", "foul", "card", "corner", "pressure", "tackle",
+                    "interception"]
+
+
 class Event(BaseModel):
     """One synthetic match event. Coordinates are 0-100, from the acting team's
-    point of view (x = 100 is the opponent's goal line)."""
+    point of view (x = 100 is the opponent's goal line).
+
+    Pass rows also carry end_x/end_y, speed_kmh and under_pressure; shot rows
+    carry speed_kmh. `pressure` rows are a defender closing down the ball
+    carrier (outcome "applied" or "forced_error"); `tackle`/`interception` rows
+    win the ball back after a failed pass (outcome "won")."""
 
     event_id: str
     match_id: str
@@ -38,11 +47,15 @@ class Event(BaseModel):
     side: Side
     team_id: str
     player: str
-    type: Literal["pass", "shot", "foul", "card", "corner"]
+    type: EventType
     x: float
     y: float
     outcome: str
     xg: float | None = None
+    end_x: float | None = None
+    end_y: float | None = None
+    speed_kmh: float | None = None
+    under_pressure: bool | None = None
 
 
 class StatLine(BaseModel):
@@ -129,3 +142,6 @@ class MatchSummary(BaseModel):
     match_id: str
     home: Team
     away: Team
+    scenario: str | None = Field(
+        default=None, description="Scripted storyline key (see /api/scenarios); null = organic.")
+    title: str | None = None

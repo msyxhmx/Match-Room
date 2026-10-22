@@ -1,0 +1,1723 @@
+{
+  "$defs": {
+    "BriefPoint": {
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "body": {
+          "title": "Body",
+          "type": "string"
+        },
+        "facts_used": {
+          "items": {
+            "$ref": "#/$defs/FactUsed"
+          },
+          "title": "Facts Used",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "title",
+        "body"
+      ],
+      "title": "BriefPoint",
+      "type": "object"
+    },
+    "CatchUp": {
+      "description": "'I just joined': the story so far in a few cards.",
+      "properties": {
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "home": {
+          "$ref": "#/$defs/Team"
+        },
+        "away": {
+          "$ref": "#/$defs/Team"
+        },
+        "score": {
+          "$ref": "#/$defs/Score"
+        },
+        "profile": {
+          "$ref": "#/$defs/Profile"
+        },
+        "headline": {
+          "title": "Headline",
+          "type": "string"
+        },
+        "cards": {
+          "items": {
+            "$ref": "#/$defs/LiveCard"
+          },
+          "title": "Cards",
+          "type": "array"
+        },
+        "control": {
+          "$ref": "#/$defs/ControlState"
+        },
+        "projection": {
+          "$ref": "#/$defs/WinProjection"
+        }
+      },
+      "required": [
+        "match_id",
+        "minute",
+        "clock",
+        "home",
+        "away",
+        "score",
+        "profile",
+        "headline",
+        "cards",
+        "control",
+        "projection"
+      ],
+      "title": "CatchUp",
+      "type": "object"
+    },
+    "ControlProfile": {
+      "description": "Minutes spent in each phase.",
+      "properties": {
+        "home_control": {
+          "title": "Home Control",
+          "type": "integer"
+        },
+        "away_control": {
+          "title": "Away Control",
+          "type": "integer"
+        },
+        "chaos": {
+          "title": "Chaos",
+          "type": "integer"
+        },
+        "balanced": {
+          "title": "Balanced",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home_control",
+        "away_control",
+        "chaos",
+        "balanced"
+      ],
+      "title": "ControlProfile",
+      "type": "object"
+    },
+    "ControlState": {
+      "description": "Our own 'control vs chaos' composite over the last 10 minutes.",
+      "properties": {
+        "home_share": {
+          "description": "0-1. Above 0.57 = home in control, below 0.43 = away.",
+          "title": "Home Share",
+          "type": "number"
+        },
+        "chaos": {
+          "description": "0-1. Above 0.80 = chaotic phase.",
+          "title": "Chaos",
+          "type": "number"
+        },
+        "tempo": {
+          "description": "Passes per minute, both teams, last 10 minutes.",
+          "title": "Tempo",
+          "type": "number"
+        },
+        "momentum": {
+          "description": "-1 (away on top) to +1 (home on top), recency-weighted share of threat.",
+          "title": "Momentum",
+          "type": "number"
+        },
+        "phase": {
+          "enum": [
+            "home_control",
+            "away_control",
+            "chaos",
+            "balanced"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "label": {
+          "description": "Localised phrase for the phase, e.g. 'Northgate in control'.",
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "home_share",
+        "chaos",
+        "tempo",
+        "momentum",
+        "phase",
+        "label"
+      ],
+      "title": "ControlState",
+      "type": "object"
+    },
+    "Driver": {
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "value"
+      ],
+      "title": "Driver",
+      "type": "object"
+    },
+    "Event": {
+      "description": "One synthetic match event. Coordinates are 0-100, from the acting team's\npoint of view (x = 100 is the opponent's goal line).\n\nPass rows also carry end_x/end_y, speed_kmh and under_pressure; shot rows\ncarry speed_kmh. `pressure` rows are a defender closing down the ball\ncarrier (outcome \"applied\" or \"forced_error\"); `tackle`/`interception` rows\nwin the ball back after a failed pass (outcome \"won\").",
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "second": {
+          "title": "Second",
+          "type": "integer"
+        },
+        "side": {
+          "enum": [
+            "home",
+            "away"
+          ],
+          "title": "Side",
+          "type": "string"
+        },
+        "team_id": {
+          "title": "Team Id",
+          "type": "string"
+        },
+        "player": {
+          "title": "Player",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "pass",
+            "shot",
+            "foul",
+            "card",
+            "corner",
+            "pressure",
+            "tackle",
+            "interception"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "title": "Y",
+          "type": "number"
+        },
+        "outcome": {
+          "title": "Outcome",
+          "type": "string"
+        },
+        "xg": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Xg"
+        },
+        "end_x": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End X"
+        },
+        "end_y": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End Y"
+        },
+        "speed_kmh": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speed Kmh"
+        },
+        "under_pressure": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Under Pressure"
+        }
+      },
+      "required": [
+        "event_id",
+        "match_id",
+        "minute",
+        "second",
+        "side",
+        "team_id",
+        "player",
+        "type",
+        "x",
+        "y",
+        "outcome"
+      ],
+      "title": "Event",
+      "type": "object"
+    },
+    "EvidenceRef": {
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "minute",
+        "description"
+      ],
+      "title": "EvidenceRef",
+      "type": "object"
+    },
+    "FactUsed": {
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "description": "Exactly as it appears in the text.",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "value"
+      ],
+      "title": "FactUsed",
+      "type": "object"
+    },
+    "Lineups": {
+      "properties": {
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "home": {
+          "$ref": "#/$defs/Team"
+        },
+        "away": {
+          "$ref": "#/$defs/Team"
+        },
+        "meta": {
+          "$ref": "#/$defs/MatchMeta"
+        },
+        "players": {
+          "items": {
+            "$ref": "#/$defs/PlayerRef"
+          },
+          "title": "Players",
+          "type": "array"
+        }
+      },
+      "required": [
+        "match_id",
+        "home",
+        "away",
+        "meta",
+        "players"
+      ],
+      "title": "Lineups",
+      "type": "object"
+    },
+    "LiveCard": {
+      "description": "One narrated insight, personalised to a Profile.",
+      "properties": {
+        "insight_id": {
+          "title": "Insight Id",
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "goal",
+            "red_card",
+            "big_chance",
+            "shot_speed",
+            "pass_of_the_moment",
+            "momentum_flip",
+            "control_shift",
+            "chaos_phase",
+            "pressure_spike",
+            "win_prob_swing",
+            "tempo_shift",
+            "player_milestone",
+            "player_focus"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "variant": {
+          "title": "Variant",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "second": {
+          "title": "Second",
+          "type": "integer"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "priority": {
+          "description": "1 = headline, 2 = notable, 3 = detail.",
+          "title": "Priority",
+          "type": "integer"
+        },
+        "side": {
+          "anyOf": [
+            {
+              "enum": [
+                "home",
+                "away"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Side"
+        },
+        "team_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Team Id"
+        },
+        "players": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Players",
+          "type": "array"
+        },
+        "headline": {
+          "title": "Headline",
+          "type": "string"
+        },
+        "body": {
+          "title": "Body",
+          "type": "string"
+        },
+        "why": {
+          "description": "Reasons it matters; analyst persona gets more.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Why",
+          "type": "array"
+        },
+        "facts_used": {
+          "items": {
+            "$ref": "#/$defs/FactUsed"
+          },
+          "title": "Facts Used",
+          "type": "array"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "tags": {
+          "description": "e.g. 'your_team', 'focus_player', 'against_your_team'.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "language": {
+          "enum": [
+            "en",
+            "ms",
+            "es"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "persona": {
+          "enum": [
+            "casual",
+            "analyst"
+          ],
+          "title": "Persona",
+          "type": "string"
+        },
+        "source": {
+          "default": "template",
+          "enum": [
+            "template",
+            "llm"
+          ],
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "insight_id",
+        "type",
+        "variant",
+        "minute",
+        "second",
+        "clock",
+        "priority",
+        "side",
+        "team_id",
+        "players",
+        "headline",
+        "body",
+        "facts_used",
+        "evidence",
+        "language",
+        "persona"
+      ],
+      "title": "LiveCard",
+      "type": "object"
+    },
+    "LiveSnapshot": {
+      "description": "Everything a screen needs at one minute of the match.",
+      "properties": {
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "period": {
+          "enum": [
+            "pre",
+            "1H",
+            "HT",
+            "2H",
+            "FT"
+          ],
+          "title": "Period",
+          "type": "string"
+        },
+        "home": {
+          "$ref": "#/$defs/Team"
+        },
+        "away": {
+          "$ref": "#/$defs/Team"
+        },
+        "score": {
+          "$ref": "#/$defs/Score"
+        },
+        "meta": {
+          "$ref": "#/$defs/MatchMeta"
+        },
+        "profile": {
+          "$ref": "#/$defs/Profile"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/MetricLine"
+          },
+          "title": "Metrics",
+          "type": "array"
+        },
+        "control": {
+          "$ref": "#/$defs/ControlState"
+        },
+        "projection": {
+          "$ref": "#/$defs/WinProjection"
+        },
+        "series": {
+          "$ref": "#/$defs/Series"
+        },
+        "cards": {
+          "description": "Personalised cards so far, newest first.",
+          "items": {
+            "$ref": "#/$defs/LiveCard"
+          },
+          "title": "Cards",
+          "type": "array"
+        },
+        "overlays": {
+          "description": "Graphics on screen at this minute.",
+          "items": {
+            "$ref": "#/$defs/OverlayMessage"
+          },
+          "title": "Overlays",
+          "type": "array"
+        },
+        "focus_player": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PlayerLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "recent_events": {
+          "description": "Shots, cards and goals in the last 10'.",
+          "items": {
+            "$ref": "#/$defs/Event"
+          },
+          "title": "Recent Events",
+          "type": "array"
+        }
+      },
+      "required": [
+        "match_id",
+        "minute",
+        "clock",
+        "period",
+        "home",
+        "away",
+        "score",
+        "meta",
+        "profile",
+        "metrics",
+        "control",
+        "projection",
+        "series",
+        "cards",
+        "overlays",
+        "recent_events"
+      ],
+      "title": "LiveSnapshot",
+      "type": "object"
+    },
+    "MatchBrief": {
+      "description": "Half-time or full-time roll-up of the insight log.",
+      "properties": {
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "halftime",
+            "fulltime"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "home": {
+          "$ref": "#/$defs/Team"
+        },
+        "away": {
+          "$ref": "#/$defs/Team"
+        },
+        "score": {
+          "$ref": "#/$defs/Score"
+        },
+        "meta": {
+          "$ref": "#/$defs/MatchMeta"
+        },
+        "profile": {
+          "$ref": "#/$defs/Profile"
+        },
+        "headline": {
+          "title": "Headline",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "summary_source": {
+          "default": "template",
+          "enum": [
+            "template",
+            "llm"
+          ],
+          "title": "Summary Source",
+          "type": "string"
+        },
+        "what_happened": {
+          "items": {
+            "$ref": "#/$defs/LiveCard"
+          },
+          "title": "What Happened",
+          "type": "array"
+        },
+        "why": {
+          "items": {
+            "$ref": "#/$defs/BriefPoint"
+          },
+          "title": "Why",
+          "type": "array"
+        },
+        "what_to_watch": {
+          "items": {
+            "$ref": "#/$defs/BriefPoint"
+          },
+          "title": "What To Watch",
+          "type": "array"
+        },
+        "turning_points": {
+          "items": {
+            "$ref": "#/$defs/TurningPoint"
+          },
+          "title": "Turning Points",
+          "type": "array"
+        },
+        "control_profile": {
+          "$ref": "#/$defs/ControlProfile"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/MetricLine"
+          },
+          "title": "Metrics",
+          "type": "array"
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WinProjection"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "player_of_the_match": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PlayerLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "focus_player": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PlayerLine"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "match_id",
+        "kind",
+        "minute",
+        "home",
+        "away",
+        "score",
+        "meta",
+        "profile",
+        "headline",
+        "summary",
+        "what_happened",
+        "why",
+        "what_to_watch",
+        "turning_points",
+        "control_profile",
+        "metrics"
+      ],
+      "title": "MatchBrief",
+      "type": "object"
+    },
+    "MatchMeta": {
+      "properties": {
+        "venue": {
+          "title": "Venue",
+          "type": "string"
+        },
+        "referee": {
+          "title": "Referee",
+          "type": "string"
+        },
+        "attendance": {
+          "title": "Attendance",
+          "type": "integer"
+        },
+        "weather": {
+          "title": "Weather",
+          "type": "string"
+        },
+        "scenario": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scenario"
+        },
+        "scenario_title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scenario Title"
+        },
+        "synthetic": {
+          "default": true,
+          "title": "Synthetic",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "venue",
+        "referee",
+        "attendance",
+        "weather"
+      ],
+      "title": "MatchMeta",
+      "type": "object"
+    },
+    "MetricLine": {
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "home": {
+          "title": "Home",
+          "type": "number"
+        },
+        "away": {
+          "title": "Away",
+          "type": "number"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "definition": {
+          "description": "Plain-language definition, shown on tap/hover.",
+          "title": "Definition",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "home",
+        "away",
+        "definition"
+      ],
+      "title": "MetricLine",
+      "type": "object"
+    },
+    "OverlayMessage": {
+      "description": "Timed, machine-readable graphic for a broadcast or stream overlay.\n\n`fields` is a flat string map, so it binds directly to graphics templates\n(e.g. Vizrt-style ${headline}) or to the HTML overlay.",
+      "properties": {
+        "seq": {
+          "title": "Seq",
+          "type": "integer"
+        },
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "second": {
+          "title": "Second",
+          "type": "integer"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "graphic": {
+          "enum": [
+            "lower_third",
+            "alert",
+            "stat_bug",
+            "momentum_bar",
+            "player_tag"
+          ],
+          "title": "Graphic",
+          "type": "string"
+        },
+        "priority": {
+          "title": "Priority",
+          "type": "integer"
+        },
+        "ttl_s": {
+          "description": "Seconds the graphic stays on screen at real speed.",
+          "title": "Ttl S",
+          "type": "integer"
+        },
+        "insight_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Insight Id"
+        },
+        "language": {
+          "enum": [
+            "en",
+            "ms",
+            "es"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "fields": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Fields",
+          "type": "object"
+        }
+      },
+      "required": [
+        "seq",
+        "match_id",
+        "minute",
+        "second",
+        "clock",
+        "graphic",
+        "priority",
+        "ttl_s",
+        "language",
+        "fields"
+      ],
+      "title": "OverlayMessage",
+      "type": "object"
+    },
+    "PlayerLine": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        },
+        "position": {
+          "title": "Position",
+          "type": "string"
+        },
+        "team_id": {
+          "title": "Team Id",
+          "type": "string"
+        },
+        "side": {
+          "enum": [
+            "home",
+            "away"
+          ],
+          "title": "Side",
+          "type": "string"
+        },
+        "touches": {
+          "title": "Touches",
+          "type": "integer"
+        },
+        "passes": {
+          "title": "Passes",
+          "type": "integer"
+        },
+        "passes_completed": {
+          "title": "Passes Completed",
+          "type": "integer"
+        },
+        "pass_accuracy": {
+          "title": "Pass Accuracy",
+          "type": "integer"
+        },
+        "xt_added": {
+          "title": "Xt Added",
+          "type": "number"
+        },
+        "shots": {
+          "title": "Shots",
+          "type": "integer"
+        },
+        "goals": {
+          "title": "Goals",
+          "type": "integer"
+        },
+        "xg": {
+          "title": "Xg",
+          "type": "number"
+        },
+        "ball_wins": {
+          "title": "Ball Wins",
+          "type": "integer"
+        },
+        "pressures": {
+          "title": "Pressures",
+          "type": "integer"
+        },
+        "top_shot_speed_kmh": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Top Shot Speed Kmh"
+        },
+        "involvement": {
+          "description": "Touches per 15-minute block.",
+          "items": {
+            "type": "integer"
+          },
+          "title": "Involvement",
+          "type": "array"
+        },
+        "cards": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Cards",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "number",
+        "position",
+        "team_id",
+        "side",
+        "touches",
+        "passes",
+        "passes_completed",
+        "pass_accuracy",
+        "xt_added",
+        "shots",
+        "goals",
+        "xg",
+        "ball_wins",
+        "pressures",
+        "involvement"
+      ],
+      "title": "PlayerLine",
+      "type": "object"
+    },
+    "PlayerRef": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "number": {
+          "title": "Number",
+          "type": "integer"
+        },
+        "position": {
+          "title": "Position",
+          "type": "string"
+        },
+        "team_id": {
+          "title": "Team Id",
+          "type": "string"
+        },
+        "side": {
+          "enum": [
+            "home",
+            "away"
+          ],
+          "title": "Side",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "number",
+        "position",
+        "team_id",
+        "side"
+      ],
+      "title": "PlayerRef",
+      "type": "object"
+    },
+    "Profile": {
+      "description": "Who the output is for. Same match, different experience.",
+      "properties": {
+        "persona": {
+          "default": "casual",
+          "enum": [
+            "casual",
+            "analyst"
+          ],
+          "title": "Persona",
+          "type": "string"
+        },
+        "language": {
+          "default": "en",
+          "enum": [
+            "en",
+            "ms",
+            "es"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "team": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Favourite team id, e.g. 'NGC'.",
+          "title": "Team"
+        },
+        "player": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Focus player name, e.g. 'L. Quinn'.",
+          "title": "Player"
+        }
+      },
+      "title": "Profile",
+      "type": "object"
+    },
+    "ScenarioInfo": {
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "match_id": {
+          "title": "Match Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "home": {
+          "$ref": "#/$defs/Team"
+        },
+        "away": {
+          "$ref": "#/$defs/Team"
+        }
+      },
+      "required": [
+        "key",
+        "match_id",
+        "title",
+        "description",
+        "home",
+        "away"
+      ],
+      "title": "ScenarioInfo",
+      "type": "object"
+    },
+    "Score": {
+      "properties": {
+        "home": {
+          "title": "Home",
+          "type": "integer"
+        },
+        "away": {
+          "title": "Away",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "home",
+        "away"
+      ],
+      "title": "Score",
+      "type": "object"
+    },
+    "SeasonReport": {
+      "properties": {
+        "matches": {
+          "title": "Matches",
+          "type": "integer"
+        },
+        "profile": {
+          "$ref": "#/$defs/Profile"
+        },
+        "table": {
+          "items": {
+            "$ref": "#/$defs/SeasonRow"
+          },
+          "title": "Table",
+          "type": "array"
+        },
+        "storylines": {
+          "items": {
+            "$ref": "#/$defs/SeasonStoryline"
+          },
+          "title": "Storylines",
+          "type": "array"
+        }
+      },
+      "required": [
+        "matches",
+        "profile",
+        "table",
+        "storylines"
+      ],
+      "title": "SeasonReport",
+      "type": "object"
+    },
+    "SeasonRow": {
+      "properties": {
+        "team": {
+          "$ref": "#/$defs/Team"
+        },
+        "played": {
+          "title": "Played",
+          "type": "integer"
+        },
+        "won": {
+          "title": "Won",
+          "type": "integer"
+        },
+        "drawn": {
+          "title": "Drawn",
+          "type": "integer"
+        },
+        "lost": {
+          "title": "Lost",
+          "type": "integer"
+        },
+        "goals_for": {
+          "title": "Goals For",
+          "type": "integer"
+        },
+        "goals_against": {
+          "title": "Goals Against",
+          "type": "integer"
+        },
+        "points": {
+          "title": "Points",
+          "type": "integer"
+        },
+        "xg_for": {
+          "title": "Xg For",
+          "type": "number"
+        },
+        "xg_against": {
+          "title": "Xg Against",
+          "type": "number"
+        },
+        "control_share": {
+          "description": "Share of match minutes this team was in control.",
+          "title": "Control Share",
+          "type": "number"
+        },
+        "chaos_share": {
+          "description": "Share of their match minutes that were chaotic.",
+          "title": "Chaos Share",
+          "type": "number"
+        },
+        "wins_against_run": {
+          "description": "Wins where they had less of the control.",
+          "title": "Wins Against Run",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "team",
+        "played",
+        "won",
+        "drawn",
+        "lost",
+        "goals_for",
+        "goals_against",
+        "points",
+        "xg_for",
+        "xg_against",
+        "control_share",
+        "chaos_share",
+        "wins_against_run"
+      ],
+      "title": "SeasonRow",
+      "type": "object"
+    },
+    "SeasonStoryline": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "body": {
+          "title": "Body",
+          "type": "string"
+        },
+        "team_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Team Id"
+        },
+        "facts_used": {
+          "items": {
+            "$ref": "#/$defs/FactUsed"
+          },
+          "title": "Facts Used",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "body"
+      ],
+      "title": "SeasonStoryline",
+      "type": "object"
+    },
+    "Series": {
+      "description": "Per-minute series from kick-off to the current minute (index 0 = 0').",
+      "properties": {
+        "minute": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Minute",
+          "type": "array"
+        },
+        "momentum": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Momentum",
+          "type": "array"
+        },
+        "control_home": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Control Home",
+          "type": "array"
+        },
+        "chaos": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Chaos",
+          "type": "array"
+        },
+        "home_win": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Home Win",
+          "type": "array"
+        },
+        "draw": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Draw",
+          "type": "array"
+        },
+        "away_win": {
+          "items": {
+            "type": "number"
+          },
+          "title": "Away Win",
+          "type": "array"
+        }
+      },
+      "required": [
+        "minute",
+        "momentum",
+        "control_home",
+        "chaos",
+        "home_win",
+        "draw",
+        "away_win"
+      ],
+      "title": "Series",
+      "type": "object"
+    },
+    "StreamBrief": {
+      "description": "Websocket message at half-time and full-time.",
+      "properties": {
+        "type": {
+          "enum": [
+            "halftime",
+            "fulltime"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "brief": {
+          "$ref": "#/$defs/MatchBrief"
+        }
+      },
+      "required": [
+        "type",
+        "brief"
+      ],
+      "title": "StreamBrief",
+      "type": "object"
+    },
+    "StreamTick": {
+      "description": "Websocket message, once per match minute.",
+      "properties": {
+        "type": {
+          "const": "tick",
+          "default": "tick",
+          "title": "Type",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "period": {
+          "enum": [
+            "pre",
+            "1H",
+            "HT",
+            "2H",
+            "FT"
+          ],
+          "title": "Period",
+          "type": "string"
+        },
+        "score": {
+          "$ref": "#/$defs/Score"
+        },
+        "control": {
+          "$ref": "#/$defs/ControlState"
+        },
+        "projection": {
+          "$ref": "#/$defs/WinProjection"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/MetricLine"
+          },
+          "title": "Metrics",
+          "type": "array"
+        },
+        "new_events": {
+          "items": {
+            "$ref": "#/$defs/Event"
+          },
+          "title": "New Events",
+          "type": "array"
+        },
+        "new_cards": {
+          "items": {
+            "$ref": "#/$defs/LiveCard"
+          },
+          "title": "New Cards",
+          "type": "array"
+        },
+        "new_overlays": {
+          "items": {
+            "$ref": "#/$defs/OverlayMessage"
+          },
+          "title": "New Overlays",
+          "type": "array"
+        }
+      },
+      "required": [
+        "minute",
+        "clock",
+        "period",
+        "score",
+        "control",
+        "projection",
+        "metrics",
+        "new_events",
+        "new_cards",
+        "new_overlays"
+      ],
+      "title": "StreamTick",
+      "type": "object"
+    },
+    "Team": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "short_name": {
+          "title": "Short Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "short_name"
+      ],
+      "title": "Team",
+      "type": "object"
+    },
+    "TurningPoint": {
+      "properties": {
+        "insight_id": {
+          "title": "Insight Id",
+          "type": "string"
+        },
+        "minute": {
+          "title": "Minute",
+          "type": "integer"
+        },
+        "clock": {
+          "title": "Clock",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "side": {
+          "anyOf": [
+            {
+              "enum": [
+                "home",
+                "away"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Side"
+        },
+        "win_before": {
+          "description": "Win chance of `side` (or home) just before.",
+          "title": "Win Before",
+          "type": "number"
+        },
+        "win_after": {
+          "title": "Win After",
+          "type": "number"
+        }
+      },
+      "required": [
+        "insight_id",
+        "minute",
+        "clock",
+        "title",
+        "side",
+        "win_before",
+        "win_after"
+      ],
+      "title": "TurningPoint",
+      "type": "object"
+    },
+    "WinProjection": {
+      "description": "An explained projection, not betting odds.",
+      "properties": {
+        "home_win": {
+          "title": "Home Win",
+          "type": "number"
+        },
+        "draw": {
+          "title": "Draw",
+          "type": "number"
+        },
+        "away_win": {
+          "title": "Away Win",
+          "type": "number"
+        },
+        "drivers": {
+          "items": {
+            "$ref": "#/$defs/Driver"
+          },
+          "title": "Drivers",
+          "type": "array"
+        },
+        "note": {
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "home_win",
+        "draw",
+        "away_win",
+        "drivers",
+        "note"
+      ],
+      "title": "WinProjection",
+      "type": "object"
+    }
+  },
+  "title": "Match-Room Live contract"
+}

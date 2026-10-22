@@ -1,0 +1,298 @@
+{
+  "matches": 28,
+  "profile": {
+    "persona": "casual",
+    "language": "en",
+    "team": "NGC",
+    "player": null
+  },
+  "table": [
+    {
+      "team": {
+        "id": "RIV",
+        "name": "Riverside Rovers",
+        "short_name": "RIV"
+      },
+      "played": 7,
+      "won": 6,
+      "drawn": 1,
+      "lost": 0,
+      "goals_for": 13,
+      "goals_against": 2,
+      "points": 19,
+      "xg_for": 15.42,
+      "xg_against": 4.54,
+      "control_share": 0.41,
+      "chaos_share": 0.163,
+      "wins_against_run": 0
+    },
+    {
+      "team": {
+        "id": "NGC",
+        "name": "Northgate City",
+        "short_name": "NGC"
+      },
+      "played": 7,
+      "won": 5,
+      "drawn": 2,
+      "lost": 0,
+      "goals_for": 19,
+      "goals_against": 5,
+      "points": 17,
+      "xg_for": 13.9,
+      "xg_against": 6.02,
+      "control_share": 0.178,
+      "chaos_share": 0.251,
+      "wins_against_run": 2
+    },
+    {
+      "team": {
+        "id": "MIL",
+        "name": "Millbrook Town",
+        "short_name": "MIL"
+      },
+      "played": 7,
+      "won": 3,
+      "drawn": 1,
+      "lost": 3,
+      "goals_for": 10,
+      "goals_against": 9,
+      "points": 10,
+      "xg_for": 8.69,
+      "xg_against": 13.69,
+      "control_share": 0.073,
+      "chaos_share": 0.195,
+      "wins_against_run": 2
+    },
+    {
+      "team": {
+        "id": "ASH",
+        "name": "Ashford Albion",
+        "short_name": "ASH"
+      },
+      "played": 7,
+      "won": 2,
+      "drawn": 3,
+      "lost": 2,
+      "goals_for": 6,
+      "goals_against": 8,
+      "points": 9,
+      "xg_for": 5.47,
+      "xg_against": 12.02,
+      "control_share": 0.23,
+      "chaos_share": 0.133,
+      "wins_against_run": 1
+    },
+    {
+      "team": {
+        "id": "ELM",
+        "name": "Elmstead United",
+        "short_name": "ELM"
+      },
+      "played": 7,
+      "won": 2,
+      "drawn": 2,
+      "lost": 3,
+      "goals_for": 10,
+      "goals_against": 8,
+      "points": 8,
+      "xg_for": 11.6,
+      "xg_against": 9.12,
+      "control_share": 0.227,
+      "chaos_share": 0.197,
+      "wins_against_run": 2
+    },
+    {
+      "team": {
+        "id": "HAR",
+        "name": "Harbour Athletic",
+        "short_name": "HAR"
+      },
+      "played": 7,
+      "won": 1,
+      "drawn": 3,
+      "lost": 3,
+      "goals_for": 4,
+      "goals_against": 10,
+      "points": 6,
+      "xg_for": 13.09,
+      "xg_against": 7.94,
+      "control_share": 0.368,
+      "chaos_share": 0.219,
+      "wins_against_run": 0
+    },
+    {
+      "team": {
+        "id": "QNB",
+        "name": "Queensbridge FC",
+        "short_name": "QNB"
+      },
+      "played": 7,
+      "won": 1,
+      "drawn": 1,
+      "lost": 5,
+      "goals_for": 4,
+      "goals_against": 17,
+      "points": 4,
+      "xg_for": 5.05,
+      "xg_against": 15.64,
+      "control_share": 0.217,
+      "chaos_share": 0.156,
+      "wins_against_run": 1
+    },
+    {
+      "team": {
+        "id": "KST",
+        "name": "Kingston Vale",
+        "short_name": "KST"
+      },
+      "played": 7,
+      "won": 0,
+      "drawn": 3,
+      "lost": 4,
+      "goals_for": 5,
+      "goals_against": 12,
+      "points": 3,
+      "xg_for": 7.71,
+      "xg_against": 11.97,
+      "control_share": 0.206,
+      "chaos_share": 0.244,
+      "wins_against_run": 0
+    }
+  ],
+  "storylines": [
+    {
+      "id": "season_yours",
+      "title": "Your team",
+      "body": "Northgate City sit in position 2 with 17 points, 13.9 xG for and 6.0 against.",
+      "team_id": "NGC",
+      "facts_used": [
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Northgate City"
+        },
+        {
+          "key": "position",
+          "label": "Position",
+          "value": "2"
+        },
+        {
+          "key": "points",
+          "label": "Points",
+          "value": "17"
+        },
+        {
+          "key": "xg",
+          "label": "Shot xG",
+          "value": "13.9"
+        },
+        {
+          "key": "xga",
+          "label": "xG against",
+          "value": "6.0"
+        }
+      ]
+    },
+    {
+      "id": "season_leader",
+      "title": "Top of the table",
+      "body": "Riverside Rovers lead with 19 points from 7 matches.",
+      "team_id": "RIV",
+      "facts_used": [
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Riverside Rovers"
+        },
+        {
+          "key": "points",
+          "label": "Points",
+          "value": "19"
+        },
+        {
+          "key": "played",
+          "label": "Played",
+          "value": "7"
+        }
+      ]
+    },
+    {
+      "id": "season_control",
+      "title": "Masters of control",
+      "body": "Riverside Rovers are in control for 41% of their minutes, more than anyone.",
+      "team_id": "RIV",
+      "facts_used": [
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Riverside Rovers"
+        },
+        {
+          "key": "share",
+          "label": "Share of threat",
+          "value": "41%"
+        }
+      ]
+    },
+    {
+      "id": "season_run",
+      "title": "Winning without the ball",
+      "body": "Northgate City have won 2 matches while having less of the control.",
+      "team_id": "NGC",
+      "facts_used": [
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Northgate City"
+        },
+        {
+          "key": "count",
+          "label": "Count",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "id": "season_finish",
+      "title": "Beating their chances",
+      "body": "Northgate City have scored 19 from 13.9 xG: clinical, or lucky.",
+      "team_id": "NGC",
+      "facts_used": [
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Northgate City"
+        },
+        {
+          "key": "goals",
+          "label": "Goals",
+          "value": "19"
+        },
+        {
+          "key": "xg",
+          "label": "Shot xG",
+          "value": "13.9"
+        }
+      ]
+    },
+    {
+      "id": "season_chaos",
+      "title": "Chaos merchants",
+      "body": "Northgate City spend 25% of their minutes in chaos, the most in the league.",
+      "team_id": "NGC",
+      "facts_used": [
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Northgate City"
+        },
+        {
+          "key": "share",
+          "label": "Share of threat",
+          "value": "25%"
+        }
+      ]
+    }
+  ]
+}
