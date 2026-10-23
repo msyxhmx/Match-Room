@@ -26,6 +26,7 @@ from contract.live import (
     WinProjection,
 )
 from contract.models import (
+    AgentStep,
     Event,
     EvidenceRef,
     Factor,
@@ -44,6 +45,7 @@ from contract.models import (
 )
 
 __all__ = [
+    "AgentStep",
     "BriefPoint",
     "CatchUp",
     "ControlProfile",

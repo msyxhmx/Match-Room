@@ -29,7 +29,9 @@ not backed by the insight's facts, and every card links to the events behind it.
 log is personalised for casual and analyst viewers, a favourite team, a focus player and three
 languages including Malay. Built with Python, FastAPI (REST + websocket), React, XGBoost + SHAP
 for the half-time model, and Azure OpenAI as an optional, validated rewriter with a template
-fallback. Azure deployment is planned but not yet live.
+fallback. The half-time story is written by two Azure OpenAI agents: an analyst that investigates
+the first half through tools and a fact-checker that sends unsupported cards back; the page shows
+their trace. Azure deployment is planned but not yet live.
 
 ## Quick start
 
@@ -68,7 +70,7 @@ curl "localhost:8000/api/matches/SCN-comeback/brief/fulltime?persona=analyst"
 contract/   API contracts (Pydantic) + JSON schemas + real samples          ← both
 sim/        synthetic match simulator + scripted scenarios                 ← Ingest
 live/       metrics, insights, narration + validator, engine, season       ← Interpret, Explain, Personalise
-model/      half-time features, XGBoost + SHAP, half-time story            ← Interpret, Explain
+model/      half-time features, XGBoost + SHAP, half-time story + agents   ← Interpret, Explain
 api/        FastAPI backend: REST + websocket stream                       ← Render
 web/        React + Vite site                                              ← Render
 tests/      pytest suite

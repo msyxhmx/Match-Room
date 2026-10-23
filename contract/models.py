@@ -118,10 +118,22 @@ class WatchItem(BaseModel):
     detail: str
 
 
+class AgentStep(BaseModel):
+    """One step of the half-time story agents, in order: an analyst tool call or
+    draft, a fact-checker verdict, a retry, or the fallback to templates."""
+
+    agent: Literal["analyst", "fact_checker", "pipeline"]
+    action: Literal["tool", "draft", "accept", "reject", "retry", "skip", "fallback"]
+    detail: str
+
+
 class ReportMeta(BaseModel):
     model_version: str
     story_source: Literal["llm", "template"]
     synthetic: bool = True
+    agent_trace: list[AgentStep] = Field(
+        default_factory=list,
+        description="How the story was made; empty when no LLM is configured.")
 
 
 class HalftimeReport(BaseModel):

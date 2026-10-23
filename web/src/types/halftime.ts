@@ -86,7 +86,19 @@ export interface HalftimeReport {
   story: InsightCard[];
   prediction: Prediction;
   what_to_watch: WatchItem[];
-  meta: { model_version: string; story_source: "llm" | "template"; synthetic: boolean };
+  meta: {
+    model_version: string;
+    story_source: "llm" | "template";
+    synthetic: boolean;
+    agent_trace: AgentStep[]; // empty when no LLM is configured
+  };
+}
+
+// One step of the half-time story agents, in order.
+export interface AgentStep {
+  agent: "analyst" | "fact_checker" | "pipeline";
+  action: "tool" | "draft" | "accept" | "reject" | "retry" | "skip" | "fallback";
+  detail: string;
 }
 
 export interface MatchSummary {

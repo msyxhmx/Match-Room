@@ -73,6 +73,12 @@ A small design that fits before the freeze, all in `model/story.py`:
 4. **Show the trace** (tool calls, rejected cards) in `ReportMeta`. This is a contract change, so
    regenerate the schema and update `web/src/types/halftime.ts`.
 
+## Status (24 Oct)
+
+- Agent work: done in `feat/story-agents` (`model/agents.py`, trace in `ReportMeta`).
+- P0 3 (LLM timeout): done for the story agents; `live/narrate.py`'s `llm_rewrite` still has none.
+- P1 (LLM tests): invented event ids and LLM errors are now covered in `tests/test_agents.py`.
+
 ## Suggested order
 
 Agent work first, since new features stop at the freeze. Then the P0 simulator fixes and a

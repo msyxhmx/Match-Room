@@ -49,7 +49,7 @@ def build_report(match: SimulatedMatch, predictor: Predictor) -> HalftimeReport:
     stats = {"home": side_stats(fh, "home"), "away": side_stats(fh, "away")}
     features = match_features(match)
     prediction = predictor.predict(features)
-    story, source = build_story(match, features, stats, prediction)
+    story, source, trace = build_story(match, features, stats, prediction)
     tilt = tilt_by_block(fh)
 
     return HalftimeReport(
@@ -64,5 +64,6 @@ def build_report(match: SimulatedMatch, predictor: Predictor) -> HalftimeReport:
         story=story,
         prediction=prediction,
         what_to_watch=what_to_watch(match, features, prediction),
-        meta=ReportMeta(model_version=predictor.version, story_source=source),
+        meta=ReportMeta(model_version=predictor.version, story_source=source,
+                        agent_trace=trace),
     )
