@@ -38,6 +38,10 @@ Details of every metric and rule: [live-engine.md](live-engine.md).
   player or team not in the insight's facts, for templates and LLM output alike.
 - **Always a fallback.** No trained model → heuristic predictor. No Azure OpenAI keys, an LLM
   error or an unprovable LLM sentence → template text. The page never breaks.
+- **Agents are checked, not trusted.** The half-time story agents (`model/agents.py`) only see
+  the first half through their tools. The fact-checker rejects any card that cites no event, an
+  event no tool returned, or a number, player or team missing from the tool output, then asks an
+  LLM whether the evidence supports the claim. One retry; fewer than 3 cards → templates.
 - **Evidence or it didn't happen.** Every card cites event IDs.
 - **The core match never changes.** Simulator enrichment uses its own random stream, so the
   trained model stays valid.

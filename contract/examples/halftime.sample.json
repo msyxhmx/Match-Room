@@ -202,6 +202,7 @@
   "meta": {
     "model_version": "xgb-20261020-1559",
     "story_source": "template",
-    "synthetic": true
+    "synthetic": true,
+    "agent_trace": []
   }
 }

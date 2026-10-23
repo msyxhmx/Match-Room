@@ -210,6 +210,13 @@ p { margin: 0; }
 .stat-bar.away { right: 0; background: var(--away); }
 
 .meta { margin-top: 4rem; color: var(--chalk-dim); font-size: var(--step--1); }
+.agent-trace { margin-top: 0.75rem; }
+.agent-trace summary { cursor: pointer; width: fit-content; }
+.agent-trace summary:hover { color: var(--chalk); }
+.agent-trace ol { margin: 0.5rem 0 0; padding-left: 1.5rem; }
+.agent-trace li { margin-bottom: 0.2rem; overflow-wrap: anywhere; }
+.agent-trace strong { color: var(--chalk); font-weight: 500; }
+.agent-trace .step-reject, .agent-trace .step-fallback { color: var(--home); }
 
 @media (max-width: 760px) {
   :root { --step-4: 3.25rem; --step-3: 2.25rem; }

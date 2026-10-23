@@ -2,25 +2,21 @@
 
 Two generators with the same output:
   * template_story(): rule-based cards, always available, never invents facts
-  * llm_story():      Azure OpenAI, grounded only on the facts passed in; every
-                      evidence id it cites is checked against the real events,
-                      and any failure falls back to the template.
+  * StoryAgents:      an analyst and a fact-checker on Azure OpenAI (model/agents.py);
+                      any failure falls back to the template.
 """
 
 from __future__ import annotations
 
-import json
 import logging
 import os
-from pathlib import Path
 
 import pandas as pd
 
-from contract import EvidenceRef, InsightCard, Prediction, WatchItem
+from contract import AgentStep, EvidenceRef, InsightCard, Prediction, WatchItem
 from sim.simulator import SimulatedMatch
 
 log = logging.getLogger(__name__)
-PROMPT_PATH = Path(__file__).parent / "prompts" / "halftime_story.md"
 
 
 # ---------- facts: the only things the story layer may talk about ----------
@@ -141,61 +137,27 @@ def template_story(match: SimulatedMatch, f: dict[str, float], stats: dict) -> l
     return cards[:5]
 
 
-# ---------- LLM generator (Azure OpenAI) ----------
+# ---------- agents (Azure OpenAI) ----------
 
 def llm_available() -> bool:
     return all(os.getenv(k) for k in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_API_KEY",
                                        "AZURE_OPENAI_DEPLOYMENT"))
 
 
-def llm_story(match: SimulatedMatch, f: dict[str, float], stats: dict,
-              prediction: Prediction) -> list[InsightCard]:
-    from openai import AzureOpenAI
-
-    teams = {"home": match.home.short_name, "away": match.away.short_name}
-    events = key_events(match)
-    facts = {
-        "home": match.home.name, "away": match.away.name,
-        "stats": stats, "features": f,
-        "key_events": [{"event_id": e["event_id"], "text": _describe(e, teams)}
-                       for _, e in events.iterrows()],
-        "prediction": prediction.model_dump(),
-    }
-    client = AzureOpenAI(
-        azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
-        api_key=os.environ["AZURE_OPENAI_API_KEY"],
-        api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-10-21"),
-    )
-    create_kwargs = {
-        "model": os.environ["AZURE_OPENAI_DEPLOYMENT"],
-        "response_format": {"type": "json_object"},
-        "messages": [
-            {"role": "system", "content": PROMPT_PATH.read_text()},
-            {"role": "user", "content": json.dumps(facts, default=float)},
-        ],
-    }
-    if os.getenv("AZURE_OPENAI_TEMPERATURE") is not None:
-        create_kwargs["temperature"] = float(os.environ["AZURE_OPENAI_TEMPERATURE"])
-    resp = client.chat.completions.create(**create_kwargs)
-    data = json.loads(resp.choices[0].message.content)
-    by_id = {e["event_id"]: e for _, e in events.iterrows()}
-    cards = []
-    for i, c in enumerate(data.get("cards", [])[:5]):
-        ids = [eid for eid in c.get("evidence_event_ids", []) if eid in by_id]  # drop invented ids
-        cards.append(InsightCard(id=f"llm-{i}", title=c["title"], body=c["body"],
-                                 evidence=[_ref(by_id[eid], teams) for eid in ids]))
-    if len(cards) < 3:
-        raise ValueError("LLM returned fewer than 3 cards")
-    return cards
-
-
-def build_story(match, f, stats, prediction) -> tuple[list[InsightCard], str]:
+def build_story(match, f, stats, prediction) -> tuple[list[InsightCard], str, list[AgentStep]]:
+    """Story cards, their source and the agents' trace. Agents when Azure OpenAI is
+    configured, templates otherwise or on any agent failure."""
     if llm_available():
+        from model.agents import StoryAgents  # imports this module
+
+        agents = StoryAgents(match, f, stats, prediction)
         try:
-            return llm_story(match, f, stats, prediction), "llm"
-        except Exception:  # noqa: BLE001 - any LLM failure must not break half-time
-            log.exception("LLM story failed; using template")
-    return template_story(match, f, stats), "template"
+            return agents.run(), "llm", agents.trace
+        except Exception as exc:  # noqa: BLE001 - any LLM failure must not break half-time
+            log.exception("Story agents failed; using template")
+            agents.step("pipeline", "fallback", f"Using template cards ({type(exc).__name__})")
+            return template_story(match, f, stats), "template", agents.trace
+    return template_story(match, f, stats), "template", []
 
 
 # ---------- what to watch ----------

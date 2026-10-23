@@ -1,5 +1,43 @@
 {
   "$defs": {
+    "AgentStep": {
+      "description": "One step of the half-time story agents, in order: an analyst tool call or\ndraft, a fact-checker verdict, a retry, or the fallback to templates.",
+      "properties": {
+        "agent": {
+          "enum": [
+            "analyst",
+            "fact_checker",
+            "pipeline"
+          ],
+          "title": "Agent",
+          "type": "string"
+        },
+        "action": {
+          "enum": [
+            "tool",
+            "draft",
+            "accept",
+            "reject",
+            "retry",
+            "skip",
+            "fallback"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent",
+        "action",
+        "detail"
+      ],
+      "title": "AgentStep",
+      "type": "object"
+    },
     "EvidenceRef": {
       "properties": {
         "event_id": {
@@ -180,6 +218,14 @@
           "default": true,
           "title": "Synthetic",
           "type": "boolean"
+        },
+        "agent_trace": {
+          "description": "How the story was made; empty when no LLM is configured.",
+          "items": {
+            "$ref": "#/$defs/AgentStep"
+          },
+          "title": "Agent Trace",
+          "type": "array"
         }
       },
       "required": [

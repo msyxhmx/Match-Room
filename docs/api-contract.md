@@ -72,7 +72,7 @@ Interactive docs at `http://localhost:8000/docs` when the API is running.
 | `prediction.next_goal` | `home` / `away` / `none` probabilities |
 | `prediction.factors[]` | Top 3 drivers; `impact` > 0 pushes toward a home win |
 | `what_to_watch[]` | 2–3 things that would change the prediction |
-| `meta` | Model version, `story_source` (`llm` or `template`), `synthetic: true` |
+| `meta` | Model version, `story_source` (`llm` or `template`), `synthetic: true`, `agent_trace[]` (the story agents' tool calls, verdicts, retries and fallback; empty with no LLM keys) |
 
 ## Changing the contract
 

@@ -147,6 +147,27 @@ function Stats({ report }: { report: HalftimeReport }) {
   );
 }
 
+const AGENT_NAMES = { analyst: "Analyst", fact_checker: "Fact-checker", pipeline: "Pipeline" };
+
+function AgentTrace({ report }: { report: HalftimeReport }) {
+  const trace = report.meta.agent_trace ?? [];
+  if (trace.length === 0) return null;
+  return (
+    <details className="agent-trace">
+      <summary>
+        How this story was made ({trace.length} {trace.length === 1 ? "step" : "steps"})
+      </summary>
+      <ol>
+        {trace.map((step, i) => (
+          <li key={i} className={`step-${step.action}`}>
+            <strong>{AGENT_NAMES[step.agent]}</strong> {step.action}: {step.detail}
+          </li>
+        ))}
+      </ol>
+    </details>
+  );
+}
+
 export function Halftime({ report }: { report: HalftimeReport }) {
   return (
     <main className="halftime">
@@ -163,7 +184,8 @@ export function Halftime({ report }: { report: HalftimeReport }) {
       </div>
       <footer className="meta">
         All match data is synthetic. Model {report.meta.model_version}, story from{" "}
-        {report.meta.story_source === "llm" ? "Azure OpenAI" : "templates"}.
+        {report.meta.story_source === "llm" ? "Azure OpenAI agents" : "templates"}.
+        <AgentTrace report={report} />
       </footer>
     </main>
   );
