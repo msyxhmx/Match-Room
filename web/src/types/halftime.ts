@@ -18,11 +18,15 @@ export interface MatchEvent {
   side: Side;
   team_id: string;
   player: string;
-  type: "pass" | "shot" | "foul" | "card" | "corner";
+  type: "pass" | "shot" | "foul" | "card" | "corner" | "pressure" | "tackle" | "interception";
   x: number;
   y: number;
   outcome: string;
   xg: number | null;
+  end_x: number | null;
+  end_y: number | null;
+  speed_kmh: number | null;
+  under_pressure: boolean | null;
 }
 
 export interface StatLine {
@@ -89,4 +93,6 @@ export interface MatchSummary {
   match_id: string;
   home: Team;
   away: Team;
+  scenario: string | null; // scripted storyline key, null = organic match
+  title: string | null;
 }

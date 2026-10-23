@@ -20,6 +20,7 @@ POSITIONS = ["GK", "DF", "DF", "DF", "DF", "MF", "MF", "MF", "FW", "FW", "FW"]
 class Player:
     name: str
     position: str
+    number: int = 0
 
 
 @dataclass(frozen=True)
@@ -45,11 +46,21 @@ _TEAM_SPECS = [
 ]
 
 
+# Match metadata (all fictional).
+VENUES = {
+    "RIV": "Riverside Park", "NGC": "Northgate Stadium", "HAR": "The Quayside",
+    "ELM": "Elmstead Lane", "KST": "Vale Road", "MIL": "Millbrook Meadow",
+    "ASH": "Albion Ground", "QNB": "Bridge End",
+}
+REFEREES = ["P. Okonjo", "S. Marlow", "T. Haddad", "R. Lindgren", "M. Castell", "J. Wren"]
+
+
 def _squad(rng: np.random.Generator) -> tuple[Player, ...]:
     names = set()
     while len(names) < len(POSITIONS):
         names.add(f"{rng.choice(FIRST)} {rng.choice(LAST)}")
-    return tuple(Player(n, p) for n, p in zip(sorted(names), POSITIONS, strict=True))
+    return tuple(Player(n, p, number=i + 1)
+                 for i, (n, p) in enumerate(zip(sorted(names), POSITIONS, strict=True)))
 
 
 def build_league(seed: int = 7) -> list[TeamProfile]:

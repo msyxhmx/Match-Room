@@ -1,0 +1,178 @@
+{
+  "match_id": "SCN-comeback",
+  "home": {
+    "id": "NGC",
+    "name": "Northgate City",
+    "short_name": "NGC"
+  },
+  "away": {
+    "id": "KST",
+    "name": "Kingston Vale",
+    "short_name": "KST"
+  },
+  "meta": {
+    "venue": "Northgate Stadium",
+    "referee": "P. Okonjo",
+    "attendance": 23047,
+    "weather": "Clear",
+    "scenario": "comeback",
+    "scenario_title": "The comeback",
+    "synthetic": true
+  },
+  "players": [
+    {
+      "name": "F. Hart",
+      "number": 1,
+      "position": "GK",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "F. Moreau",
+      "number": 2,
+      "position": "DF",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "G. Ferreira",
+      "number": 3,
+      "position": "DF",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "H. Moreau",
+      "number": 4,
+      "position": "DF",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "H. Novak",
+      "number": 5,
+      "position": "DF",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "J. Okafor",
+      "number": 6,
+      "position": "MF",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "L. Gallo",
+      "number": 7,
+      "position": "MF",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "L. Quinn",
+      "number": 8,
+      "position": "MF",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "N. Ekwueme",
+      "number": 9,
+      "position": "FW",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "N. Vidal",
+      "number": 10,
+      "position": "FW",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "R. Mensah",
+      "number": 11,
+      "position": "FW",
+      "team_id": "NGC",
+      "side": "home"
+    },
+    {
+      "name": "A. Ueda",
+      "number": 1,
+      "position": "GK",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "B. Barros",
+      "number": 2,
+      "position": "DF",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "D. Ekwueme",
+      "number": 3,
+      "position": "DF",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "D. Okafor",
+      "number": 4,
+      "position": "DF",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "H. Carter",
+      "number": 5,
+      "position": "DF",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "J. Ibrahim",
+      "number": 6,
+      "position": "MF",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "K. Kovac",
+      "number": 7,
+      "position": "MF",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "K. Quinn",
+      "number": 8,
+      "position": "MF",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "K. Yilmaz",
+      "number": 9,
+      "position": "FW",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "L. Jensen",
+      "number": 10,
+      "position": "FW",
+      "team_id": "KST",
+      "side": "away"
+    },
+    {
+      "name": "L. Novak",
+      "number": 11,
+      "position": "FW",
+      "team_id": "KST",
+      "side": "away"
+    }
+  ]
+}

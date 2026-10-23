@@ -1,0 +1,392 @@
+{
+  "match_id": "SCN-comeback",
+  "minute": 70,
+  "clock": "70:00",
+  "home": {
+    "id": "NGC",
+    "name": "Northgate City",
+    "short_name": "NGC"
+  },
+  "away": {
+    "id": "KST",
+    "name": "Kingston Vale",
+    "short_name": "KST"
+  },
+  "score": {
+    "home": 1,
+    "away": 2
+  },
+  "profile": {
+    "persona": "casual",
+    "language": "en",
+    "team": "NGC",
+    "player": "L. Quinn"
+  },
+  "headline": "70': Northgate City 1-2 Kingston Vale. Northgate City in control.",
+  "cards": [
+    {
+      "insight_id": "SCN-comeback-1413-goal-2",
+      "type": "goal",
+      "variant": "against_run",
+      "minute": 14,
+      "second": 13,
+      "clock": "14:13",
+      "priority": 1,
+      "side": "away",
+      "team_id": "KST",
+      "players": [
+        "K. Quinn",
+        "K. Kovac"
+      ],
+      "headline": "Against the run of play: Kingston Vale score",
+      "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by K. Kovac.",
+      "why": [
+        "Their chance of winning moves from 22% to 69%."
+      ],
+      "facts_used": [
+        {
+          "key": "player",
+          "label": "Player",
+          "value": "K. Quinn"
+        },
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Kingston Vale"
+        },
+        {
+          "key": "score",
+          "label": "Score",
+          "value": "0-1"
+        },
+        {
+          "key": "win_before",
+          "label": "Win chance before",
+          "value": "22%"
+        },
+        {
+          "key": "win_after",
+          "label": "Win chance after",
+          "value": "69%"
+        },
+        {
+          "key": "assist",
+          "label": "Assist",
+          "value": "K. Kovac"
+        }
+      ],
+      "evidence": [
+        {
+          "event_id": "SCN-comeback-0206",
+          "minute": 13,
+          "description": "13' K. Kovac (KST) pass 26 m"
+        },
+        {
+          "event_id": "SCN-comeback-0208",
+          "minute": 14,
+          "description": "14' K. Quinn (KST) scores (0.52 xG)"
+        }
+      ],
+      "tags": [
+        "against_your_team"
+      ],
+      "language": "en",
+      "persona": "casual",
+      "source": "template"
+    },
+    {
+      "insight_id": "SCN-comeback-3713-goal-8",
+      "type": "goal",
+      "variant": "neutral",
+      "minute": 37,
+      "second": 13,
+      "clock": "37:13",
+      "priority": 1,
+      "side": "away",
+      "team_id": "KST",
+      "players": [
+        "K. Quinn",
+        "D. Ekwueme"
+      ],
+      "headline": "Goal for Kingston Vale",
+      "body": "K. Quinn scores for Kingston Vale. It's 0-2. Set up by D. Ekwueme. That's 2 for K. Quinn today.",
+      "why": [
+        "Their chance of winning moves from 61% to 88%."
+      ],
+      "facts_used": [
+        {
+          "key": "player",
+          "label": "Player",
+          "value": "K. Quinn"
+        },
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Kingston Vale"
+        },
+        {
+          "key": "score",
+          "label": "Score",
+          "value": "0-2"
+        },
+        {
+          "key": "win_before",
+          "label": "Win chance before",
+          "value": "61%"
+        },
+        {
+          "key": "win_after",
+          "label": "Win chance after",
+          "value": "88%"
+        },
+        {
+          "key": "player_goals",
+          "label": "Player's goals",
+          "value": "2"
+        },
+        {
+          "key": "assist",
+          "label": "Assist",
+          "value": "D. Ekwueme"
+        }
+      ],
+      "evidence": [
+        {
+          "event_id": "SCN-comeback-0519",
+          "minute": 37,
+          "description": "37' D. Ekwueme (KST) pass 8 m"
+        },
+        {
+          "event_id": "SCN-comeback-0520",
+          "minute": 37,
+          "description": "37' K. Quinn (KST) scores (0.48 xG)"
+        }
+      ],
+      "tags": [
+        "against_your_team"
+      ],
+      "language": "en",
+      "persona": "casual",
+      "source": "template"
+    },
+    {
+      "insight_id": "SCN-comeback-6000-player_focus-L. Quinn",
+      "type": "player_focus",
+      "variant": "focus",
+      "minute": 60,
+      "second": 0,
+      "clock": "60:00",
+      "priority": 2,
+      "side": "home",
+      "team_id": "NGC",
+      "players": [
+        "L. Quinn"
+      ],
+      "headline": "L. Quinn so far",
+      "body": "L. Quinn has had 57 touches and won the ball back 2 times.",
+      "why": [],
+      "facts_used": [
+        {
+          "key": "player",
+          "label": "Player",
+          "value": "L. Quinn"
+        },
+        {
+          "key": "touches",
+          "label": "Touches",
+          "value": "57"
+        },
+        {
+          "key": "ball_wins",
+          "label": "Ball wins",
+          "value": "2"
+        }
+      ],
+      "evidence": [
+        {
+          "event_id": "SCN-comeback-0820",
+          "minute": 59,
+          "description": "59' L. Quinn (NGC) pass 36 m"
+        },
+        {
+          "event_id": "SCN-comeback-0822",
+          "minute": 59,
+          "description": "59' L. Quinn (NGC) pass 12 m"
+        },
+        {
+          "event_id": "SCN-comeback-0829",
+          "minute": 60,
+          "description": "60' L. Quinn (NGC) pass 10 m"
+        }
+      ],
+      "tags": [
+        "your_team",
+        "focus_player"
+      ],
+      "language": "en",
+      "persona": "casual",
+      "source": "template"
+    },
+    {
+      "insight_id": "SCN-comeback-6143-goal-13",
+      "type": "goal",
+      "variant": "deserved",
+      "minute": 61,
+      "second": 43,
+      "clock": "61:43",
+      "priority": 1,
+      "side": "home",
+      "team_id": "NGC",
+      "players": [
+        "G. Ferreira",
+        "N. Ekwueme"
+      ],
+      "headline": "Northgate City make it count",
+      "body": "G. Ferreira scores for Northgate City. It's 1-2. Set up by N. Ekwueme.",
+      "why": [
+        "Their chance of winning moves from 1% to 10%."
+      ],
+      "facts_used": [
+        {
+          "key": "player",
+          "label": "Player",
+          "value": "G. Ferreira"
+        },
+        {
+          "key": "team",
+          "label": "Team",
+          "value": "Northgate City"
+        },
+        {
+          "key": "score",
+          "label": "Score",
+          "value": "1-2"
+        },
+        {
+          "key": "win_before",
+          "label": "Win chance before",
+          "value": "1%"
+        },
+        {
+          "key": "win_after",
+          "label": "Win chance after",
+          "value": "10%"
+        },
+        {
+          "key": "assist",
+          "label": "Assist",
+          "value": "N. Ekwueme"
+        }
+      ],
+      "evidence": [
+        {
+          "event_id": "SCN-comeback-0855",
+          "minute": 61,
+          "description": "61' N. Ekwueme (NGC) pass 15 m"
+        },
+        {
+          "event_id": "SCN-comeback-0856",
+          "minute": 61,
+          "description": "61' G. Ferreira (NGC) scores (0.45 xG)"
+        }
+      ],
+      "tags": [
+        "your_team"
+      ],
+      "language": "en",
+      "persona": "casual",
+      "source": "template"
+    },
+    {
+      "insight_id": "SCN-comeback-6559-chaos_phase-15",
+      "type": "chaos_phase",
+      "variant": "chaos",
+      "minute": 65,
+      "second": 59,
+      "clock": "65:59",
+      "priority": 2,
+      "side": null,
+      "team_id": null,
+      "players": [],
+      "headline": "Chaos phase",
+      "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+      "why": [
+        "Neither Northgate City nor Kingston Vale can keep the ball."
+      ],
+      "facts_used": [
+        {
+          "key": "home",
+          "label": "Home",
+          "value": "Northgate City"
+        },
+        {
+          "key": "away",
+          "label": "Away",
+          "value": "Kingston Vale"
+        }
+      ],
+      "evidence": [
+        {
+          "event_id": "SCN-comeback-0802",
+          "minute": 57,
+          "description": "57' N. Vidal (NGC) shot wide (0.07 xG)"
+        },
+        {
+          "event_id": "SCN-comeback-0830",
+          "minute": 60,
+          "description": "60' N. Vidal (NGC) shot blocked (0.05 xG)"
+        },
+        {
+          "event_id": "SCN-comeback-0856",
+          "minute": 61,
+          "description": "61' G. Ferreira (NGC) scores (0.45 xG)"
+        }
+      ],
+      "tags": [],
+      "language": "en",
+      "persona": "casual",
+      "source": "template"
+    }
+  ],
+  "control": {
+    "home_share": 0.764,
+    "chaos": 0.777,
+    "tempo": 9.1,
+    "momentum": 0.794,
+    "phase": "home_control",
+    "label": "Northgate City in control"
+  },
+  "projection": {
+    "home_win": 0.065,
+    "draw": 0.231,
+    "away_win": 0.704,
+    "drivers": [
+      {
+        "key": "score",
+        "label": "Score",
+        "value": "1-2"
+      },
+      {
+        "key": "minutes_left",
+        "label": "Minutes left",
+        "value": "20"
+      },
+      {
+        "key": "home_rate",
+        "label": "Northgate City expected goals per 90",
+        "value": "2.19"
+      },
+      {
+        "key": "away_rate",
+        "label": "Kingston Vale expected goals per 90",
+        "value": "1.54"
+      },
+      {
+        "key": "live_weight",
+        "label": "Weight on live data",
+        "value": "70%"
+      }
+    ],
+    "note": "A projection from the score, time left and chance creation, not betting odds."
+  }
+}

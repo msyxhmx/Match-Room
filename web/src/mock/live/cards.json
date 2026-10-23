@@ -1,0 +1,1301 @@
+[
+  {
+    "insight_id": "SCN-comeback-1159-chaos_phase-0",
+    "type": "chaos_phase",
+    "variant": "chaos",
+    "minute": 11,
+    "second": 59,
+    "clock": "11:59",
+    "priority": 2,
+    "side": null,
+    "team_id": null,
+    "players": [],
+    "headline": "Chaos phase",
+    "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+    "why": [
+      "Neither Northgate City nor Kingston Vale can keep the ball."
+    ],
+    "facts_used": [
+      {
+        "key": "home",
+        "label": "Home",
+        "value": "Northgate City"
+      },
+      {
+        "key": "away",
+        "label": "Away",
+        "value": "Kingston Vale"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0122",
+        "minute": 7,
+        "description": "7' N. Vidal (NGC) shot blocked (0.04 xG)"
+      },
+      {
+        "event_id": "SCN-comeback-0147",
+        "minute": 10,
+        "description": "10' N. Vidal (NGC) shot blocked (0.05 xG)"
+      },
+      {
+        "event_id": "SCN-comeback-0158",
+        "minute": 11,
+        "description": "11' G. Ferreira (NGC) shot wide (0.05 xG)"
+      }
+    ],
+    "tags": [],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-1357-pass_of_the_moment-1",
+    "type": "pass_of_the_moment",
+    "variant": "pass",
+    "minute": 13,
+    "second": 57,
+    "clock": "13:57",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "Pass of the moment: L. Quinn",
+    "body": "L. Quinn picks out a 45 m pass most players wouldn't try.",
+    "why": [
+      "It moved Northgate City much closer to a scoring chance."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "length",
+        "label": "Pass length",
+        "value": "45 m"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0207",
+        "minute": 13,
+        "description": "13' L. Quinn (NGC) pass 45 m"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-1413-goal-2",
+    "type": "goal",
+    "variant": "against_run",
+    "minute": 14,
+    "second": 13,
+    "clock": "14:13",
+    "priority": 1,
+    "side": "away",
+    "team_id": "KST",
+    "players": [
+      "K. Quinn",
+      "K. Kovac"
+    ],
+    "headline": "Against the run of play: Kingston Vale score",
+    "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by K. Kovac.",
+    "why": [
+      "Their chance of winning moves from 22% to 69%."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "K. Quinn"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Kingston Vale"
+      },
+      {
+        "key": "score",
+        "label": "Score",
+        "value": "0-1"
+      },
+      {
+        "key": "win_before",
+        "label": "Win chance before",
+        "value": "22%"
+      },
+      {
+        "key": "win_after",
+        "label": "Win chance after",
+        "value": "69%"
+      },
+      {
+        "key": "assist",
+        "label": "Assist",
+        "value": "K. Kovac"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0206",
+        "minute": 13,
+        "description": "13' K. Kovac (KST) pass 26 m"
+      },
+      {
+        "event_id": "SCN-comeback-0208",
+        "minute": 14,
+        "description": "14' K. Quinn (KST) scores (0.52 xG)"
+      }
+    ],
+    "tags": [
+      "against_your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-1500-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 15,
+    "second": 0,
+    "clock": "15:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "L. Quinn so far",
+    "body": "L. Quinn has had 18 touches and won the ball back 2 times.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "touches",
+        "label": "Touches",
+        "value": "18"
+      },
+      {
+        "key": "ball_wins",
+        "label": "Ball wins",
+        "value": "2"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0160",
+        "minute": 11,
+        "description": "11' L. Quinn (NGC) pass 12 m"
+      },
+      {
+        "event_id": "SCN-comeback-0172",
+        "minute": 12,
+        "description": "12' L. Quinn (NGC) presses"
+      },
+      {
+        "event_id": "SCN-comeback-0207",
+        "minute": 13,
+        "description": "13' L. Quinn (NGC) pass 45 m"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-2659-pressure_spike-5",
+    "type": "pressure_spike",
+    "variant": "press",
+    "minute": 26,
+    "second": 59,
+    "clock": "26:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Northgate City turn up the press",
+    "body": "Northgate City are hunting the ball high up the pitch.",
+    "why": [
+      "They are winning the ball back quickly."
+    ],
+    "facts_used": [
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0355",
+        "minute": 25,
+        "description": "25' H. Novak (NGC) foul"
+      },
+      {
+        "event_id": "SCN-comeback-0358",
+        "minute": 25,
+        "description": "25' G. Ferreira (NGC) tackle"
+      },
+      {
+        "event_id": "SCN-comeback-0364",
+        "minute": 26,
+        "description": "26' H. Moreau (NGC) interception"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-3000-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 30,
+    "second": 0,
+    "clock": "30:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "L. Quinn so far",
+    "body": "L. Quinn has had 27 touches and won the ball back 2 times.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "touches",
+        "label": "Touches",
+        "value": "27"
+      },
+      {
+        "key": "ball_wins",
+        "label": "Ball wins",
+        "value": "2"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0365",
+        "minute": 26,
+        "description": "26' L. Quinn (NGC) presses"
+      },
+      {
+        "event_id": "SCN-comeback-0388",
+        "minute": 27,
+        "description": "27' L. Quinn (NGC) pass 4 m"
+      },
+      {
+        "event_id": "SCN-comeback-0425",
+        "minute": 30,
+        "description": "30' L. Quinn (NGC) presses"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-3004-shot_speed-6",
+    "type": "shot_speed",
+    "variant": "saved",
+    "minute": 30,
+    "second": 4,
+    "clock": "30:04",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "N. Ekwueme"
+    ],
+    "headline": "116 km/h strike from N. Ekwueme",
+    "body": "N. Ekwueme hits one at 116 km/h from 38 m out.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "N. Ekwueme"
+      },
+      {
+        "key": "speed",
+        "label": "Ball speed",
+        "value": "116 km/h"
+      },
+      {
+        "key": "distance",
+        "label": "Distance",
+        "value": "38 m"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0413",
+        "minute": 30,
+        "description": "30' N. Ekwueme (NGC) shot saved (0.05 xG)"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-3159-control_shift-7",
+    "type": "control_shift",
+    "variant": "control",
+    "minute": 31,
+    "second": 59,
+    "clock": "31:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Northgate City take control",
+    "body": "Northgate City have the ball and the territory.",
+    "why": [
+      "They are dictating where the game is played."
+    ],
+    "facts_used": [
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0354",
+        "minute": 25,
+        "description": "25' J. Okafor (NGC) shot blocked (0.15 xG)"
+      },
+      {
+        "event_id": "SCN-comeback-0400",
+        "minute": 28,
+        "description": "28' N. Vidal (NGC) shot wide (0.10 xG)"
+      },
+      {
+        "event_id": "SCN-comeback-0411",
+        "minute": 29,
+        "description": "29' N. Vidal (NGC) shot saved (0.10 xG)"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-3713-goal-8",
+    "type": "goal",
+    "variant": "neutral",
+    "minute": 37,
+    "second": 13,
+    "clock": "37:13",
+    "priority": 1,
+    "side": "away",
+    "team_id": "KST",
+    "players": [
+      "K. Quinn",
+      "D. Ekwueme"
+    ],
+    "headline": "Goal for Kingston Vale",
+    "body": "K. Quinn scores for Kingston Vale. It's 0-2. Set up by D. Ekwueme. That's 2 for K. Quinn today.",
+    "why": [
+      "Their chance of winning moves from 61% to 88%."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "K. Quinn"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Kingston Vale"
+      },
+      {
+        "key": "score",
+        "label": "Score",
+        "value": "0-2"
+      },
+      {
+        "key": "win_before",
+        "label": "Win chance before",
+        "value": "61%"
+      },
+      {
+        "key": "win_after",
+        "label": "Win chance after",
+        "value": "88%"
+      },
+      {
+        "key": "player_goals",
+        "label": "Player's goals",
+        "value": "2"
+      },
+      {
+        "key": "assist",
+        "label": "Assist",
+        "value": "D. Ekwueme"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0519",
+        "minute": 37,
+        "description": "37' D. Ekwueme (KST) pass 8 m"
+      },
+      {
+        "event_id": "SCN-comeback-0520",
+        "minute": 37,
+        "description": "37' K. Quinn (KST) scores (0.48 xG)"
+      }
+    ],
+    "tags": [
+      "against_your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-4500-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 45,
+    "second": 0,
+    "clock": "45:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "L. Quinn so far",
+    "body": "L. Quinn has had 38 touches and won the ball back 2 times.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "touches",
+        "label": "Touches",
+        "value": "38"
+      },
+      {
+        "key": "ball_wins",
+        "label": "Ball wins",
+        "value": "2"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0597",
+        "minute": 42,
+        "description": "42' L. Quinn (NGC) pass 10 m"
+      },
+      {
+        "event_id": "SCN-comeback-0633",
+        "minute": 45,
+        "description": "45' L. Quinn (NGC) pass 15 m"
+      },
+      {
+        "event_id": "SCN-comeback-0635",
+        "minute": 45,
+        "description": "45' L. Quinn (NGC) pass 23 m"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-4826-pass_of_the_moment-11",
+    "type": "pass_of_the_moment",
+    "variant": "pass",
+    "minute": 48,
+    "second": 26,
+    "clock": "48:26",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "F. Hart"
+    ],
+    "headline": "Pass of the moment: F. Hart",
+    "body": "F. Hart picks out a 36 m pass most players wouldn't try.",
+    "why": [
+      "It moved Northgate City much closer to a scoring chance."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "F. Hart"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "length",
+        "label": "Pass length",
+        "value": "36 m"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0663",
+        "minute": 48,
+        "description": "48' F. Hart (NGC) pass 36 m"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-5159-momentum_flip-12",
+    "type": "momentum_flip",
+    "variant": "flip",
+    "minute": 51,
+    "second": 59,
+    "clock": "51:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "F. Moreau"
+    ],
+    "headline": "Momentum swings to Northgate City",
+    "body": "Northgate City are on top now. F. Moreau is driving it.",
+    "why": [
+      "Most of the dangerous play is now coming from Northgate City."
+    ],
+    "facts_used": [
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "F. Moreau"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0658",
+        "minute": 47,
+        "description": "47' F. Moreau (NGC) pass 26 m"
+      },
+      {
+        "event_id": "SCN-comeback-0674",
+        "minute": 49,
+        "description": "49' H. Moreau (NGC) pass 31 m"
+      },
+      {
+        "event_id": "SCN-comeback-0699",
+        "minute": 50,
+        "description": "50' L. Quinn (NGC) pass 20 m"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-6000-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 60,
+    "second": 0,
+    "clock": "60:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "L. Quinn so far",
+    "body": "L. Quinn has had 57 touches and won the ball back 2 times.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "touches",
+        "label": "Touches",
+        "value": "57"
+      },
+      {
+        "key": "ball_wins",
+        "label": "Ball wins",
+        "value": "2"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0820",
+        "minute": 59,
+        "description": "59' L. Quinn (NGC) pass 36 m"
+      },
+      {
+        "event_id": "SCN-comeback-0822",
+        "minute": 59,
+        "description": "59' L. Quinn (NGC) pass 12 m"
+      },
+      {
+        "event_id": "SCN-comeback-0829",
+        "minute": 60,
+        "description": "60' L. Quinn (NGC) pass 10 m"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-6143-goal-13",
+    "type": "goal",
+    "variant": "deserved",
+    "minute": 61,
+    "second": 43,
+    "clock": "61:43",
+    "priority": 1,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "G. Ferreira",
+      "N. Ekwueme"
+    ],
+    "headline": "Northgate City make it count",
+    "body": "G. Ferreira scores for Northgate City. It's 1-2. Set up by N. Ekwueme.",
+    "why": [
+      "Their chance of winning moves from 1% to 10%."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "G. Ferreira"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "score",
+        "label": "Score",
+        "value": "1-2"
+      },
+      {
+        "key": "win_before",
+        "label": "Win chance before",
+        "value": "1%"
+      },
+      {
+        "key": "win_after",
+        "label": "Win chance after",
+        "value": "10%"
+      },
+      {
+        "key": "assist",
+        "label": "Assist",
+        "value": "N. Ekwueme"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0855",
+        "minute": 61,
+        "description": "61' N. Ekwueme (NGC) pass 15 m"
+      },
+      {
+        "event_id": "SCN-comeback-0856",
+        "minute": 61,
+        "description": "61' G. Ferreira (NGC) scores (0.45 xG)"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-6459-player_milestone-14",
+    "type": "player_milestone",
+    "variant": "passes",
+    "minute": 64,
+    "second": 59,
+    "clock": "64:59",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Gallo"
+    ],
+    "headline": "L. Gallo: 40 completed passes",
+    "body": "L. Gallo is running the show for Northgate City.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Gallo"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "count",
+        "label": "Count",
+        "value": "40"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0870",
+        "minute": 62,
+        "description": "62' L. Gallo (NGC) pass 18 m"
+      },
+      {
+        "event_id": "SCN-comeback-0905",
+        "minute": 63,
+        "description": "63' L. Gallo (NGC) pass 14 m"
+      },
+      {
+        "event_id": "SCN-comeback-0919",
+        "minute": 64,
+        "description": "64' L. Gallo (NGC) pass 9 m"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-6559-chaos_phase-15",
+    "type": "chaos_phase",
+    "variant": "chaos",
+    "minute": 65,
+    "second": 59,
+    "clock": "65:59",
+    "priority": 2,
+    "side": null,
+    "team_id": null,
+    "players": [],
+    "headline": "Chaos phase",
+    "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+    "why": [
+      "Neither Northgate City nor Kingston Vale can keep the ball."
+    ],
+    "facts_used": [
+      {
+        "key": "home",
+        "label": "Home",
+        "value": "Northgate City"
+      },
+      {
+        "key": "away",
+        "label": "Away",
+        "value": "Kingston Vale"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0802",
+        "minute": 57,
+        "description": "57' N. Vidal (NGC) shot wide (0.07 xG)"
+      },
+      {
+        "event_id": "SCN-comeback-0830",
+        "minute": 60,
+        "description": "60' N. Vidal (NGC) shot blocked (0.05 xG)"
+      },
+      {
+        "event_id": "SCN-comeback-0856",
+        "minute": 61,
+        "description": "61' G. Ferreira (NGC) scores (0.45 xG)"
+      }
+    ],
+    "tags": [],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-6753-shot_speed-16",
+    "type": "shot_speed",
+    "variant": "blocked",
+    "minute": 67,
+    "second": 53,
+    "clock": "67:53",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "N. Ekwueme"
+    ],
+    "headline": "117 km/h strike from N. Ekwueme",
+    "body": "N. Ekwueme hits one at 117 km/h from 31 m out.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "N. Ekwueme"
+      },
+      {
+        "key": "speed",
+        "label": "Ball speed",
+        "value": "117 km/h"
+      },
+      {
+        "key": "distance",
+        "label": "Distance",
+        "value": "31 m"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-0966",
+        "minute": 67,
+        "description": "67' N. Ekwueme (NGC) shot blocked (0.08 xG)"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-7410-goal-17",
+    "type": "goal",
+    "variant": "deserved",
+    "minute": 74,
+    "second": 10,
+    "clock": "74:10",
+    "priority": 1,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn",
+      "H. Novak"
+    ],
+    "headline": "Northgate City make it count",
+    "body": "L. Quinn scores for Northgate City. It's 2-2. Set up by H. Novak.",
+    "why": [
+      "Their chance of winning moves from 5% to 28%."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "score",
+        "label": "Score",
+        "value": "2-2"
+      },
+      {
+        "key": "win_before",
+        "label": "Win chance before",
+        "value": "5%"
+      },
+      {
+        "key": "win_after",
+        "label": "Win chance after",
+        "value": "28%"
+      },
+      {
+        "key": "assist",
+        "label": "Assist",
+        "value": "H. Novak"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-1041",
+        "minute": 74,
+        "description": "74' H. Novak (NGC) pass 22 m"
+      },
+      {
+        "event_id": "SCN-comeback-1042",
+        "minute": 74,
+        "description": "74' L. Quinn (NGC) scores (0.22 xG)"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-7500-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 75,
+    "second": 0,
+    "clock": "75:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "L. Quinn so far",
+    "body": "L. Quinn has had 72 touches and won the ball back 2 times.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "touches",
+        "label": "Touches",
+        "value": "72"
+      },
+      {
+        "key": "ball_wins",
+        "label": "Ball wins",
+        "value": "2"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-1046",
+        "minute": 74,
+        "description": "74' L. Quinn (NGC) presses"
+      },
+      {
+        "event_id": "SCN-comeback-1054",
+        "minute": 75,
+        "description": "75' L. Quinn (NGC) presses"
+      },
+      {
+        "event_id": "SCN-comeback-1065",
+        "minute": 75,
+        "description": "75' L. Quinn (NGC) pass 40 m"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-7537-pass_of_the_moment-19",
+    "type": "pass_of_the_moment",
+    "variant": "pass",
+    "minute": 75,
+    "second": 37,
+    "clock": "75:37",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "Pass of the moment: L. Quinn",
+    "body": "L. Quinn picks out a 40 m pass most players wouldn't try.",
+    "why": [
+      "It moved Northgate City much closer to a scoring chance."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "length",
+        "label": "Pass length",
+        "value": "40 m"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-1065",
+        "minute": 75,
+        "description": "75' L. Quinn (NGC) pass 40 m"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-8701-goal-21",
+    "type": "goal",
+    "variant": "deserved",
+    "minute": 87,
+    "second": 1,
+    "clock": "87:01",
+    "priority": 1,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "J. Okafor",
+      "F. Moreau"
+    ],
+    "headline": "Northgate City make it count",
+    "body": "J. Okafor scores for Northgate City. It's 3-2. Set up by F. Moreau.",
+    "why": [
+      "Their chance of winning moves from 10% to 96%."
+    ],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "J. Okafor"
+      },
+      {
+        "key": "team",
+        "label": "Team",
+        "value": "Northgate City"
+      },
+      {
+        "key": "score",
+        "label": "Score",
+        "value": "3-2"
+      },
+      {
+        "key": "win_before",
+        "label": "Win chance before",
+        "value": "10%"
+      },
+      {
+        "key": "win_after",
+        "label": "Win chance after",
+        "value": "96%"
+      },
+      {
+        "key": "assist",
+        "label": "Assist",
+        "value": "F. Moreau"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-1225",
+        "minute": 86,
+        "description": "86' F. Moreau (NGC) pass 13 m"
+      },
+      {
+        "event_id": "SCN-comeback-1229",
+        "minute": 87,
+        "description": "87' J. Okafor (NGC) scores (0.47 xG)"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-8923-shot_speed-22",
+    "type": "shot_speed",
+    "variant": "blocked",
+    "minute": 89,
+    "second": 23,
+    "clock": "89:23",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Gallo"
+    ],
+    "headline": "132 km/h strike from L. Gallo",
+    "body": "L. Gallo hits one at 132 km/h from 36 m out.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Gallo"
+      },
+      {
+        "key": "speed",
+        "label": "Ball speed",
+        "value": "132 km/h"
+      },
+      {
+        "key": "distance",
+        "label": "Distance",
+        "value": "36 m"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-1268",
+        "minute": 89,
+        "description": "89' L. Gallo (NGC) shot blocked (0.09 xG)"
+      }
+    ],
+    "tags": [
+      "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  },
+  {
+    "insight_id": "SCN-comeback-9000-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 90,
+    "second": 0,
+    "clock": "90:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+      "L. Quinn"
+    ],
+    "headline": "L. Quinn so far",
+    "body": "L. Quinn has had 84 touches and won the ball back 2 times.",
+    "why": [],
+    "facts_used": [
+      {
+        "key": "player",
+        "label": "Player",
+        "value": "L. Quinn"
+      },
+      {
+        "key": "touches",
+        "label": "Touches",
+        "value": "84"
+      },
+      {
+        "key": "ball_wins",
+        "label": "Ball wins",
+        "value": "2"
+      }
+    ],
+    "evidence": [
+      {
+        "event_id": "SCN-comeback-1271",
+        "minute": 89,
+        "description": "89' L. Quinn (NGC) pass 6 m"
+      },
+      {
+        "event_id": "SCN-comeback-1285",
+        "minute": 90,
+        "description": "90' L. Quinn (NGC) pass 17 m"
+      },
+      {
+        "event_id": "SCN-comeback-1288",
+        "minute": 90,
+        "description": "90' L. Quinn (NGC) pass 15 m"
+      }
+    ],
+    "tags": [
+      "your_team",
+      "focus_player"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+  }
+]

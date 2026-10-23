@@ -1,6 +1,6 @@
 {
   "match_id": "SIM-2026-00001",
-  "generated_at": "2026-10-20T16:06:39.524489Z",
+  "generated_at": "2026-10-22T17:25:24.306264Z",
   "home": {
     "id": "HAR",
     "name": "Harbour Athletic",
@@ -101,12 +101,12 @@
       "body": "Goals: 1' L. Jensen (KST) scores, 0.25 xG; 27' B. Barros (KST) scores, 0.12 xG. Shots 11-8, xG 1.12-0.91.",
       "evidence": [
         {
-          "event_id": "SIM-2026-00001-0001",
+          "event_id": "SIM-2026-00001-0002",
           "minute": 1,
           "description": "1' L. Jensen (KST) scores, 0.25 xG"
         },
         {
-          "event_id": "SIM-2026-00001-0247",
+          "event_id": "SIM-2026-00001-0376",
           "minute": 27,
           "description": "27' B. Barros (KST) scores, 0.12 xG"
         }
@@ -118,12 +118,12 @@
       "body": "Chance quality is close (1.12 vs 0.91 xG).",
       "evidence": [
         {
-          "event_id": "SIM-2026-00001-0157",
+          "event_id": "SIM-2026-00001-0241",
           "minute": 16,
           "description": "16' R. Adeyemi (HAR) has a shot blocked, 0.32 xG"
         },
         {
-          "event_id": "SIM-2026-00001-0001",
+          "event_id": "SIM-2026-00001-0002",
           "minute": 1,
           "description": "1' L. Jensen (KST) scores, 0.25 xG"
         }
@@ -135,12 +135,12 @@
       "body": "Harbour Athletic had 58% of the play in the final third. Momentum swung toward Kingston Vale as the half went on.",
       "evidence": [
         {
-          "event_id": "SIM-2026-00001-0301",
+          "event_id": "SIM-2026-00001-0460",
           "minute": 33,
           "description": "33' R. Mensah (HAR) has a shot blocked, 0.14 xG"
         },
         {
-          "event_id": "SIM-2026-00001-0335",
+          "event_id": "SIM-2026-00001-0511",
           "minute": 36,
           "description": "36' G. Novak (HAR) forces a save, 0.13 xG"
         }
@@ -195,7 +195,7 @@
     },
     {
       "id": "top-factor",
-      "title": "Watch: half-time goal difference",
+      "title": "Watch: home possession share",
       "detail": "This is the biggest driver of the prediction right now (favours Kingston Vale). A swing here changes the odds most."
     }
   ],
