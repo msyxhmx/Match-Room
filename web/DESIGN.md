@@ -444,6 +444,39 @@ It adds two requirements to [§5](#5-required-elements):
   persona, so no menu is clicked on camera.
 - **A visible speed label** whenever playback runs faster than real time.
 
+### 9.9 Wireframes (step 4)
+Done 25 Oct. Method: a priority guide per screen
+([A List Apart](https://alistapart.com/article/priority-guides-a-content-first-alternative-to-wireframes/)),
+eight rough sketches of the live screen (Crazy 8s), then three grey candidates at 1920×1080 with
+real API text, measured against each other. The sketches and chosen layout can be edited in
+[wireframes/match-room.excalidraw](wireframes/match-room.excalidraw).
+
+**Chosen: B · Centre stage.** Top to bottom:
+- a full-width score header
+- the moment card centred, with a 76 px headline
+- a full-width match timeline: one bar per minute, ● goals, ○ moments you can tap
+
+Measured on the rendered frames, against two columns (A) and a feed (C), B gives the moment the
+largest share of the safe area (39% vs 35% and 28%) and the largest headline, with the fewest
+boxes. The timeline also carries the turning points at full time, so one component serves S3,
+S6 and S8.
+
+**Component inventory for step 6:**
+- `ScoreHeader`
+- `MomentCard`, with the chance bar and the Facts used button
+- `Timeline`, with momentum bars, moment pins and turning-point labels
+- `FactsSheet`
+- `BriefPanel`, for half-time and full-time
+- `AgentTrace`
+- `PlayerOfMatch`
+- `ScoreBug` and `OverlayGraphic`, for the overlay page
+- `TopBar`, for profile and synthetic label
+
+The phone uses the same parts, stacked: header, moment, compact timeline, list.
+
+**States still to design (step 6):** loading, pre-kick-off, reconnecting, API down (mocks plus
+a notice), and a moment with no why-line.
+
 ## 10. Rules from the project and the hackathon
 - **Synthetic data only.** Fictional clubs and players ([sim/teams.py](../sim/teams.py)).
 - **No unlicensed trademarks** in the video
