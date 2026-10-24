@@ -23,7 +23,7 @@ dev = ["pytest>=8", "ruff>=0.6", "httpx>=0.27"]
 all = ["halftime-insights[model,api,llm,dev]"]
 
 [tool.setuptools.packages.find]
-include = ["contract*", "sim*", "model*", "live*", "api*"]
+include = ["contract*", "sim*", "model*", "live*", "api*", "agent_tools*"]
 
 [tool.ruff]
 line-length = 100
