@@ -319,9 +319,17 @@ These are suggestions. Each one needs a native-speaker read before it changes, a
 ## 9. Visual foundations (constraints for step 5)
 
 ### 9.1 Typography
-- **System font stack only:** `-apple-system, system-ui, "Helvetica Neue", Arial, sans-serif`.
-  On the Mac that records the demo, this renders Apple's system font
-  ([WebKit](https://webkit.org/blog/3709/using-the-system-font-in-web-content/)).
+- **Locked 25 Oct (Ilham): system font stack only:**
+  `-apple-system, system-ui, "Helvetica Neue", Arial, sans-serif`. On the Mac that records the
+  demo, this renders Apple's system font
+  ([WebKit](https://webkit.org/blog/3709/using-the-system-font-in-web-content/)). Judges see the
+  video, so they see SF Pro.
+- **Drop Barlow Condensed and IBM Plex Sans** (currently loaded in `web/index.html`). They belong
+  to the old Halftime Insights look. Avoid the usual AI-default faces too: Inter, Space Grotesk,
+  Geist, and uppercase monospace labels on every panel.
+- **Narrow scores:** `font-stretch: 75%` on the system font (§9.7). Windows shows normal-width
+  digits. **Open for step 5:** a downloaded condensed face for score digits only, if we want the
+  narrow look everywhere.
 - **Never download, self-host or embed SF Pro.** Its licence excludes website content and
   embedding ([Apple Fonts](https://developer.apple.com/fonts/)). We ship no font file. Other
   viewers see their own system font, so the design must still work in Segoe UI or Roboto.
@@ -428,6 +436,13 @@ Avoided:
 
 Note: the PL broadcast score bug is only 38 px tall with 28 pt codes. That works on a TV, but
 our YouTube-window demo needs the larger tvOS sizes in §6.2.
+
+### 9.8 Storyboard (step 3)
+The demo video, shot by shot, with the UI each shot needs, is in [STORYBOARD.md](STORYBOARD.md).
+It adds two requirements to [§5](#5-required-elements):
+- **Hidden director controls:** keyboard shortcuts to jump minutes and switch language or
+  persona, so no menu is clicked on camera.
+- **A visible speed label** whenever playback runs faster than real time.
 
 ## 10. Rules from the project and the hackathon
 - **Synthetic data only.** Fictional clubs and players ([sim/teams.py](../sim/teams.py)).
