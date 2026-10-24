@@ -25,6 +25,9 @@ Sports is "designed for speed and simplicity"
 ([Apple](https://www.apple.com/newsroom/2024/02/introducing-apple-sports-a-new-app-for-sports-fans/));
 we keep that and add the layer it leaves out: *why*.
 
+**Locked 25 Oct (Ilham):** a **light** interface, with **Northgate Blue v Vale Claret** as the
+demo clubs' colours. See [§9.2](#92-colour).
+
 **The hero is the explanation, not the number.** The Premier League already shows win probability
 and momentum graphics, so Syahmi's research says to use them
 ["only to explain why it moved"](../docs/research/pl-studios-gaps-and-ideas.md). The moment card
@@ -326,12 +329,31 @@ These are suggestions. Each one needs a native-speaker read before it changes, a
   that updates. **Proposal**; not an Apple-sourced rule.
 
 ### 9.2 Colour
-- Neutral interface: system-style backgrounds with "base" and "elevated" layers for depth
+- **Locked: light.** A neutral, Apple-style light interface: a grey ground with white cards, using
+  "base" and "elevated" layers for depth
   ([HIG: Dark mode](https://developer.apple.com/design/human-interface-guidelines/dark-mode)).
-  Light or dark is decided in step 5.
+  Dark mode is out of scope for the demo.
 - **Only the clubs carry colour**, plus one red for "live". The simulator's eight clubs have no
-  colours ([sim/teams.py](../sim/teams.py)). **Proposal:** a web-side map `clubColours.ts` with a
-  primary and a text-safe colour per club. This doesn't touch the contract.
+  colours ([sim/teams.py](../sim/teams.py)), so we keep a web-side map `clubColours.ts` with a
+  primary, a glow and a text-safe colour per club. This doesn't touch the contract.
+- **Locked: Option A, "Classic"**, chosen from two style tiles on 25 Oct:
+
+  | Role | Colour | Contrast on white |
+  |---|---|---|
+  | Northgate City (NGC), "Northgate Blue" | `#1D4ED8` | 6.7:1 |
+  | NGC glow (soft gradient only, never text) | `#3B82F6` | n/a |
+  | Kingston Vale (KST), "Vale Claret" | `#8B1E3F` | 8.9:1 |
+  | KST glow (soft gradient only, never text) | `#C2415E` | n/a |
+  | Live (filled pill, white text) | `#D70015` | 5.4:1 |
+  | Secondary text | `#6E6E73` | 5.1:1 |
+  | Ground | `#F2F2F7` | n/a |
+  | Losing score at full time (large text only) | `#8E8E93` | 3.3:1 |
+
+  The pair stays distinct under simulated protanopia, deuteranopia and tritanopia (Machado 2009
+  matrices). Under protanopia, claret reads as dark grey-brown against blue, so the teams are told
+  apart mainly by lightness. Home on the left and short names (§9.2, next bullet) cover the rest.
+- The other six clubs get palettes in step 5, by the same rules: text colour at least 4.5:1 on
+  white, and distinct from both demo clubs and from the Live red.
 - **Colour is never the only signal.** Home is always on the left and short names are always
   shown, so the screen reads correctly in greyscale or for colour-blind viewers.
 - Contrast: at least 4.5:1 for text up to 17 pt and 3:1 for 18 pt+ or bold
@@ -426,12 +448,12 @@ our YouTube-window demo needs the larger tvOS sizes in §6.2.
   ([PL Studios research](../docs/research/pl-studios-gaps-and-ideas.md)).
 
 ## 12. Open questions
-1. **Light or dark** for the video frame? Decide with the style tiles (step 5); test both with the
-   shrink test.
+1. ~~Light or dark?~~ **Decided 25 Oct: light** ([§9.2](#92-colour)).
 2. **Agent trace in the demo:** why is the trace empty locally with a `.env` present (keys
    blank, or the LLM call falling back)? And should the half-time screen make two calls, or
    should the trace move into `MatchBrief`? Ask Syahmi; see [§5](#5-required-elements).
-3. **Club colours:** invent eight palettes now, or only NGC and KST for the demo?
+3. ~~Club colours?~~ **Decided 25 Oct:** Northgate Blue v Vale Claret for the demo. The other six
+   come in step 5.
 4. **Malay labels:** Ilham to confirm [§8.3](#83-ui-labels-in-three-languages).
 
 ## 13. How we'll know the design works
