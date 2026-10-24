@@ -34,7 +34,6 @@ the new `metrics.json`. Use `make train-quick` for a fast smoke test you don't c
   The other teammate reviews and merges.
 - Any folder is open to edit. Owners are listed in [docs/workflow.md](docs/workflow.md); name the
   owner in the PR when you change their area.
-- **Feature freeze: night of 24 Oct 2026.** After that, only fixes, deployment and demo work.
 
 ## Secrets
 

@@ -5,7 +5,6 @@
 - **One branch per feature**: `feat/simulator`, `feat/halftime-page`, `fix/...`. Open a PR; the other person reviews before merging.
 - **`main` always runs.** Run `make check` before opening a PR. CI runs lint, tests and the web build on every PR.
 - **Ship ugly first**: crude end to end before polishing any one part.
-- **Feature freeze 24 Oct night**: after that, only fixes, deployment and the demo.
 
 ## Who owns what
 
