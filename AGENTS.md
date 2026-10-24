@@ -35,14 +35,6 @@ the new `metrics.json`. Use `make train-quick` for a fast smoke test you don't c
 - Any folder is open to edit. Owners are listed in [docs/workflow.md](docs/workflow.md); name the
   owner in the PR when you change their area.
 
-## Models and helpers (Claude Code)
-
-On Opus, hand checkable pieces to the helper agents in `.claude/agents/`; on Sonnet, call the
-advisor (Opus) before choosing an approach, when stuck, and before saying a task is done. The
-details are in [the orchestrate skill](.claude/skills/orchestrate/SKILL.md). Two hooks in
-`.claude/settings.json` use Jev (`TYPESAFE_API_KEY`, optional): a bash gate that blocks pushes to
-`main`, force pushes and the like, and a prompt-injection check on fetched pages.
-
 ## Secrets
 
 Azure OpenAI keys go in `.env` (copied from `.env.example`), which stays out of git. Everything

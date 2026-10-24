@@ -25,9 +25,3 @@ web/dist/
 .DS_Store
 .idea/
 web/*.tsbuildinfo
-
-# Claude Code: settings.json, agents/ and skills/ are shared; the rest is personal
-.claude/*
-!.claude/settings.json
-!.claude/agents/
-!.claude/skills/
