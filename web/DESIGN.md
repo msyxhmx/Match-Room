@@ -1,6 +1,6 @@
 # Design brief: Match-Room Live
 
-Owner: Ilham. Status: draft, 25 Oct 2026. Read the one-page summary first; everything after it is
+Owner: Ilham (Syahmi has handed over all frontend decisions). Status: draft, 25 Oct 2026. Read the one-page summary first; everything after it is
 the reasoning and the rules in detail.
 
 This brief sets **constraints, not values**. The storyboard (playbook step 3) and the design
@@ -43,8 +43,8 @@ never as a standalone widget.
 5. **Honest and neutral.** The "Synthetic data" label and the scenario title are always visible.
    The interface stays neutral; only the two clubs carry colour.
 
-**Ask of Ilham:** confirm the Malay terms in [§8](#8-words-on-screen). **Ask of Syahmi:**
-the template wording fixes in [§8.4](#84-wording-fixes-for-syahmis-templates).
+**Ask of Ilham:** confirm the Malay terms in [§8.3](#83-ui-labels-in-three-languages). **Ask of Syahmi:**
+the template wording fixes in [§8.5](#85-wording-fixes-for-the-engines-templates).
 
 ---
 
@@ -233,46 +233,85 @@ still be readable. If they aren't, the design fails, however good it looks full 
 - Card text aims for 25 words or fewer, the target proposed in the
   [PL Studios research](../docs/research/pl-studios-gaps-and-ideas.md).
 
-### 8.2 UI labels in three languages
-The engine already writes casual text as "chance of winning" and formal text as "Peluang … untuk
-menang" / "Probabilidad de victoria" (`live/templates.py`). UI labels should match.
+### 8.2 How real match reports are written (the benchmark)
+We write like sports journalists in each language, not like a translation. The benchmark is
+published Premier League match reports from October 2026. Both helpers read **post-match
+reports**; no minute-by-minute live blogs were reachable.
 
-| Label | EN | MS | ES (Spain) | Status |
+**Malay** ([RTM Arena](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/liverpool-bangkit-atasi-southampton-3-1/), [Kosmo](https://www.kosmo.com.my/?p=758913), Sinar Harian, Utusan):
+- Formal, neutral news prose. Only quotes are casual.
+- Standard verbs: *menjaringkan*, *menyamakan kedudukan*, *mendahului*, *bangkit*,
+  *menewaskan*, *memecah kebuntuan*, *dilayangkan kad merah*, *dibuang padang*.
+- Scores are bare ("menewaskan Leicester City 3-1", "seri 1-1"). Minutes are "pada minit
+  ke-74". Stoppage time is "masa kecederaan".
+- Example: "kembali menyamakan kedudukan menerusi Darwin Nunez pada minit ke-51" ([RTM](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/liverpool-bangkit-atasi-southampton-3-1/)).
+- "Peluang" means a **scoring chance** in match reports, not a probability. So "Peluang menang"
+  needs its context (§7) to read as "chance to win".
+- Stats such as xG and possession are rare in Malay reports. **Inference:** gloss xG once, as
+  "jangkaan gol".
+
+**Spanish, Spain** ([Marca](https://www.marca.com/futbol/premier-league/cronica/2026/10/17/gol-victor-munoz-lidera-remontada-liverpool-brentford.html), [Soccerway ES](https://es.soccerway.com/noticias/futbol-premier-league-el-aston-villa-voltea-el-partido-y-derrota-1-2-al-tottenham-en-su-estadio/QTmK2BAa)):
+- Lively, with short punchy sentences mixed with long ones.
+- Standard verbs: *remontar*, *dar la vuelta*, *empatar*, *ver la roja*.
+- Score in brackets ("(1-2)") or as a noun ("el 1-1"). Minutes as "en el 74'". Stoppage time is
+  "el añadido".
+- Stats are common: "tiro a puerta" and "presión muy alta" ([Marca](https://www.marca.com/futbol/premier-league/cronica/2026/10/17/gran-haaland-historico-maresca.html)), and controlling the
+  ball as "se hizo con el control de la pelota" ([Marca](https://www.marca.com/futbol/premier-league/cronica/2026/10/18/arsenal-anestesia-nottingham-forest-vence-unico-tiro-puerta.html)).
+
+*So we* match the register: Malay formal and plain, Spanish livelier. Casual cards may be
+shorter than news prose, but they use the same verbs.
+
+### 8.3 UI labels in three languages
+UI labels must match the engine's wording. The engine writes "chance of winning" (casual EN) and
+"Peluang {team} untuk menang" / "Probabilidad de victoria" (`live/templates.py`).
+
+| Label | EN | MS | ES (Spain) | Basis |
 |---|---|---|---|---|
 | Live | Live | Langsung | En directo | MS seen in media; ES to confirm |
-| Half-time | Half-time (HT) | Separuh masa | Descanso | MS verified ([Kosmo](https://www.kosmo.com.my/?p=533561)); ES to confirm |
+| Kick-off | Kick-off | Sepak mula | Saque inicial | **Ilham to choose**: "sepak mula" or "sepakan permulaan" |
+| Half-time | Half-time (HT) | Separuh masa | Descanso | MS: RTM uses "rehat separuh masa" ([RTM](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/liverpool-bangkit-atasi-southampton-3-1/)) |
 | Full-time | Full-time (FT) | Tamat perlawanan | Final del partido | To confirm |
 | Chance to win | Chance to win | Peluang menang | Probabilidad de victoria | Matches the engine |
-| Draw | Draw | Seri | Empate | MS seen in media |
-| Facts used | Facts used | Fakta digunakan | Datos utilizados | To confirm |
-| Evidence | Evidence | Bukti | Pruebas | To confirm |
+| Draw | Draw | Seri | Empate | MS verified ([RTM](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/solanke-selamatkan-tottenham-carrick-terus-tertekan/)) |
+| Comeback | Comeback | Bangkit | Remontada | Verified ([RTM](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/liverpool-bangkit-atasi-southampton-3-1/); [Marca](https://www.marca.com/futbol/premier-league/cronica/2026/10/17/gol-victor-munoz-lidera-remontada-liverpool-brentford.html)) |
+| Equaliser | Equaliser | Gol penyamaan | Gol del empate | Verified ([RTM](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/solanke-selamatkan-tottenham-carrick-terus-tertekan/)); ES own knowledge |
+| In control | In control | Menguasai permainan | Controla el partido | Matches the engine; ES see [Marca](https://www.marca.com/futbol/premier-league/cronica/2026/10/18/arsenal-anestesia-nottingham-forest-vence-unico-tiro-puerta.html) |
+| Pressing | Pressing | Tekanan tinggi | Presión alta | ES verified ([Marca](https://www.marca.com/futbol/premier-league/cronica/2026/10/17/gran-haaland-historico-maresca.html)); MS to confirm |
+| Facts used | Facts used | Fakta digunakan | Datos utilizados | UI term, to confirm |
+| Evidence | Evidence | Bukti | Pruebas | UI term, to confirm |
 | Key moments | Key moments | Detik penting | Momentos clave | To confirm |
 | Turning points | Turning points | Titik perubahan | Puntos de inflexión | To confirm |
 | Player of the match | Player of the match | Pemain terbaik perlawanan | Jugador del partido | MS verified ([RTM](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/jdt-kekal-dominan-arif-aiman-bangkit-selepas-6-bulan-kecederaan/)) |
 | Synthetic data | Synthetic data | Data sintetik | Datos sintéticos | To confirm |
-| Casual / Analyst | Casual / Analyst | Kasual / Penganalisis | Aficionado / Analista | **Proposal**, to confirm |
+| Casual / Analyst | Casual / Analyst | Kasual / Penganalisis | Aficionado / Analista | **Proposal**; "analis" may read as a finance term |
 | xG | xG | xG (jangkaan gol) | xG (goles esperados) | ES verified ([Soccerway](https://es.soccerway.com/noticias/goles-esperados-o-xg-que-son-y-para-que-se-puede-usar-su-valor/049xmFT6)); MS gloss is a proposal |
 
-- **Ilham:** you're the native Malay speaker, so please confirm or fix the MS column. The research
-  helper couldn't open Dewan Bahasa dan Pustaka or Astro Arena.
-- "Penganalisis" rather than "Analis": the helper notes "analis" reads as a finance term in
-  Malaysia. To confirm. The C mockup used "Analis", so update it if we keep this.
+**Ilham** (native Malay speaker) confirms the MS column after this draft. Everything marked "to
+confirm" is our best reading, not yet checked by a person.
 
-### 8.3 Spanish variant
+### 8.4 Spanish variant
 **Proposal:** Spain Spanish (es-ES), matching what the engine already writes ("portero",
-"córner", "a puerta", "tarjeta roja"). Use "descanso", not "medio tiempo", and "tiempo añadido",
-not "compensación". The stoppage-time variants are purely regional
+"córner", "a puerta", "tarjeta roja") and the Marca benchmark. Use "descanso", not "medio
+tiempo", and "tiempo añadido", not "compensación". The stoppage-time variants are purely regional
 ([BBVA/Fundéu](https://www.bbva.com/es/yolollamo-alargue-prolongacion-tiempo-extra-asi-llama-tiempo-descuento-mundo/)).
 
-### 8.4 Wording fixes for Syahmi's templates
-These are in `live/templates.py`, which is Syahmi's area; they're listed here so they're not lost:
-- MS "suapan sintetik" and ES "feed sintético" → "data sintetik" and "datos sintéticos".
-- MS pressure spike "kawasan tinggi" reads as altitude → "di kawasan lawan" (already used
-  elsewhere in the file).
-- ES deserved goal "{team} lo convierten" is awkward → "Gol merecido de {team}".
-- ES momentum flip "{team} mandan ahora" is colloquial → "{team} dominan ahora".
-- MS "kecondongan padang" (field tilt) is a literal calque. Consider keeping "field tilt" with a
-  gloss (to confirm).
+### 8.5 Wording fixes for the engine's templates
+These are in `live/templates.py` (Syahmi's area). Line numbers are as of 25 Oct.
+
+| Line | Now | Suggested | Why |
+|---|---|---|---|
+| 25 (MS) | "Di luar jangkaan: {team} menjaringkan gol" | "{team} menjaringkan gol walaupun ditekan" | "Di luar jangkaan" means "unexpected", not "against the run of play" |
+| 37 (MS) | "{team} akhirnya berjaya" | "Gol yang wajar buat {team}" | Vague; this is the "deserved goal" card |
+| 41 (ES) | "{team} lo convierten" | "Gol merecido de {team}" | Awkward |
+| 85–86 (MS) | "dibuang padang. {team} perlu bermain dengan sepuluh orang" | "{player} dilayangkan kad merah. {team} beraksi dengan 10 pemain" | Matches [RTM](https://berita.rtm.gov.my/arena/senarai-berita-arena/senarai-artikel/solanke-selamatkan-tottenham-carrick-terus-tertekan/) and [Kosmo](https://www.kosmo.com.my/?p=758913) |
+| 94 (ES) | "{player} es expulsado" | "{player} ve la roja" | Matches "vio la roja" ([Marca](https://www.marca.com/futbol/premier-league/cronica/2026/10/17/gol-victor-munoz-lidera-remontada-liverpool-brentford.html)) |
+| 144 / 149 | "suapan sintetik" / "feed sintético" | "data sintetik" / "datos sintéticos" | Half-English calques |
+| 204 (ES) | "{team} mandan ahora" | "{team} dominan ahora" | Slang; Marca writes "dominio" |
+| 247, 255, 481 | "Fasa huru-hara" / "Fase caótica" | "Permainan terbuka" / "Partido de ida y vuelta" | Literal calque. Judgement call, to confirm. "Huru-hara" appears about 10 times (index, season, roll-ups), so rename all of them or none |
+| 277 (MS) | "kawasan tinggi" | "di kawasan lawan" | Reads as altitude |
+
+These are suggestions. Each one needs a native-speaker read before it changes, and changing
+`templates.py` means re-running `make schema` so the mocks match.
 
 ## 9. Visual foundations (constraints for step 5)
 
@@ -338,6 +377,36 @@ Brief and purposeful, and optional under reduced motion
 - a sheet opening
 - the win-chance swing
 
+### 9.7 Patterns from the moodboard (step 2)
+Studied 25 Oct from Apple Sports, Bundesliga Match Momentum, Opta, and DixonBaxi's Premier League
+graphics. Each pattern was redrawn with our own data rather than copied.
+
+1. **Team colour as a soft glow** on neutral surfaces. The clubs are the only strong colour.
+   ([Apple Sports](https://www.apple.com/newsroom/2024/02/introducing-apple-sports-a-new-app-for-sports-fans/))
+2. **A huge, narrow score, where the losing side dims** at full time. On a Mac,
+   `font-stretch: 75%` on the system font rendered 14% narrower in our test, with no font
+   download. **To confirm** in Safari and on Windows.
+3. **The proof in a sheet:** Facts used and evidence slide up from the moment card.
+4. **Momentum as per-minute bars**, home up and away down, split at half-time, with goals pinned
+   on.
+   ([Bundesliga](https://aws.amazon.com/blogs/media/bundesliga-match-fact-match-momentum-revealing-the-games-invisible-pulse))
+5. **Motion borrowed from the pitch**, used sparingly: a momentum shift sweeps sideways, a goal
+   rises.
+   ([DixonBaxi](https://www.itsnicethat.com/news/dixonbaxi-premier-league-field-of-play-120816))
+
+Used, but contained:
+- the three-way chance bar (Opta), only inside a card
+- mirrored stat bars (Apple Sports), only in the analyst sheet
+- the strict score bug (PL graphics), only on the overlay page
+
+Avoided:
+- a grid of equal boxes
+- anything resembling odds
+- several overlays on screen at once
+
+Note: the PL broadcast score bug is only 38 px tall with 28 pt codes. That works on a TV, but
+our YouTube-window demo needs the larger tvOS sizes in §6.2.
+
 ## 10. Rules from the project and the hackathon
 - **Synthetic data only.** Fictional clubs and players ([sim/teams.py](../sim/teams.py)).
 - **No unlicensed trademarks** in the video
@@ -363,7 +432,7 @@ Brief and purposeful, and optional under reduced motion
    blank, or the LLM call falling back)? And should the half-time screen make two calls, or
    should the trace move into `MatchBrief`? Ask Syahmi; see [§5](#5-required-elements).
 3. **Club colours:** invent eight palettes now, or only NGC and KST for the demo?
-4. **Malay labels:** Ilham to confirm [§8.2](#82-ui-labels-in-three-languages).
+4. **Malay labels:** Ilham to confirm [§8.3](#83-ui-labels-in-three-languages).
 
 ## 13. How we'll know the design works
 These don't depend on our taste. They are step 9 of the playbook.
