@@ -1,8 +1,7 @@
 # Demo video storyboard: Match-Room Live
 
-Owner: Ilham (video lead). Status: draft, 25 Oct 2026. This is a **proposed replacement** for
-[docs/demo-script.md](../docs/demo-script.md), which is Syahmi's file and stays untouched until
-he agrees.
+Owner: Ilham (video lead; Syahmi handed over the demo on 25 Oct 2026). Status: draft. The
+recording script that comes out of this is [docs/demo-script.md](../docs/demo-script.md).
 
 The storyboard is also a **build spec**. None of these screens exist yet, so every shot says what
 the UI must do for the shot to be recordable ("UI needs"). The rules require the project to work
@@ -268,9 +267,9 @@ once:
 
 | # | Risk | Owner | By |
 |---|---|---|---|
-| **R1** | **The agent trace is empty.** Locally, `/halftime` returned `story_source: "template"` and no trace with a `.env` present, and `MatchBrief` has no trace field (DESIGN §5). S5 Plan A needs working Azure OpenAI keys, plus either a second call from the half-time screen or the trace added to `MatchBrief`. | Syahmi | Mon 26 Oct, evening |
-| **R2** | **Template text visible on camera.** All of these are on screen (DESIGN §8.5):<br>• S7, Malay headline: "Northgate City akhirnya berjaya" (vague).<br>• S8: the 74' and 87' turning points share one title, "Northgate City make it count".<br>• S3, if recorded in Malay: "Di luar jangkaan" (wrong meaning). We record S3 in English. | Syahmi (templates), Ilham (Malay check) | Mon 26 Oct |
-| **R3** | **Azure claims.** The README says Azure deployment is not live. S9 names Azure only if it is live when we record. The rules also require a working version available for testing. | Ilham, with Syahmi | Tue 27 Oct, before recording |
+| **R1** · [#9](https://github.com/msyxhmx/Match-Room/issues/9) | **The agent trace is empty.** Locally, `/halftime` returned `story_source: "template"` and no trace with a `.env` present, and `MatchBrief` has no trace field (DESIGN §5). S5 Plan A needs working Azure OpenAI keys, plus either a second call from the half-time screen or the trace added to `MatchBrief`. | Syahmi | Mon 26 Oct, evening |
+| **R2** · [#10](https://github.com/msyxhmx/Match-Room/issues/10) | **Template text visible on camera.** All of these are on screen (DESIGN §8.5):<br>• S7, Malay headline: "Northgate City akhirnya berjaya" (vague).<br>• S8: the 74' and 87' turning points share one title, "Northgate City make it count".<br>• S3, if recorded in Malay: "Di luar jangkaan" (wrong meaning). We record S3 in English. | Syahmi (templates), Ilham (Malay check) | Mon 26 Oct |
+| **R3** · [#11](https://github.com/msyxhmx/Match-Room/issues/11) | **Azure claims.** The README says Azure deployment is not live. S9 names Azure only if it is live when we record. The rules also require a working version available for testing. | Ilham, with Syahmi | Tue 27 Oct, before recording |
 | R4 | **Speed honesty.** Every sped-up take shows ×60; no cut shows something the product can't do. | Ilham | at recording |
 | R5 | **Length.** If the human read runs over 1:55, cut S6 first, then shorten S2. | Ilham | at editing |
 
