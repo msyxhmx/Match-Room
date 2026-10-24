@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import ssl
 import urllib.request
 from collections.abc import Callable, Mapping
 from pathlib import Path
@@ -33,6 +34,18 @@ SECRET = re.compile(
 )
 
 Questions = dict[str, dict[str, Any]]
+
+
+def _tls() -> ssl.SSLContext:
+    """Certifi's CA bundle when it is installed (it comes with httpx), else the system's.
+
+    A python.org Python on macOS ships with no CA certificates, so the default fails there.
+    """
+    try:
+        import certifi
+    except ImportError:
+        return ssl.create_default_context()
+    return ssl.create_default_context(cafile=certifi.where())
 Evaluate = Callable[[object, Questions], "dict[str, Any] | None"]
 
 
@@ -79,7 +92,7 @@ def ask(
         method="POST",
     )
     try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310
+        with urllib.request.urlopen(request, timeout=timeout, context=_tls()) as response:  # noqa: S310
             data = json.load(response)
         answers = data["answers"]
         if not all(q in answers for q in questions):

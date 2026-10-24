@@ -167,7 +167,7 @@ def test_key_is_redacted_before_sending(monkeypatch):
         def __exit__(self, *exc):
             return False
 
-    def fake_urlopen(request, timeout):
+    def fake_urlopen(request, timeout, **kwargs):
         sent["body"] = request.data.decode()
         return Reply(json.dumps({"answers": {"q": {}}}).encode())
 
@@ -180,7 +180,7 @@ def test_key_is_redacted_before_sending(monkeypatch):
 
 
 def test_ask_returns_none_on_error(monkeypatch):
-    def fail(request, timeout):
+    def fail(request, timeout, **kwargs):
         raise TimeoutError
 
     monkeypatch.setattr(jev.urllib.request, "urlopen", fail)
