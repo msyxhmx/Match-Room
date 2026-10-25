@@ -1,0 +1,224 @@
+.root {
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  color: var(--text-primary);
+}
+:global(.video) .root {
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+}
+
+.header,
+.group,
+.points {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  gap: var(--space-1);
+  align-items: flex-start;
+}
+.kind {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+:global(.video) .columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: start;
+}
+.pointHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-2);
+  align-self: stretch;
+}
+.headline,
+.summary,
+.source,
+.pointTitle,
+.pointBody,
+.groupTitle,
+.note {
+  margin: 0;
+  overflow-wrap: break-word;
+  text-wrap: pretty; /* no lone last word */
+}
+.headline {
+  font: var(--type-title1);
+  text-wrap: balance;
+}
+.summary {
+  font: var(--type-body);
+  color: var(--text-secondary);
+}
+.source {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+.group {
+  gap: var(--space-2);
+}
+.groupTitle {
+  font: var(--type-title3);
+}
+.points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: var(--space-2);
+}
+.point {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-half);
+}
+.pointTitle {
+  font: var(--type-headline);
+}
+.pointBody {
+  font: var(--type-body);
+  color: var(--text-secondary);
+}
+
+/* Text button: no fill, so only the one tinted area stays tinted. */
+.facts {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  /* 44 px minimum touch target: no space token, so 40 + 4. */
+  min-height: calc(var(--space-5) + var(--space-half));
+  font: var(--type-callout);
+  color: var(--you-primary);
+  cursor: pointer;
+}
+:global(.video) .facts {
+  min-height: var(--space-5);
+}
+.facts:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}
+
+/* The one tinted area: the half-time chance bar. */
+.tint {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--state-muted-tint);
+}
+:global(.video) .tint {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+}
+
+/* ---- full-time ---- */
+.turns {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.turn {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  align-items: baseline;
+  column-gap: var(--space-2);
+}
+.minute {
+  min-width: var(--space-5);
+  font: var(--type-headline);
+  color: var(--text-secondary);
+  font-variant-numeric: var(--numeric);
+}
+.dot {
+  /* 12 px dot: no space token, so 8 + 4. */
+  width: calc(var(--space-1) + var(--space-half));
+  height: calc(var(--space-1) + var(--space-half));
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill-strong);
+  align-self: center;
+}
+.dot[data-side="home"] {
+  background: var(--home-primary);
+}
+.dot[data-side="away"] {
+  background: var(--away-primary);
+}
+.turnTitle {
+  font: var(--type-headline);
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.swing {
+  font: var(--type-body);
+  color: var(--text-secondary);
+  font-variant-numeric: var(--numeric);
+  white-space: nowrap;
+}
+.note {
+  font: var(--type-caption2);
+  color: var(--text-secondary);
+}
+
+/* Video: the player of the match takes a right column beside the header and turning points, so
+   the panel fits the safe area without shrinking type. */
+:global(.video) .root[data-kind="fulltime"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(var(--space-12) * 5); /* 480 px */
+  grid-template-rows: auto 1fr;
+  column-gap: var(--space-5);
+  row-gap: var(--space-3);
+}
+:global(.video) .root[data-kind="fulltime"] > .header {
+  grid-column: 1;
+}
+:global(.video) .root[data-kind="fulltime"] > .group {
+  grid-column: 1;
+}
+:global(.video) .root[data-kind="fulltime"] > .pom {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* Video, in the half-time screen's 1080 column: the headline in title2 fits one line
+   ("Kingston Vale lead 0-2 at the break"), so the brief fits beside the agents under the top bar.
+   Full time (1440) keeps title1. */
+@container (max-width: 1100px) {
+  :global(.video) .headline {
+    font: var(--type-title2);
+  }
+}
+
+/* Video: a tighter header keeps the half-time panel inside the 972 px safe height. */
+:global(.video) .header {
+  gap: var(--space-half);
+}

@@ -1,0 +1,268 @@
+/* The hero. Phone: three columns, each side stacked. Video: crest beside its text.
+   Team glow is atmosphere only: soft, low, behind the crest, never behind small text at a
+   strength that drops contrast, never a gradient across the whole card. */
+.root {
+  --glow-home: color-mix(in srgb, var(--home-glow) 16%, transparent);
+  --glow-away: color-mix(in srgb, var(--away-glow) 16%, transparent);
+  container-type: inline-size;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-1);
+  min-width: 0;
+}
+
+:global(.video) .root {
+  gap: var(--space-4);
+  padding: var(--space-1) var(--space-6);
+  /* Layout B budget: 224 max. Content is 152 score + 56 status = 208, plus 8 + 8 padding. */
+  max-height: 224px;
+  --crest-size: calc(var(--space-12) + var(--space-4)); /* 128: spec crest size on video */
+}
+
+.root {
+  --crest-size: var(--space-6); /* 48 on the phone */
+}
+
+/* ---------- sides ---------- */
+.side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  text-align: center;
+}
+
+.crest {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font: var(--type-title3);
+  color: var(--home-text);
+  overflow-wrap: anywhere;
+}
+.side[data-side="away"] .name {
+  color: var(--away-text);
+}
+
+.scorers {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+:global(.video) .root {
+  align-items: start;
+}
+/* Both sides share one top line however many scorers each has: the crest centres on the
+   score digits (152 tall, so 12 down for a 128 crest) and the name centres on the crest. */
+:global(.video) .side {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-3);
+  text-align: left;
+  padding-top: calc((var(--space-12) + var(--space-8) - var(--crest-size)) / 2 - var(--space-1));
+}
+:global(.video) .info {
+  padding-top: calc(var(--crest-size) / 2 - var(--space-4) + var(--space-half));
+}
+:global(.video) .side[data-side="away"] {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+:global(.video) .info {
+  align-items: flex-start;
+}
+:global(.video) .side[data-side="away"] .info {
+  align-items: flex-end;
+}
+
+/* ---------- centre ---------- */
+.centre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.score {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-half);
+  font: var(--type-score);
+  font-stretch: var(--score-stretch);
+  font-variant-numeric: var(--numeric);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.score[data-pre="true"] {
+  color: var(--text-secondary);
+}
+.score [data-dim="true"] {
+  color: var(--text-dimmed-large);
+}
+:global(.video) .score {
+  gap: var(--space-1);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+}
+:global(.video) .status {
+  gap: var(--space-2);
+}
+
+.minute {
+  font: var(--type-title3);
+  font-variant-numeric: var(--numeric);
+  color: var(--text-primary);
+}
+
+/* ---------- open stage: glow behind each crest ---------- */
+.root {
+  padding-block: var(--space-1);
+}
+.root .side::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  /* Glow is a circle 2.5 crests wide, centred on the crest. */
+  width: calc(var(--crest-size) * 2.5);
+  aspect-ratio: 1;
+  top: calc(var(--space-1) + var(--crest-size) / 2);
+  left: 50%;
+  translate: -50% -50%;
+  background: radial-gradient(circle, var(--glow-home), transparent 68%);
+}
+.root .side[data-side="away"]::before {
+  background: radial-gradient(circle, var(--glow-away), transparent 68%);
+}
+/* Crests hug the score; names sit outside them. */
+:global(.video) .root .side {
+  flex-direction: row-reverse;
+  text-align: right;
+  justify-content: flex-start;
+}
+:global(.video) .root .side[data-side="away"] {
+  flex-direction: row;
+  text-align: left;
+}
+:global(.video) .root .side[data-side="home"] {
+  justify-self: end;
+}
+:global(.video) .root .side[data-side="home"] .info {
+  align-items: flex-end;
+}
+:global(.video) .root .side[data-side="away"] .info {
+  align-items: flex-start;
+}
+:global(.video) .root .side::before {
+  top: 50%;
+  left: auto;
+  translate: 0 -50%;
+}
+:global(.video) .root .side[data-side="home"]::before {
+  right: calc(-1 * var(--crest-size) / 2 - var(--space-2));
+}
+:global(.video) .root .side[data-side="away"]::before {
+  left: calc(-1 * var(--crest-size) / 2 - var(--space-2));
+}
+
+/* ---------- skeleton ---------- */
+.skel {
+  display: block;
+  background: var(--surface-fill);
+  border-radius: var(--radius-small);
+}
+.skelCrest {
+  width: var(--crest-size);
+  height: var(--crest-size);
+  border-radius: var(--radius-pill);
+}
+.skelName {
+  width: calc(var(--space-12) + var(--space-8)); /* about a team name wide */
+  height: var(--space-4);
+}
+.skelScore {
+  width: calc(var(--space-12) + var(--space-4));
+  height: calc(var(--space-8) + var(--space-1));
+}
+:global(.video) .skelName {
+  width: calc(var(--space-12) * 2.5);
+  height: var(--space-6);
+}
+:global(.video) .skelScore {
+  width: calc(var(--space-12) * 3);
+  height: calc(var(--space-12) + var(--space-8));
+}
+
+/* ---------- narrow container ---------- */
+@container (max-width: 700px) {
+  .side,
+  :global(.video) .side {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Phone: crests line up on one row even when names wrap differently. */
+@container (max-width: 700px) {
+  .side {
+    align-self: start;
+  }
+  .centre {
+    align-self: center;
+  }
+}
+
+/* ---- Motion (step 8): a goal. The score rolls like an odometer: the old number leaves
+   upwards as the new one comes up, so the score is readable in every frame. The new number is a
+   new element (keyed), so this plays once. clip-path (not overflow) clips the roll without
+   moving the digits' baseline. Under reduced motion nothing travels: the new number fades in
+   (its opacity starts at --motion-travel, 0 then). ---- */
+.clip {
+  display: inline-block;
+  clip-path: inset(0);
+}
+.digit {
+  display: inline-block;
+  position: relative;
+}
+/* The old number, parked just above the new one. */
+.digit::before {
+  content: attr(data-prev);
+  position: absolute;
+  inset: auto 0 100% 0;
+}
+.digit[data-state="scored"] {
+  animation: digit-roll var(--duration-moment) var(--ease-spring-firm) both;
+}
+@keyframes digit-roll {
+  from {
+    opacity: var(--motion-travel);
+    transform: translateY(calc(100% * var(--motion-travel)));
+  }
+}

@@ -1,0 +1,48 @@
+/* Element defaults for the Match-Room Live UI. Tokens live in theme.css; this file only resets
+   the browser so components start from the same place. Imported by the app and the lab. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:where(h1, h2, h3, h4, p, ul, ol, li, figure, dl, dd) {
+  margin: 0;
+  padding: 0;
+}
+
+:where(ul, ol) {
+  list-style: none;
+}
+
+:where(button) {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+:where(svg) {
+  flex-shrink: 0;
+}
+
+.mr-root {
+  font: var(--type-body);
+  color: var(--text-primary);
+  background: var(--surface-ground);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Visible only to screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

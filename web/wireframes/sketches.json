@@ -1,0 +1,61 @@
+[
+  {"id": "two-col", "name": "1 · Two columns", "idea": "Score and momentum on the left, the moment on the right. The storyboard draft.", "verdict": "candidate",
+   "els": [
+     {"t": "r", "x": 96, "y": 130, "w": 760, "h": 230, "l": "Score + clock"},
+     {"t": "bars", "x": 96, "y": 400, "w": 760, "h": 230, "l": "Momentum"},
+     {"t": "r", "x": 96, "y": 670, "w": 760, "h": 356, "l": "Earlier moments"},
+     {"t": "r", "x": 900, "y": 130, "w": 924, "h": 600, "l": "THE MOMENT", "big": true},
+     {"t": "lines", "x": 940, "y": 330, "w": 820, "n": 4}
+   ]},
+  {"id": "stage", "name": "2 · Centre stage", "idea": "The moment fills the middle like a keynote slide. Score on top, match timeline along the bottom.", "verdict": "candidate",
+   "els": [
+     {"t": "r", "x": 96, "y": 110, "w": 1728, "h": 200, "l": "Score header + team glow"},
+     {"t": "r", "x": 310, "y": 340, "w": 1300, "h": 430, "l": "THE MOMENT", "big": true},
+     {"t": "lines", "x": 360, "y": 520, "w": 1200, "n": 3},
+     {"t": "bars", "x": 96, "y": 800, "w": 1728, "h": 226, "l": "Timeline: momentum + moment pins", "pins": true}
+   ]},
+  {"id": "timeline", "name": "3 · Timeline first", "idea": "A wide match timeline is the hero. The selected moment opens underneath it.", "verdict": "merged into 2",
+   "els": [
+     {"t": "r", "x": 96, "y": 54, "w": 1728, "h": 120, "l": "Score + clock"},
+     {"t": "bars", "x": 96, "y": 210, "w": 1728, "h": 330, "l": "Match timeline with pins", "pins": true},
+     {"t": "r", "x": 96, "y": 580, "w": 1150, "h": 446, "l": "Selected moment", "big": true},
+     {"t": "r", "x": 1290, "y": 580, "w": 534, "h": 446, "l": "Chance to win"}
+   ]},
+  {"id": "feed", "name": "4 · Feed", "idea": "Apple Sports' play-by-play: a score header, then a vertical list of moments, the newest one open.", "verdict": "candidate",
+   "els": [
+     {"t": "r", "x": 560, "y": 54, "w": 800, "h": 230, "l": "Score header + glow"},
+     {"t": "r", "x": 560, "y": 310, "w": 800, "h": 330, "l": "Newest moment (open)", "big": true},
+     {"t": "r", "x": 560, "y": 660, "w": 800, "h": 110, "l": "Earlier moment"},
+     {"t": "r", "x": 560, "y": 790, "w": 800, "h": 110, "l": "Earlier moment"},
+     {"t": "r", "x": 560, "y": 920, "w": 800, "h": 106, "l": "Earlier moment"}
+   ]},
+  {"id": "plate", "name": "5 · Broadcast plate", "idea": "A full-screen pitch with TV-style graphics on top: score bug, and the moment as a lower third.", "verdict": "kept for the overlay page",
+   "els": [
+     {"t": "r", "x": 0, "y": 0, "w": 1920, "h": 1080, "l": "", "hatch": true},
+     {"t": "r", "x": 96, "y": 54, "w": 460, "h": 90, "l": "Score bug"},
+     {"t": "r", "x": 96, "y": 790, "w": 1150, "h": 236, "l": "Moment as lower third", "big": true}
+   ]},
+  {"id": "split", "name": "6 · Split hero", "idea": "Apple Sports' game page: a giant score with team glows on the left, the moment on the right.", "verdict": "rejected: the score outranks the why",
+   "els": [
+     {"t": "r", "x": 96, "y": 54, "w": 860, "h": 972, "l": "GIANT SCORE + glows", "big": true},
+     {"t": "r", "x": 1000, "y": 54, "w": 824, "h": 600, "l": "Moment"},
+     {"t": "r", "x": 1000, "y": 690, "w": 824, "h": 336, "l": "Earlier"}
+   ]},
+  {"id": "dash", "name": "7 · Dashboard", "idea": "Moment across the top, three equal panels below it.", "verdict": "rejected: the AI-grid look",
+   "els": [
+     {"t": "r", "x": 96, "y": 54, "w": 1728, "h": 380, "l": "Moment", "big": true},
+     {"t": "r", "x": 96, "y": 470, "w": 552, "h": 556, "l": "Momentum"},
+     {"t": "r", "x": 684, "y": 470, "w": 552, "h": 556, "l": "Control"},
+     {"t": "r", "x": 1272, "y": 470, "w": 552, "h": 556, "l": "Chance"}
+   ]},
+  {"id": "film", "name": "8 · Filmstrip", "idea": "Score and momentum on top, every moment as a card in a strip along the bottom.", "verdict": "rejected: cards too small for video",
+   "els": [
+     {"t": "r", "x": 96, "y": 54, "w": 1728, "h": 200, "l": "Score"},
+     {"t": "bars", "x": 96, "y": 290, "w": 1728, "h": 360, "l": "Momentum"},
+     {"t": "r", "x": 96, "y": 690, "w": 330, "h": 336, "l": "Moment"},
+     {"t": "r", "x": 446, "y": 690, "w": 330, "h": 336, "l": "Moment"},
+     {"t": "r", "x": 796, "y": 690, "w": 330, "h": 336, "l": "Moment"},
+     {"t": "r", "x": 1146, "y": 690, "w": 330, "h": 336, "l": "Moment"},
+     {"t": "r", "x": 1496, "y": 690, "w": 328, "h": 336, "l": "Moment", "big": true}
+   ]}
+]

@@ -1,0 +1,106 @@
+/* Player of the match. Pass accuracy is a rate, not a win chance, so nothing here is a probability. */
+.root {
+  container-type: inline-size;
+  background: var(--surface-card);
+  border-radius: var(--radius-card);
+  padding: var(--space-3);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  --crest-size: var(--space-5); /* 40: badge crest, spec 28-40 */
+}
+
+:global(.video) .root {
+  --crest-size: var(--space-8); /* 64: legible at 1080p */
+}
+
+.root[data-side="home"] { --bar: var(--home-primary); }
+.root[data-side="away"] { --bar: var(--away-primary); }
+
+.kicker {
+  margin: 0;
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap; /* in a narrow column the "Your player" pill drops under the name */
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+.who {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto; /* keeps the whole name; the pill wraps instead */
+}
+
+.name {
+  margin: 0;
+  font: var(--type-title2);
+  white-space: nowrap; /* "L. Quinn" never splits at the initial */
+}
+
+.meta {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+  font-variant-numeric: var(--numeric);
+}
+
+.stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  min-width: 0;
+}
+
+.value {
+  margin: 0;
+  font: var(--type-title3);
+  font-variant-numeric: var(--numeric);
+}
+
+.label {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+  text-wrap: balance;
+}
+
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.bars {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-1);
+  align-items: end;
+  height: calc(var(--space-8) + var(--space-2)); /* 80: chart plot height */
+}
+
+:global(.video) .bars {
+  height: calc(var(--space-12) + var(--space-4)); /* 128 */
+}
+
+.bar {
+  background: var(--bar);
+  border-radius: var(--radius-small) var(--radius-small) 0 0;
+  min-height: var(--stroke);
+}
+
+.caption {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}

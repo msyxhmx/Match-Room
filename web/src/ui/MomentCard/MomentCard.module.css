@@ -1,0 +1,267 @@
+/* The root is the size container. */
+.root {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+:global(.video) .card {
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+}
+
+/* ---- tag row ---- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  font: var(--type-caption1);
+}
+.minute {
+  color: var(--text-secondary);
+  font-variant-numeric: var(--numeric);
+}
+
+/* ---- text ---- */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.headline,
+.body,
+.whyLine,
+.whyMore {
+  margin: 0;
+  overflow-wrap: break-word;
+  text-wrap: pretty; /* no lone last word ("Novak.", "28%.") */
+}
+.headline {
+  font: var(--type-title1);
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.body {
+  font: var(--type-body);
+  color: var(--text-secondary);
+}
+
+/* The why-line is the hero sentence after the headline. */
+.why {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.whyLine {
+  font: var(--type-headline);
+  color: var(--text-primary);
+}
+.whyMore {
+  font: var(--type-body);
+  color: var(--text-secondary);
+}
+
+/* ---- footer: swing and the facts button ---- */
+.footer {
+  display: flex;
+  flex-wrap: wrap; /* phone: the button takes its own row so the bar and note get the width */
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+}
+.swing {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.facts {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  margin-left: auto;
+  /* 44 px minimum touch target: no space token, so 40 + 4. */
+  min-height: calc(var(--space-5) + var(--space-half));
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--state-muted-tint);
+  color: var(--text-secondary);
+  font: var(--type-callout);
+  white-space: nowrap;
+  cursor: pointer;
+}
+:global(.video) .facts {
+  min-height: var(--space-6);
+  padding: 0 var(--space-2);
+}
+.facts:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}
+
+/* On video the footer is one grid so the card stays under 420 px: the numbers on the left, the
+   label above the track in the middle, the button on the right, and the note under all three.
+   `display: contents` hands ChanceSwing's own elements to this grid; it takes no layout props. */
+:global(.video) .footer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  column-gap: var(--space-2);
+  row-gap: 0;
+  align-items: center;
+}
+:global(.video) .footer > .swing,
+:global(.video) .footer > .swing > div {
+  display: contents;
+}
+:global(.video) .footer .swing [data-role="chance-label"] {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+}
+:global(.video) .footer .swing [data-role="probability"] {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+:global(.video) .footer .swing > div > div {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  margin: var(--space-1) 0 0;
+}
+:global(.video) .footer .swing [data-role="projection-note"] {
+  grid-column: 1 / 3;
+  grid-row: 3;
+  margin-top: var(--space-1); /* clear of the before tick */
+}
+/* No big numbers: the label and bar take the left and middle columns. */
+:global(.video) .footer .swing [data-numbers="false"] [data-role="chance-label"] {
+  grid-column: 1 / 3;
+}
+:global(.video) .footer .swing > div[data-numbers="false"] > div {
+  grid-column: 1 / 3;
+}
+:global(.video) .footer > .facts {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+  align-self: end;
+}
+
+/* ---- why band ---- */
+.band {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0 calc(-1 * var(--space-3)) calc(-1 * var(--space-3));
+  padding: var(--space-3);
+  background: var(--state-muted-tint);
+}
+:global(.video) .band {
+  gap: var(--space-1);
+  margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-2));
+  /* 8 above and below: the longest analyst card has to stay under 460 px on video. */
+  padding: var(--space-1) var(--space-4);
+}
+.band[data-glow="home"] {
+  background: color-mix(in srgb, var(--home-glow) 8%, var(--surface-card));
+}
+.band[data-glow="away"] {
+  background: color-mix(in srgb, var(--away-glow) 8%, var(--surface-card));
+}
+.card {
+  gap: var(--space-2);
+}
+
+/* ---- states ---- */
+.empty {
+  margin: auto;
+  text-align: center;
+  font: var(--type-title3);
+  color: var(--text-secondary);
+}
+.card[data-variant="empty"] {
+  /* Minimum height: two 80 px steps on the phone, two 96 px steps on video. */
+  min-height: calc(var(--space-10) * 2);
+  justify-content: center;
+}
+:global(.video) .card[data-variant="empty"] {
+  min-height: calc(var(--space-12) * 2);
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.bone {
+  display: block;
+  border-radius: var(--radius-small, var(--space-1));
+  background: var(--surface-fill);
+}
+.bone[data-size="tag"] {
+  width: calc(var(--space-12) * 1.5);
+  height: var(--space-3);
+}
+.bone[data-size="headline"] {
+  width: 80%;
+  height: var(--space-5);
+}
+.bone[data-size="line"] {
+  width: 100%;
+  height: var(--space-3);
+}
+.bone[data-short] {
+  width: 60%;
+}
+:global(.video) .bone[data-size="tag"] {
+  height: var(--space-4);
+}
+:global(.video) .bone[data-size="headline"] {
+  height: var(--space-10);
+}
+:global(.video) .bone[data-size="line"] {
+  height: var(--space-4);
+}
+
+/* On the band the button is white, so it still reads as a button. */
+.band .facts {
+  background: var(--surface-card);
+}
+
+/* ---- Motion (step 8): a new moment lands, one stagger after the score: it rises with a
+   touch of scale on the firm spring. The card is a new element per moment (the screen keys it),
+   so this never replays on an old card. ---- */
+.card[data-state="arriving"] {
+  animation: card-land var(--duration-moment) var(--ease-spring-firm) var(--stagger) both;
+}
+@keyframes card-land {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-5) * var(--motion-travel)))
+      scale(calc(1 - 0.03 * var(--motion-travel)));
+  }
+}
+
+/* A language or persona switch: the same card, new words. The text cross-fades in place. */
+.card[data-text="relabel"] > * {
+  animation: text-fade var(--duration-quick) var(--ease-standard) both;
+}
+@keyframes text-fade {
+  from {
+    opacity: 0;
+  }
+}

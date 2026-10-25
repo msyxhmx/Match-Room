@@ -1,0 +1,23 @@
+/* Size comes from the parent through --crest-size. */
+.crest,
+.missing {
+  /* default: no token between space-6 and space-8 is needed, one space token */
+  width: var(--crest-size, var(--space-6));
+  height: var(--crest-size, var(--space-6));
+  flex-shrink: 0;
+}
+
+.crest {
+  display: block;
+  object-fit: contain;
+}
+
+.missing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+  color: var(--text-secondary);
+  font: var(--type-headline);
+}

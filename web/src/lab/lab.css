@@ -1,0 +1,177 @@
+/* Lab chrome only. Never imported by the app. Raw values are fine here: this is a dev tool,
+   and check-raw-values skips src/lab/. */
+
+body {
+  margin: 0;
+  background: #fafafa;
+  font: 14px/1.4 -apple-system, system-ui, sans-serif;
+  color: #1d1d1f;
+}
+
+.lab {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.lab-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+  padding: 16px;
+  border-right: 1px solid #e5e5ea;
+  background: #fff;
+}
+
+.lab-nav h1 {
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+
+.lab-nav a {
+  display: block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lab-nav a[aria-current="page"] {
+  background: #e5e5ea;
+  font-weight: 600;
+}
+
+.lab-nav label {
+  display: block;
+  margin-top: 16px;
+  color: #6e6e73;
+}
+
+.lab-main {
+  padding: 24px 32px 96px;
+}
+
+.lab-main h2 {
+  font-size: 22px;
+  margin: 0;
+}
+
+.lab-summary {
+  color: #6e6e73;
+  margin: 4px 0 24px;
+}
+
+.lab-state {
+  margin-bottom: 40px;
+}
+
+.lab-state h3 {
+  font-size: 15px;
+  margin: 0 0 2px;
+}
+
+.lab-state h3 code {
+  font-weight: 400;
+  color: #6e6e73;
+}
+
+.lab-state p {
+  margin: 0 0 8px;
+  color: #6e6e73;
+}
+
+.lab-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* Frames are shown scaled in the index; shots render them at 1:1. */
+.lab-scaled-video {
+  zoom: 0.42;
+  outline: 2px solid #d1d1d6;
+}
+
+.lab-scaled-phone {
+  zoom: 0.84;
+  outline: 1px solid #d1d1d6;
+}
+
+.lab-frame {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.lab-frame.pad {
+  padding: var(--safe-y, var(--space-3)) var(--gutter);
+}
+
+.lab-frame.place-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.lab-frame.place-top {
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.lab-frame.place-bottom {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.lab-stage {
+  width: 100%;
+  min-width: 0;
+}
+
+.lab-frame.place-fill .lab-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.lab-frame.bg-ground {
+  background: var(--surface-ground);
+}
+
+.lab-frame.bg-card {
+  background: var(--surface-card);
+}
+
+.lab-frame.bg-plate {
+  background: #0b3d1e url("/plates/pitch.png") center / cover no-repeat;
+}
+
+.lab-frame.bg-transparent {
+  background: repeating-conic-gradient(#d9d9de 0% 25%, #f5f5f7 0% 50%) 0 0 / 32px 32px;
+}
+
+.lab-frame.shot-transparent {
+  background: transparent;
+}
+
+body:has(.shot-transparent) {
+  background: transparent;
+}
+
+.lab-safe {
+  position: absolute;
+  inset: 54px 96px;
+  outline: 2px dashed rgb(215 0 21 / 0.5);
+  pointer-events: none;
+}
+
+.lab-error {
+  padding: 16px;
+  color: #b00020;
+  font: 13px/1.4 ui-monospace, monospace;
+  white-space: pre-wrap;
+}
+
+.lab-empty {
+  color: #6e6e73;
+}

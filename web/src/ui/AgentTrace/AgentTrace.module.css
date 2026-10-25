@@ -1,0 +1,108 @@
+/* The half-time agents' steps as a log, grouped by agent: one line per step.
+   Cards are --surface-card on the ground, no border, no shadow. */
+.root {
+  container-type: inline-size;
+  background: var(--surface-card);
+  border-radius: var(--radius-card);
+  padding: var(--space-2);
+  color: var(--text-primary);
+}
+
+/* Sticky: when a long trace scrolls inside its column, the title stays. */
+.title {
+  position: sticky;
+  top: calc(var(--space-2) * -1);
+  z-index: 1;
+  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) var(--space-1);
+  padding: var(--space-2) var(--space-2) 0;
+  background: var(--surface-card);
+  font: var(--type-title3);
+}
+
+.list,
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.list {
+  gap: var(--space-1);
+}
+
+/* One agent's turn: its name once, then its steps. */
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.agent {
+  padding: 0 var(--space-1);
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+/* A step is one line: the action pill, then the detail. A long detail wraps beside its pill
+   (a hanging indent), never under it. */
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: var(--space-1);
+  padding: var(--space-half) var(--space-1);
+  border-radius: var(--radius-small);
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  align-self: start;
+}
+
+.detail {
+  min-width: 0;
+  font: var(--type-body);
+  overflow-wrap: anywhere;
+  /* Centre a one-line detail on the pill: the pill is a line plus its padding. */
+  padding-top: var(--space-half);
+}
+
+/* A reject is visibly heavier. */
+.row[data-action="reject"] {
+  background: var(--state-muted-tint);
+  padding: var(--space-1);
+}
+.row[data-action="reject"] .detail {
+  font: var(--type-headline);
+}
+.bigIcon {
+  display: inline-flex;
+  font: var(--type-title3); /* the X icon is title3 size */
+  color: var(--state-muted-text);
+}
+.claim {
+  text-decoration-thickness: var(--stroke);
+}
+
+/* ---------- empty: the honest Plan B, a quiet panel ---------- */
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-small);
+  background: var(--state-positive-tint);
+  color: var(--state-positive-text);
+}
+.emptyIcon {
+  display: inline-flex;
+  font: var(--type-title3);
+}
+.emptyText {
+  font: var(--type-callout);
+  text-align: left;
+}

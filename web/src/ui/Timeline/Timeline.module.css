@@ -1,0 +1,239 @@
+/* Phone: 358 wide, bars 3 px with 1 px gaps (the SVG's own units, stretched to fit).
+   Video: 1728 x 160 in all, title row + label lane + chart + axis. */
+.root {
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto auto var(--chart-h) auto;
+  min-width: 0;
+  /* Chart heights have no token: a multiple of the 8-point grid. */
+  --chart-h: calc(var(--space-8));
+  --goal: var(--space-2);
+  --lane: var(--space-2); /* pins and the chaos icon live above the bars, never on them */
+}
+
+:global(.video) .root {
+  height: calc(var(--space-10) * 2); /* the 160 px row in Layout B */
+  --chart-h: calc(var(--space-8) + var(--space-half)); /* 68: 160 - title 32 - lane 30 - axis 30 */
+  --goal: var(--space-3);
+  --lane: var(--space-3);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.title {
+  font: var(--type-caption1);
+  color: var(--text-primary);
+}
+
+.note {
+  margin: 0;
+  font: var(--type-caption2);
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+/* Turning-point labels sit in their own lane, so they never touch the bars or the pins. */
+.lane {
+  position: relative;
+  height: 0;
+}
+:global(.video) .lane {
+  height: 30px; /* one caption2 line (23/30) */
+}
+
+/* On the phone the labels and the note have no room: the list under the chart carries them. */
+.note,
+.tp {
+  display: none;
+}
+:global(.video) .note {
+  display: block;
+}
+:global(.video) .tp {
+  display: block;
+}
+
+.tp {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  font: var(--type-caption2);
+  font-variant-numeric: var(--numeric);
+  color: var(--text-secondary);
+  transform: translateX(-50%);
+}
+.tp[data-edge="end"] {
+  transform: translateX(-100%);
+  /* anchor the right edge to the chart edge */
+  left: 100% !important;
+}
+.tp[data-edge="start"] {
+  transform: none;
+  left: 0 !important;
+}
+.tpMinute {
+  color: var(--home-text);
+}
+.tp[data-side="away"] .tpMinute {
+  color: var(--away-text);
+}
+
+.chart {
+  position: relative;
+  container-type: inline-size;
+  min-height: 0;
+}
+
+.svg {
+  position: absolute;
+  inset: var(--lane) 0 0 0;
+  width: 100%;
+  height: calc(100% - var(--lane));
+  display: block;
+}
+.home {
+  fill: var(--home-primary);
+}
+.away {
+  fill: var(--away-primary);
+}
+.stub,
+.chaos {
+  fill: var(--surface-fill);
+}
+
+.centre {
+  position: absolute;
+  inset: calc(var(--lane) + (100% - var(--lane)) / 2) 0 auto 0;
+  height: var(--stroke);
+  margin-top: calc(var(--stroke) / -2);
+  background: var(--surface-fill-strong);
+}
+
+/* Goals sit on the centre line; a ground-coloured ring separates them from the bars. */
+.goal {
+  position: absolute;
+  top: calc(var(--lane) + (100% - var(--lane)) / 2);
+  width: var(--goal);
+  height: var(--goal);
+  margin: calc(var(--goal) / -2) 0 0 calc(var(--goal) / -2);
+  box-sizing: content-box;
+  border: var(--stroke) solid var(--surface-ground);
+  border-radius: var(--radius-pill);
+  translate: calc(-1 * var(--stroke)) calc(-1 * var(--stroke));
+}
+.goal[data-side="home"] {
+  background: var(--home-primary);
+}
+.goal[data-side="away"] {
+  background: var(--away-primary);
+}
+/* The selected goal gets an outline in the text colour (and the stem), not colour alone. */
+.goal[data-selected] {
+  outline: var(--stroke) solid var(--text-primary);
+}
+
+.stem {
+  position: absolute;
+  inset: var(--lane) auto 0 auto;
+  width: var(--stroke);
+  margin-left: calc(var(--stroke) / -2);
+  background: var(--text-primary);
+}
+
+.chaosIcon {
+  position: absolute;
+  top: 0;
+  height: var(--lane);
+  display: flex;
+  align-items: center;
+  transform: translateX(-50%);
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+/* Pins: a hollow ring inside a 44 px+ button. Not on the phone. */
+.pin {
+  display: none;
+  position: absolute;
+  top: 0;
+  width: var(--space-6);
+  height: var(--space-6);
+  margin: calc(var(--lane) / 2 - var(--space-3)) 0 0 calc(var(--space-6) / -2);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+}
+:global(.video) .pin {
+  display: flex;
+}
+.pin:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+}
+.ring {
+  width: var(--space-2);
+  height: var(--space-2);
+  box-sizing: border-box;
+  border: var(--stroke) solid var(--text-secondary);
+  border-radius: var(--radius-pill);
+}
+.pin[data-selected] .ring {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.axis {
+  position: relative;
+  height: 1.3em;
+  font: var(--type-caption2);
+  color: var(--text-secondary);
+  font-variant-numeric: var(--numeric);
+}
+.tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  display: none;
+}
+.tick[data-phone] {
+  display: block;
+}
+:global(.video) .tick {
+  display: block;
+}
+.tick[data-edge="start"] {
+  transform: none;
+  left: 0 !important;
+}
+.tick[data-edge="end"] {
+  transform: translateX(-100%);
+  left: 100% !important;
+}
+
+.skelTitle,
+.skelChart,
+.axis:empty {
+  background: var(--surface-fill);
+  border-radius: var(--radius-small);
+}
+.skelTitle {
+  height: var(--space-2);
+  width: 40%;
+  margin-bottom: var(--space-1);
+}
+:global(.video) .skelTitle {
+  height: var(--space-3);
+  margin-bottom: var(--space-1);
+}

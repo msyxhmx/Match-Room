@@ -1,0 +1,104 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  min-width: 0;
+}
+
+.label,
+.numbers,
+.note {
+  margin: 0;
+}
+
+.label {
+  font: var(--type-caption1);
+}
+
+.what {
+  color: var(--text-secondary);
+}
+
+.team {
+  color: var(--home-text);
+}
+.root[data-side="away"] .team {
+  color: var(--away-text);
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--type-title3);
+  font-variant-numeric: var(--numeric);
+}
+
+.before {
+  color: var(--text-secondary);
+}
+.after {
+  color: var(--text-primary);
+}
+
+.track {
+  position: relative;
+  height: var(--space-half);
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+  margin-block: var(--space-1) var(--space-half);
+}
+
+:global(.video) .track {
+  height: var(--space-1);
+  margin-block: var(--space-2) var(--space-1);
+}
+
+/* The fill spans the track and is clipped to the chance (--to), so it can sweep from --from
+   without animating layout. inset(… round) keeps the pill ends round at any length. */
+.fill {
+  position: absolute;
+  inset: 0;
+  background: var(--home-primary);
+  clip-path: inset(0 calc(100% - var(--to)) 0 0 round var(--radius-pill));
+}
+.root[data-side="away"] .fill {
+  background: var(--away-primary);
+}
+
+/* 3 px tick: no space token is that thin. */
+.tick {
+  position: absolute;
+  top: calc(-1 * var(--space-half));
+  bottom: calc(-1 * var(--space-half));
+  width: 3px;
+  margin-left: -1px;
+  background: var(--text-secondary);
+}
+
+.note {
+  font: var(--type-caption2);
+  color: var(--text-secondary);
+}
+
+/* ---- Motion (step 8): the chance swing fills from before to after on the firm spring, last
+   in the goal's sequence (score, card, swing). Under reduced motion it fades in at its final
+   length. */
+.track[data-state="from"] .fill {
+  animation: swing-fill var(--duration-sheet) var(--ease-spring-firm) calc(var(--stagger) * 2.5) both;
+}
+@keyframes swing-fill {
+  from {
+    clip-path: inset(0 calc(100% - var(--from)) 0 0 round var(--radius-pill));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .track[data-state="from"] .fill {
+    animation-name: swing-fade;
+  }
+}
+@keyframes swing-fade {
+  from {
+    opacity: 0;
+  }
+}

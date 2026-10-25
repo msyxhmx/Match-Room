@@ -1,0 +1,101 @@
+/* Whole screens. Video first: the frame is 1920 × 1080 and every screen keeps to the EBU R 95
+   safe area (DESIGN §6.1). Layout B (COMPONENTS.md "Layout B budget"): top bar 56, score 224,
+   moment up to 460, timeline 160, with --space-3 between rows. The phone stacks the same parts. */
+
+.screen {
+  /* The sheet positions against this. */
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-2);
+  overflow: hidden;
+}
+
+:global(.video) .screen {
+  padding: var(--safe-y) var(--safe-x);
+}
+
+/* The moment row takes what's left and centres the card in it. */
+.stage {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  min-height: 0;
+}
+
+.moment {
+  width: 100%;
+}
+
+:global(.video) .moment {
+  /* 1440 px: the moment card's width in layout B. No token; 96 × 15. */
+  width: calc(var(--space-12) * 15);
+}
+
+/* ---- half-time: brief 1080 | agents 600 ---- */
+.screen[data-screen="halftime"] {
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.halftime {
+  display: grid;
+  gap: var(--space-3);
+  min-height: 0;
+  height: 100%;
+}
+
+:global(.video) .halftime {
+  /* 1080 + 48 + 600 = 1728, the safe width. */
+  grid-template-columns: minmax(0, 1fr) calc(var(--space-12) * 6 + var(--space-3));
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* Plan B: the brief alone, 1440 wide and centred like the full-time brief. */
+:global(.video) .halftime[data-alone] {
+  grid-template-columns: calc(var(--space-12) * 15);
+  justify-content: center;
+}
+
+.brief,
+.trace {
+  min-height: 0;
+}
+
+/* Both half-time columns scroll inside themselves when their text runs long: the agents' log
+   follows its newest step (HalfTimeScreen), the brief reads from the top. They keep their
+   rounded card look at the column's height. */
+.brief,
+.trace {
+  max-height: 100%;
+  overflow-y: auto;
+  border-radius: var(--radius-card);
+  scrollbar-width: none;
+}
+
+/* ---- the overlay page ---- */
+.overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* The pitch plate for the video (S7). The real page in OBS stays transparent. */
+.overlay[data-plate="true"] {
+  background: url("/plates/pitch.png") center / cover no-repeat;
+}
+
+/* No graphic up: the score bug alone, where the graphics put it. */
+.bugOnly {
+  position: absolute;
+  inset: 0;
+}
+.brief:focus-visible,
+.trace:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}

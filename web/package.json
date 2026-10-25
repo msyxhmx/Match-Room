@@ -7,13 +7,21 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -b --noEmit"
+    "typecheck": "tsc -b --noEmit",
+    "check:tokens": "node scripts/check-tokens.mjs",
+    "check:raw": "node scripts/check-raw-values.mjs",
+    "shots": "node scripts/shots.mjs",
+    "flows": "node scripts/flows.mjs",
+    "motion": "node scripts/motion.mjs"
   },
   "dependencies": {
+    "lucide-react": "^1.61.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
     "@types/node": "^22.20.5",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

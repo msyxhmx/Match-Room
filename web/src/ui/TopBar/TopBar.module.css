@@ -1,0 +1,105 @@
+/* Phone first: two rows. Row 1 brand + synthetic, row 2 the rest. */
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "brand synthetic"
+    "meta meta";
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  width: 100%;
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+.brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.wordmark {
+  display: none;
+  height: var(--space-5);
+  width: auto;
+}
+
+.mark {
+  display: block;
+  height: var(--space-3);
+  width: auto;
+}
+
+.scenario {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  grid-area: meta;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.following {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+.synthetic {
+  grid-area: synthetic;
+  display: flex;
+}
+
+/* Video: one row, at most 56 tall. */
+:global(.video) .root {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+  max-height: calc(var(--space-6) + var(--space-1));
+}
+
+:global(.video) .brand {
+  flex: 1 0 auto;
+}
+
+:global(.video) .wordmark {
+  display: block;
+}
+
+:global(.video) .mark {
+  display: none;
+}
+
+:global(.video) .meta {
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  gap: var(--space-1);
+}
+
+:global(.video) .synthetic {
+  flex: 0 0 auto;
+}
+
+:global(.video) .following,
+:global(.video) .scenario {
+  white-space: nowrap;
+}
+
+/* The language and persona pills, when the screen makes them switches. */
+.switch {
+  display: inline-flex;
+  border-radius: var(--radius-pill);
+}
+.switch:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}
