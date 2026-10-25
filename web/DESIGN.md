@@ -573,37 +573,53 @@ Done 25 Oct. Review them in place in the
 [assets mockup](https://claude.ai/artifact/5Fdh9aBkdmYGdVcjGf3oD3). Each source and script lives in
 [assets-src/](assets-src/) so it can be re-made.
 
-- **Crests** ([src/assets/crests/](src/assets/crests/), made by `assets-src/crests.py`).
-  **Round 2, 25 Oct:** Ilham rejected round 1 because all eight used one template (an outline,
-  a symbol and an initial). Now each club differs in container, colour use, lettering and emblem
-  style, the way a real league's set does:
+- **Crests, round 3** ([src/assets/crests/](src/assets/crests/), made by
+  `assets-src/crests/final.py`). Each fictional club has a story: its town, founding year,
+  nickname, motto and emblem, in [assets-src/crests/IDENTITY.md](assets-src/crests/IDENTITY.md).
+  The process:
+  - **Round 1** used one template eight times. Ilham rejected it.
+  - **Round 2** varied the containers but had no layers or stories. Ilham found it too simple.
+  - **Round 3** followed the Premier League's structure: a different container per club, one
+    local emblem, and layers (a name ring or ribbon, a year, a motto).
+  - A sketch round of 24 options (`assets-src/crests/sketches/`), then Ilham's picks:
 
-  | Club | Container | Colour use | Lettering | Emblem |
+  | Club | Pick | Container | Emblem | Lettering |
   |---|---|---|---|---|
-  | NGC | heater shield | solid field | none | gatehouse under a north star |
-  | KST | lettered roundel | white field, claret ring | "KINGSTON VALE · VALE ROAD" | the vale and its river |
-  | RIV | none (monogram) | solid letter | R | the river cut through the R |
-  | HAR | round-bottom shield | wavy split field | "HARBOUR" on a scroll | lighthouse over a heraldic sea |
-  | ELM | rounded square | counterchanged diagonal | none | elm leaf |
-  | MIL | octagon | solid field | "MILLBROOK" | mill wheel in the brook |
-  | ASH | lozenge | white field, magenta keyline | none | ash sprig (white for Albion) |
-  | QNB | bridge silhouette | solid, arches cut out | "QBFC" on the deck | the bridge itself |
+  | NGC | NGC-2 | classic shield | gatehouse under a north star | NORTHGATE chief, 18·79, *Porta Patens* |
+  | KST | KST-1 | classic shield, arched top | heron in the river valley | KINGSTON VALE, EST 1894 |
+  | RIV | RIV-2 | roundel | kingfisher on a reed | RIVERSIDE ROVERS, Riverside Park, 18·86 |
+  | HAR | HAR-1 | modern heraldic | lighthouse, anchor, wavy sea | HARBOUR ATHLETIC, *Lux in Tempestate* |
+  | ELM | ELM-3 | roundel, colours inverted | elm leaf | ELMSTEAD UNITED, Elmstead Lane, 19·02 |
+  | MIL | MIL-1 | wordmark-led | waterwheel over the brook | MILLBROOK, TOWN · 1888 |
+  | ASH | ASH-1 | quartered shield | ash sprig, cliffs, ford stones, year | ASHFORD ALBION |
+  | QNB | QNB-3 | shield with a gold chief | crown over a three-arch bridge | *Over and Onward* |
 
-  What keeps them a set:
-  - one typeface (Hanken Grotesk, outlined)
+  **Two files per club.**
+  - `<ID>.svg` is the full crest, for 96 px and up: the video score header, the end card and
+    the thumbnail.
+  - `<ID>-badge.svg` keeps the container and emblem without lettering, for 28 px: the phone
+    and the score bug.
+
+  **Set rules:**
+  - the club colour plus white, with one shared crest gold `#C9A13B` and ink as accents
   - flat fills
-  - the club colour plus white only (Harbour's scroll uses its darker text gold)
-  - strokes at least 6 of 96 units
+  - lettering in Oswald (SIL OFL), outlined; the font file isn't committed
 
-  They avoid look-alikes: no lions, birds, roses, trees, crowns, castles in claret, cannons,
-  hoops, ships, or interlocking RR. Lettering is a bonus at 96 px; at 28 px the emblem carries
-  the crest, and the short name always sits beside it. The sketch round (3 directions each for
-  NGC and KST) is in `assets-src/sketches/` and the mockup.
+  **Checks** (`assets-src/check_crests.py`):
+  - **Contrast.** Every club colour is at least 3:1 on white and on the ground. Ribbon
+    lettering is ink on gold at 6.9:1. Gold on white is only 2.4:1, so gold stays an accent.
+  - **Greyscale.** The closest badges at 28 px (KST/HAR) differ on 40% of their pixels, and
+    the closest full crests (NGC/QNB) on 46%. ELM's roundel is inverted against RIV's to
+    keep these apart.
+  - **YouTube downscale.** After shrinking to 480p and saving as JPEG at quality 30, the
+    closest pair still differs on 37%; the pass mark we set is 15%. Mottos go soft at that
+    size, but outlines and emblems survive.
+  - **Look-alikes, checked against the Premier League reference sheet:**
+    - medium risk: NGC (a blue shield with a building, like Everton) and QNB (a green and gold
+      shield, like Norwich)
+    - every other club is low risk
+    - the mockup lists what each crest must keep to stay different
 
-  `assets-src/check_crests.py` measures them. Every colour in every crest is at least 3:1 on
-  white and on the ground (the lowest is Harbour Gold on the ground, at 4.41:1). In greyscale,
-  the closest pair (HAR/NGC) differs on 45% of its pixels; round 1's closest pair was 27%, and
-  the pass mark, which we set ourselves, is 15%.
 - **Wordmark and mark** ([src/assets/brand/](src/assets/brand/), made by `assets-src/brand.py`):
   - **Wordmark:** "Match-Room **Live**", outlined, so it needs no font.
   - **Mark:** a match clock. An ink ring, a kick-off tick, the match so far as a blue sector,

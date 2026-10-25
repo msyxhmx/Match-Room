@@ -1,4 +1,6 @@
-"""Crests for the eight fictional clubs in sim/teams.py, written to web/src/assets/crests/<ID>.svg.
+"""Round 2 crests (25 Oct), superseded by round 3 in crests/final.py. Kept for its shared
+drawing helpers (Type, wave, circle, star4, elm_leaf, leaflet), which round 3 imports, and
+for the record. Running it no longer writes to web/src/assets/crests.
 
 Round 2 (25 Oct): a league set rather than one template. Each club differs on four axes:
 container, colour use, type and emblem style (see SET below and DESIGN §9.11). What they share,
@@ -17,7 +19,6 @@ Nothing here may resemble a real club or league mark (DESIGN §10).
 """
 
 import math
-import sys
 from pathlib import Path
 
 import uharfbuzz as hb
@@ -452,24 +453,7 @@ def svg(inner, title):
 
 
 def main():
-    t = Type(sys.argv[1])
-    OUT.mkdir(parents=True, exist_ok=True)
-    SKETCHES.mkdir(parents=True, exist_ok=True)
-    for cid, fn in FINAL.items():
-        (OUT / f"{cid}.svg").write_text(svg(fn(t, COLOURS[cid]), f"{NAMES[cid]} crest"))
-    sketches = {
-        "NGC-a": grey(ngc(t, COLOURS["NGC"])),
-        "NGC-b": sketch_ngc_b(t),
-        "NGC-c": sketch_ngc_c(t),
-        "KST-a": grey(kst(t, COLOURS["KST"]))
-        .replace('id="kst-in"', 'id="kst-in-s"')
-        .replace("url(#kst-in)", "url(#kst-in-s)"),
-        "KST-b": sketch_kst_b(t),
-        "KST-c": sketch_kst_c(t),
-    }
-    for sid, inner in sketches.items():
-        (SKETCHES / f"{sid}.svg").write_text(svg(inner, SKETCH_NOTES[sid][0]))
-    print("wrote", len(FINAL), "crests and", len(sketches), "sketches")
+    raise SystemExit("Round 2 is retired. Run web/assets-src/crests/final.py for the crests.")
 
 
 if __name__ == "__main__":

@@ -1,18 +1,24 @@
-"""Measure the crests instead of eyeballing them.
+"""Measure the crests instead of eyeballing them (round 3: full crests and 28 px badges).
 
-Prints a table and writes renders/crest-check.json.
+Prints a table, writes renders/crest-check.json and renders/crest-downscale.png.
 
-1. Contrast: every colour a crest uses (other than white) is measured against white and against
-   the grey ground. Inside a crest, detail is always colour on white or white on colour, and
-   every crest's outer edge is coloured, so both pairs need >= 3:1 (WCAG 1.4.11, graphics).
-2. Greyscale: each crest is rendered at 96 px on white and turned to grey. For every pair we
-   count the pixels whose grey differs by more than a quarter of the range, as a share of the
-   area either crest covers. Under 15% means they'd be told apart mainly by colour: a fail.
-   Silhouette overlap (IoU) is reported too, for information.
+1. Contrast (WCAG 1.4.11 for graphics, 1.4.3 for lettering):
+   - the club colour against white and the grey ground: >= 3:1 (it forms each crest's edge)
+   - white on the club colour (symbols, ring lettering): >= 3:1
+   - lettering on ribbons, ink on gold or white on ink: >= 4.5:1
+   - crest gold against white is reported but not gated: it's an accent on ribbons and
+     keylines, and the club colour carries the edge.
+2. Greyscale: badges rendered at 28 px and full crests at 96 px, turned to grey. For every pair
+   we count the pixels whose grey differs by more than a quarter of the range, as a share of the
+   area either covers. Under 15% means they'd be told apart mainly by colour: a fail.
+3. YouTube downscale: each full crest at its 96 px video size is shrunk to what a 480p stream
+   keeps (x0.444, so about 43 px), saved as a JPEG at quality 30, and blown back up. The
+   greyscale test is repeated on those, and a strip is saved for the mockup.
 
     python web/assets-src/check_crests.py      (needs Pillow and the Chrome that render.sh uses)
 """
 
+import io
 import itertools
 import json
 import os
@@ -25,7 +31,19 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 CRESTS = HERE.parent / "src" / "assets" / "crests"
-GROUND = "#F2F2F7"
+RENDERS = HERE / "renders"
+GROUND, GOLD, INK, WHITE = "#F2F2F7", "#C9A13B", "#1D1D1F", "#FFFFFF"
+IDS = ["NGC", "KST", "RIV", "HAR", "ELM", "MIL", "ASH", "QNB"]
+PRIMARY = {  # keep equal to clubColours.ts
+    "NGC": "#1D4ED8",
+    "KST": "#8B1E3F",
+    "RIV": "#0F766E",
+    "HAR": "#A16207",
+    "ELM": "#166534",
+    "MIL": "#1C1917",
+    "ASH": "#A21CAF",
+    "QNB": "#4D7C0F",
+}
 
 
 def lum(hex_):
@@ -52,10 +70,18 @@ def chrome():
     return str(hits[-1])
 
 
-def mask(svg):
+def render(files, size):
+    """Render each SVG at `size` px on a transparent sheet in one Chrome run; return tiles."""
+    gap = 8
+    width = len(files) * (size + gap)
     with tempfile.TemporaryDirectory() as tmp:
         html = Path(tmp) / "c.html"
-        html.write_text(f'<body style="margin:0"><img src="file://{svg}" width="96" height="96">')
+        cells = "".join(
+            f'<img src="file://{f}" width="{size}" height="{size}" '
+            f'style="position:absolute;left:{i * (size + gap)}px;top:0">'
+            for i, f in enumerate(files)
+        )
+        html.write_text(f'<body style="margin:0;background:transparent">{cells}')
         png = Path(tmp) / "c.png"
         subprocess.run(
             [
@@ -65,75 +91,122 @@ def mask(svg):
                 "--force-device-scale-factor=1",
                 "--default-background-color=00000000",
                 "--allow-file-access-from-files",
-                "--window-size=96,96",
+                f"--window-size={max(width, 500)},{max(size, 100)}",
                 f"--screenshot={png}",
                 f"file://{html}",
             ],
             capture_output=True,
             check=False,
         )
-        im = Image.open(png).convert("RGBA")
-        white = Image.new("RGBA", im.size, "#FFFFFF")
-        grey = list(Image.alpha_composite(white, im).convert("L").getdata())
-        alpha = list(im.getchannel("A").getdata())
-        return {"shape": {i for i, v in enumerate(alpha) if v > 127}, "grey": grey}
+        sheet = Image.open(png).convert("RGBA")
+        step = size + gap
+        return [sheet.crop((i * step, 0, i * step + size, size)) for i in range(len(files))]
+
+
+def grey_and_shape(tile):
+    white = Image.new("RGBA", tile.size, WHITE)
+    grey = list(Image.alpha_composite(white, tile).convert("L").getdata())
+    shape = {i for i, v in enumerate(tile.getchannel("A").getdata()) if v > 127}
+    return grey, shape
+
+
+def pairs(tiles):
+    data = {cid: grey_and_shape(t) for cid, t in tiles.items()}
+    out = []
+    for a, b in itertools.combinations(IDS, 2):
+        union = data[a][1] | data[b][1]
+        diff = sum(1 for i in union if abs(data[a][0][i] - data[b][0][i]) > 64) / len(union)
+        out.append({"a": a, "b": b, "grey_differs": round(diff, 3)})
+    return sorted(out, key=lambda p: p["grey_differs"])
+
+
+def youtube(tile):
+    """96 px crest -> 480p size -> JPEG q30 -> back to 96 px. Returns (restored, small)."""
+    white = Image.new("RGBA", tile.size, WHITE)
+    rgb = Image.alpha_composite(white, tile).convert("RGB")
+    small = rgb.resize((43, 43), Image.LANCZOS)
+    buf = io.BytesIO()
+    small.save(buf, "JPEG", quality=30)
+    small = Image.open(buf).convert("RGB")
+    back = small.resize(tile.size, Image.BICUBIC).convert("RGBA")
+    back.putalpha(tile.getchannel("A"))
+    return back, small
+
+
+def contrast_row(c, used):
+    prim = PRIMARY[c]
+    row = {
+        "id": c,
+        "primary": prim,
+        "colours": sorted(used),
+        "primary_on_white": round(ratio(prim, WHITE), 2),
+        "primary_on_ground": round(ratio(prim, GROUND), 2),
+        "white_on_primary": round(ratio(WHITE, prim), 2),
+    }
+    if GOLD in used:
+        row["ink_on_gold"] = round(ratio(INK, GOLD), 2)
+        row["gold_on_white_accent"] = round(ratio(GOLD, WHITE), 2)
+    if INK in used:
+        row["white_on_ink"] = round(ratio(WHITE, INK), 2)
+    row["pass"] = (
+        min(row["primary_on_white"], row["primary_on_ground"], row["white_on_primary"]) >= 3
+        and row.get("ink_on_gold", 9) >= 4.5
+        and row.get("white_on_ink", 9) >= 4.5
+    )
+    return row
 
 
 def main():
-    rows, masks = [], {}
-    for svg in sorted(CRESTS.glob("*.svg")):
-        cid = svg.stem
-        text = svg.read_text()
-        used = sorted({c.upper() for c in re.findall(r'(?:fill|stroke)="(#[0-9A-Fa-f]{6})"', text)})
-        colours = [c for c in used if c != "#FFFFFF"]
-        primary = max(colours, key=lum)  # the field colour; darker ones are text
-        worst = min(colours, key=lambda c: ratio(c, GROUND))
-        rows.append(
-            {
-                "id": cid,
-                "primary": primary,
-                "colours": colours,
-                "grey_luminance": round(lum(primary), 3),
-                "symbol_on_primary": round(min(ratio("#FFFFFF", c) for c in colours), 2),
-                "edge_on_white": round(min(ratio(c, "#FFFFFF") for c in colours), 2),
-                "edge_on_ground": round(ratio(worst, GROUND), 2),
-            }
-        )
-        masks[cid] = mask(svg)
-    pairs = []
-    for a, b in itertools.combinations(masks, 2):
-        union = masks[a]["shape"] | masks[b]["shape"]
-        iou = len(masks[a]["shape"] & masks[b]["shape"]) / len(union)
-        ga, gb = masks[a]["grey"], masks[b]["grey"]
-        diff = sum(1 for i in union if abs(ga[i] - gb[i]) > 64) / len(union)
-        pairs.append(
-            {"a": a, "b": b, "grey_differs": round(diff, 3), "silhouette_iou": round(iou, 3)}
-        )
-    pairs.sort(key=lambda p: p["grey_differs"])
-    ok = all(
-        min(r["symbol_on_primary"], r["edge_on_white"], r["edge_on_ground"]) >= 3 for r in rows
-    )
-    ok_shape = pairs[0]["grey_differs"] >= 0.15
-    print(f"{'club':5}{'primary':9}{'grey L':>8}{'white/prim':>11}{'on white':>9}{'on ground':>10}")
+    full = {c: CRESTS / f"{c}.svg" for c in IDS}
+    badge = {c: CRESTS / f"{c}-badge.svg" for c in IDS}
+    rows = []
+    for c in IDS:
+        used = set()
+        for f in (full[c], badge[c]):
+            found = re.findall(r'(?:fill|stroke)="(#[0-9A-Fa-f]{6})"', f.read_text())
+            used |= {x.upper() for x in found}
+        rows.append(contrast_row(c, used))
+
+    badges28 = dict(zip(IDS, render([badge[c] for c in IDS], 28), strict=True))
+    full96 = dict(zip(IDS, render([full[c] for c in IDS], 96), strict=True))
+    yt = {c: youtube(full96[c]) for c in IDS}
+    p28, p96 = pairs(badges28), pairs(full96)
+    pyt = pairs({c: yt[c][0] for c in IDS})
+
+    # Strip for the mockup: per crest, the 96 px original, then its 480p+JPEG pixels at 96 px.
+    RENDERS.mkdir(exist_ok=True)
+    strip = Image.new("RGB", (len(IDS) * 208, 104), WHITE)
+    for i, c in enumerate(IDS):
+        w = Image.new("RGBA", (96, 96), WHITE)
+        strip.paste(Image.alpha_composite(w, full96[c]).convert("RGB"), (i * 208 + 4, 4))
+        strip.paste(yt[c][1].resize((96, 96), Image.NEAREST), (i * 208 + 106, 4))
+    strip.save(RENDERS / "crest-downscale.png")
+
+    ok_contrast = all(r["pass"] for r in rows)
+    lowest = min(p28[0]["grey_differs"], p96[0]["grey_differs"], pyt[0]["grey_differs"])
+    ok_grey = lowest >= 0.15
     for r in rows:
+        keys = ("ink_on_gold", "white_on_ink", "gold_on_white_accent")
+        extra = "".join(f"  {k}={r[k]}" for k in keys if k in r)
         print(
-            f"{r['id']:5}{r['primary']:9}{r['grey_luminance']:>8}{r['symbol_on_primary']:>11}"
-            f"{r['edge_on_white']:>9}{r['edge_on_ground']:>10}"
+            f"{r['id']}  on white {r['primary_on_white']}  on ground {r['primary_on_ground']}"
+            f"  white on it {r['white_on_primary']}{extra}"
         )
+    for label, ps in (("badges 28px", p28), ("full 96px", p96), ("after 480p+JPEG", pyt)):
+        top = ", ".join(f"{p['a']}/{p['b']} {p['grey_differs']:.0%}" for p in ps[:3])
+        print(f"closest in greyscale, {label}: {top}")
     print(
-        "closest pairs in greyscale (share of pixels that differ):",
-        ", ".join(f"{p['a']}/{p['b']} {p['grey_differs']:.0%}" for p in pairs[:3]),
+        "contrast", "PASS" if ok_contrast else "FAIL", "| greyscale", "PASS" if ok_grey else "FAIL"
     )
-    print(
-        "contrast", "PASS" if ok else "FAIL", "| greyscale shapes", "PASS" if ok_shape else "FAIL"
-    )
-    out = HERE / "renders" / "crest-check.json"
-    out.parent.mkdir(exist_ok=True)
-    out.write_text(
-        json.dumps({"contrast": rows, "greyscale_pairs": pairs, "pass": ok and ok_shape}, indent=2)
-        + "\n"
-    )
-    raise SystemExit(0 if ok and ok_shape else 1)
+    result = {
+        "contrast": rows,
+        "grey_badges_28": p28,
+        "grey_full_96": p96,
+        "grey_after_youtube": pyt,
+        "pass": ok_contrast and ok_grey,
+    }
+    (RENDERS / "crest-check.json").write_text(json.dumps(result, indent=2) + "\n")
+    raise SystemExit(0 if ok_contrast and ok_grey else 1)
 
 
 if __name__ == "__main__":
