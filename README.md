@@ -6,6 +6,13 @@ first whistle to the season table, in the viewer's language and at their depth.
 Our entry for the Microsoft × Premier League **Inside the Game** developer hackathon
 (*The Synthetic Match Insights Engine for Premier League Studio*). All match data is **synthetic**.
 
+**Try it: [match-room-preview.pages.dev](https://match-room-preview.pages.dev)**
+- It's a preview build that plays the saved synthetic match in your browser, with no backend
+  needed. It opens at kick-off at ×60, on desktop or phone.
+- The on-page controls play, pause, restart and switch speed. The top bar switches language and
+  casual / analyst.
+- The broadcast page with the pitch: [/overlay?minute=74&plate=1](https://match-room-preview.pages.dev/overlay?minute=74&plate=1).
+
 What it produces from a stream of synthetic events:
 
 1. **Live cards**: "why it matters" insights as they happen (a goal against the run of play, a

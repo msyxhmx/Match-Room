@@ -99,3 +99,63 @@
   outline: var(--stroke) solid var(--you-primary);
   outline-offset: var(--stroke);
 }
+
+/* ---- layout A "pitch stage" (25 Oct): top bar, the pitch with the score on it, the moment ---- */
+.screen[data-layout="pitch"] {
+  /* Three rows; on a phone the timeline adds a fourth (implicit, so the video frame's hidden
+     timeline costs no row gap). */
+  grid-template-rows: auto auto auto;
+  align-content: start;
+}
+
+.pitchTimeline {
+  min-width: 0;
+}
+:global(.video) .pitchTimeline {
+  display: none;
+}
+
+.pitchStage {
+  position: relative;
+  min-width: 0;
+}
+
+/* Phone: the score bar sits above the pitch. Video: it rides on the pitch, top left. */
+.pitchStage {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-1);
+}
+:global(.video) .pitchScore {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+}
+
+.pitchMoment {
+  min-width: 0;
+}
+
+/* The on-page controls on the video frame: bottom right of the pitch (phones pin their own). */
+.pitchControls {
+  display: none;
+}
+:global(.video) .pitchControls {
+  display: block;
+  position: absolute;
+  right: var(--space-2);
+  bottom: var(--space-2);
+}
+
+/* A phone held sideways: the score rides on the pitch, as on the video frame. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .pitchStage {
+    flex-direction: column;
+  }
+  .pitchScore {
+    position: absolute;
+    top: var(--space-1);
+    left: var(--space-1);
+    z-index: 1;
+  }
+}

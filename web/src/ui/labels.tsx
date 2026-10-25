@@ -13,6 +13,14 @@ const EN = {
   fullTimeLong: "Full-time",
   kickOff: "Kick-off",
   synthetic: "Synthetic data",
+  pitchNote: "Positions illustrative · events from the match feed",
+  replay: "Replay",
+  analystView: "Analyst view · team shape",
+  play: "Play",
+  pause: "Pause",
+  restart: "Restart from kick-off",
+  speedChoice: "Speed",
+  controls: "Match controls",
   following: "Following",
   casual: "Casual",
   analyst: "Analyst",
@@ -47,6 +55,7 @@ const EN = {
   loading: "Loading the match",
   reconnecting: "Reconnecting",
   offline: "Offline · showing saved match",
+  preview: "Preview · synthetic match",
   close: "Close",
   goals: "Goals",
   shots: "Shots",
@@ -87,6 +96,14 @@ const MS: Labels = {
   fullTimeLong: "Tamat perlawanan", // confirm
   kickOff: "Sepak mula", // Ilham to choose: or "Sepakan permulaan"
   synthetic: "Data sintetik", // confirm
+  pitchNote: "Kedudukan ilustrasi · peristiwa daripada suapan perlawanan", // confirm
+  replay: "Ulang tayang", // confirm
+  analystView: "Paparan analisis · bentuk pasukan", // confirm
+  play: "Main", // confirm
+  pause: "Jeda",
+  restart: "Mula semula dari sepak mula", // confirm
+  speedChoice: "Kelajuan",
+  controls: "Kawalan perlawanan", // confirm
   following: "Mengikuti", // confirm
   casual: "Kasual",
   analyst: "Penganalisis",
@@ -121,6 +138,7 @@ const MS: Labels = {
   loading: "Memuatkan perlawanan", // confirm
   reconnecting: "Menyambung semula", // confirm
   offline: "Luar talian · perlawanan yang disimpan", // confirm
+  preview: "Pratonton · perlawanan sintetik", // confirm
   close: "Tutup",
   goals: "Gol",
   shots: "Rembatan",
@@ -157,6 +175,14 @@ const ES: Labels = {
   fullTimeLong: "Final del partido",
   kickOff: "Saque inicial",
   synthetic: "Datos sintéticos",
+  pitchNote: "Posiciones ilustrativas · eventos del partido",
+  replay: "Repetición",
+  analystView: "Vista de analista · forma del equipo",
+  play: "Reproducir",
+  pause: "Pausa",
+  restart: "Reiniciar desde el saque inicial",
+  speedChoice: "Velocidad",
+  controls: "Controles del partido",
   following: "Siguiendo",
   casual: "Aficionado",
   analyst: "Analista",
@@ -191,6 +217,7 @@ const ES: Labels = {
   loading: "Cargando el partido",
   reconnecting: "Reconectando",
   offline: "Sin conexión · partido guardado",
+  preview: "Vista previa · partido sintético",
   close: "Cerrar",
   goals: "Goles",
   shots: "Tiros",

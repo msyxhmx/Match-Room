@@ -1,0 +1,259 @@
+{
+ "match_id": "SCN-comeback",
+ "minute": 0,
+ "clock": "00:00",
+ "period": "pre",
+ "home": {
+  "id": "NGC",
+  "name": "Northgate City",
+  "short_name": "NGC"
+ },
+ "away": {
+  "id": "KST",
+  "name": "Kingston Vale",
+  "short_name": "KST"
+ },
+ "score": {
+  "home": 0,
+  "away": 0
+ },
+ "meta": {
+  "venue": "Northgate Stadium",
+  "referee": "P. Okonjo",
+  "attendance": 23047,
+  "weather": "Clear",
+  "scenario": "comeback",
+  "scenario_title": "The comeback",
+  "synthetic": true
+ },
+ "profile": {
+  "persona": "analyst",
+  "language": "ms",
+  "team": "NGC",
+  "player": "L. Quinn"
+ },
+ "metrics": [
+  {
+   "key": "goals",
+   "label": "Gol",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Jumlah gol."
+  },
+  {
+   "key": "xg",
+   "label": "Jangkaan gol (xG)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Jumlah kualiti peluang bagi setiap rembatan: kebarangkalian rembatan itu menjadi gol."
+  },
+  {
+   "key": "shots",
+   "label": "Rembatan",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Semua percubaan ke arah gol."
+  },
+  {
+   "key": "sot",
+   "label": "Rembatan tepat",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Rembatan yang menjadi gol atau diselamatkan."
+  },
+  {
+   "key": "xt",
+   "label": "Jangkaan ancaman (xT)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Sejauh mana hantaran berjaya menaikkan peluang menjaringkan gol, daripada grid zon padang."
+  },
+  {
+   "key": "possession",
+   "label": "Penguasaan bola",
+   "home": 50.0,
+   "away": 50.0,
+   "unit": "%",
+   "definition": "Bahagian daripada semua hantaran."
+  },
+  {
+   "key": "field_tilt",
+   "label": "Kecondongan padang",
+   "home": 50.0,
+   "away": 50.0,
+   "unit": "%",
+   "definition": "Bahagian hantaran di sepertiga akhir."
+  },
+  {
+   "key": "pass_accuracy",
+   "label": "Ketepatan hantaran",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "%",
+   "definition": "Hantaran berjaya / hantaran dicuba."
+  },
+  {
+   "key": "avg_pass_length",
+   "label": "Purata jarak hantaran",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "m",
+   "definition": "Purata jarak hantaran yang dicuba."
+  },
+  {
+   "key": "pass_difficulty",
+   "label": "Purata kesukaran hantaran",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "%",
+   "definition": "Satu tolak kebarangkalian jangkaan hantaran berjaya."
+  },
+  {
+   "key": "ppda",
+   "label": "PPDA (tekanan)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Hantaran lawan yang dibenarkan bagi setiap tindakan bertahan di kawasan tinggi. Lebih rendah = tekanan lebih kuat."
+  },
+  {
+   "key": "pressures",
+   "label": "Tekanan",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Kali pemain menekan pembawa bola."
+  },
+  {
+   "key": "ball_wins",
+   "label": "Rampasan bola",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Terjahan dan pintasan."
+  },
+  {
+   "key": "top_shot_speed",
+   "label": "Rembatan terpantas",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "km/h",
+   "definition": "Kelajuan bola tertinggi bagi rembatan."
+  },
+  {
+   "key": "corners",
+   "label": "Sepakan sudut",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Sepakan sudut diperoleh."
+  },
+  {
+   "key": "fouls",
+   "label": "Kekasaran",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Kekasaran dilakukan."
+  }
+ ],
+ "control": {
+  "home_share": 0.5,
+  "chaos": 0.0,
+  "tempo": 0.0,
+  "momentum": 0.0,
+  "phase": "balanced",
+  "label": "Seimbang"
+ },
+ "projection": {
+  "home_win": 0.543,
+  "draw": 0.218,
+  "away_win": 0.24,
+  "drivers": [
+   {
+    "key": "score",
+    "label": "Kedudukan",
+    "value": "0-0"
+   },
+   {
+    "key": "minutes_left",
+    "label": "Minit berbaki",
+    "value": "90"
+   },
+   {
+    "key": "home_rate",
+    "label": "Jangkaan gol Northgate City setiap 90",
+    "value": "1.98"
+   },
+   {
+    "key": "away_rate",
+    "label": "Jangkaan gol Kingston Vale setiap 90",
+    "value": "1.25"
+   },
+   {
+    "key": "live_weight",
+    "label": "Pemberat data langsung",
+    "value": "0%"
+   }
+  ],
+  "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+ },
+ "series": {
+  "minute": [
+   0
+  ],
+  "momentum": [
+   0.0
+  ],
+  "control_home": [
+   0.5
+  ],
+  "chaos": [
+   0.0
+  ],
+  "home_win": [
+   0.543
+  ],
+  "draw": [
+   0.218
+  ],
+  "away_win": [
+   0.24
+  ]
+ },
+ "cards": [],
+ "overlays": [],
+ "focus_player": {
+  "name": "L. Quinn",
+  "number": 8,
+  "position": "MF",
+  "team_id": "NGC",
+  "side": "home",
+  "touches": 0,
+  "passes": 0,
+  "passes_completed": 0,
+  "pass_accuracy": 0,
+  "xt_added": 0.0,
+  "shots": 0,
+  "goals": 0,
+  "xg": 0.0,
+  "ball_wins": 0,
+  "pressures": 0,
+  "top_shot_speed_kmh": null,
+  "involvement": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "cards": []
+ },
+ "recent_events": []
+}

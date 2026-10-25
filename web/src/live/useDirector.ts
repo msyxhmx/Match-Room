@@ -22,6 +22,12 @@ export interface Direction {
   factsOpen: boolean;
   /** Bumps on every scene jump, so the same scene twice restarts the take. */
   epoch: number;
+  /** A director URL (it named a minute, speed or play state) rather than a plain visit. Plain
+   *  visits keep a bare address, so the link always opens at kick-off at ×60, and show the
+   *  on-page controls; director URLs are for recording and show none on the video frame. */
+  director: boolean;
+  /** `?rec=1`: recording, no on-page controls whatever the URL. */
+  rec: boolean;
 }
 
 const LANGUAGES: Language[] = ["en", "ms", "es"];
@@ -59,17 +65,26 @@ export function readDirection(search: string): Direction {
     playing: q.has("play") ? q.get("play") === "1" : !q.has("minute"),
     factsOpen: q.get("facts") === "1",
     epoch: 0,
+    director: q.has("minute") || q.has("speed") || q.has("play"),
+    rec: q.get("rec") === "1",
   };
 }
 
 function writeUrl(d: Direction) {
   const q = new URLSearchParams(location.search);
-  q.set("minute", String(d.minute));
-  q.set("speed", String(d.speed));
-  q.set("lang", d.profile.language);
-  q.set("persona", d.profile.persona);
-  q.set("play", d.playing ? "1" : "0");
-  history.replaceState(null, "", `${location.pathname}?${q}`);
+  if (d.director) {
+    q.set("minute", String(d.minute));
+    q.set("speed", String(d.speed));
+    q.set("play", d.playing ? "1" : "0");
+  }
+  // A plain visit keeps a bare address (language and persona only, and only when changed), so a
+  // refresh or a copied link opens at kick-off at ×60, playing.
+  if (d.director || d.profile.language !== "en") q.set("lang", d.profile.language);
+  else q.delete("lang");
+  if (d.director || d.profile.persona !== "casual") q.set("persona", d.profile.persona);
+  else q.delete("persona");
+  const s = q.toString();
+  history.replaceState(null, "", s ? `${location.pathname}?${s}` : location.pathname);
 }
 
 function typing(e: KeyboardEvent): boolean {
@@ -99,6 +114,18 @@ export function useDirector() {
     [update],
   );
   const setFacts = useCallback((open: boolean) => update((x) => ({ ...x, factsOpen: open })), [update]);
+  // The on-page controls (25 Oct: "every button on the page").
+  const togglePlay = useCallback(() => update((x) => ({ ...x, playing: !x.playing })), [update]);
+  const restart = useCallback(
+    () => update((x) => ({ ...x, minute: 0, playing: true, factsOpen: false, epoch: x.epoch + 1 })),
+    [update],
+  );
+  /** A new speed, carrying on from the minute on screen. */
+  const setSpeed = useCallback(
+    (speed: number, fromMinute: number) =>
+      update((x) => (x.speed === speed ? x : { ...x, speed, minute: fromMinute, epoch: x.epoch + 1 })),
+    [update],
+  );
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -123,5 +150,5 @@ export function useDirector() {
 
   useEffect(() => writeUrl(d), [d]);
 
-  return { ...d, nextLanguage, togglePersona, setFacts };
+  return { ...d, nextLanguage, togglePersona, setFacts, togglePlay, restart, setSpeed };
 }

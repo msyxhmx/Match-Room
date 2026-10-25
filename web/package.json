@@ -6,13 +6,18 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:preview": "tsc -b && VITE_PREVIEW=1 vite build",
+    "dev:preview": "VITE_PREVIEW=1 vite",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "check:tokens": "node scripts/check-tokens.mjs",
     "check:raw": "node scripts/check-raw-values.mjs",
     "shots": "node scripts/shots.mjs",
     "flows": "node scripts/flows.mjs",
-    "motion": "node scripts/motion.mjs"
+    "motion": "node scripts/motion.mjs",
+    "test:pitch": "node scripts/pitch-test.mjs",
+    "film:pitch": "node scripts/pitch-film.mjs",
+    "perf:pitch": "node scripts/pitch-perf.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.61.0",

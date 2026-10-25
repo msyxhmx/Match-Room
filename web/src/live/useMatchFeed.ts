@@ -13,10 +13,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { api, liveApi } from "../api";
-import type { LiveSnapshot, MatchBrief, Profile, StreamMessage, StreamTick } from "../types/live";
-import { applyBrief, applyTick, fromSnapshot, relabel, replay, sameProfile, type MatchView } from "./feed";
+import type { MatchEvent } from "../types/halftime";
+import type { Lineups, LiveSnapshot, MatchBrief, Profile, StreamMessage, StreamTick } from "../types/live";
+import { addEvents, applyBrief, applyTick, fromSnapshot, relabel, replay, sameProfile, type MatchView } from "./feed";
 
-export type Connection = "live" | "reconnecting" | "offline";
+export type Connection = "live" | "reconnecting" | "offline" | "preview";
+
+/** Preview build (`npm run build:preview`): play the saved synthetic match, never call the API. */
+const PREVIEW = import.meta.env.VITE_PREVIEW === "1";
 
 export interface FeedState {
   view: MatchView | null;
@@ -47,22 +51,35 @@ interface Saved {
   ticks: StreamTick[];
   halftime: MatchBrief;
   fulltime: MatchBrief;
+  events: MatchEvent[];
+  lineups: Lineups;
 }
 
-/** The recorded stream (scripts/export_lab_fixtures.py), loaded only when the API is down. */
-async function loadSaved(): Promise<Saved> {
-  const [start, ticks, halftime, fulltime] = await Promise.all([
-    import("./saved/snapshot.0.json"),
-    import("./saved/ticks.json"),
-    import("./saved/brief.halftime.json"),
-    import("./saved/brief.fulltime.json"),
+// One recorded set per language and persona (en-casual is the top-level set). Lazy: a build
+// ships them as separate chunks and the page fetches only the ones it shows.
+const PROFILE_FILES = import.meta.glob("./saved/profiles/*/*.json", { import: "default" });
+
+async function profileFile<T>(p: Profile, name: string, fallback: () => Promise<{ default: unknown }>): Promise<T> {
+  const load = PROFILE_FILES[`./saved/profiles/${p.language}-${p.persona}/${name}`];
+  return (load ? await load() : (await fallback()).default) as T;
+}
+
+let sharedSaved: Promise<[MatchEvent[], Lineups]> | null = null;
+
+/** The recorded stream (scripts/export_lab_fixtures.py) in this profile's words. Loaded only when
+ * the API is down or in preview. Events and squads are the same in every language. */
+async function loadSaved(p: Profile): Promise<Saved> {
+  sharedSaved ??= Promise.all([import("./saved/events.json"), import("./saved/lineups.json")]).then(
+    ([e, l]) => [e.default as unknown as MatchEvent[], l.default as unknown as Lineups],
+  );
+  const [start, ticks, halftime, fulltime, [events, lineups]] = await Promise.all([
+    profileFile<LiveSnapshot>(p, "snapshot.0.json", () => import("./saved/snapshot.0.json")),
+    profileFile<StreamTick[]>(p, "ticks.json", () => import("./saved/ticks.json")),
+    profileFile<MatchBrief>(p, "brief.halftime.json", () => import("./saved/brief.halftime.json")),
+    profileFile<MatchBrief>(p, "brief.fulltime.json", () => import("./saved/brief.fulltime.json")),
+    sharedSaved,
   ]);
-  return {
-    start: start.default as unknown as LiveSnapshot,
-    ticks: ticks.default as unknown as StreamTick[],
-    halftime: halftime.default as unknown as MatchBrief,
-    fulltime: fulltime.default as unknown as MatchBrief,
-  };
+  return { start, ticks, halftime, fulltime, events, lineups };
 }
 
 function profileQuery(p: Profile) {
@@ -105,6 +122,13 @@ class FeedController {
   // ---------- loading ----------
 
   async load() {
+    if (PREVIEW) {
+      await this.goOffline();
+      if (this.disposed) return;
+      this.loadTrace();
+      if (this.wantPlay) this.play();
+      return;
+    }
     try {
       const v = await this.fetchAt(this.startMinute, this.profile);
       if (this.disposed) return;
@@ -121,13 +145,16 @@ class FeedController {
   /** Everything a screen needs at minute m, from the API. */
   private async fetchAt(m: number, p: Profile): Promise<MatchView> {
     const q = profileQuery(p);
-    const [snap, overlays, ht, ft] = await Promise.all([
+    const [snap, overlays, ht, ft, events, lineups] = await Promise.all([
       liveApi.snapshot(this.matchId, m, q),
       liveApi.overlays(this.matchId, m, q),
       m >= HALF ? liveApi.brief(this.matchId, "halftime", q) : null,
       m >= FULL ? liveApi.brief(this.matchId, "fulltime", q) : null,
+      // The pitch is a bonus: if either call fails, carry on without it.
+      m >= 1 ? api.events(this.matchId, m).catch(() => [] as MatchEvent[]) : ([] as MatchEvent[]),
+      liveApi.lineups(this.matchId).catch(() => null),
     ]);
-    let v = { ...fromSnapshot(snap), overlays };
+    let v = { ...fromSnapshot(snap), overlays, events, lineups };
     if (ht) v = applyBrief(v, ht);
     if (ft) v = applyBrief(v, ft);
     return v;
@@ -136,13 +163,13 @@ class FeedController {
   private async goOffline() {
     this.closeStream();
     this.offline = true;
-    this.connection = "offline";
-    this.saved ??= await loadSaved();
+    this.connection = PREVIEW ? "preview" : "offline";
+    this.saved ??= await loadSaved(this.profile);
     if (this.disposed) return;
     // Keep our place: the saved match picks up at the minute we're on.
     const at = this.view?.minute ?? this.startMinute;
     const kept = this.view;
-    const v = replay(this.saved.start, this.saved.ticks, at, this.saved);
+    const v = replay(this.saved.start, this.saved.ticks, at, this.saved, this.saved);
     this.set(kept ? { ...v, agentTrace: kept.agentTrace } : v);
   }
 
@@ -265,9 +292,9 @@ class FeedController {
   /** Offline: the saved match at the same pace as the stream. */
   private stepSaved() {
     this.clearTimer();
-    const saved = this.saved!;
     const tick = () => {
       if (!this.running || !this.view) return;
+      const saved = this.saved!; // read each minute: a profile switch swaps the set under us
       const next = saved.ticks.find((t) => t.minute === this.view!.minute + 1);
       if (!next) {
         this.running = false;
@@ -275,6 +302,8 @@ class FeedController {
         return;
       }
       let v = applyTick(this.view, next);
+      // The saved ticks carry no events: take that minute's from the recorded list.
+      v = { ...v, events: addEvents(v.events, saved.events.filter((e) => e.minute === next.minute)) };
       if (next.minute === HALF) v = applyBrief(v, saved.halftime);
       if (next.minute === FULL) v = applyBrief(v, saved.fulltime);
       this.set(v);
@@ -291,7 +320,21 @@ class FeedController {
   setProfile(p: Profile) {
     if (sameProfile(p, this.profile)) return;
     this.profile = p;
-    if (!this.view || this.offline) return; // the saved match has one language
+    if (!this.view) return;
+    if (this.offline) {
+      // Saved match (offline or preview): load this profile's recorded set, rebuild the view at
+      // the minute we're on, and relabel so the card cross-fades like the online path.
+      const at = this.view.minute;
+      loadSaved(p)
+        .then((saved) => {
+          if (this.disposed || !this.view || !sameProfile(p, this.profile)) return;
+          this.saved = saved;
+          const fresh = replay(saved.start, saved.ticks, at, saved, saved);
+          this.set(relabel(this.view, fresh));
+        })
+        .catch(() => undefined);
+      return;
+    }
     this.ws?.readyState === WebSocket.OPEN && this.ws.send(JSON.stringify({ profile: p }));
     const at = this.view.minute;
     this.fetchAt(at, p)

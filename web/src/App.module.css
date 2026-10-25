@@ -43,3 +43,27 @@
   width: 100%;
   height: 100%;
 }
+
+/* The on-page controls on a phone: pinned to the bottom, clear of the home indicator. The
+   video frame shows its own copy on the pitch (LiveScreen), so this one hides there. */
+.phoneControls {
+  position: fixed;
+  left: max(var(--gutter), env(safe-area-inset-left));
+  right: max(var(--gutter), env(safe-area-inset-right));
+  bottom: calc(var(--space-2) + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+:global(.video) .phoneControls {
+  display: none;
+}
+/* Room under the page so its end never hides behind the bar (48 + 8 + 8, then 16 air). */
+.phone {
+  padding-bottom: calc(var(--space-6) + var(--space-4) + env(safe-area-inset-bottom));
+}
+
+/* A phone held sideways: little height, so the controls are a compact bar in the corner. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .phoneControls {
+    left: auto;
+  }
+}

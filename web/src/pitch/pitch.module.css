@@ -1,0 +1,98 @@
+/* The pitch layer, on the plate only (DESIGN §9.6: the agreed exception to "four things move"). */
+
+.pitch {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Small and calm, beside the graphics: the dots are illustration, the events are real. */
+/* Top right: the score bug owns the top left, the graphics the bottom. */
+.labels {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--safe-x);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-1);
+}
+
+.note {
+  padding: var(--space-half) var(--space-2);
+  border-radius: var(--radius-pill);
+  font: var(--type-caption2);
+  color: var(--you-tag-on-fill);
+  background: var(--you-tag-fill);
+}
+
+.chip {
+  padding: var(--space-half) var(--space-2);
+  border-radius: var(--radius-pill);
+  font: var(--type-caption2);
+  color: var(--you-tag-on-fill);
+  background: var(--you-tag-fill);
+}
+
+.replay {
+  padding: var(--space-half) var(--space-2);
+  border-radius: var(--radius-pill);
+  font: var(--type-caption1);
+  font-variant-numeric: var(--numeric);
+  color: var(--you-tag-on-fill);
+  background: var(--you-tag-fill);
+}
+
+/* ---- the pitch inside a page (PitchView): the plate, cropped to the pitch ---- */
+.view {
+  position: relative;
+  width: 100%;
+  /* The crop: paint containment clips the 1920 × 1080 plate to this box without making it
+     overflow content (nothing here scrolls or is cut text). */
+  contain: paint;
+  clip-path: inset(0 round var(--radius-card));
+}
+
+/* Too small for in-picture labels (a phone): they sit in a row under the pitch instead. */
+.captionRow {
+  margin-top: var(--space-1);
+}
+.captionLabels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+.captionLabels .note,
+.captionLabels .chip,
+.captionLabels .replay {
+  font: var(--type-caption1);
+}
+
+/* Follow camera: the box is the plate; the canvas draws it. */
+.view[data-follow="true"] {
+  background: var(--surface-fill);
+}
+
+.viewInner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+  background: url("/plates/pitch.png") 0 0 / 1920px 1080px no-repeat;
+}
+
+/* Inside a page the labels sit just under the crop's top edge. */
+.view .labels {
+  top: calc(328px + var(--space-2));
+  transform-origin: 100% 0;
+}
