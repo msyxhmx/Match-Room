@@ -54,11 +54,13 @@
   margin-block: var(--space-2) var(--space-1);
 }
 
+/* The fill spans the track and is clipped to the chance (--to), so it can sweep from --from
+   without animating layout. inset(… round) keeps the pill ends round at any length. */
 .fill {
   position: absolute;
-  inset: 0 auto 0 0;
-  border-radius: var(--radius-pill);
+  inset: 0;
   background: var(--home-primary);
+  clip-path: inset(0 calc(100% - var(--to)) 0 0 round var(--radius-pill));
 }
 .root[data-side="away"] .fill {
   background: var(--away-primary);
@@ -77,4 +79,31 @@
 .note {
   font: var(--type-caption2);
   color: var(--text-secondary);
+}
+
+/* ---- Motion (step 8): the chance swing fills from before to after, last in the goal's
+   sequence (score, card, swing). Under reduced motion it fades in at its final length. */
+.track[data-state="from"] .fill {
+  animation: swing-fill var(--duration-sheet) var(--ease-standard) calc(var(--stagger) * 2.5) both;
+}
+@keyframes swing-fill {
+  from {
+    clip-path: inset(0 calc(100% - var(--from)) 0 0 round var(--radius-pill));
+  }
+}
+:global([data-motion="broadcast"]) .track[data-state="from"] .fill {
+  animation-timing-function: var(--ease-spring-firm);
+}
+:global([data-motion="pitch"]) .track[data-state="from"] .fill {
+  animation-timing-function: var(--ease-spring);
+}
+@media (prefers-reduced-motion: reduce) {
+  .track[data-state="from"] .fill {
+    animation-name: swing-fade;
+  }
+}
+@keyframes swing-fade {
+  from {
+    opacity: 0;
+  }
 }

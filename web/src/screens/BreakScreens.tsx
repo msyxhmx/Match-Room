@@ -15,6 +15,7 @@ import { scorersFrom } from "../ui/format";
 import { useLabels } from "../ui/labels";
 import type { MatchView } from "../live/feed";
 import type { Connection } from "../live/useMatchFeed";
+import { useLastFacts } from "./LiveScreen";
 import styles from "./screens.module.css";
 
 interface BreakProps {
@@ -71,6 +72,7 @@ export function pointAsCard(point: BriefPoint, view: MatchView): LiveCard {
 
 export function HalfTimeScreen(props: BreakProps & { revealed?: number }) {
   const { view, facts, revealed } = props;
+  const sheetCard = useLastFacts(facts);
   const brief = view.halftime!;
   const labels = useLabels();
   // A real trace can be longer than the column: keep the newest step in view, like a log.
@@ -99,13 +101,14 @@ export function HalfTimeScreen(props: BreakProps & { revealed?: number }) {
           </div>
         )}
       </div>
-      {facts && <FactsSheet open card={facts} note={view.projection.note} onClose={props.onCloseFacts} />}
+      {sheetCard && <FactsSheet open={!!facts} card={sheetCard} note={view.projection.note} onClose={props.onCloseFacts} />}
     </div>
   );
 }
 
 export function FullTimeScreen(props: BreakProps) {
   const { view, facts } = props;
+  const sheetCard = useLastFacts(facts);
   const brief = view.fulltime!;
   const note = view.projection.note;
   return (
@@ -141,7 +144,7 @@ export function FullTimeScreen(props: BreakProps) {
         title={view.control.label}
         note={note}
       />
-      {facts && <FactsSheet open card={facts} note={note} onClose={props.onCloseFacts} />}
+      {sheetCard && <FactsSheet open={!!facts} card={sheetCard} note={note} onClose={props.onCloseFacts} />}
     </div>
   );
 }

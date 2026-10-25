@@ -28,6 +28,8 @@ export interface MomentCardProps {
   onOpenFacts?: () => void;
   /** The screen sets this for the moment a new card takes the stage (step 8 animates it). */
   arriving?: boolean;
+  /** The same card in new words (a language or persona switch): the text cross-fades. */
+  relabel?: boolean;
   loading?: boolean;
   empty?: boolean;
 }
@@ -50,6 +52,7 @@ export function MomentCard({
   note,
   onOpenFacts,
   arriving,
+  relabel,
   loading,
   empty,
 }: MomentCardProps) {
@@ -121,7 +124,7 @@ export function MomentCard({
 
   const swingEl = showSwing && (
     <div className={styles.swing}>
-      <ChanceSwing team={team} side={side} swing={swing} note={note} numbers={!sayNumbers} />
+      <ChanceSwing team={team} side={side} swing={swing} note={note} numbers={!sayNumbers} arriving={arriving} />
     </div>
   );
 
@@ -144,6 +147,8 @@ export function MomentCard({
       <article
         className={styles.card}
         data-state={state}
+        data-text={relabel ? "relabel" : undefined}
+        data-side={side ?? "none"}
         data-glow={glow}
         data-type={card.type}
         data-has-why={hasWhy}

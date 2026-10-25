@@ -2,6 +2,7 @@
 // timeline. Pure: the container (MatchScreen) decides which card is on stage and when it is
 // arriving; this only places the parts.
 
+import { useRef } from "react";
 import type { Team } from "../types/halftime";
 import type { LiveCard } from "../types/live";
 import { FactsSheet, MomentCard, ScoreHeader, Timeline, TopBar } from "../ui";
@@ -17,6 +18,8 @@ export interface LiveScreenProps {
   /** The card on stage (the moment rule, or a pin the viewer picked). */
   stage: LiveCard | null;
   arriving?: boolean;
+  /** The stage card was just re-worded (language or persona switch). */
+  relabel?: boolean;
   scoredSide?: "home" | "away";
   /** The card whose facts are open, if any. */
   facts?: LiveCard | null;
@@ -32,8 +35,16 @@ export function teamOf(view: Pick<MatchView, "home" | "away">, card: Pick<LiveCa
   return card.side === "home" ? view.home : card.side === "away" ? view.away : undefined;
 }
 
+/** The last card whose facts were open, so the sheet can play its closing motion. */
+export function useLastFacts(facts: LiveCard | null | undefined): LiveCard | null {
+  const last = useRef<LiveCard | null>(null);
+  if (facts) last.current = facts;
+  return last.current;
+}
+
 export function LiveScreen(props: LiveScreenProps) {
-  const { view, speed, connection, stage, arriving, scoredSide, facts } = props;
+  const { view, speed, connection, stage, arriving, relabel, scoredSide, facts } = props;
+  const sheetCard = useLastFacts(facts);
   const note = view.projection.note;
   const you = view.profile.team === view.away.id ? view.away : view.home;
 
@@ -67,6 +78,7 @@ export function LiveScreen(props: LiveScreenProps) {
             team={stage ? teamOf(view, stage) : undefined}
             note={note}
             arriving={arriving}
+            relabel={relabel}
             empty={!stage && !props.loading}
             loading={props.loading}
             onOpenFacts={stage && props.onOpenFacts ? () => props.onOpenFacts!(stage) : undefined}
@@ -82,7 +94,7 @@ export function LiveScreen(props: LiveScreenProps) {
         title={view.control.label}
         loading={props.loading}
       />
-      {facts && <FactsSheet open card={facts} note={note} onClose={props.onCloseFacts} />}
+      {sheetCard && <FactsSheet open={!!facts} card={sheetCard} note={note} onClose={props.onCloseFacts} />}
     </div>
   );
 }

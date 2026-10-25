@@ -10,7 +10,9 @@
     "typecheck": "tsc -b --noEmit",
     "check:tokens": "node scripts/check-tokens.mjs",
     "check:raw": "node scripts/check-raw-values.mjs",
-    "shots": "node scripts/shots.mjs"
+    "shots": "node scripts/shots.mjs",
+    "flows": "node scripts/flows.mjs",
+    "motion": "node scripts/motion.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.61.0",

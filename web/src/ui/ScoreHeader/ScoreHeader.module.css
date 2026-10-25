@@ -237,3 +237,58 @@
     align-self: center;
   }
 }
+
+/* ---- Motion (step 8): a goal. The new number is a new element, so this plays once. ----
+   clip-path (not overflow) clips the roll without moving the digits' baseline. */
+.clip {
+  display: inline-block;
+  clip-path: inset(0);
+}
+.digit {
+  display: inline-block;
+  position: relative;
+}
+/* The old number, parked just above the new one; only the broadcast roll brings it into view. */
+.digit::before {
+  content: attr(data-prev);
+  position: absolute;
+  inset: auto 0 100% 0;
+  visibility: hidden;
+}
+
+/* Calm: the new number fades up into place. */
+.digit[data-state="scored"] {
+  animation: digit-rise var(--duration-quick) var(--ease-standard) both;
+}
+@keyframes digit-rise {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-2) * var(--motion-travel)));
+  }
+}
+
+/* Broadcast: an odometer roll, the old number leaving upwards as the new one comes up.
+   Under reduced motion nothing travels, so the new number fades in instead. */
+:global([data-motion="broadcast"]) .digit[data-state="scored"] {
+  animation: digit-roll var(--duration-moment) var(--ease-spring-firm) both;
+}
+:global([data-motion="broadcast"]) .digit[data-state="scored"]::before {
+  visibility: visible;
+}
+@keyframes digit-roll {
+  from {
+    opacity: var(--motion-travel);
+    transform: translateY(calc(100% * var(--motion-travel)));
+  }
+}
+
+/* Pitch: a goal rises, further and on the gentle spring. */
+:global([data-motion="pitch"]) .digit[data-state="scored"] {
+  animation: digit-lift var(--duration-moment) var(--ease-spring) both;
+}
+@keyframes digit-lift {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-6) * var(--motion-travel)));
+  }
+}

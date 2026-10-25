@@ -4,7 +4,7 @@
 //
 // The containers here hold the timers and the state; the screens in src/screens are pure.
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { clubSlots } from "./clubColours";
 import { nowSeconds } from "./live/feed";
 import { pickStage } from "./live/stage";
@@ -12,7 +12,7 @@ import { useDirector } from "./live/useDirector";
 import { useMatchFeed } from "./live/useMatchFeed";
 import { moreImportant, overlayAt, OverlayScreen } from "./screens/OverlayScreen";
 import { MatchScreen } from "./screens/MatchScreen";
-import type { LiveCard, OverlayMessage } from "./types/live";
+import type { LiveCard, OverlayMessage, Score } from "./types/live";
 import { LabelsProvider } from "./ui/labels";
 import styles from "./App.module.css";
 
@@ -25,6 +25,9 @@ const ARRIVAL_MS = 1200;
 const TRACE_STEP_MS = 700;
 /** Overlay graphics stay up at least this long, whatever the speed. */
 const OVERLAY_MIN_MS = 4000;
+
+/** The motion feel (step 8). ?motion=calm|broadcast|pitch overrides it, for the gallery. */
+const MOTION = "calm";
 
 const reducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 
@@ -44,6 +47,7 @@ function useWindowSize() {
  */
 function Frame({ clubs, transparent, children }: { clubs: [string, string, string]; transparent?: boolean; children: ReactNode }) {
   const { width, height } = useWindowSize();
+  const motion = new URLSearchParams(location.search).get("motion") ?? MOTION;
   const phone = width < PHONE_MAX;
   const zoom = phone ? 1 : Math.min(width / VIDEO.width, height / VIDEO.height);
   return (
@@ -51,6 +55,7 @@ function Frame({ clubs, transparent, children }: { clubs: [string, string, strin
       <div
         className={`mr-root ${phone ? styles.phone : `video ${styles.video}`}`}
         data-transparent={transparent ? "true" : undefined}
+        data-motion={motion}
         style={{ ...clubSlots(...clubs), ...(phone ? {} : { zoom }) }}
       >
         {children}
@@ -59,11 +64,14 @@ function Frame({ clubs, transparent, children }: { clubs: [string, string, strin
   );
 }
 
-/** True for a while after `key` changes, but only while the match is moving. */
+/**
+ * True for a while after `key` changes, but only while the match is moving. A layout effect, so
+ * the flag is set before the new content's first paint: no frame of it shows before its motion.
+ */
 function useJustChanged(key: string | null | undefined, live: boolean, ms = ARRIVAL_MS): boolean {
   const [on, setOn] = useState(false);
   const last = useRef(key);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (key === last.current) return;
     last.current = key;
     if (!live || !key) return;
@@ -71,6 +79,39 @@ function useJustChanged(key: string | null | undefined, live: boolean, ms = ARRI
     const t = setTimeout(() => setOn(false), ms);
     return () => clearTimeout(t);
   }, [key, live, ms]);
+  return on;
+}
+
+/** The side whose score just went up, for a while after, while the match is moving. */
+function useScored(score: Score | undefined, live: boolean): "home" | "away" | undefined {
+  const [side, setSide] = useState<"home" | "away">();
+  const last = useRef(score);
+  useLayoutEffect(() => {
+    const before = last.current;
+    last.current = score;
+    if (!live || !before || !score) return;
+    const up = score.home > before.home ? "home" : score.away > before.away ? "away" : undefined;
+    if (!up) return;
+    setSide(up);
+    const t = setTimeout(() => setSide(undefined), ARRIVAL_MS);
+    return () => clearTimeout(t);
+  }, [score?.home, score?.away, live]); // eslint-disable-line react-hooks/exhaustive-deps
+  return side;
+}
+
+/** True for a while after the same card comes back in new words (a language or persona switch). */
+function useReworded(card: LiveCard | null): boolean {
+  const [on, setOn] = useState(false);
+  const last = useRef(card);
+  useLayoutEffect(() => {
+    const prev = last.current;
+    last.current = card;
+    if (!prev || !card || prev.insight_id !== card.insight_id) return;
+    if (prev.language === card.language && prev.persona === card.persona) return;
+    setOn(true);
+    const t = setTimeout(() => setOn(false), ARRIVAL_MS);
+    return () => clearTimeout(t);
+  }, [card]);
   return on;
 }
 
@@ -86,17 +127,8 @@ function LivePage() {
   const stage = (pinned && view?.cards.find((c) => c.insight_id === pinned)) || ruled;
 
   const arriving = useJustChanged(ruled?.insight_id, running);
-  const scoreKey = view ? `${view.score.home}-${view.score.away}` : null;
-  const scored = useJustChanged(scoreKey, running);
-  const [scoredSide, setScoredSide] = useState<"home" | "away">();
-  const prevScore = useRef(view?.score);
-  useEffect(() => {
-    const before = prevScore.current;
-    prevScore.current = view?.score;
-    if (!before || !view) return;
-    if (view.score.home > before.home) setScoredSide("home");
-    else if (view.score.away > before.away) setScoredSide("away");
-  }, [scoreKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  const reworded = useReworded(stage);
+  const scoredSide = useScored(view?.score, running);
 
   // Half-time: the agents' steps appear one by one (all at once under reduced motion).
   const steps = view?.agentTrace?.length ?? 0;
@@ -138,7 +170,8 @@ function LivePage() {
             connection={connection}
             stage={stage}
             arriving={arriving}
-            scoredSide={scored ? scoredSide : undefined}
+            relabel={reworded}
+            scoredSide={scoredSide}
             facts={facts}
             revealed={revealed}
             onOpenFacts={openFacts}

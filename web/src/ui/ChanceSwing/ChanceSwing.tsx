@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import type { CSSProperties } from "react";
 import type { Side, Team } from "../../types/halftime";
 import type { Swing } from "../format";
 import { Icon } from "../Icon/Icon";
@@ -13,11 +14,13 @@ export interface ChanceSwingProps {
   note: string;
   /** Draw the big before → after numbers. False when the sentence above already says them. */
   numbers?: boolean;
+  /** The card just arrived: the bar fills from `before` to `after` (step 8). */
+  arriving?: boolean;
 }
 
 const pct = (v: string) => `${Math.min(100, Math.max(0, parseFloat(v)))}%`;
 
-export function ChanceSwing({ team, side, swing, note, numbers = true }: ChanceSwingProps) {
+export function ChanceSwing({ team, side, swing, note, numbers = true, arriving }: ChanceSwingProps) {
   const labels = useLabels();
   return (
     <div className={styles.root} data-side={side} data-rising={swing.rising} data-numbers={numbers}>
@@ -32,8 +35,13 @@ export function ChanceSwing({ team, side, swing, note, numbers = true }: ChanceS
           <span className={styles.after}>{swing.after}</span>
         </p>
       )}
-      <div className={styles.track} aria-hidden="true" data-state="to">
-        <span className={styles.fill} style={{ width: pct(swing.after) }} />
+      <div
+        className={styles.track}
+        aria-hidden="true"
+        data-state={arriving ? "from" : "to"}
+        style={{ "--from": pct(swing.before), "--to": pct(swing.after) } as CSSProperties}
+      >
+        <span className={styles.fill} />
         <span className={styles.tick} style={{ left: pct(swing.before) }} />
       </div>
       <p className={styles.note} data-role="projection-note">

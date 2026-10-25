@@ -51,6 +51,26 @@ function Side({
   );
 }
 
+/**
+ * One side's score. A new value is a new element (keyed), so its motion plays once when the
+ * goal goes in and never replays. `data-prev` lets the roll show the old number leaving.
+ */
+function Digit({ value, dim, scored }: { value: number; dim: boolean; scored: boolean }) {
+  return (
+    <span className={styles.clip}>
+      <span
+        key={value}
+        className={styles.digit}
+        data-dim={dim ? "true" : undefined}
+        data-state={scored ? "scored" : undefined}
+        data-prev={scored ? value - 1 : undefined}
+      >
+        {value}
+      </span>
+    </span>
+  );
+}
+
 export function ScoreHeader({
   home,
   away,
@@ -93,9 +113,9 @@ export function ScoreHeader({
       <Side side="home" team={home} scorers={scorers?.home ?? []} scored={scoredSide === "home"} />
       <div className={styles.centre}>
         <p className={styles.score} data-pre={pre ? "true" : undefined} aria-hidden="true">
-          <span data-dim={homeDim ? "true" : undefined}>{score.home}</span>
+          <Digit value={score.home} dim={homeDim} scored={scoredSide === "home"} />
           <span className={styles.dash}>–</span>
-          <span data-dim={awayDim ? "true" : undefined}>{score.away}</span>
+          <Digit value={score.away} dim={awayDim} scored={scoredSide === "away"} />
         </p>
         <div className={styles.status}>
           {live && (

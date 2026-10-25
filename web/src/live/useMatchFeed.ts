@@ -106,10 +106,14 @@ class FeedController {
 
   async load() {
     try {
-      this.set(await this.fetchAt(this.startMinute, this.profile));
+      const v = await this.fetchAt(this.startMinute, this.profile);
+      if (this.disposed) return;
+      this.set(v);
     } catch {
+      if (this.disposed) return;
       await this.goOffline();
     }
+    if (this.disposed) return; // a jump replaced us while we loaded: never open a stream
     this.loadTrace();
     if (this.wantPlay) this.play();
   }
@@ -164,7 +168,7 @@ class FeedController {
   }
 
   private play() {
-    if (this.running || !this.view || this.view.minute >= FULL) return;
+    if (this.disposed || this.running || !this.view || this.view.minute >= FULL) return;
     this.running = true;
     this.publish();
     if (this.offline) this.stepSaved();

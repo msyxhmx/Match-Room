@@ -100,3 +100,44 @@
   overflow-y: auto;
   font: var(--type-body);
 }
+
+/* ---- Motion (step 8): the sheet rises over a fading scrim, and drops away on close. ---- */
+.root[data-state="closed"] {
+  pointer-events: none;
+}
+.root[data-state="open"] .scrim {
+  animation: scrim-in var(--duration-sheet) var(--ease-standard) both;
+}
+.root[data-state="open"] .panel {
+  animation: sheet-in var(--duration-sheet) var(--ease-spring) both;
+}
+.root[data-state="closed"] .scrim {
+  animation: scrim-out var(--duration-quick) var(--ease-standard) both;
+}
+.root[data-state="closed"] .panel {
+  animation: sheet-out var(--duration-quick) var(--ease-standard) both;
+}
+@keyframes scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes scrim-out {
+  to {
+    opacity: 0;
+  }
+}
+/* Opacity is the travel (1, or 0 under reduced motion): with motion it only slides; without,
+   nothing travels and it fades instead. */
+@keyframes sheet-in {
+  from {
+    opacity: var(--motion-travel);
+    transform: translateY(calc(100% * var(--motion-travel)));
+  }
+}
+@keyframes sheet-out {
+  to {
+    opacity: var(--motion-travel);
+    transform: translateY(calc(100% * var(--motion-travel)));
+  }
+}

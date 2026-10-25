@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { useEffect, useId, useRef, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { Icon } from "../Icon/Icon";
 import { useLabels } from "../labels";
 import styles from "./Sheet.module.css";
@@ -19,11 +19,23 @@ export function Sheet({ open, onClose, title, detent = "medium", children }: She
   const panel = useRef<HTMLDivElement>(null);
   const titleId = useId();
 
+  // Closing plays its motion before the sheet leaves: `shown` outlives `open` until the
+  // panel's animation ends (or at once, when nothing animates).
+  const [shown, setShown] = useState(open);
+  if (open && !shown) setShown(true);
+  const closing = shown && !open;
+
   useEffect(() => {
-    if (open) panel.current?.focus();
+    // preventScroll: the panel starts below the frame (it rises in), and a plain focus() would
+    // scroll the whole screen up to reveal it.
+    if (open) panel.current?.focus({ preventScroll: true });
   }, [open]);
 
-  if (!open) return null;
+  useEffect(() => {
+    if (closing && !panel.current?.getAnimations().length) setShown(false);
+  }, [closing]);
+
+  if (!shown) return null;
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Escape") {
@@ -47,7 +59,13 @@ export function Sheet({ open, onClose, title, detent = "medium", children }: She
   };
 
   return (
-    <div className={styles.root} data-state="open" data-detent={detent}>
+    <div
+      className={styles.root}
+      data-state={open ? "open" : "closed"}
+      data-detent={detent}
+      aria-hidden={closing || undefined}
+      onAnimationEnd={(e) => closing && e.target === panel.current && setShown(false)}
+    >
       <div className={styles.scrim} onClick={onClose} data-role="scrim" />
       <div
         ref={panel}

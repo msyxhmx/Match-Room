@@ -59,6 +59,7 @@ try {
     await page.goto(url);
     await page.waitForSelector("[data-shot]");
     await page.evaluate(() => document.fonts.ready);
+    await page.evaluate(settle);
 
     const problems = await page.evaluate(measure, shot.canvas);
     for (const e of errors) problems.push({ rule: "error", detail: e.slice(0, 300) });
@@ -76,6 +77,7 @@ try {
     await small.setViewportSize({ width: shot.width, height: shot.height });
     await small.goto(url);
     await small.waitForSelector("[data-shot]");
+    await small.evaluate(settle);
     await small.screenshot({ path: resolve(out, "half", `${shot.id}.png`), omitBackground: shot.transparent });
     await small.close();
 
@@ -96,6 +98,13 @@ try {
 process.exit(failed ? 1 : 0);
 
 // ---- runs in the page ----
+
+/** Every state is measured at rest: jump each motion (step 8) to its end. scripts/motion.mjs
+ *  captures the motion itself. */
+function settle() {
+  for (const a of document.getAnimations()) a.finish();
+}
+
 function measure(canvas) {
   const frame = document.querySelector("[data-shot]");
   const box = frame.getBoundingClientRect();
