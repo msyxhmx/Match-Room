@@ -183,7 +183,7 @@
         "L. Quinn"
       ],
       "headline": "L. Quinn so far",
-      "body": "L. Quinn has had 57 touches and won the ball back 2 times.",
+      "body": "L. Quinn has had 58 touches and won the ball back 2 times.",
       "why": [],
       "facts_used": [
         {
@@ -194,7 +194,7 @@
         {
           "key": "touches",
           "label": "Touches",
-          "value": "57"
+          "value": "58"
         },
         {
           "key": "ball_wins",
@@ -352,7 +352,7 @@
     "home_share": 0.764,
     "chaos": 0.777,
     "tempo": 9.1,
-    "momentum": 0.794,
+    "momentum": 0.795,
     "phase": "home_control",
     "label": "Northgate City in control"
   },

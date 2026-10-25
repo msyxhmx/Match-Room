@@ -17,13 +17,13 @@
       "won": 6,
       "drawn": 1,
       "lost": 0,
-      "goals_for": 13,
+      "goals_for": 15,
       "goals_against": 2,
       "points": 19,
-      "xg_for": 15.42,
-      "xg_against": 4.54,
+      "xg_for": 16.27,
+      "xg_against": 4.53,
       "control_share": 0.41,
-      "chaos_share": 0.163,
+      "chaos_share": 0.157,
       "wins_against_run": 0
     },
     {
@@ -41,9 +41,28 @@
       "points": 17,
       "xg_for": 13.9,
       "xg_against": 6.02,
-      "control_share": 0.178,
-      "chaos_share": 0.251,
+      "control_share": 0.181,
+      "chaos_share": 0.248,
       "wins_against_run": 2
+    },
+    {
+      "team": {
+        "id": "ELM",
+        "name": "Elmstead United",
+        "short_name": "ELM"
+      },
+      "played": 7,
+      "won": 3,
+      "drawn": 1,
+      "lost": 3,
+      "goals_for": 13,
+      "goals_against": 10,
+      "points": 10,
+      "xg_for": 13.97,
+      "xg_against": 9.77,
+      "control_share": 0.221,
+      "chaos_share": 0.144,
+      "wins_against_run": 3
     },
     {
       "team": {
@@ -56,12 +75,12 @@
       "drawn": 1,
       "lost": 3,
       "goals_for": 10,
-      "goals_against": 9,
+      "goals_against": 10,
       "points": 10,
-      "xg_for": 8.69,
-      "xg_against": 13.69,
+      "xg_for": 8.61,
+      "xg_against": 15.91,
       "control_share": 0.073,
-      "chaos_share": 0.195,
+      "chaos_share": 0.184,
       "wins_against_run": 2
     },
     {
@@ -80,27 +99,8 @@
       "xg_for": 5.47,
       "xg_against": 12.02,
       "control_share": 0.23,
-      "chaos_share": 0.133,
+      "chaos_share": 0.138,
       "wins_against_run": 1
-    },
-    {
-      "team": {
-        "id": "ELM",
-        "name": "Elmstead United",
-        "short_name": "ELM"
-      },
-      "played": 7,
-      "won": 2,
-      "drawn": 2,
-      "lost": 3,
-      "goals_for": 10,
-      "goals_against": 8,
-      "points": 8,
-      "xg_for": 11.6,
-      "xg_against": 9.12,
-      "control_share": 0.227,
-      "chaos_share": 0.197,
-      "wins_against_run": 2
     },
     {
       "team": {
@@ -118,7 +118,7 @@
       "xg_for": 13.09,
       "xg_against": 7.94,
       "control_share": 0.368,
-      "chaos_share": 0.219,
+      "chaos_share": 0.222,
       "wins_against_run": 0
     },
     {
@@ -131,13 +131,13 @@
       "won": 1,
       "drawn": 1,
       "lost": 5,
-      "goals_for": 4,
+      "goals_for": 3,
       "goals_against": 17,
       "points": 4,
-      "xg_for": 5.05,
-      "xg_against": 15.64,
-      "control_share": 0.217,
-      "chaos_share": 0.156,
+      "xg_for": 5.35,
+      "xg_against": 15.51,
+      "control_share": 0.208,
+      "chaos_share": 0.167,
       "wins_against_run": 1
     },
     {
@@ -148,15 +148,15 @@
       },
       "played": 7,
       "won": 0,
-      "drawn": 3,
-      "lost": 4,
+      "drawn": 2,
+      "lost": 5,
       "goals_for": 5,
-      "goals_against": 12,
-      "points": 3,
-      "xg_for": 7.71,
-      "xg_against": 11.97,
-      "control_share": 0.206,
-      "chaos_share": 0.244,
+      "goals_against": 13,
+      "points": 2,
+      "xg_for": 7.46,
+      "xg_against": 12.42,
+      "control_share": 0.214,
+      "chaos_share": 0.219,
       "wins_against_run": 0
     }
   ],
@@ -238,18 +238,18 @@
     {
       "id": "season_run",
       "title": "Winning without the ball",
-      "body": "Northgate City have won 2 matches while having less of the control.",
-      "team_id": "NGC",
+      "body": "Elmstead United have won 3 matches while having less of the control.",
+      "team_id": "ELM",
       "facts_used": [
         {
           "key": "team",
           "label": "Team",
-          "value": "Northgate City"
+          "value": "Elmstead United"
         },
         {
           "key": "count",
           "label": "Count",
-          "value": "2"
+          "value": "3"
         }
       ]
     },

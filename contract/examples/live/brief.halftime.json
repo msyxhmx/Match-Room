@@ -449,12 +449,12 @@
     },
     {
       "title": "L. Quinn",
-      "body": "38 touches and 0.24 xT added so far. One to watch.",
+      "body": "39 touches and 0.24 xT added so far. One to watch.",
       "facts_used": [
         {
           "key": "touches",
           "label": "Touches",
-          "value": "38"
+          "value": "39"
         },
         {
           "key": "xt",
@@ -661,7 +661,7 @@
     "position": "MF",
     "team_id": "NGC",
     "side": "home",
-    "touches": 38,
+    "touches": 39,
     "passes": 20,
     "passes_completed": 15,
     "pass_accuracy": 75,
@@ -675,11 +675,13 @@
     "involvement": [
       18,
       9,
-      11,
+      12,
       0,
       0,
       0
     ],
-    "cards": []
+    "cards": [
+      "yellow"
+    ]
   }
 }

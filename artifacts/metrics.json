@@ -1,25 +1,25 @@
 {
-  "version": "xgb-20261020-1559",
+  "version": "xgb-20261025-1459",
   "n_matches": 10000,
   "result": {
     "baseline_score_only": {
-      "log_loss": 0.7477,
-      "accuracy": 0.6475
+      "log_loss": 0.7299,
+      "accuracy": 0.658
     },
     "xgboost": {
-      "log_loss": 0.6894,
-      "accuracy": 0.6835
+      "log_loss": 0.6654,
+      "accuracy": 0.691
     }
   },
   "next_goal": {
     "xgboost": {
-      "log_loss": 1.0058,
-      "accuracy": 0.513
+      "log_loss": 1.0159,
+      "accuracy": 0.5155
     }
   },
   "class_balance": {
-    "home_win": 0.445,
-    "away_win": 0.34,
-    "draw": 0.215
+    "home_win": 0.449,
+    "away_win": 0.344,
+    "draw": 0.207
   }
 }

@@ -2,7 +2,7 @@
 
 Two passes:
 
-1. Core match (unchanged since v0): minute-by-minute Poisson-style draws for
+1. Core match: minute-by-minute Poisson-style draws for
    passes, shots, fouls, cards and corners, driven by team strength, pressing,
    home advantage, a random momentum swing per 15-minute block, game state
    (trailing teams push) and red cards. An optional `Scenario` can script a
@@ -11,6 +11,10 @@ Two passes:
    the tackles/interceptions that win the ball back after a failed pass. It
    draws from its *own* random stream, so a given seed produces exactly the
    same goals, shots and cards as v0 and the trained model stays valid.
+
+v1.1 (25 Oct): a red card's defence penalty now lasts the rest of the match (it was
+undone a minute later), and a card shares its foul's second and player. Both keep the
+random stream, so only matches with a red card play out differently; retrained after.
 
 Output rows follow contract.Event.
 """
@@ -107,14 +111,22 @@ def simulate_match(
     rows: list[tuple] = []
 
     def add(minute: int, side: str, kind: str, x: float, y: float, outcome: str,
-            xg: float | None = None) -> None:
+            xg: float | None = None, like: tuple[int, str] | None = None) -> tuple[int, str]:
+        """Append an event; returns its (second, player). `like` copies them from an
+        earlier event (a card takes its foul's). The draws still happen so the random
+        stream, and so every later event, stays the same for a given seed."""
         team = teams[side]
+        second, player = int(rng.integers(0, 60)), _pick_players(rng, team, kind, 1)[0]
+        if like is not None:
+            second, player = like
         rows.append((
-            None, match_id, minute, int(rng.integers(0, 60)), side, team.id,
-            _pick_players(rng, team, kind, 1)[0], kind, round(float(x), 1), round(float(y), 1),
-            outcome, None if xg is None else round(float(xg), 3),
+            None, match_id, minute, second, side, team.id, player, kind,
+            round(float(x), 1), round(float(y), 1), outcome,
+            None if xg is None else round(float(xg), 3),
         ))
+        return second, player
 
+    defence = {"home": home.defence, "away": away.defence}  # built once: red cards persist
     for minute in range(1, 91):
         block = min((minute - 1) // 15, 5)
         strength_edge = (attack["home"] - attack["away"]) * 0.18
@@ -123,7 +135,6 @@ def simulate_match(
         share = float(np.clip(0.5 + strength_edge + press_edge + chase + block_swing[block],
                               0.22, 0.78))
         shares = {"home": share, "away": 1.0 - share}
-        defence = {"home": home.defence, "away": away.defence}
 
         # passes (vectorised per side: they are ~90% of all events)
         n_passes = rng.poisson(PASSES_PER_MINUTE)
@@ -148,7 +159,7 @@ def simulate_match(
             rate = BASE_SHOT_RATE * (attack[side] / defence[opp]) * (2 * shares[side]) ** 0.9
             if rng.random() < rate * shot_mult:
                 xg = float(np.clip(rng.beta(1.3, 11.0) * (attack[side] / defence[opp]), 0.01, 0.9))
-                x = 100 - (4 + 30 * (1 - xg) ** 2) + rng.normal(0, 2)
+                x = min(100 - (4 + 30 * (1 - xg) ** 2) + rng.normal(0, 2), 100)
                 y = np.clip(rng.normal(50, 10 * (1 - xg) + 3), 5, 95)
                 r = rng.random()
                 if r < xg:
@@ -174,19 +185,19 @@ def simulate_match(
             p_away_fouls = shares["home"] * (0.8 + 0.4 * away.press)
             side = "home" if rng.random() < p_home_fouls / (p_home_fouls + p_away_fouls) else "away"
             x = rng.uniform(10, 80)
-            add(minute, side, "foul", x, rng.uniform(5, 95), "committed")
+            foul = add(minute, side, "foul", x, rng.uniform(5, 95), "committed")
             r = rng.random()
             if r < RED_GIVEN_FOUL:
-                add(minute, side, "card", x, 50, "red")
+                add(minute, side, "card", x, 50, "red", like=foul)
                 attack[side] *= 0.72
                 defence[side] *= 0.85
             elif r < RED_GIVEN_FOUL + YELLOW_GIVEN_FOUL:
-                add(minute, side, "card", x, 50, "yellow")
+                add(minute, side, "card", x, 50, "yellow", like=foul)
 
         for side in forced_reds.get(minute, []):  # scripted storyline red cards
             x = rng.uniform(20, 60)
-            add(minute, side, "foul", x, rng.uniform(5, 95), "committed")
-            add(minute, side, "card", x, 50, "red")
+            foul = add(minute, side, "foul", x, rng.uniform(5, 95), "committed")
+            add(minute, side, "card", x, 50, "red", like=foul)
             attack[side] *= 0.72
             defence[side] *= 0.85
 

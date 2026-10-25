@@ -96,11 +96,11 @@ Trained on 10,000 synthetic matches, evaluated on a held-out 20%
 
 | Final result | Log loss (lower is better) | Accuracy |
 |---|---|---|
-| Baseline: half-time score only | 0.748 | 64.8% |
-| XGBoost on first-half features | **0.689** | **68.4%** |
+| Baseline: half-time score only | 0.730 | 65.8% |
+| XGBoost on first-half features | **0.665** | **69.1%** |
 
-Next-goal model (home / away / none): log loss 1.006, accuracy 51.3%.
-Simulated outcomes: 44.5% home wins, 21.5% draws, 34.0% away wins, ~2.9 goals per match.
+Next-goal model (home / away / none): log loss 1.016, accuracy 51.6%.
+Simulated outcomes: 44.9% home wins, 20.7% draws, 34.4% away wins, ~3.1 goals per match.
 
 ## Docs
 
