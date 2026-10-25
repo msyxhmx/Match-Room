@@ -1,0 +1,147 @@
+/* Match-Room Live design tokens (playbook step 5).
+   Tokens only: no element rules, so this file can sit next to the old styles.css.
+   Components read these and never use a raw colour or size. Decisions: DESIGN.md §9.10.
+   Checked by `npm run check:tokens` (every text colour >= 4.5:1 on white and on the ground).
+
+   Naming rules the checker relies on:
+   - --text-* and --*-text are text colours: >= 4.5:1 on white and on --surface-ground.
+   - --*-text-large is large text only (>= 24px, or >= 19px bold): >= 3:1 on white.
+   - --*-fill is paired with --*-on-fill: >= 4.5:1.
+   - --state-*-text on --state-*-tint: >= 4.5:1. */
+
+:root {
+  color-scheme: light;
+
+  /* Neutrals. Base layer is the grey ground; cards and sheets are the elevated white layer. */
+  --surface-ground: #f2f2f7;
+  --surface-card: #ffffff;
+  --surface-sheet: #ffffff;
+  --surface-fill: #e5e5ea; /* pills, empty timeline minutes, chance-bar track */
+  --surface-fill-strong: #d1d1d6;
+  --separator: #c6c6c8; /* rare; prefer space over lines */
+  --scrim: rgb(0 0 0 / 0.2); /* behind an open sheet */
+
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-dimmed-large: #8e8e93; /* losing score at full time; large text only */
+
+  /* Club slots. Set these on the match root from clubColours.ts; defaults are the demo pair.
+     primary: fills and bars (>= 3:1 on white). glow: soft gradients only, never text.
+     text: team-coloured words (>= 4.5:1). Keep the defaults equal to clubColours.ts (checked). */
+  --home-primary: #1d4ed8; /* NGC, Northgate Blue */
+  --home-glow: #3b82f6;
+  --home-text: #1d4ed8;
+  --away-primary: #8b1e3f; /* KST, Vale Claret */
+  --away-glow: #c2415e;
+  --away-text: #8b1e3f;
+  /* The viewer's chosen team, from the profile switcher. Defaults to home. */
+  --you-primary: #1d4ed8;
+  --you-glow: #3b82f6;
+  --you-text: #1d4ed8;
+
+  /* Live: the only red on screen. A filled pill with white text. */
+  --live-fill: #d70015;
+  --live-on-fill: #ffffff;
+
+  /* Semantic states (STORYBOARD §6). Colour is never the only signal: each state also has
+     its label or icon, listed in DESIGN §9.10. Green is the one extra hue; everything else
+     uses the club slots or neutrals so red keeps meaning "live". */
+  --state-positive-text: #1f7a35; /* checked, accepted */
+  --state-positive-tint: #e6f4ea;
+  --state-neutral-text: #1d1d1f; /* chaos phase, HT/FT */
+  --state-neutral-tint: #e5e5ea;
+  --state-muted-text: #6e6e73; /* goal against, rejected/retry, offline */
+  --state-muted-tint: #f2f2f7;
+  --you-tag-fill: #1d1d1f; /* "your player" tag */
+  --you-tag-on-fill: #ffffff;
+
+  /* Type. One family, the system font; never ship a font file (DESIGN §9.1). */
+  --font-sans: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --numeric: tabular-nums; /* font-variant-numeric for every number that updates */
+  --score-stretch: 75%; /* font-stretch for scores; Windows falls back to normal width */
+
+  /* Phone: Apple's iOS text styles at the default size (1 pt = 1 px). */
+  --type-score: 700 56px/1 var(--font-sans);
+  --type-title1: 400 28px/34px var(--font-sans);
+  --type-title2: 400 22px/28px var(--font-sans);
+  --type-title3: 400 20px/25px var(--font-sans);
+  --type-headline: 600 17px/22px var(--font-sans);
+  --type-body: 400 17px/22px var(--font-sans);
+  --type-callout: 400 16px/21px var(--font-sans);
+  --type-caption1: 400 12px/16px var(--font-sans);
+  --type-caption2: 400 11px/13px var(--font-sans);
+
+  /* Space: an 8-point grid. --space-half is for icon gaps only. */
+  --space-half: 4px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --gutter: 16px; /* phone side margin */
+
+  --stroke: 2px; /* minimum line, divider and chart stroke; thinner smears in video */
+
+  --radius-small: 8px;
+  --radius-card: 20px;
+  --radius-sheet: 24px;
+  --radius-pill: 999px;
+
+  /* Depth: the sheet is the only thing with a shadow. Cards sit on the ground without one. */
+  --shadow-sheet: 0 -1px 4px rgb(0 0 0 / 0.04), 0 -12px 32px rgb(0 0 0 / 0.12);
+
+  /* Motion. Only four things move: the score, a new moment, the sheet, the chance swing. */
+  --duration-quick: 200ms; /* score digits, fades */
+  --duration-moment: 280ms; /* a new moment card arriving */
+  --duration-sheet: 350ms; /* sheet open/close, chance swing */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring: cubic-bezier(0.2, 0.9, 0.3, 1.02); /* fallback; real spring below */
+  --motion-travel: 1; /* multiply every translate distance by this */
+}
+
+/* Gentle spring: damping 0.8, about 1.5% overshoot, settled by the end of the duration. */
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(0, 0.041 4%, 0.138 8%, 0.262 12%, 0.394 16%, 0.519 20%, 0.657 25%,
+      0.77 30%, 0.856 35%, 0.918 40%, 0.96 45%, 0.988 50%, 1.012 60%, 1.015 70%, 1.011 80%,
+      1.006 90%, 1);
+  }
+}
+
+/* Reduce Motion: nothing travels, things fade in place. Durations stay short for the fades. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-travel: 0;
+    --ease-spring: var(--ease-standard);
+  }
+}
+
+/* The 1920x1080 video frame: Apple's tvOS text styles (1 pt = 1 px). Nothing under 23 px.
+   Content stays inside the EBU R 95 graphics-safe area. */
+.video {
+  --type-score: 700 152px/1 var(--font-sans);
+  --type-title1: 500 76px/96px var(--font-sans);
+  --type-title2: 500 57px/66px var(--font-sans);
+  --type-title3: 500 48px/56px var(--font-sans);
+  --type-headline: 500 38px/46px var(--font-sans);
+  --type-body: 500 29px/36px var(--font-sans);
+  --type-callout: 500 31px/38px var(--font-sans);
+  --type-caption1: 500 25px/32px var(--font-sans);
+  --type-caption2: 500 23px/30px var(--font-sans);
+
+  --safe-x: 96px;
+  --safe-y: 54px;
+  --gutter: var(--safe-x);
+
+  --stroke: 3px;
+
+  --radius-small: 12px;
+  --radius-card: 28px;
+  --radius-sheet: 40px;
+
+  --shadow-sheet: 0 -2px 8px rgb(0 0 0 / 0.04), 0 -24px 64px rgb(0 0 0 / 0.14);
+}

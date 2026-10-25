@@ -360,8 +360,9 @@ These are suggestions. Each one needs a native-speaker read before it changes, a
   The pair stays distinct under simulated protanopia, deuteranopia and tritanopia (Machado 2009
   matrices). Under protanopia, claret reads as dark grey-brown against blue, so the teams are told
   apart mainly by lightness. Home on the left and short names (§9.2, next bullet) cover the rest.
-- The other six clubs get palettes in step 5, by the same rules: text colour at least 4.5:1 on
-  white, and distinct from both demo clubs and from the Live red.
+- **Done in step 5:** the other six clubs have palettes, by the same rules: text colour at least
+  4.5:1 on white, and distinct from both demo clubs and from the Live red. See
+  [§9.10](#910-design-tokens-step-5).
 - **Colour is never the only signal.** Home is always on the left and short names are always
   shown, so the screen reads correctly in greyscale or for colour-blind viewers.
 - Contrast: at least 4.5:1 for text up to 17 pt and 3:1 for 18 pt+ or bold
@@ -477,6 +478,93 @@ The phone uses the same parts, stacked: header, moment, compact timeline, list.
 **States still to design (step 6):** loading, pre-kick-off, reconnecting, API down (mocks plus
 a notice), and a moment with no why-line.
 
+### 9.10 Design tokens (step 5)
+Done 25 Oct. The tokens live in [src/theme.css](src/theme.css), and the club palettes in
+[src/clubColours.ts](src/clubColours.ts). Components use tokens only, never a raw colour or
+size. `npm run check:tokens` measures every colour pair rather than trusting our eyes. It runs
+in `make lint` and in CI, and fails the build if a text colour drops under 4.5:1 on white or on
+the ground. On 25 Oct, all 64 checks passed.
+
+**Colour.**
+- Neutrals:
+  - the ground `#F2F2F7` is the base layer
+  - cards and the sheet are white, the elevated layer
+  - fills are `#E5E5EA` (pills, empty minutes, the chance-bar track)
+  - primary text is `#1D1D1F`, and secondary is `#6E6E73` (4.54:1 on the ground: passing, but
+    with no room to go lighter)
+- **Club slots:** components read `--home-*`, `--away-*` and `--you-*` (the viewer's team).
+  `clubSlots(home, away, you)` fills them from `clubColours.ts` on the match root. The defaults
+  are NGC and KST, and the check confirms they match the TS map exactly.
+- **The eight clubs.** "Distinct" means at least ΔE2000 20 from Northgate Blue, Vale Claret and
+  Live red. That's the gap between the two locked demo colours and Live (KST to Live is 21.8).
+  Blues and purples all came out under 17 from Northgate Blue, so no other club is blue or
+  purple.
+
+  | Club | Name | Primary | Glow | Text | Text on white | Closest of NGC / KST / Live |
+  |---|---|---|---|---|---|---|
+  | NGC | Northgate Blue (locked) | `#1D4ED8` | `#3B82F6` | `#1D4ED8` | 6.7:1 | n/a |
+  | KST | Vale Claret (locked) | `#8B1E3F` | `#C2415E` | `#8B1E3F` | 8.9:1 | n/a |
+  | RIV | River Teal | `#0F766E` | `#2DD4BF` | `#0F766E` | 5.5:1 | 36 (NGC) |
+  | HAR | Harbour Gold | `#A16207` | `#FBBF24` | `#854D0E` | 6.9:1 | 25 (Live) |
+  | ELM | Elm Green | `#166534` | `#4ADE80` | `#166534` | 7.1:1 | 49 (NGC) |
+  | MIL | Mill Black | `#1C1917` | `#78716C` | `#1C1917` | 17.5:1 | 29 (KST) |
+  | ASH | Albion Magenta | `#A21CAF` | `#E879F9` | `#A21CAF` | 6.3:1 | 22 (NGC) |
+  | QNB | Bridge Olive | `#4D7C0F` | `#A3E635` | `#3F6212` | 7.1:1 | 61 (Live) |
+
+  Every primary is at least 3:1 on white, the WCAG 1.4.11 bar for bars and fills. Gold and olive
+  primaries are too light for small text, so those clubs have a darker text colour.
+- **Semantic states (STORYBOARD §6).** Each state has a label or icon, so colour is never the
+  only signal. To keep red meaning "live", the only hue we add is one green:
+
+  | State | Colour | Also shown by |
+  |---|---|---|
+  | Live | `--live-fill` `#D70015`, white text | "LIVE" pill, and the ×60 speed label next to it |
+  | Goal for | the scoring club's glow and primary | "Goal" label with the scorer |
+  | Goal against | `--state-muted-*` (grey, no glow) | "Goal against" label |
+  | Your player | `--you-tag-*`, a black pill with white text | the "Your player" tag |
+  | Chaos phase | `--state-neutral-*` | "Chaos" label and a zigzag icon; the timeline shows both clubs' bars |
+  | Checked, accepted | `--state-positive-*` `#1F7A35` (the one extra hue) | tick icon and "Checked" |
+  | Rejected, retry | `--state-muted-*` | cross or retry icon, with the draft struck through |
+  | HT / FT | `--state-neutral-*` | "HT" / "FT" pill; at FT the loser's score is `--text-dimmed-large` |
+  | Offline | `--state-muted-*` | an "Offline · showing saved match" notice, never the red pill |
+
+  **The one exception to "only the clubs carry colour"** is the positive green, used for the
+  fact-check tick: that tick is our trust mechanism, so it earns a colour. The green is
+  `#1F7A35` rather than Apple's accessible green (from memory `#248A3D`, which measured 4.40:1,
+  under the bar).
+
+**Type.** The same role names on both canvases (`--type-title1` … `--type-caption2`, plus
+`--type-score`), each a full `font` shorthand. The iOS values sit on `:root` and the tvOS values
+under `.video`, so no component branches on the canvas. The sizes and weights are checked
+against the HIG Typography tables: iOS is Regular (Headline Semibold), and tvOS is Medium.
+- **Score:** 152 px bold on video (2× Title 1), and 56 px on the phone, with
+  `font-stretch: var(--score-stretch)` (75%).
+- `--numeric: tabular-nums` applies to every number that updates.
+- **Decided: no condensed digit font.** We stay on `font-stretch: 75%` of the system font. The
+  demo is recorded on a Mac, so judges see the narrow SF digits. A downloaded face would add a
+  second family, a licence to check and a font load, all for Windows viewers who aren't the
+  audience for the video.
+
+**Space, radii, depth.**
+- An 8-point grid, `--space-1` (8) to `--space-12` (96), plus `--space-half` (4) for icon gaps.
+- On video: `--safe-x` 96 and `--safe-y` 54 (EBU R 95), and `--gutter` equals the safe margin.
+  On the phone the gutter is 16.
+- Radii: cards are 20 on the phone and 28 on video; sheets 24 and 40; pills fully round.
+- `--stroke` is 2 px on the phone and 3 px on video, the minimum for lines and chart strokes
+  (§6.3).
+- The sheet is the only thing with a shadow (`--shadow-sheet`, cast upwards). Cards sit on the
+  ground without one.
+
+**Motion.**
+- Durations: `--duration-quick` 200 ms (score, fades), `--duration-moment` 280 ms (a new card)
+  and `--duration-sheet` 350 ms (the sheet, the chance swing).
+- `--ease-spring` is a gentle spring: damping 0.8, about 1.5% overshoot, close to SwiftUI's
+  default spring (damping 0.825, per Apple's Animation docs). It's written as CSS `linear()`,
+  which is Baseline since Dec 2023 (Safari 17.2), with a cubic-bezier fallback.
+- **Reduce Motion:** `--motion-travel` becomes 0, so components multiply their translate
+  distances by it and the spring becomes a plain ease. Things fade in place instead of moving,
+  as the HIG Accessibility page asks ("replacing transitions… with fades").
+
 ## 10. Rules from the project and the hackathon
 - **Synthetic data only.** Fictional clubs and players ([sim/teams.py](../sim/teams.py)).
 - **No unlicensed trademarks** in the video
@@ -501,7 +589,7 @@ a notice), and a moment with no why-line.
    blank, or the LLM call falling back)? And should the half-time screen make two calls, or
    should the trace move into `MatchBrief`? Ask Syahmi; see [§5](#5-required-elements).
 3. ~~Club colours?~~ **Decided 25 Oct:** Northgate Blue v Vale Claret for the demo. The other six
-   come in step 5.
+   were set in step 5 ([§9.10](#910-design-tokens-step-5)).
 4. **Malay labels:** Ilham to confirm [§8.3](#83-ui-labels-in-three-languages).
 
 ## 13. How we'll know the design works
