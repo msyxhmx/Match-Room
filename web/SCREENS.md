@@ -33,13 +33,13 @@ and checks each one (`scripts/flows.mjs`).
 cards in order. A card takes the stage when it is at least as important as the one there, or the
 one there has used up its hold. Nothing empties the stage mid-match.
 
-Three candidates, for Ilham's pick (the gallery shows each across the whole match):
-- **Newest worth explaining:** the newest priority 1–2 card with a why-line. No holds.
-- **Goals hold** (in use until the pick): the same cards, but a goal holds the stage for 5 match
-  minutes against anything less important, a notable card for 2.
-- **Every notable card:** as goals hold, plus the stat cards with no why-line ("L. Quinn so far").
+**Picked 25 Oct (Ilham): R2, "goals hold".** Only priority 1–2 cards with a why-line take the
+stage. A goal holds it for 5 match minutes against anything less important, a notable card for 2.
+Priority 3 cards and stat cards with no why-line ("L. Quinn so far") never take it.
 
-All three put the right card on stage at 14' and 74'. Priority 3 cards never take the stage.
+Compared and not picked: R1 "newest worth explaining" (no holds, so the 66' chaos card bumped
+the 61' goal) and R3 "every notable card" (stat cards on stage at 30', 45' and 60'). The other
+two rules stay in `stage.ts` for now, as the record of what was compared.
 
 ## Decisions made in step 7
 
@@ -83,13 +83,16 @@ All three put the right card on stage at 14' and 74'. Priority 3 cards never tak
 Only the four hooks move, each 200–350 ms from the tokens in `theme.css`, with `--motion-travel`
 at 0 under reduced motion (fades in place):
 
-| What | Hook | Calm | Broadcast | Pitch |
-|---|---|---|---|---|
-| The score | the digit's `data-state="scored"` (a new element per value) | fades up 16 px | rolls like an odometer | rises 48 px |
-| A new moment | `MomentCard` `data-state="arriving"` | fades up 24 px | rises 40 px, 3% scale, firm spring | sweeps in sideways from its side |
-| The swing | `ChanceSwing` track `data-state="from"` | fills before → after | the same, firm spring | the same, gentle spring |
-| The sheet | `Sheet` `data-state="open" \| "closed"` | rises over the scrim, drops on close | same | same |
-| Re-worded card (S7) | `MomentCard` `data-text="relabel"` | text cross-fades 200 ms | same | same |
+**Picked 25 Oct (Ilham): M2, "broadcast".** Compared and not picked: M1 "calm" (fades and small
+rises; the score read "–2" for about 3 frames) and M3 "pitch" (the card swept in sideways).
+
+| What | Hook | Motion |
+|---|---|---|
+| The score | the digit's `data-state="scored"` (a new element per value) | rolls like an odometer, 280 ms, firm spring |
+| A new moment | `MomentCard` `data-state="arriving"` | rises 40 px with 3% scale, 280 ms, firm spring |
+| The swing | `ChanceSwing` track `data-state="from"` | fills before → after, 350 ms, firm spring |
+| The sheet | `Sheet` `data-state="open" \| "closed"` | rises over the scrim in 350 ms, drops in 200 ms |
+| Re-worded card (S7) | `MomentCard` `data-text="relabel"` | text cross-fades, 200 ms |
 
 **Choreography at 74':** score at 0, card at +120 ms (`--stagger`), swing at +300 ms, all done by
 about 650 ms. At ×60 the stage changes at most once a tick (1 s), so nothing stacks: a new card is

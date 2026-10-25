@@ -104,7 +104,7 @@
   /* Choreography: when one change moves several things (a goal: score, card, swing), each starts
      this long after the one before it, in story order. Everything is done in about 650 ms. */
   --stagger: 120ms;
-  /* A firmer spring for the "broadcast" motion variant: about 4% overshoot. */
+  /* A firmer spring (about 4% overshoot): the score roll, a moment landing, the swing. */
   --ease-spring-firm: cubic-bezier(0.3, 1.3, 0.5, 1);
 }
 

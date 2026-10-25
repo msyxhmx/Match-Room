@@ -81,21 +81,16 @@
   color: var(--text-secondary);
 }
 
-/* ---- Motion (step 8): the chance swing fills from before to after, last in the goal's
-   sequence (score, card, swing). Under reduced motion it fades in at its final length. */
+/* ---- Motion (step 8): the chance swing fills from before to after on the firm spring, last
+   in the goal's sequence (score, card, swing). Under reduced motion it fades in at its final
+   length. */
 .track[data-state="from"] .fill {
-  animation: swing-fill var(--duration-sheet) var(--ease-standard) calc(var(--stagger) * 2.5) both;
+  animation: swing-fill var(--duration-sheet) var(--ease-spring-firm) calc(var(--stagger) * 2.5) both;
 }
 @keyframes swing-fill {
   from {
     clip-path: inset(0 calc(100% - var(--from)) 0 0 round var(--radius-pill));
   }
-}
-:global([data-motion="broadcast"]) .track[data-state="from"] .fill {
-  animation-timing-function: var(--ease-spring-firm);
-}
-:global([data-motion="pitch"]) .track[data-state="from"] .fill {
-  animation-timing-function: var(--ease-spring);
 }
 @media (prefers-reduced-motion: reduce) {
   .track[data-state="from"] .fill {

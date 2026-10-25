@@ -26,9 +26,6 @@ const TRACE_STEP_MS = 700;
 /** Overlay graphics stay up at least this long, whatever the speed. */
 const OVERLAY_MIN_MS = 4000;
 
-/** The motion feel (step 8). ?motion=calm|broadcast|pitch overrides it, for the gallery. */
-const MOTION = "calm";
-
 const reducedMotion = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 
 function useWindowSize() {
@@ -47,7 +44,6 @@ function useWindowSize() {
  */
 function Frame({ clubs, transparent, children }: { clubs: [string, string, string]; transparent?: boolean; children: ReactNode }) {
   const { width, height } = useWindowSize();
-  const motion = new URLSearchParams(location.search).get("motion") ?? MOTION;
   const phone = width < PHONE_MAX;
   const zoom = phone ? 1 : Math.min(width / VIDEO.width, height / VIDEO.height);
   return (
@@ -55,7 +51,6 @@ function Frame({ clubs, transparent, children }: { clubs: [string, string, strin
       <div
         className={`mr-root ${phone ? styles.phone : `video ${styles.video}`}`}
         data-transparent={transparent ? "true" : undefined}
-        data-motion={motion}
         style={{ ...clubSlots(...clubs), ...(phone ? {} : { zoom }) }}
       >
         {children}

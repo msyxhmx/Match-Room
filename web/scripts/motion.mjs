@@ -39,8 +39,8 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const out = resolve(root, "shots", "motion");
 const filter = process.argv[2] ?? "";
 const FFMPEG = existsSync("/opt/homebrew/bin/ffmpeg") ? "/opt/homebrew/bin/ffmpeg" : "ffmpeg";
-const STATES = ["equaliser-calm", "equaliser-broadcast", "equaliser-pitch", "facts-sheet", "reword-ms"];
-const CLIPS = ["equaliser-calm", "equaliser-broadcast", "equaliser-pitch", "reword-ms"];
+const STATES = ["equaliser", "facts-sheet", "reword-ms"];
+const CLIPS = ["equaliser", "reword-ms"];
 const TIMES = [0, 50, 100, 200, 300, 450, 650, 1000];
 const size = { width: 1920, height: 1080 };
 

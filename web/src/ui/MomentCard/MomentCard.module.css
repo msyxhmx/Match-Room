@@ -242,50 +242,17 @@
   background: var(--surface-card);
 }
 
-/* ---- Motion (step 8): a new moment arrives, one stagger after the score. The card is a new
-   element per moment (the screen keys it), so this never replays on an old card. ---- */
-
-/* Calm: it fades up into place. */
+/* ---- Motion (step 8): a new moment lands, one stagger after the score: it rises with a
+   touch of scale on the firm spring. The card is a new element per moment (the screen keys it),
+   so this never replays on an old card. ---- */
 .card[data-state="arriving"] {
-  animation: card-rise var(--duration-moment) var(--ease-spring) var(--stagger) both;
-}
-@keyframes card-rise {
-  from {
-    opacity: 0;
-    transform: translateY(calc(var(--space-3) * var(--motion-travel)));
-  }
-}
-
-/* Broadcast: further, a touch of scale, on the firm spring. */
-:global([data-motion="broadcast"]) .card[data-state="arriving"] {
-  animation-name: card-land;
-  animation-timing-function: var(--ease-spring-firm);
+  animation: card-land var(--duration-moment) var(--ease-spring-firm) var(--stagger) both;
 }
 @keyframes card-land {
   from {
     opacity: 0;
     transform: translateY(calc(var(--space-5) * var(--motion-travel)))
       scale(calc(1 - 0.03 * var(--motion-travel)));
-  }
-}
-
-/* Pitch: the moment sweeps in from the side it belongs to, like play switching flanks. */
-:global([data-motion="pitch"]) .card[data-state="arriving"] {
-  animation-name: card-sweep-home;
-}
-:global([data-motion="pitch"]) .card[data-state="arriving"][data-side="away"] {
-  animation-name: card-sweep-away;
-}
-@keyframes card-sweep-home {
-  from {
-    opacity: 0;
-    transform: translateX(calc(var(--space-8) * -1 * var(--motion-travel)));
-  }
-}
-@keyframes card-sweep-away {
-  from {
-    opacity: 0;
-    transform: translateX(calc(var(--space-8) * var(--motion-travel)));
   }
 }
 

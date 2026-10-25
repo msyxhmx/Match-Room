@@ -77,24 +77,16 @@ function msCard(card: LiveCard): LiveCard {
   return (snap75ms as unknown as LiveSnapshot).cards.find((c) => c.insight_id === card.insight_id) ?? card;
 }
 
-function variant(name: string, motion: string, note: string, body: () => ReactNode): LabState {
-  return {
-    name,
-    note,
-    canvases: ["video"],
-    place: "fill",
-    render: () => <div data-motion={motion} style={{ display: "contents" }}>{body()}</div>,
-  };
+function state(name: string, note: string, body: () => ReactNode): LabState {
+  return { name, note, canvases: ["video"], place: "fill", render: body };
 }
 
 export default {
   component: "Motion",
-  summary: "Step 8: each motion, played on the `lab:play` event, in each candidate feel.",
+  summary: "Step 8: each motion, played on the `lab:play` event.",
   states: [
-    variant("equaliser-calm", "calm", "S1 in the calm feel: fades and small rises.", () => <Equaliser />),
-    variant("equaliser-broadcast", "broadcast", "S1 in the broadcast feel: the score rolls, a firmer spring.", () => <Equaliser />),
-    variant("equaliser-pitch", "pitch", "S1 in the pitch feel: the card sweeps in from its side.", () => <Equaliser />),
-    variant("facts-sheet", "calm", "S4: the sheet rises over the scrim (the same in every feel).", () => <Facts />),
-    variant("reword-ms", "calm", "S7: English to Malay on the same card, a cross-fade.", () => <Reword />),
+    state("equaliser", "S1: the score rolls, the card lands, the swing fills.", () => <Equaliser />),
+    state("facts-sheet", "S4: the sheet rises over the scrim.", () => <Facts />),
+    state("reword-ms", "S7: English to Malay on the same card, a cross-fade.", () => <Reword />),
   ],
 } satisfies LabModule;

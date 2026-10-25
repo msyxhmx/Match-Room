@@ -10,7 +10,7 @@ import type { LiveCard } from "../types/live";
 
 export type MomentRule = "newest-explained" | "goals-hold" | "every-notable";
 
-/** The rule the screens use. Ilham picks one of the three in the gallery. */
+/** The rule the screens use: Ilham picked "goals hold" (R2) on 25 Oct. */
 export const MOMENT_RULE: MomentRule = "goals-hold";
 
 /** Match time in seconds: 74:10 → 4450. */
