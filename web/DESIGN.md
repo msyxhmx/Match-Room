@@ -451,7 +451,7 @@ eight rough sketches of the live screen (Crazy 8s), then three grey candidates a
 real API text, measured against each other. The sketches and chosen layout can be edited in
 [wireframes/match-room.excalidraw](wireframes/match-room.excalidraw).
 
-**Chosen: B · Centre stage.** Top to bottom:
+**Locked 25 Oct (Ilham): B · Centre stage.** Top to bottom:
 - a full-width score header
 - the moment card centred, with a 76 px headline
 - a full-width match timeline: one bar per minute, ● goals, ○ moments you can tap
