@@ -133,7 +133,13 @@ function measure(canvas) {
       seenFont.add(el);
       add("min-font", `${size}px "${short(text)}"`);
     }
+    // Text scrolled out of view inside a scroll container (a sheet body) isn't on screen yet.
+    let scroller = el.parentElement;
+    while (scroller && scroller !== frame && !/auto|scroll/.test(getComputedStyle(scroller).overflowY))
+      scroller = scroller.parentElement;
+    const view = scroller && scroller !== frame ? scroller.getBoundingClientRect() : null;
     for (const r of rects) {
+      if (view && (r.bottom <= view.top || r.top >= view.bottom)) continue;
       const x1 = r.left - box.left, x2 = r.right - box.left, y1 = r.top - box.top, y2 = r.bottom - box.top;
       if ((x1 < safe.left - 0.5 || x2 > safe.right + 0.5 || y1 < safe.top - 0.5 || y2 > safe.bottom + 0.5) && !seenSafe.has(el)) {
         seenSafe.add(el);

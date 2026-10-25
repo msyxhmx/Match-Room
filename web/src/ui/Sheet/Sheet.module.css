@@ -1,0 +1,99 @@
+/* Positioned against the nearest positioned ancestor (frame or screen root), never fixed. */
+.root {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--scrim);
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  padding: var(--space-1) var(--gutter) var(--space-3);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  background: var(--surface-sheet);
+  box-shadow: var(--shadow-sheet);
+}
+
+.panel:focus {
+  outline: none;
+}
+
+.root[data-detent="medium"] .panel {
+  height: 50%;
+}
+.root[data-detent="large"] .panel {
+  height: 88%;
+}
+
+/* 1440 wide and centred on video; padding keeps text in the safe area. */
+:global(.video) .panel {
+  width: calc(var(--space-12) * 15);
+  padding: var(--space-2) var(--space-6) calc(var(--safe-y) + var(--space-3));
+}
+
+.grabber {
+  align-self: center;
+  /* 5 x 36 on the phone: no space tokens that small. */
+  width: 36px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill-strong);
+  margin-bottom: var(--space-1);
+}
+
+:global(.video) .grabber {
+  width: 72px;
+  height: 8px;
+  margin-bottom: var(--space-2);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-bottom: var(--space-2);
+}
+
+.title {
+  font: var(--type-title3);
+  min-width: 0;
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 44 px minimum hit target. */
+  min-width: calc(var(--space-5) + var(--space-half));
+  min-height: calc(var(--space-5) + var(--space-half));
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+  color: var(--text-primary);
+  font: var(--type-title3);
+}
+
+.close:focus-visible,
+.body:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  font: var(--type-body);
+}

@@ -65,3 +65,24 @@ export function turningSwing(
     rising: tp.win_after >= tp.win_before,
   };
 }
+
+/**
+ * Scorer strings for the score header, one per player: "K. Quinn 14', 37'". Goal cards are
+ * grouped by side, then by player (the scorer is `players[0]`), minutes in order.
+ */
+export function scorersFrom(cards: LiveCard[]): { home: string[]; away: string[] } {
+  const out: { home: string[]; away: string[] } = { home: [], away: [] };
+  const goals = cards
+    .filter((c) => c.type === "goal" && (c.side === "home" || c.side === "away") && c.players.length)
+    .sort((a, b) => a.minute - b.minute || a.second - b.second);
+  for (const side of ["home", "away"] as const) {
+    const byPlayer = new Map<string, string[]>();
+    for (const c of goals.filter((g) => g.side === side)) {
+      const list = byPlayer.get(c.players[0]) ?? [];
+      list.push(cardMinute(c));
+      byPlayer.set(c.players[0], list);
+    }
+    out[side] = [...byPlayer].map(([name, minutes]) => `${name} ${minutes.join(", ")}`);
+  }
+  return out;
+}

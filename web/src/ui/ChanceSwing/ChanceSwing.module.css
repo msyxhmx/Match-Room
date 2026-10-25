@@ -1,0 +1,80 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+  min-width: 0;
+}
+
+.label,
+.numbers,
+.note {
+  margin: 0;
+}
+
+.label {
+  font: var(--type-caption1);
+}
+
+.what {
+  color: var(--text-secondary);
+}
+
+.team {
+  color: var(--home-text);
+}
+.root[data-side="away"] .team {
+  color: var(--away-text);
+}
+
+.numbers {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--type-title3);
+  font-variant-numeric: var(--numeric);
+}
+
+.before {
+  color: var(--text-secondary);
+}
+.after {
+  color: var(--text-primary);
+}
+
+.track {
+  position: relative;
+  height: var(--space-half);
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+  margin-block: var(--space-1) var(--space-half);
+}
+
+:global(.video) .track {
+  height: var(--space-1);
+  margin-block: var(--space-2) var(--space-1);
+}
+
+.fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--radius-pill);
+  background: var(--home-primary);
+}
+.root[data-side="away"] .fill {
+  background: var(--away-primary);
+}
+
+/* 3 px tick: no space token is that thin. */
+.tick {
+  position: absolute;
+  top: calc(-1 * var(--space-half));
+  bottom: calc(-1 * var(--space-half));
+  width: 3px;
+  margin-left: -1px;
+  background: var(--text-secondary);
+}
+
+.note {
+  font: var(--type-caption2);
+  color: var(--text-secondary);
+}

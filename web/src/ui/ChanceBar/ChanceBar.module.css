@@ -1,0 +1,71 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.caption {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+/* 3 px gaps: thinner than any space token, like the swing tick. */
+.track {
+  display: grid;
+  column-gap: 3px;
+  margin: 0;
+}
+
+/* Labels sit at the left, middle and right edge so narrow segments never make them overlap. */
+.labels {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.track {
+  height: var(--space-1);
+}
+
+:global(.video) .track {
+  height: var(--space-2);
+}
+
+.seg {
+  border-radius: var(--radius-pill);
+}
+.seg[data-seg="home"] {
+  background: var(--home-primary);
+}
+.seg[data-seg="draw"] {
+  background: var(--surface-fill-strong);
+}
+.seg[data-seg="away"] {
+  background: var(--away-primary);
+}
+
+.label {
+  font: var(--type-caption1);
+  font-variant-numeric: var(--numeric);
+  color: var(--text-primary);
+  white-space: nowrap;
+  min-width: 0;
+}
+.label[data-seg="home"] {
+  color: var(--home-text);
+}
+.label[data-seg="away"] {
+  color: var(--away-text);
+  text-align: right;
+}
+.label[data-seg="draw"] {
+  text-align: center;
+}
+
+.note {
+  margin: 0;
+  font: var(--type-caption2);
+  color: var(--text-secondary);
+}
