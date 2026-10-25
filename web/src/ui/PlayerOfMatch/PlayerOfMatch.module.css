@@ -26,20 +26,21 @@
 
 .head {
   display: flex;
+  flex-wrap: wrap; /* in a narrow column the "Your player" pill drops under the name */
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-1) var(--space-2);
 }
 
 .who {
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  flex: 1;
+  flex: 1 0 auto; /* keeps the whole name; the pill wraps instead */
 }
 
 .name {
   margin: 0;
   font: var(--type-title2);
+  white-space: nowrap; /* "L. Quinn" never splits at the initial */
 }
 
 .meta {
@@ -71,6 +72,7 @@
 .label {
   font: var(--type-caption1);
   color: var(--text-secondary);
+  text-wrap: balance;
 }
 
 .figure {

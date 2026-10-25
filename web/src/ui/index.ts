@@ -16,3 +16,4 @@ export { TopBar } from "./TopBar/TopBar";
 export { FactsSheet } from "./FactsSheet/FactsSheet";
 export { AgentTrace } from "./AgentTrace/AgentTrace";
 export { PlayerOfMatch } from "./PlayerOfMatch/PlayerOfMatch";
+export { BriefPanel } from "./BriefPanel/BriefPanel";
