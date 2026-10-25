@@ -1,0 +1,259 @@
+{
+ "match_id": "SCN-comeback",
+ "minute": 0,
+ "clock": "00:00",
+ "period": "pre",
+ "home": {
+  "id": "NGC",
+  "name": "Northgate City",
+  "short_name": "NGC"
+ },
+ "away": {
+  "id": "KST",
+  "name": "Kingston Vale",
+  "short_name": "KST"
+ },
+ "score": {
+  "home": 0,
+  "away": 0
+ },
+ "meta": {
+  "venue": "Northgate Stadium",
+  "referee": "P. Okonjo",
+  "attendance": 23047,
+  "weather": "Clear",
+  "scenario": "comeback",
+  "scenario_title": "The comeback",
+  "synthetic": true
+ },
+ "profile": {
+  "persona": "analyst",
+  "language": "es",
+  "team": "NGC",
+  "player": "L. Quinn"
+ },
+ "metrics": [
+  {
+   "key": "goals",
+   "label": "Goles",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Goles marcados."
+  },
+  {
+   "key": "xg",
+   "label": "Goles esperados (xG)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Suma de la calidad de cada disparo: la probabilidad de que acabe en gol."
+  },
+  {
+   "key": "shots",
+   "label": "Disparos",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Todos los intentos a portería."
+  },
+  {
+   "key": "sot",
+   "label": "Disparos a puerta",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Disparos que acabaron en gol o parada."
+  },
+  {
+   "key": "xt",
+   "label": "Amenaza esperada (xT)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Cuánto aumentaron los pases completados la probabilidad de marcar, según una cuadrícula de zonas."
+  },
+  {
+   "key": "possession",
+   "label": "Posesión",
+   "home": 50.0,
+   "away": 50.0,
+   "unit": "%",
+   "definition": "Proporción de todos los pases."
+  },
+  {
+   "key": "field_tilt",
+   "label": "Inclinación del campo",
+   "home": 50.0,
+   "away": 50.0,
+   "unit": "%",
+   "definition": "Proporción de pases en el último tercio."
+  },
+  {
+   "key": "pass_accuracy",
+   "label": "Precisión de pase",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "%",
+   "definition": "Pases completados / pases intentados."
+  },
+  {
+   "key": "avg_pass_length",
+   "label": "Longitud media del pase",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "m",
+   "definition": "Distancia media de los pases."
+  },
+  {
+   "key": "pass_difficulty",
+   "label": "Dificultad media del pase",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "%",
+   "definition": "Uno menos la probabilidad esperada de completar el pase."
+  },
+  {
+   "key": "ppda",
+   "label": "PPDA (presión)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Pases rivales permitidos por acción defensiva en campo contrario. Más bajo = presión más intensa."
+  },
+  {
+   "key": "pressures",
+   "label": "Presiones",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Veces que un jugador presionó al poseedor."
+  },
+  {
+   "key": "ball_wins",
+   "label": "Recuperaciones",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Entradas e intercepciones."
+  },
+  {
+   "key": "top_shot_speed",
+   "label": "Disparo más rápido",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "km/h",
+   "definition": "Mayor velocidad de balón en un disparo."
+  },
+  {
+   "key": "corners",
+   "label": "Córners",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Saques de esquina a favor."
+  },
+  {
+   "key": "fouls",
+   "label": "Faltas",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Faltas cometidas."
+  }
+ ],
+ "control": {
+  "home_share": 0.5,
+  "chaos": 0.0,
+  "tempo": 0.0,
+  "momentum": 0.0,
+  "phase": "balanced",
+  "label": "Partido equilibrado"
+ },
+ "projection": {
+  "home_win": 0.543,
+  "draw": 0.218,
+  "away_win": 0.24,
+  "drivers": [
+   {
+    "key": "score",
+    "label": "Marcador",
+    "value": "0-0"
+   },
+   {
+    "key": "minutes_left",
+    "label": "Minutos restantes",
+    "value": "90"
+   },
+   {
+    "key": "home_rate",
+    "label": "Goles esperados de Northgate City por 90",
+    "value": "1.98"
+   },
+   {
+    "key": "away_rate",
+    "label": "Goles esperados de Kingston Vale por 90",
+    "value": "1.25"
+   },
+   {
+    "key": "live_weight",
+    "label": "Peso de los datos en directo",
+    "value": "0%"
+   }
+  ],
+  "note": "Una proyección según el marcador, el tiempo restante y las ocasiones generadas; no son cuotas de apuestas."
+ },
+ "series": {
+  "minute": [
+   0
+  ],
+  "momentum": [
+   0.0
+  ],
+  "control_home": [
+   0.5
+  ],
+  "chaos": [
+   0.0
+  ],
+  "home_win": [
+   0.543
+  ],
+  "draw": [
+   0.218
+  ],
+  "away_win": [
+   0.24
+  ]
+ },
+ "cards": [],
+ "overlays": [],
+ "focus_player": {
+  "name": "L. Quinn",
+  "number": 8,
+  "position": "MF",
+  "team_id": "NGC",
+  "side": "home",
+  "touches": 0,
+  "passes": 0,
+  "passes_completed": 0,
+  "pass_accuracy": 0,
+  "xt_added": 0.0,
+  "shots": 0,
+  "goals": 0,
+  "xg": 0.0,
+  "ball_wins": 0,
+  "pressures": 0,
+  "top_shot_speed_kmh": null,
+  "involvement": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "cards": []
+ },
+ "recent_events": []
+}

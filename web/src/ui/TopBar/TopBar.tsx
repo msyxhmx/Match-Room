@@ -1,4 +1,4 @@
-import { CloudOff, Info, RefreshCw } from "lucide-react";
+import { CloudOff, FlaskConical, Info, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
 import markUrl from "../../assets/brand/mark.svg";
 import wordmarkUrl from "../../assets/brand/wordmark.svg";
@@ -12,7 +12,7 @@ export interface TopBarProps {
   meta: MatchMeta;
   profile: Profile;
   team?: Team;
-  connection: "live" | "reconnecting" | "offline";
+  connection: "live" | "reconnecting" | "offline" | "preview";
   /** Tapping the language pill: next language. Without a handler the pill is a plain label. */
   onLanguage?: () => void;
   /** Tapping the persona pill: casual ↔ analyst. */
@@ -51,6 +51,13 @@ export function TopBar({ meta, profile, team, connection, onLanguage, onPersona 
           <span role="status">
             <Pill tone="muted" icon={CloudOff}>
               {labels.offline}
+            </Pill>
+          </span>
+        )}
+        {connection === "preview" && (
+          <span role="status">
+            <Pill tone="neutral" icon={FlaskConical}>
+              {labels.preview}
             </Pill>
           </span>
         )}

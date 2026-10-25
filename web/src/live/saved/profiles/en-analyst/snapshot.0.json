@@ -1,0 +1,259 @@
+{
+ "match_id": "SCN-comeback",
+ "minute": 0,
+ "clock": "00:00",
+ "period": "pre",
+ "home": {
+  "id": "NGC",
+  "name": "Northgate City",
+  "short_name": "NGC"
+ },
+ "away": {
+  "id": "KST",
+  "name": "Kingston Vale",
+  "short_name": "KST"
+ },
+ "score": {
+  "home": 0,
+  "away": 0
+ },
+ "meta": {
+  "venue": "Northgate Stadium",
+  "referee": "P. Okonjo",
+  "attendance": 23047,
+  "weather": "Clear",
+  "scenario": "comeback",
+  "scenario_title": "The comeback",
+  "synthetic": true
+ },
+ "profile": {
+  "persona": "analyst",
+  "language": "en",
+  "team": "NGC",
+  "player": "L. Quinn"
+ },
+ "metrics": [
+  {
+   "key": "goals",
+   "label": "Goals",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Goals scored."
+  },
+  {
+   "key": "xg",
+   "label": "Expected goals (xG)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Sum of the chance quality of every shot: the probability each shot is scored."
+  },
+  {
+   "key": "shots",
+   "label": "Shots",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "All attempts on goal."
+  },
+  {
+   "key": "sot",
+   "label": "Shots on target",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Shots that were scored or saved."
+  },
+  {
+   "key": "xt",
+   "label": "Expected threat added (xT)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "How much completed passes increased the chance of scoring, from a 12x8 zone grid."
+  },
+  {
+   "key": "possession",
+   "label": "Possession",
+   "home": 50.0,
+   "away": 50.0,
+   "unit": "%",
+   "definition": "Share of all passes played."
+  },
+  {
+   "key": "field_tilt",
+   "label": "Field tilt",
+   "home": 50.0,
+   "away": 50.0,
+   "unit": "%",
+   "definition": "Share of passes played in the final third."
+  },
+  {
+   "key": "pass_accuracy",
+   "label": "Pass accuracy",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "%",
+   "definition": "Completed passes / passes attempted."
+  },
+  {
+   "key": "avg_pass_length",
+   "label": "Average pass length",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "m",
+   "definition": "Mean distance of attempted passes."
+  },
+  {
+   "key": "pass_difficulty",
+   "label": "Average pass difficulty",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "%",
+   "definition": "1 - expected completion probability, from length, depth and pressure."
+  },
+  {
+   "key": "ppda",
+   "label": "PPDA (pressing)",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Opponent build-up passes allowed per defensive action high up the pitch. Lower = more intense pressing."
+  },
+  {
+   "key": "pressures",
+   "label": "Pressures",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Times a player closed down the ball carrier."
+  },
+  {
+   "key": "ball_wins",
+   "label": "Ball wins",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Tackles and interceptions."
+  },
+  {
+   "key": "top_shot_speed",
+   "label": "Fastest shot",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": "km/h",
+   "definition": "Highest ball speed of any shot."
+  },
+  {
+   "key": "corners",
+   "label": "Corners",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Corners won."
+  },
+  {
+   "key": "fouls",
+   "label": "Fouls",
+   "home": 0.0,
+   "away": 0.0,
+   "unit": null,
+   "definition": "Fouls committed."
+  }
+ ],
+ "control": {
+  "home_share": 0.5,
+  "chaos": 0.0,
+  "tempo": 0.0,
+  "momentum": 0.0,
+  "phase": "balanced",
+  "label": "Evenly balanced"
+ },
+ "projection": {
+  "home_win": 0.543,
+  "draw": 0.218,
+  "away_win": 0.24,
+  "drivers": [
+   {
+    "key": "score",
+    "label": "Score",
+    "value": "0-0"
+   },
+   {
+    "key": "minutes_left",
+    "label": "Minutes left",
+    "value": "90"
+   },
+   {
+    "key": "home_rate",
+    "label": "Northgate City expected goals per 90",
+    "value": "1.98"
+   },
+   {
+    "key": "away_rate",
+    "label": "Kingston Vale expected goals per 90",
+    "value": "1.25"
+   },
+   {
+    "key": "live_weight",
+    "label": "Weight on live data",
+    "value": "0%"
+   }
+  ],
+  "note": "A projection from the score, time left and chance creation, not betting odds."
+ },
+ "series": {
+  "minute": [
+   0
+  ],
+  "momentum": [
+   0.0
+  ],
+  "control_home": [
+   0.5
+  ],
+  "chaos": [
+   0.0
+  ],
+  "home_win": [
+   0.543
+  ],
+  "draw": [
+   0.218
+  ],
+  "away_win": [
+   0.24
+  ]
+ },
+ "cards": [],
+ "overlays": [],
+ "focus_player": {
+  "name": "L. Quinn",
+  "number": 8,
+  "position": "MF",
+  "team_id": "NGC",
+  "side": "home",
+  "touches": 0,
+  "passes": 0,
+  "passes_completed": 0,
+  "pass_accuracy": 0,
+  "xt_added": 0.0,
+  "shots": 0,
+  "goals": 0,
+  "xg": 0.0,
+  "ball_wins": 0,
+  "pressures": 0,
+  "top_shot_speed_kmh": null,
+  "involvement": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "cards": []
+ },
+ "recent_events": []
+}

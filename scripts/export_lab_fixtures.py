@@ -84,6 +84,20 @@ def main() -> None:
     write("brief.halftime.json", engine.brief("halftime", en), SAVED)
     write("brief.fulltime.json", engine.brief("fulltime", en), SAVED)
 
+    # Preview mode: the same four files for every other language and persona, so L and P
+    # work with no API. en-casual is the top-level set above.
+    for lang in ("en", "ms", "es"):
+        for persona in ("casual", "analyst"):
+            if (lang, persona) == ("en", "casual"):
+                continue
+            p = Profile(persona=persona, language=lang, team="NGC", player="L. Quinn")
+            d = SAVED / "profiles" / f"{lang}-{persona}"
+            write("snapshot.0.json", engine.snapshot(0, p), d)
+            write("ticks.json", [engine.tick(m, p) for m in range(1, 91)], d,
+                  exclude={"new_events", "metrics"})
+            write("brief.halftime.json", engine.brief("halftime", p), d)
+            write("brief.fulltime.json", engine.brief("fulltime", p), d)
+
     # The pitch simulation's inputs: every event, and the squads (what GET .../lineups returns).
     events = slim_events(engine)
     path = SAVED / "events.json"

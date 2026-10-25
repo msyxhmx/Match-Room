@@ -50,6 +50,7 @@ const EN = {
   loading: "Loading the match",
   reconnecting: "Reconnecting",
   offline: "Offline · showing saved match",
+  preview: "Preview · synthetic match",
   close: "Close",
   goals: "Goals",
   shots: "Shots",
@@ -127,6 +128,7 @@ const MS: Labels = {
   loading: "Memuatkan perlawanan", // confirm
   reconnecting: "Menyambung semula", // confirm
   offline: "Luar talian · perlawanan yang disimpan", // confirm
+  preview: "Pratonton · perlawanan sintetik", // confirm
   close: "Tutup",
   goals: "Gol",
   shots: "Rembatan",
@@ -200,6 +202,7 @@ const ES: Labels = {
   loading: "Cargando el partido",
   reconnecting: "Reconectando",
   offline: "Sin conexión · partido guardado",
+  preview: "Vista previa · partido sintético",
   close: "Cerrar",
   goals: "Goles",
   shots: "Tiros",

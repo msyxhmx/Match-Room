@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:preview": "tsc -b && VITE_PREVIEW=1 vite build",
+    "dev:preview": "VITE_PREVIEW=1 vite",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "check:tokens": "node scripts/check-tokens.mjs",

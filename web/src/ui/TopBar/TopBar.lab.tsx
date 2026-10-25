@@ -38,6 +38,13 @@ export default {
       render: () => <TopBar meta={m75.meta} profile={m75.profile} team={m75.home} connection="offline" />,
     },
     {
+      name: "preview",
+      note: "Neutral pill with FlaskConical: the preview build plays the saved synthetic match.",
+      place: "top",
+      language: "en",
+      render: () => <TopBar meta={m75.meta} profile={m75.profile} team={m75.home} connection="preview" />,
+    },
+    {
       name: "no-following",
       note: "Profile with team and player null: no Following text.",
       canvases: ["video"],

@@ -24,6 +24,8 @@
 //                 to show the goal; the score never runs ahead of the alert
 //   offline-plate with the API dead the pitch still plays, from the saved events
 //   offline       with the API dead the saved match shows, and plays on
+//   preview       the VITE_PREVIEW build: "Preview · synthetic match" pill (no "Offline"), Space plays
+//                 the saved match, L switches it to Malay with no API
 //   reconnect     a dropped stream shows "Reconnecting", recovers, and the clock keeps moving
 
 import { spawn } from "node:child_process";
@@ -117,7 +119,7 @@ async function noPill(page) {
 }
 
 // ---- the flows ----
-function flows(live, dead) {
+function flows(live, dead, preview) {
   return [
     {
       name: "S1",
@@ -267,6 +269,20 @@ function flows(live, dead) {
       },
     },
     {
+      name: "preview",
+      url: `${preview}/?minute=73`,
+      async run(page) {
+        await page.getByText("Preview · synthetic match").first().waitFor({ timeout: 6000 });
+        if ((await body(page)).includes("Offline")) throw new Error('"Offline" is on screen');
+        await pressKey(page, " ");
+        await sleep(3000);
+        const m = await headerMinute(page);
+        if (m <= 74) throw new Error(`the minute is ${m}', not past 74'`);
+        await pressKey(page, "l");
+        await page.getByText("Pratonton").first().waitFor({ timeout: 4000 });
+      },
+    },
+    {
       name: "reconnect",
       url: `${live}/?minute=10&speed=60&play=1`,
       async before(page) {
@@ -309,9 +325,13 @@ try {
   const apiUrl = await startApi();
   const live = await startVite(apiUrl);
   const dead = await startVite("http://127.0.0.1:9");
+  // The preview build reads VITE_PREVIEW when Vite loads its env, so set it just for this server.
+  process.env.VITE_PREVIEW = "1";
+  const preview = await startVite("http://127.0.0.1:9");
+  delete process.env.VITE_PREVIEW;
   browser = await chromium.launch();
 
-  for (const flow of flows(live, dead)) {
+  for (const flow of flows(live, dead, preview)) {
     if (!flow.name.includes(filter)) continue;
     const t0 = Date.now();
     const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 } });

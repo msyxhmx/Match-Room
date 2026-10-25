@@ -1,0 +1,7166 @@
+[
+ {
+  "type": "tick",
+  "minute": 1,
+  "clock": "01:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.282,
+   "chaos": 0.213,
+   "tempo": 11.0,
+   "momentum": -0.681,
+   "phase": "away_control",
+   "label": "Kingston Vale menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.536,
+   "draw": 0.224,
+   "away_win": 0.24,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "89"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.91"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.21"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "3%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 2,
+  "clock": "02:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.293,
+   "chaos": 0.24,
+   "tempo": 8.0,
+   "momentum": -0.613,
+   "phase": "away_control",
+   "label": "Kingston Vale menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.529,
+   "draw": 0.23,
+   "away_win": 0.24,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "88"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.85"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.17"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "6%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 3,
+  "clock": "03:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.495,
+   "chaos": 0.547,
+   "tempo": 10.3,
+   "momentum": -0.73,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.49,
+   "draw": 0.236,
+   "away_win": 0.274,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "87"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.80"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.29"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "9%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 4,
+  "clock": "04:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.53,
+   "chaos": 0.547,
+   "tempo": 10.5,
+   "momentum": -0.549,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.484,
+   "draw": 0.242,
+   "away_win": 0.274,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "86"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.75"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.25"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "12%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 5,
+  "clock": "05:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.557,
+   "chaos": 0.629,
+   "tempo": 11.2,
+   "momentum": -0.388,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.479,
+   "draw": 0.248,
+   "away_win": 0.273,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "85"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.70"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.21"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "14%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 1,
+    "match_id": "SCN-comeback",
+    "minute": 5,
+    "second": 59,
+    "clock": "5:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "5:59",
+     "minute": "5",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-0",
+     "momentum": "-0.39",
+     "control_home": "0.56",
+     "chaos": "0.63",
+     "phase": "balanced",
+     "phase_label": "Seimbang"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 6,
+  "clock": "06:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.513,
+   "chaos": 0.638,
+   "tempo": 11.7,
+   "momentum": -0.497,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.474,
+   "draw": 0.254,
+   "away_win": 0.272,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "84"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.65"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.18"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "17%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 7,
+  "clock": "07:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.543,
+   "chaos": 0.752,
+   "tempo": 11.4,
+   "momentum": -0.082,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.493,
+   "draw": 0.252,
+   "away_win": 0.255,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "83"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.71"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.15"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "19%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 8,
+  "clock": "08:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.528,
+   "chaos": 0.75,
+   "tempo": 10.8,
+   "momentum": -0.386,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.487,
+   "draw": 0.258,
+   "away_win": 0.255,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "82"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.66"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.12"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "21%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 9,
+  "clock": "09:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.551,
+   "chaos": 0.825,
+   "tempo": 10.2,
+   "momentum": 0.232,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.482,
+   "draw": 0.264,
+   "away_win": 0.254,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "81"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.62"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.09"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "23%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 10,
+  "clock": "10:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.557,
+   "chaos": 0.797,
+   "tempo": 9.6,
+   "momentum": 0.291,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.504,
+   "draw": 0.26,
+   "away_win": 0.236,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "80"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.70"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.06"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "25%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 2,
+    "match_id": "SCN-comeback",
+    "minute": 10,
+    "second": 59,
+    "clock": "10:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "10:59",
+     "minute": "10",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-0",
+     "momentum": "0.29",
+     "control_home": "0.56",
+     "chaos": "0.80",
+     "phase": "balanced",
+     "phase_label": "Seimbang"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 11,
+  "clock": "11:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.557,
+   "chaos": 0.816,
+   "tempo": 9.2,
+   "momentum": 0.353,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.525,
+   "draw": 0.255,
+   "away_win": 0.22,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "79"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.78"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.04"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "27%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-1159-chaos_phase-0",
+    "type": "chaos_phase",
+    "variant": "chaos",
+    "minute": 11,
+    "second": 59,
+    "clock": "11:59",
+    "priority": 2,
+    "side": null,
+    "team_id": null,
+    "players": [],
+    "headline": "Fasa huru-hara",
+    "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
+    "why": [
+     "Northgate City dan Kingston Vale sama-sama tidak dapat mengawal bola."
+    ],
+    "facts_used": [
+     {
+      "key": "home",
+      "label": "Tuan rumah",
+      "value": "Northgate City"
+     },
+     {
+      "key": "away",
+      "label": "Pelawat",
+      "value": "Kingston Vale"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0122",
+      "minute": 7,
+      "description": "7' N. Vidal (NGC) rembatan disekat (0.04 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0147",
+      "minute": 10,
+      "description": "10' N. Vidal (NGC) rembatan disekat (0.05 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0158",
+      "minute": 11,
+      "description": "11' G. Ferreira (NGC) rembatan tersasar (0.05 xG)"
+     }
+    ],
+    "tags": [],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 3,
+    "match_id": "SCN-comeback",
+    "minute": 11,
+    "second": 59,
+    "clock": "11:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-1159-chaos_phase-0",
+    "language": "ms",
+    "fields": {
+     "headline": "Fasa huru-hara",
+     "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
+     "clock": "11:59",
+     "minute": "11",
+     "type": "chaos_phase",
+     "team": "",
+     "team_id": "",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-0"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 12,
+  "clock": "12:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.538,
+   "chaos": 0.846,
+   "tempo": 9.8,
+   "momentum": 0.169,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.519,
+   "draw": 0.261,
+   "away_win": 0.22,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "78"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.73"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.01"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "29%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 13,
+  "clock": "13:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 0
+  },
+  "control": {
+   "home_share": 0.52,
+   "chaos": 0.84,
+   "tempo": 9.5,
+   "momentum": 0.307,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.513,
+   "draw": 0.268,
+   "away_win": 0.219,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-0"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "77"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.69"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "0.99"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "30%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-1357-pass_of_the_moment-1",
+    "type": "pass_of_the_moment",
+    "variant": "pass",
+    "minute": 13,
+    "second": 57,
+    "clock": "13:57",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "Hantaran terbaik: L. Quinn",
+    "body": "L. Quinn melepaskan hantaran 45 m yang jarang dicuba pemain lain.",
+    "why": [
+     "Hantaran ini membawa Northgate City lebih dekat kepada peluang menjaringkan gol."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "length",
+      "label": "Jarak hantaran",
+      "value": "45 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0207",
+      "minute": 13,
+      "description": "13' L. Quinn (NGC) hantaran 45 m"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 4,
+    "match_id": "SCN-comeback",
+    "minute": 13,
+    "second": 57,
+    "clock": "13:57",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-1357-pass_of_the_moment-1",
+    "language": "ms",
+    "fields": {
+     "headline": "Hantaran terbaik: L. Quinn",
+     "body": "L. Quinn melepaskan hantaran 45 m yang jarang dicuba pemain lain.",
+     "clock": "13:57",
+     "minute": "13",
+     "type": "pass_of_the_moment",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-0",
+     "player": "L. Quinn",
+     "number": "8"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 14,
+  "clock": "14:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.535,
+   "chaos": 0.945,
+   "tempo": 9.0,
+   "momentum": -0.219,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.141,
+   "draw": 0.173,
+   "away_win": 0.685,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "76"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.66"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "2.03"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "32%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-1413-goal-2",
+    "type": "goal",
+    "variant": "against_run",
+    "minute": 14,
+    "second": 13,
+    "clock": "14:13",
+    "priority": 1,
+    "side": "away",
+    "team_id": "KST",
+    "players": [
+     "K. Quinn",
+     "K. Kovac"
+    ],
+    "headline": "Di luar jangkaan: Kingston Vale menjaringkan gol",
+    "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-1. Hantaran daripada K. Kovac.",
+    "why": [
+     "Peluang mereka untuk menang berubah daripada 22% kepada 69%."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "K. Quinn"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Kingston Vale"
+     },
+     {
+      "key": "score",
+      "label": "Kedudukan",
+      "value": "0-1"
+     },
+     {
+      "key": "win_before",
+      "label": "Peluang menang sebelum",
+      "value": "22%"
+     },
+     {
+      "key": "win_after",
+      "label": "Peluang menang selepas",
+      "value": "69%"
+     },
+     {
+      "key": "assist",
+      "label": "Bantuan",
+      "value": "K. Kovac"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0206",
+      "minute": 13,
+      "description": "13' K. Kovac (KST) hantaran 26 m"
+     },
+     {
+      "event_id": "SCN-comeback-0208",
+      "minute": 14,
+      "description": "14' K. Quinn (KST) menjaringkan gol (0.52 xG)"
+     }
+    ],
+    "tags": [
+     "against_your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 5,
+    "match_id": "SCN-comeback",
+    "minute": 14,
+    "second": 13,
+    "clock": "14:13",
+    "graphic": "alert",
+    "priority": 1,
+    "ttl_s": 20,
+    "insight_id": "SCN-comeback-1413-goal-2",
+    "language": "ms",
+    "fields": {
+     "headline": "Di luar jangkaan: Kingston Vale menjaringkan gol",
+     "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-1. Hantaran daripada K. Kovac.",
+     "clock": "14:13",
+     "minute": "14",
+     "type": "goal",
+     "team": "Kingston Vale",
+     "team_id": "KST",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "player": "K. Quinn",
+     "number": "8"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 15,
+  "clock": "15:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.524,
+   "chaos": 0.951,
+   "tempo": 8.6,
+   "momentum": -0.282,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.138,
+   "draw": 0.175,
+   "away_win": 0.686,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "75"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.62"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.98"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "33%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-1500-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 15,
+    "second": 0,
+    "clock": "15:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "L. Quinn setakat ini",
+    "body": "L. Quinn telah menyentuh bola 18 kali dan merampas semula bola 2 kali.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "touches",
+      "label": "Sentuhan",
+      "value": "18"
+     },
+     {
+      "key": "ball_wins",
+      "label": "Rampasan bola",
+      "value": "2"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0160",
+      "minute": 11,
+      "description": "11' L. Quinn (NGC) hantaran 12 m"
+     },
+     {
+      "event_id": "SCN-comeback-0172",
+      "minute": 12,
+      "description": "12' L. Quinn (NGC) menekan"
+     },
+     {
+      "event_id": "SCN-comeback-0207",
+      "minute": 13,
+      "description": "13' L. Quinn (NGC) hantaran 45 m"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 6,
+    "match_id": "SCN-comeback",
+    "minute": 15,
+    "second": 0,
+    "clock": "15:00",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-1500-player_focus-L. Quinn",
+    "language": "ms",
+    "fields": {
+     "headline": "L. Quinn setakat ini",
+     "body": "L. Quinn telah menyentuh bola 18 kali dan merampas semula bola 2 kali.",
+     "clock": "15:00",
+     "minute": "15",
+     "type": "player_focus",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "player": "L. Quinn",
+     "number": "8",
+     "stat_label": "Sentuhan",
+     "stat_value": "18"
+    }
+   },
+   {
+    "seq": 7,
+    "match_id": "SCN-comeback",
+    "minute": 15,
+    "second": 59,
+    "clock": "15:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "15:59",
+     "minute": "15",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "momentum": "-0.28",
+     "control_home": "0.52",
+     "chaos": "0.95",
+     "phase": "chaos",
+     "phase_label": "Fasa huru-hara"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 16,
+  "clock": "16:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.547,
+   "chaos": 0.881,
+   "tempo": 7.9,
+   "momentum": -0.276,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.135,
+   "draw": 0.177,
+   "away_win": 0.688,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "74"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.58"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.94"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "35%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 17,
+  "clock": "17:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.527,
+   "chaos": 0.904,
+   "tempo": 7.7,
+   "momentum": -0.194,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.132,
+   "draw": 0.179,
+   "away_win": 0.689,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "73"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.55"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.90"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "36%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 18,
+  "clock": "18:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.518,
+   "chaos": 0.868,
+   "tempo": 7.8,
+   "momentum": -0.22,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.129,
+   "draw": 0.181,
+   "away_win": 0.69,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "72"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.52"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.86"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "38%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 19,
+  "clock": "19:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.486,
+   "chaos": 0.836,
+   "tempo": 8.2,
+   "momentum": -0.317,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.126,
+   "draw": 0.183,
+   "away_win": 0.692,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "71"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.49"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.82"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "39%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 20,
+  "clock": "20:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.463,
+   "chaos": 0.869,
+   "tempo": 9.0,
+   "momentum": -0.216,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.137,
+   "draw": 0.19,
+   "away_win": 0.673,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "70"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.56"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.78"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "40%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 8,
+    "match_id": "SCN-comeback",
+    "minute": 20,
+    "second": 59,
+    "clock": "20:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "20:59",
+     "minute": "20",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "momentum": "-0.22",
+     "control_home": "0.46",
+     "chaos": "0.87",
+     "phase": "chaos",
+     "phase_label": "Fasa huru-hara"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 21,
+  "clock": "21:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.473,
+   "chaos": 0.824,
+   "tempo": 9.2,
+   "momentum": -0.18,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.133,
+   "draw": 0.192,
+   "away_win": 0.675,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "69"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.53"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.75"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "41%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 22,
+  "clock": "22:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.494,
+   "chaos": 0.745,
+   "tempo": 8.7,
+   "momentum": -0.132,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.13,
+   "draw": 0.193,
+   "away_win": 0.677,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "68"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.50"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.72"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "42%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 23,
+  "clock": "23:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.539,
+   "chaos": 0.524,
+   "tempo": 7.9,
+   "momentum": -0.131,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.126,
+   "draw": 0.195,
+   "away_win": 0.679,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "67"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.47"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.68"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "43%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 24,
+  "clock": "24:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.487,
+   "chaos": 0.409,
+   "tempo": 8.3,
+   "momentum": -0.204,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.123,
+   "draw": 0.196,
+   "away_win": 0.681,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "66"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.44"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.65"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "44%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 25,
+  "clock": "25:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.465,
+   "chaos": 0.447,
+   "tempo": 7.8,
+   "momentum": 0.012,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.157,
+   "draw": 0.212,
+   "away_win": 0.631,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "65"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.67"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.62"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "45%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 9,
+    "match_id": "SCN-comeback",
+    "minute": 25,
+    "second": 59,
+    "clock": "25:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "25:59",
+     "minute": "25",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "momentum": "0.01",
+     "control_home": "0.47",
+     "chaos": "0.45",
+     "phase": "balanced",
+     "phase_label": "Seimbang"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 26,
+  "clock": "26:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.475,
+   "chaos": 0.481,
+   "tempo": 7.6,
+   "momentum": 0.028,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.153,
+   "draw": 0.213,
+   "away_win": 0.634,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "64"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.64"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.59"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "46%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-2659-pressure_spike-5",
+    "type": "pressure_spike",
+    "variant": "press",
+    "minute": 26,
+    "second": 59,
+    "clock": "26:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Northgate City meningkatkan tekanan",
+    "body": "Northgate City memburu bola jauh di kawasan lawan.",
+    "why": [
+     "Mereka cepat merampas semula bola."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0355",
+      "minute": 25,
+      "description": "25' H. Novak (NGC) kekasaran"
+     },
+     {
+      "event_id": "SCN-comeback-0358",
+      "minute": 25,
+      "description": "25' G. Ferreira (NGC) terjahan"
+     },
+     {
+      "event_id": "SCN-comeback-0364",
+      "minute": 26,
+      "description": "26' H. Moreau (NGC) pintasan"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 10,
+    "match_id": "SCN-comeback",
+    "minute": 26,
+    "second": 59,
+    "clock": "26:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-2659-pressure_spike-5",
+    "language": "ms",
+    "fields": {
+     "headline": "Northgate City meningkatkan tekanan",
+     "body": "Northgate City memburu bola jauh di kawasan lawan.",
+     "clock": "26:59",
+     "minute": "26",
+     "type": "pressure_spike",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 27,
+  "clock": "27:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.492,
+   "chaos": 0.517,
+   "tempo": 8.1,
+   "momentum": -0.157,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.142,
+   "draw": 0.207,
+   "away_win": 0.651,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "63"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.61"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.66"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "47%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 28,
+  "clock": "28:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.541,
+   "chaos": 0.537,
+   "tempo": 7.9,
+   "momentum": 0.057,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.159,
+   "draw": 0.216,
+   "away_win": 0.625,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "62"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.73"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.63"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "48%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 29,
+  "clock": "29:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.571,
+   "chaos": 0.554,
+   "tempo": 7.4,
+   "momentum": 0.206,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.177,
+   "draw": 0.224,
+   "away_win": 0.6,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "61"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.85"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.61"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "49%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 30,
+  "clock": "30:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.593,
+   "chaos": 0.563,
+   "tempo": 7.2,
+   "momentum": 0.016,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.183,
+   "draw": 0.228,
+   "away_win": 0.59,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "60"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.89"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.58"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "50%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-3000-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 30,
+    "second": 0,
+    "clock": "30:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "L. Quinn setakat ini",
+    "body": "L. Quinn telah menyentuh bola 27 kali dan merampas semula bola 2 kali.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "touches",
+      "label": "Sentuhan",
+      "value": "27"
+     },
+     {
+      "key": "ball_wins",
+      "label": "Rampasan bola",
+      "value": "2"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0365",
+      "minute": 26,
+      "description": "26' L. Quinn (NGC) menekan"
+     },
+     {
+      "event_id": "SCN-comeback-0388",
+      "minute": 27,
+      "description": "27' L. Quinn (NGC) hantaran 4 m"
+     },
+     {
+      "event_id": "SCN-comeback-0425",
+      "minute": 30,
+      "description": "30' L. Quinn (NGC) menekan"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   },
+   {
+    "insight_id": "SCN-comeback-3004-shot_speed-6",
+    "type": "shot_speed",
+    "variant": "saved",
+    "minute": 30,
+    "second": 4,
+    "clock": "30:04",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "N. Ekwueme"
+    ],
+    "headline": "Rembatan 116 km/h oleh N. Ekwueme",
+    "body": "N. Ekwueme melepaskan rembatan 116 km/h dari jarak 38 m.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "N. Ekwueme"
+     },
+     {
+      "key": "speed",
+      "label": "Kelajuan bola",
+      "value": "116 km/h"
+     },
+     {
+      "key": "distance",
+      "label": "Jarak",
+      "value": "38 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0413",
+      "minute": 30,
+      "description": "30' N. Ekwueme (NGC) rembatan diselamatkan (0.05 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 11,
+    "match_id": "SCN-comeback",
+    "minute": 30,
+    "second": 0,
+    "clock": "30:00",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-3000-player_focus-L. Quinn",
+    "language": "ms",
+    "fields": {
+     "headline": "L. Quinn setakat ini",
+     "body": "L. Quinn telah menyentuh bola 27 kali dan merampas semula bola 2 kali.",
+     "clock": "30:00",
+     "minute": "30",
+     "type": "player_focus",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "player": "L. Quinn",
+     "number": "8",
+     "stat_label": "Sentuhan",
+     "stat_value": "27"
+    }
+   },
+   {
+    "seq": 12,
+    "match_id": "SCN-comeback",
+    "minute": 30,
+    "second": 4,
+    "clock": "30:04",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-3004-shot_speed-6",
+    "language": "ms",
+    "fields": {
+     "headline": "Rembatan 116 km/h oleh N. Ekwueme",
+     "body": "N. Ekwueme melepaskan rembatan 116 km/h dari jarak 38 m.",
+     "clock": "30:04",
+     "minute": "30",
+     "type": "shot_speed",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "player": "N. Ekwueme",
+     "number": "9",
+     "stat_label": "Kelajuan bola",
+     "stat_value": "116 km/h"
+    }
+   },
+   {
+    "seq": 13,
+    "match_id": "SCN-comeback",
+    "minute": 30,
+    "second": 59,
+    "clock": "30:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "30:59",
+     "minute": "30",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "momentum": "0.02",
+     "control_home": "0.59",
+     "chaos": "0.56",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 31,
+  "clock": "31:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.591,
+   "chaos": 0.553,
+   "tempo": 6.9,
+   "momentum": 0.015,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.177,
+   "draw": 0.229,
+   "away_win": 0.593,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "59"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.86"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.55"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "51%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-3159-control_shift-7",
+    "type": "control_shift",
+    "variant": "control",
+    "minute": 31,
+    "second": 59,
+    "clock": "31:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Northgate City menguasai permainan",
+    "body": "Northgate City menguasai bola dan kawasan.",
+    "why": [
+     "Mereka menentukan di mana permainan dimainkan."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0354",
+      "minute": 25,
+      "description": "25' J. Okafor (NGC) rembatan disekat (0.15 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0400",
+      "minute": 28,
+      "description": "28' N. Vidal (NGC) rembatan tersasar (0.10 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0411",
+      "minute": 29,
+      "description": "29' N. Vidal (NGC) rembatan diselamatkan (0.10 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 14,
+    "match_id": "SCN-comeback",
+    "minute": 31,
+    "second": 59,
+    "clock": "31:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-3159-control_shift-7",
+    "language": "ms",
+    "fields": {
+     "headline": "Northgate City menguasai permainan",
+     "body": "Northgate City menguasai bola dan kawasan.",
+     "clock": "31:59",
+     "minute": "31",
+     "type": "control_shift",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 32,
+  "clock": "32:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.564,
+   "chaos": 0.581,
+   "tempo": 7.3,
+   "momentum": -0.092,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.172,
+   "draw": 0.231,
+   "away_win": 0.597,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "58"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.83"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.53"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "52%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 33,
+  "clock": "33:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.51,
+   "chaos": 0.598,
+   "tempo": 7.7,
+   "momentum": -0.173,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.167,
+   "draw": 0.232,
+   "away_win": 0.601,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "57"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.80"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.50"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "52%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 34,
+  "clock": "34:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.533,
+   "chaos": 0.568,
+   "tempo": 7.4,
+   "momentum": -0.158,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.161,
+   "draw": 0.233,
+   "away_win": 0.605,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "56"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.77"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.48"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "53%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 35,
+  "clock": "35:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.54,
+   "chaos": 0.529,
+   "tempo": 8.4,
+   "momentum": -0.029,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.161,
+   "draw": 0.236,
+   "away_win": 0.602,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "55"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.78"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.46"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "54%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 15,
+    "match_id": "SCN-comeback",
+    "minute": 35,
+    "second": 59,
+    "clock": "35:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "35:59",
+     "minute": "35",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "momentum": "-0.03",
+     "control_home": "0.54",
+     "chaos": "0.53",
+     "phase": "balanced",
+     "phase_label": "Seimbang"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 36,
+  "clock": "36:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.534,
+   "chaos": 0.528,
+   "tempo": 8.8,
+   "momentum": -0.028,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.156,
+   "draw": 0.237,
+   "away_win": 0.607,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "54"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.75"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.44"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "55%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 37,
+  "clock": "37:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.465,
+   "chaos": 0.637,
+   "tempo": 8.4,
+   "momentum": -0.488,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.033,
+   "draw": 0.082,
+   "away_win": 0.885,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "53"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.73"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "2.06"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "55%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-3713-goal-8",
+    "type": "goal",
+    "variant": "neutral",
+    "minute": 37,
+    "second": 13,
+    "clock": "37:13",
+    "priority": 1,
+    "side": "away",
+    "team_id": "KST",
+    "players": [
+     "K. Quinn",
+     "D. Ekwueme"
+    ],
+    "headline": "Gol untuk Kingston Vale",
+    "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-2. Hantaran daripada D. Ekwueme. Itu gol ke-2 untuk K. Quinn hari ini.",
+    "why": [
+     "Peluang mereka untuk menang berubah daripada 61% kepada 88%."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "K. Quinn"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Kingston Vale"
+     },
+     {
+      "key": "score",
+      "label": "Kedudukan",
+      "value": "0-2"
+     },
+     {
+      "key": "win_before",
+      "label": "Peluang menang sebelum",
+      "value": "61%"
+     },
+     {
+      "key": "win_after",
+      "label": "Peluang menang selepas",
+      "value": "88%"
+     },
+     {
+      "key": "player_goals",
+      "label": "Gol pemain",
+      "value": "2"
+     },
+     {
+      "key": "assist",
+      "label": "Bantuan",
+      "value": "D. Ekwueme"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0519",
+      "minute": 37,
+      "description": "37' D. Ekwueme (KST) hantaran 8 m"
+     },
+     {
+      "event_id": "SCN-comeback-0520",
+      "minute": 37,
+      "description": "37' K. Quinn (KST) menjaringkan gol (0.48 xG)"
+     }
+    ],
+    "tags": [
+     "against_your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 16,
+    "match_id": "SCN-comeback",
+    "minute": 37,
+    "second": 13,
+    "clock": "37:13",
+    "graphic": "alert",
+    "priority": 1,
+    "ttl_s": 20,
+    "insight_id": "SCN-comeback-3713-goal-8",
+    "language": "ms",
+    "fields": {
+     "headline": "Gol untuk Kingston Vale",
+     "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-2. Hantaran daripada D. Ekwueme. Itu gol ke-2 untuk K. Quinn hari ini.",
+     "clock": "37:13",
+     "minute": "37",
+     "type": "goal",
+     "team": "Kingston Vale",
+     "team_id": "KST",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "K. Quinn",
+     "number": "8"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 38,
+  "clock": "38:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.447,
+   "chaos": 0.745,
+   "tempo": 8.8,
+   "momentum": -0.504,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.031,
+   "draw": 0.081,
+   "away_win": 0.888,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "52"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.70"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "2.03"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "56%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 39,
+  "clock": "39:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.451,
+   "chaos": 0.76,
+   "tempo": 8.9,
+   "momentum": -0.534,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.029,
+   "draw": 0.079,
+   "away_win": 0.891,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "51"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.68"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "2.00"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "57%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 40,
+  "clock": "40:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.445,
+   "chaos": 0.733,
+   "tempo": 8.6,
+   "momentum": -0.368,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.028,
+   "draw": 0.078,
+   "away_win": 0.894,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "50"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.65"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.97"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "57%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 17,
+    "match_id": "SCN-comeback",
+    "minute": 40,
+    "second": 59,
+    "clock": "40:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "40:59",
+     "minute": "40",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "momentum": "-0.37",
+     "control_home": "0.45",
+     "chaos": "0.73",
+     "phase": "balanced",
+     "phase_label": "Seimbang"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 41,
+  "clock": "41:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.455,
+   "chaos": 0.715,
+   "tempo": 8.9,
+   "momentum": -0.366,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.026,
+   "draw": 0.076,
+   "away_win": 0.898,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "49"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.63"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.94"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "58%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 42,
+  "clock": "42:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.524,
+   "chaos": 0.686,
+   "tempo": 8.7,
+   "momentum": -0.332,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.025,
+   "draw": 0.074,
+   "away_win": 0.901,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "48"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.61"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.92"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "58%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 43,
+  "clock": "43:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.565,
+   "chaos": 0.669,
+   "tempo": 8.6,
+   "momentum": -0.322,
+   "phase": "balanced",
+   "label": "Seimbang"
+  },
+  "projection": {
+   "home_win": 0.023,
+   "draw": 0.073,
+   "away_win": 0.904,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "47"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.58"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.89"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "59%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 44,
+  "clock": "44:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.588,
+   "chaos": 0.684,
+   "tempo": 8.7,
+   "momentum": -0.323,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.022,
+   "draw": 0.071,
+   "away_win": 0.907,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "46"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.56"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.86"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "59%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 45,
+  "clock": "45:00",
+  "period": "HT",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.613,
+   "chaos": 0.663,
+   "tempo": 8.1,
+   "momentum": -0.148,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.02,
+   "draw": 0.069,
+   "away_win": 0.911,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "45"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.54"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.84"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "60%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-4500-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 45,
+    "second": 0,
+    "clock": "45:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "L. Quinn setakat ini",
+    "body": "L. Quinn telah menyentuh bola 38 kali dan merampas semula bola 2 kali.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "touches",
+      "label": "Sentuhan",
+      "value": "38"
+     },
+     {
+      "key": "ball_wins",
+      "label": "Rampasan bola",
+      "value": "2"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0597",
+      "minute": 42,
+      "description": "42' L. Quinn (NGC) hantaran 10 m"
+     },
+     {
+      "event_id": "SCN-comeback-0633",
+      "minute": 45,
+      "description": "45' L. Quinn (NGC) hantaran 15 m"
+     },
+     {
+      "event_id": "SCN-comeback-0635",
+      "minute": 45,
+      "description": "45' L. Quinn (NGC) hantaran 23 m"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 18,
+    "match_id": "SCN-comeback",
+    "minute": 45,
+    "second": 0,
+    "clock": "45:00",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-4500-player_focus-L. Quinn",
+    "language": "ms",
+    "fields": {
+     "headline": "L. Quinn setakat ini",
+     "body": "L. Quinn telah menyentuh bola 38 kali dan merampas semula bola 2 kali.",
+     "clock": "45:00",
+     "minute": "45",
+     "type": "player_focus",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "L. Quinn",
+     "number": "8",
+     "stat_label": "Sentuhan",
+     "stat_value": "38"
+    }
+   },
+   {
+    "seq": 19,
+    "match_id": "SCN-comeback",
+    "minute": 45,
+    "second": 59,
+    "clock": "45:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "45:59",
+     "minute": "45",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "momentum": "-0.15",
+     "control_home": "0.61",
+     "chaos": "0.66",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 46,
+  "clock": "46:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.627,
+   "chaos": 0.665,
+   "tempo": 7.6,
+   "momentum": -0.05,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.021,
+   "draw": 0.071,
+   "away_win": 0.907,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "44"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.59"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.82"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "61%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 47,
+  "clock": "47:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.699,
+   "chaos": 0.711,
+   "tempo": 7.7,
+   "momentum": 0.301,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.02,
+   "draw": 0.069,
+   "away_win": 0.911,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "43"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.57"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.79"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "61%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 48,
+  "clock": "48:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.71,
+   "chaos": 0.66,
+   "tempo": 7.4,
+   "momentum": 0.413,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.02,
+   "draw": 0.07,
+   "away_win": 0.91,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "42"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.59"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.77"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "62%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-4826-pass_of_the_moment-11",
+    "type": "pass_of_the_moment",
+    "variant": "pass",
+    "minute": 48,
+    "second": 26,
+    "clock": "48:26",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "F. Hart"
+    ],
+    "headline": "Hantaran terbaik: F. Hart",
+    "body": "F. Hart melepaskan hantaran 36 m yang jarang dicuba pemain lain.",
+    "why": [
+     "Hantaran ini membawa Northgate City lebih dekat kepada peluang menjaringkan gol."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "F. Hart"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "length",
+      "label": "Jarak hantaran",
+      "value": "36 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0663",
+      "minute": 48,
+      "description": "48' F. Hart (NGC) hantaran 36 m"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 20,
+    "match_id": "SCN-comeback",
+    "minute": 48,
+    "second": 26,
+    "clock": "48:26",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-4826-pass_of_the_moment-11",
+    "language": "ms",
+    "fields": {
+     "headline": "Hantaran terbaik: F. Hart",
+     "body": "F. Hart melepaskan hantaran 36 m yang jarang dicuba pemain lain.",
+     "clock": "48:26",
+     "minute": "48",
+     "type": "pass_of_the_moment",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "F. Hart",
+     "number": "1"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 49,
+  "clock": "49:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.757,
+   "chaos": 0.72,
+   "tempo": 7.6,
+   "momentum": 0.269,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.019,
+   "draw": 0.068,
+   "away_win": 0.913,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "41"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.57"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.75"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "62%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 50,
+  "clock": "50:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.764,
+   "chaos": 0.709,
+   "tempo": 7.7,
+   "momentum": 0.379,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.017,
+   "draw": 0.066,
+   "away_win": 0.917,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "40"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.55"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.73"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "62%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 21,
+    "match_id": "SCN-comeback",
+    "minute": 50,
+    "second": 59,
+    "clock": "50:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "50:59",
+     "minute": "50",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "momentum": "0.38",
+     "control_home": "0.76",
+     "chaos": "0.71",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 51,
+  "clock": "51:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.777,
+   "chaos": 0.708,
+   "tempo": 7.9,
+   "momentum": 0.385,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.016,
+   "draw": 0.064,
+   "away_win": 0.92,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "39"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.53"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.70"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "63%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-5159-momentum_flip-12",
+    "type": "momentum_flip",
+    "variant": "flip",
+    "minute": 51,
+    "second": 59,
+    "clock": "51:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "F. Moreau"
+    ],
+    "headline": "Momentum beralih kepada Northgate City",
+    "body": "Northgate City kini menguasai permainan. F. Moreau menjadi penggeraknya.",
+    "why": [
+     "Kebanyakan serangan berbahaya kini datang daripada Northgate City."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "F. Moreau"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0658",
+      "minute": 47,
+      "description": "47' F. Moreau (NGC) hantaran 26 m"
+     },
+     {
+      "event_id": "SCN-comeback-0674",
+      "minute": 49,
+      "description": "49' H. Moreau (NGC) hantaran 31 m"
+     },
+     {
+      "event_id": "SCN-comeback-0699",
+      "minute": 50,
+      "description": "50' L. Quinn (NGC) hantaran 20 m"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 22,
+    "match_id": "SCN-comeback",
+    "minute": 51,
+    "second": 59,
+    "clock": "51:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-5159-momentum_flip-12",
+    "language": "ms",
+    "fields": {
+     "headline": "Momentum beralih kepada Northgate City",
+     "body": "Northgate City kini menguasai permainan. F. Moreau menjadi penggeraknya.",
+     "clock": "51:59",
+     "minute": "51",
+     "type": "momentum_flip",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "F. Moreau",
+     "number": "2"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 52,
+  "clock": "52:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.78,
+   "chaos": 0.716,
+   "tempo": 8.1,
+   "momentum": 0.425,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.015,
+   "draw": 0.062,
+   "away_win": 0.923,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "38"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.52"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.68"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "63%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 53,
+  "clock": "53:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.78,
+   "chaos": 0.756,
+   "tempo": 8.4,
+   "momentum": 0.379,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.014,
+   "draw": 0.059,
+   "away_win": 0.927,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "37"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.50"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.66"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "64%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 54,
+  "clock": "54:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.777,
+   "chaos": 0.719,
+   "tempo": 8.4,
+   "momentum": 0.398,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.013,
+   "draw": 0.057,
+   "away_win": 0.93,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "36"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.48"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.64"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "64%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 55,
+  "clock": "55:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.771,
+   "chaos": 0.637,
+   "tempo": 8.3,
+   "momentum": 0.439,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.012,
+   "draw": 0.055,
+   "away_win": 0.934,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "35"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.46"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.62"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "65%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 23,
+    "match_id": "SCN-comeback",
+    "minute": 55,
+    "second": 59,
+    "clock": "55:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "55:59",
+     "minute": "55",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "momentum": "0.44",
+     "control_home": "0.77",
+     "chaos": "0.64",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 56,
+  "clock": "56:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.777,
+   "chaos": 0.57,
+   "tempo": 8.5,
+   "momentum": 0.501,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.017,
+   "draw": 0.067,
+   "away_win": 0.917,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "34"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.72"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.69"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "65%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 57,
+  "clock": "57:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.779,
+   "chaos": 0.568,
+   "tempo": 8.5,
+   "momentum": 0.472,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.016,
+   "draw": 0.067,
+   "away_win": 0.917,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "33"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.77"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.74"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "66%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 58,
+  "clock": "58:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.776,
+   "chaos": 0.594,
+   "tempo": 8.7,
+   "momentum": 0.519,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.015,
+   "draw": 0.064,
+   "away_win": 0.921,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "32"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.75"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.72"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "66%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 59,
+  "clock": "59:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.76,
+   "chaos": 0.506,
+   "tempo": 8.5,
+   "momentum": 0.518,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.014,
+   "draw": 0.061,
+   "away_win": 0.925,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "31"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.73"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.70"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "66%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 60,
+  "clock": "60:00",
+  "period": "2H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.756,
+   "chaos": 0.476,
+   "tempo": 8.4,
+   "momentum": 0.552,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.014,
+   "draw": 0.061,
+   "away_win": 0.926,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "30"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "1.76"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.68"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "67%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6000-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 60,
+    "second": 0,
+    "clock": "60:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "L. Quinn setakat ini",
+    "body": "L. Quinn telah menyentuh bola 57 kali dan merampas semula bola 2 kali.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "touches",
+      "label": "Sentuhan",
+      "value": "57"
+     },
+     {
+      "key": "ball_wins",
+      "label": "Rampasan bola",
+      "value": "2"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0820",
+      "minute": 59,
+      "description": "59' L. Quinn (NGC) hantaran 36 m"
+     },
+     {
+      "event_id": "SCN-comeback-0822",
+      "minute": 59,
+      "description": "59' L. Quinn (NGC) hantaran 12 m"
+     },
+     {
+      "event_id": "SCN-comeback-0829",
+      "minute": 60,
+      "description": "60' L. Quinn (NGC) hantaran 10 m"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 24,
+    "match_id": "SCN-comeback",
+    "minute": 60,
+    "second": 0,
+    "clock": "60:00",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-6000-player_focus-L. Quinn",
+    "language": "ms",
+    "fields": {
+     "headline": "L. Quinn setakat ini",
+     "body": "L. Quinn telah menyentuh bola 57 kali dan merampas semula bola 2 kali.",
+     "clock": "60:00",
+     "minute": "60",
+     "type": "player_focus",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "L. Quinn",
+     "number": "8",
+     "stat_label": "Sentuhan",
+     "stat_value": "57"
+    }
+   },
+   {
+    "seq": 25,
+    "match_id": "SCN-comeback",
+    "minute": 60,
+    "second": 59,
+    "clock": "60:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "60:59",
+     "minute": "60",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "momentum": "0.55",
+     "control_home": "0.76",
+     "chaos": "0.48",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 61,
+  "clock": "61:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.75,
+   "chaos": 0.575,
+   "tempo": 8.4,
+   "momentum": 0.578,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.103,
+   "draw": 0.245,
+   "away_win": 0.652,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "29"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.19"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.66"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "67%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6143-goal-13",
+    "type": "goal",
+    "variant": "deserved",
+    "minute": 61,
+    "second": 43,
+    "clock": "61:43",
+    "priority": 1,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "G. Ferreira",
+     "N. Ekwueme"
+    ],
+    "headline": "Northgate City akhirnya berjaya",
+    "body": "G. Ferreira menjaringkan gol untuk Northgate City. Kedudukan kini 1-2. Hantaran daripada N. Ekwueme.",
+    "why": [
+     "Peluang mereka untuk menang berubah daripada 1% kepada 10%."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "G. Ferreira"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "score",
+      "label": "Kedudukan",
+      "value": "1-2"
+     },
+     {
+      "key": "win_before",
+      "label": "Peluang menang sebelum",
+      "value": "1%"
+     },
+     {
+      "key": "win_after",
+      "label": "Peluang menang selepas",
+      "value": "10%"
+     },
+     {
+      "key": "assist",
+      "label": "Bantuan",
+      "value": "N. Ekwueme"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0855",
+      "minute": 61,
+      "description": "61' N. Ekwueme (NGC) hantaran 15 m"
+     },
+     {
+      "event_id": "SCN-comeback-0856",
+      "minute": 61,
+      "description": "61' G. Ferreira (NGC) menjaringkan gol (0.45 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 26,
+    "match_id": "SCN-comeback",
+    "minute": 61,
+    "second": 43,
+    "clock": "61:43",
+    "graphic": "alert",
+    "priority": 1,
+    "ttl_s": 20,
+    "insight_id": "SCN-comeback-6143-goal-13",
+    "language": "ms",
+    "fields": {
+     "headline": "Northgate City akhirnya berjaya",
+     "body": "G. Ferreira menjaringkan gol untuk Northgate City. Kedudukan kini 1-2. Hantaran daripada N. Ekwueme.",
+     "clock": "61:43",
+     "minute": "61",
+     "type": "goal",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2",
+     "player": "G. Ferreira",
+     "number": "3"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 62,
+  "clock": "62:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.752,
+   "chaos": 0.721,
+   "tempo": 8.7,
+   "momentum": 0.662,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.098,
+   "draw": 0.243,
+   "away_win": 0.659,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "28"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.16"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.65"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "67%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 63,
+  "clock": "63:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.749,
+   "chaos": 0.795,
+   "tempo": 9.3,
+   "momentum": 0.698,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.092,
+   "draw": 0.241,
+   "away_win": 0.667,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "27"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.14"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.63"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "68%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 64,
+  "clock": "64:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.754,
+   "chaos": 0.793,
+   "tempo": 9.8,
+   "momentum": 0.689,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.086,
+   "draw": 0.239,
+   "away_win": 0.674,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "26"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.12"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.61"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "68%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6459-player_milestone-14",
+    "type": "player_milestone",
+    "variant": "passes",
+    "minute": 64,
+    "second": 59,
+    "clock": "64:59",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Gallo"
+    ],
+    "headline": "L. Gallo: 40 hantaran berjaya",
+    "body": "L. Gallo mengemudi permainan Northgate City.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Gallo"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "count",
+      "label": "Jumlah",
+      "value": "40"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0870",
+      "minute": 62,
+      "description": "62' L. Gallo (NGC) hantaran 18 m"
+     },
+     {
+      "event_id": "SCN-comeback-0905",
+      "minute": 63,
+      "description": "63' L. Gallo (NGC) hantaran 14 m"
+     },
+     {
+      "event_id": "SCN-comeback-0919",
+      "minute": 64,
+      "description": "64' L. Gallo (NGC) hantaran 9 m"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 27,
+    "match_id": "SCN-comeback",
+    "minute": 64,
+    "second": 59,
+    "clock": "64:59",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-6459-player_milestone-14",
+    "language": "ms",
+    "fields": {
+     "headline": "L. Gallo: 40 hantaran berjaya",
+     "body": "L. Gallo mengemudi permainan Northgate City.",
+     "clock": "64:59",
+     "minute": "64",
+     "type": "player_milestone",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2",
+     "player": "L. Gallo",
+     "number": "7",
+     "stat_label": "Jumlah",
+     "stat_value": "40"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 65,
+  "clock": "65:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.76,
+   "chaos": 0.811,
+   "tempo": 9.9,
+   "momentum": 0.726,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.081,
+   "draw": 0.237,
+   "away_win": 0.682,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "25"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.09"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.59"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "68%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6559-chaos_phase-15",
+    "type": "chaos_phase",
+    "variant": "chaos",
+    "minute": 65,
+    "second": 59,
+    "clock": "65:59",
+    "priority": 2,
+    "side": null,
+    "team_id": null,
+    "players": [],
+    "headline": "Fasa huru-hara",
+    "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
+    "why": [
+     "Northgate City dan Kingston Vale sama-sama tidak dapat mengawal bola."
+    ],
+    "facts_used": [
+     {
+      "key": "home",
+      "label": "Tuan rumah",
+      "value": "Northgate City"
+     },
+     {
+      "key": "away",
+      "label": "Pelawat",
+      "value": "Kingston Vale"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0802",
+      "minute": 57,
+      "description": "57' N. Vidal (NGC) rembatan tersasar (0.07 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0830",
+      "minute": 60,
+      "description": "60' N. Vidal (NGC) rembatan disekat (0.05 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0856",
+      "minute": 61,
+      "description": "61' G. Ferreira (NGC) menjaringkan gol (0.45 xG)"
+     }
+    ],
+    "tags": [],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 28,
+    "match_id": "SCN-comeback",
+    "minute": 65,
+    "second": 59,
+    "clock": "65:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-6559-chaos_phase-15",
+    "language": "ms",
+    "fields": {
+     "headline": "Fasa huru-hara",
+     "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
+     "clock": "65:59",
+     "minute": "65",
+     "type": "chaos_phase",
+     "team": "",
+     "team_id": "",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2"
+    }
+   },
+   {
+    "seq": 29,
+    "match_id": "SCN-comeback",
+    "minute": 65,
+    "second": 59,
+    "clock": "65:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "65:59",
+     "minute": "65",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2",
+     "momentum": "0.73",
+     "control_home": "0.76",
+     "chaos": "0.81",
+     "phase": "chaos",
+     "phase_label": "Fasa huru-hara"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 66,
+  "clock": "66:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.756,
+   "chaos": 0.82,
+   "tempo": 10.0,
+   "momentum": 0.761,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.075,
+   "draw": 0.234,
+   "away_win": 0.691,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "24"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.07"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.58"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "69%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 67,
+  "clock": "67:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.755,
+   "chaos": 0.815,
+   "tempo": 9.6,
+   "momentum": 0.765,
+   "phase": "chaos",
+   "label": "Fasa huru-hara"
+  },
+  "projection": {
+   "home_win": 0.074,
+   "draw": 0.234,
+   "away_win": 0.692,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "23"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.13"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.59"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "69%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6753-shot_speed-16",
+    "type": "shot_speed",
+    "variant": "blocked",
+    "minute": 67,
+    "second": 53,
+    "clock": "67:53",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "N. Ekwueme"
+    ],
+    "headline": "Rembatan 117 km/h oleh N. Ekwueme",
+    "body": "N. Ekwueme melepaskan rembatan 117 km/h dari jarak 31 m.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "N. Ekwueme"
+     },
+     {
+      "key": "speed",
+      "label": "Kelajuan bola",
+      "value": "117 km/h"
+     },
+     {
+      "key": "distance",
+      "label": "Jarak",
+      "value": "31 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0966",
+      "minute": 67,
+      "description": "67' N. Ekwueme (NGC) rembatan disekat (0.08 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 30,
+    "match_id": "SCN-comeback",
+    "minute": 67,
+    "second": 53,
+    "clock": "67:53",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-6753-shot_speed-16",
+    "language": "ms",
+    "fields": {
+     "headline": "Rembatan 117 km/h oleh N. Ekwueme",
+     "body": "N. Ekwueme melepaskan rembatan 117 km/h dari jarak 31 m.",
+     "clock": "67:53",
+     "minute": "67",
+     "type": "shot_speed",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2",
+     "player": "N. Ekwueme",
+     "number": "9",
+     "stat_label": "Kelajuan bola",
+     "stat_value": "117 km/h"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 68,
+  "clock": "68:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.763,
+   "chaos": 0.795,
+   "tempo": 9.3,
+   "momentum": 0.764,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.069,
+   "draw": 0.231,
+   "away_win": 0.701,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "22"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.10"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.57"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "69%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 69,
+  "clock": "69:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.773,
+   "chaos": 0.781,
+   "tempo": 9.3,
+   "momentum": 0.763,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.063,
+   "draw": 0.227,
+   "away_win": 0.71,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "21"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.08"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.55"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "70%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 70,
+  "clock": "70:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.764,
+   "chaos": 0.777,
+   "tempo": 9.1,
+   "momentum": 0.794,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.065,
+   "draw": 0.231,
+   "away_win": 0.704,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "20"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.19"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.54"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "70%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 31,
+    "match_id": "SCN-comeback",
+    "minute": 70,
+    "second": 59,
+    "clock": "70:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "70:59",
+     "minute": "70",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2",
+     "momentum": "0.79",
+     "control_home": "0.76",
+     "chaos": "0.78",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 71,
+  "clock": "71:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.775,
+   "chaos": 0.662,
+   "tempo": 8.6,
+   "momentum": 0.722,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.059,
+   "draw": 0.226,
+   "away_win": 0.715,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "19"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.17"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.52"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "70%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 72,
+  "clock": "72:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.768,
+   "chaos": 0.553,
+   "tempo": 8.2,
+   "momentum": 0.714,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.054,
+   "draw": 0.221,
+   "away_win": 0.726,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "18"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.15"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.51"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "71%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 73,
+  "clock": "73:00",
+  "period": "2H",
+  "score": {
+   "home": 1,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.747,
+   "chaos": 0.471,
+   "tempo": 7.4,
+   "momentum": 0.781,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.054,
+   "draw": 0.222,
+   "away_win": 0.724,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "1-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "17"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.25"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.49"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "71%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 74,
+  "clock": "74:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.734,
+   "chaos": 0.487,
+   "tempo": 6.7,
+   "momentum": 0.782,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.283,
+   "draw": 0.558,
+   "away_win": 0.159,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "16"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.42"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.48"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "71%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-7410-goal-17",
+    "type": "goal",
+    "variant": "deserved",
+    "minute": 74,
+    "second": 10,
+    "clock": "74:10",
+    "priority": 1,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn",
+     "H. Novak"
+    ],
+    "headline": "Northgate City akhirnya berjaya",
+    "body": "L. Quinn menjaringkan gol untuk Northgate City. Kedudukan kini 2-2. Hantaran daripada H. Novak.",
+    "why": [
+     "Peluang mereka untuk menang berubah daripada 5% kepada 28%."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "score",
+      "label": "Kedudukan",
+      "value": "2-2"
+     },
+     {
+      "key": "win_before",
+      "label": "Peluang menang sebelum",
+      "value": "5%"
+     },
+     {
+      "key": "win_after",
+      "label": "Peluang menang selepas",
+      "value": "28%"
+     },
+     {
+      "key": "assist",
+      "label": "Bantuan",
+      "value": "H. Novak"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-1041",
+      "minute": 74,
+      "description": "74' H. Novak (NGC) hantaran 22 m"
+     },
+     {
+      "event_id": "SCN-comeback-1042",
+      "minute": 74,
+      "description": "74' L. Quinn (NGC) menjaringkan gol (0.22 xG)"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 32,
+    "match_id": "SCN-comeback",
+    "minute": 74,
+    "second": 10,
+    "clock": "74:10",
+    "graphic": "alert",
+    "priority": 1,
+    "ttl_s": 20,
+    "insight_id": "SCN-comeback-7410-goal-17",
+    "language": "ms",
+    "fields": {
+     "headline": "Northgate City akhirnya berjaya",
+     "body": "L. Quinn menjaringkan gol untuk Northgate City. Kedudukan kini 2-2. Hantaran daripada H. Novak.",
+     "clock": "74:10",
+     "minute": "74",
+     "type": "goal",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "2-2",
+     "player": "L. Quinn",
+     "number": "8"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 75,
+  "clock": "75:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.727,
+   "chaos": 0.502,
+   "tempo": 6.7,
+   "momentum": 0.824,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.27,
+   "draw": 0.578,
+   "away_win": 0.152,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "15"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.40"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.47"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "71%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-7500-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 75,
+    "second": 0,
+    "clock": "75:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "L. Quinn setakat ini",
+    "body": "L. Quinn telah menyentuh bola 72 kali dan merampas semula bola 2 kali.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "touches",
+      "label": "Sentuhan",
+      "value": "72"
+     },
+     {
+      "key": "ball_wins",
+      "label": "Rampasan bola",
+      "value": "2"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-1046",
+      "minute": 74,
+      "description": "74' L. Quinn (NGC) menekan"
+     },
+     {
+      "event_id": "SCN-comeback-1054",
+      "minute": 75,
+      "description": "75' L. Quinn (NGC) menekan"
+     },
+     {
+      "event_id": "SCN-comeback-1065",
+      "minute": 75,
+      "description": "75' L. Quinn (NGC) hantaran 40 m"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   },
+   {
+    "insight_id": "SCN-comeback-7537-pass_of_the_moment-19",
+    "type": "pass_of_the_moment",
+    "variant": "pass",
+    "minute": 75,
+    "second": 37,
+    "clock": "75:37",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "Hantaran terbaik: L. Quinn",
+    "body": "L. Quinn melepaskan hantaran 40 m yang jarang dicuba pemain lain.",
+    "why": [
+     "Hantaran ini membawa Northgate City lebih dekat kepada peluang menjaringkan gol."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "length",
+      "label": "Jarak hantaran",
+      "value": "40 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-1065",
+      "minute": 75,
+      "description": "75' L. Quinn (NGC) hantaran 40 m"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 33,
+    "match_id": "SCN-comeback",
+    "minute": 75,
+    "second": 0,
+    "clock": "75:00",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-7500-player_focus-L. Quinn",
+    "language": "ms",
+    "fields": {
+     "headline": "L. Quinn setakat ini",
+     "body": "L. Quinn telah menyentuh bola 72 kali dan merampas semula bola 2 kali.",
+     "clock": "75:00",
+     "minute": "75",
+     "type": "player_focus",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "2-2",
+     "player": "L. Quinn",
+     "number": "8",
+     "stat_label": "Sentuhan",
+     "stat_value": "72"
+    }
+   },
+   {
+    "seq": 34,
+    "match_id": "SCN-comeback",
+    "minute": 75,
+    "second": 37,
+    "clock": "75:37",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-7537-pass_of_the_moment-19",
+    "language": "ms",
+    "fields": {
+     "headline": "Hantaran terbaik: L. Quinn",
+     "body": "L. Quinn melepaskan hantaran 40 m yang jarang dicuba pemain lain.",
+     "clock": "75:37",
+     "minute": "75",
+     "type": "pass_of_the_moment",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "2-2",
+     "player": "L. Quinn",
+     "number": "8"
+    }
+   },
+   {
+    "seq": 35,
+    "match_id": "SCN-comeback",
+    "minute": 75,
+    "second": 59,
+    "clock": "75:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "75:59",
+     "minute": "75",
+     "home": "NGC",
+     "away": "KST",
+     "score": "2-2",
+     "momentum": "0.82",
+     "control_home": "0.73",
+     "chaos": "0.50",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 76,
+  "clock": "76:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.735,
+   "chaos": 0.531,
+   "tempo": 6.7,
+   "momentum": 0.824,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.256,
+   "draw": 0.598,
+   "away_win": 0.145,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "14"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.38"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.45"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "72%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 77,
+  "clock": "77:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.721,
+   "chaos": 0.523,
+   "tempo": 7.0,
+   "momentum": 0.833,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.242,
+   "draw": 0.62,
+   "away_win": 0.138,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "13"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.35"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.44"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "72%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 78,
+  "clock": "78:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.702,
+   "chaos": 0.58,
+   "tempo": 6.9,
+   "momentum": 0.597,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.227,
+   "draw": 0.642,
+   "away_win": 0.13,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "12"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.33"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.42"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "72%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 79,
+  "clock": "79:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.716,
+   "chaos": 0.654,
+   "tempo": 6.9,
+   "momentum": 0.702,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.229,
+   "draw": 0.652,
+   "away_win": 0.12,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "11"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.52"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.41"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "72%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 80,
+  "clock": "80:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.742,
+   "chaos": 0.689,
+   "tempo": 7.2,
+   "momentum": 0.722,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.214,
+   "draw": 0.675,
+   "away_win": 0.111,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "10"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.53"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.40"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "73%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 36,
+    "match_id": "SCN-comeback",
+    "minute": 80,
+    "second": 59,
+    "clock": "80:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "80:59",
+     "minute": "80",
+     "home": "NGC",
+     "away": "KST",
+     "score": "2-2",
+     "momentum": "0.72",
+     "control_home": "0.74",
+     "chaos": "0.69",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 81,
+  "clock": "81:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.753,
+   "chaos": 0.712,
+   "tempo": 7.8,
+   "momentum": 0.765,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.196,
+   "draw": 0.701,
+   "away_win": 0.102,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "9"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.50"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.39"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "73%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 82,
+  "clock": "82:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.747,
+   "chaos": 0.714,
+   "tempo": 7.6,
+   "momentum": 0.627,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.183,
+   "draw": 0.725,
+   "away_win": 0.093,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "8"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.56"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.37"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "73%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 83,
+  "clock": "83:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.769,
+   "chaos": 0.706,
+   "tempo": 7.2,
+   "momentum": 0.624,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.163,
+   "draw": 0.754,
+   "away_win": 0.083,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "7"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.54"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.36"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "73%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 84,
+  "clock": "84:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.746,
+   "chaos": 0.656,
+   "tempo": 7.6,
+   "momentum": 0.633,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.142,
+   "draw": 0.785,
+   "away_win": 0.073,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "6"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.52"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.35"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "74%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 85,
+  "clock": "85:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.763,
+   "chaos": 0.674,
+   "tempo": 7.8,
+   "momentum": 0.669,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.121,
+   "draw": 0.817,
+   "away_win": 0.063,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "5"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.49"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.34"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "74%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 37,
+    "match_id": "SCN-comeback",
+    "minute": 85,
+    "second": 59,
+    "clock": "85:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "85:59",
+     "minute": "85",
+     "home": "NGC",
+     "away": "KST",
+     "score": "2-2",
+     "momentum": "0.67",
+     "control_home": "0.76",
+     "chaos": "0.67",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 86,
+  "clock": "86:00",
+  "period": "2H",
+  "score": {
+   "home": 2,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.764,
+   "chaos": 0.673,
+   "tempo": 8.2,
+   "momentum": 0.668,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.098,
+   "draw": 0.85,
+   "away_win": 0.051,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "2-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "4"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.47"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.33"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "74%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 87,
+  "clock": "87:00",
+  "period": "2H",
+  "score": {
+   "home": 3,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.785,
+   "chaos": 0.761,
+   "tempo": 8.4,
+   "momentum": 0.83,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.961,
+   "draw": 0.038,
+   "away_win": 0.001,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "3-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "3"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.91"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.31"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "74%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-8701-goal-21",
+    "type": "goal",
+    "variant": "deserved",
+    "minute": 87,
+    "second": 1,
+    "clock": "87:01",
+    "priority": 1,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "J. Okafor",
+     "F. Moreau"
+    ],
+    "headline": "Northgate City akhirnya berjaya",
+    "body": "J. Okafor menjaringkan gol untuk Northgate City. Kedudukan kini 3-2. Hantaran daripada F. Moreau.",
+    "why": [
+     "Peluang mereka untuk menang berubah daripada 10% kepada 96%."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "J. Okafor"
+     },
+     {
+      "key": "team",
+      "label": "Pasukan",
+      "value": "Northgate City"
+     },
+     {
+      "key": "score",
+      "label": "Kedudukan",
+      "value": "3-2"
+     },
+     {
+      "key": "win_before",
+      "label": "Peluang menang sebelum",
+      "value": "10%"
+     },
+     {
+      "key": "win_after",
+      "label": "Peluang menang selepas",
+      "value": "96%"
+     },
+     {
+      "key": "assist",
+      "label": "Bantuan",
+      "value": "F. Moreau"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-1225",
+      "minute": 86,
+      "description": "86' F. Moreau (NGC) hantaran 13 m"
+     },
+     {
+      "event_id": "SCN-comeback-1229",
+      "minute": 87,
+      "description": "87' J. Okafor (NGC) menjaringkan gol (0.47 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 38,
+    "match_id": "SCN-comeback",
+    "minute": 87,
+    "second": 1,
+    "clock": "87:01",
+    "graphic": "alert",
+    "priority": 1,
+    "ttl_s": 20,
+    "insight_id": "SCN-comeback-8701-goal-21",
+    "language": "ms",
+    "fields": {
+     "headline": "Northgate City akhirnya berjaya",
+     "body": "J. Okafor menjaringkan gol untuk Northgate City. Kedudukan kini 3-2. Hantaran daripada F. Moreau.",
+     "clock": "87:01",
+     "minute": "87",
+     "type": "goal",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "3-2",
+     "player": "J. Okafor",
+     "number": "6"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 88,
+  "clock": "88:00",
+  "period": "2H",
+  "score": {
+   "home": 3,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.801,
+   "chaos": 0.754,
+   "tempo": 8.8,
+   "momentum": 0.833,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.973,
+   "draw": 0.026,
+   "away_win": 0.0,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "3-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "2"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.88"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.30"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "75%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 89,
+  "clock": "89:00",
+  "period": "2H",
+  "score": {
+   "home": 3,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.786,
+   "chaos": 0.724,
+   "tempo": 8.8,
+   "momentum": 0.835,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 0.986,
+   "draw": 0.014,
+   "away_win": 0.0,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "3-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "1"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.93"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.29"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "75%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-8923-shot_speed-22",
+    "type": "shot_speed",
+    "variant": "blocked",
+    "minute": 89,
+    "second": 23,
+    "clock": "89:23",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Gallo"
+    ],
+    "headline": "Rembatan 132 km/h oleh L. Gallo",
+    "body": "L. Gallo melepaskan rembatan 132 km/h dari jarak 36 m.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Gallo"
+     },
+     {
+      "key": "speed",
+      "label": "Kelajuan bola",
+      "value": "132 km/h"
+     },
+     {
+      "key": "distance",
+      "label": "Jarak",
+      "value": "36 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-1268",
+      "minute": 89,
+      "description": "89' L. Gallo (NGC) rembatan disekat (0.09 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 39,
+    "match_id": "SCN-comeback",
+    "minute": 89,
+    "second": 23,
+    "clock": "89:23",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-8923-shot_speed-22",
+    "language": "ms",
+    "fields": {
+     "headline": "Rembatan 132 km/h oleh L. Gallo",
+     "body": "L. Gallo melepaskan rembatan 132 km/h dari jarak 36 m.",
+     "clock": "89:23",
+     "minute": "89",
+     "type": "shot_speed",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "3-2",
+     "player": "L. Gallo",
+     "number": "7",
+     "stat_label": "Kelajuan bola",
+     "stat_value": "132 km/h"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 90,
+  "clock": "90:00",
+  "period": "FT",
+  "score": {
+   "home": 3,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.772,
+   "chaos": 0.785,
+   "tempo": 8.9,
+   "momentum": 0.555,
+   "phase": "home_control",
+   "label": "Northgate City menguasai permainan"
+  },
+  "projection": {
+   "home_win": 1.0,
+   "draw": 0.0,
+   "away_win": 0.0,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Kedudukan",
+     "value": "3-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minit berbaki",
+     "value": "0"
+    },
+    {
+     "key": "home_rate",
+     "label": "Jangkaan gol Northgate City setiap 90",
+     "value": "2.90"
+    },
+    {
+     "key": "away_rate",
+     "label": "Jangkaan gol Kingston Vale setiap 90",
+     "value": "1.39"
+    },
+    {
+     "key": "live_weight",
+     "label": "Pemberat data langsung",
+     "value": "75%"
+    }
+   ],
+   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-9000-player_focus-L. Quinn",
+    "type": "player_focus",
+    "variant": "focus",
+    "minute": 90,
+    "second": 0,
+    "clock": "90:00",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "L. Quinn"
+    ],
+    "headline": "L. Quinn setakat ini",
+    "body": "L. Quinn telah menyentuh bola 84 kali dan merampas semula bola 2 kali.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Pemain",
+      "value": "L. Quinn"
+     },
+     {
+      "key": "touches",
+      "label": "Sentuhan",
+      "value": "84"
+     },
+     {
+      "key": "ball_wins",
+      "label": "Rampasan bola",
+      "value": "2"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-1271",
+      "minute": 89,
+      "description": "89' L. Quinn (NGC) hantaran 6 m"
+     },
+     {
+      "event_id": "SCN-comeback-1285",
+      "minute": 90,
+      "description": "90' L. Quinn (NGC) hantaran 17 m"
+     },
+     {
+      "event_id": "SCN-comeback-1288",
+      "minute": 90,
+      "description": "90' L. Quinn (NGC) hantaran 15 m"
+     }
+    ],
+    "tags": [
+     "your_team",
+     "focus_player"
+    ],
+    "language": "ms",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 40,
+    "match_id": "SCN-comeback",
+    "minute": 90,
+    "second": 0,
+    "clock": "90:00",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-9000-player_focus-L. Quinn",
+    "language": "ms",
+    "fields": {
+     "headline": "L. Quinn setakat ini",
+     "body": "L. Quinn telah menyentuh bola 84 kali dan merampas semula bola 2 kali.",
+     "clock": "90:00",
+     "minute": "90",
+     "type": "player_focus",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "3-2",
+     "player": "L. Quinn",
+     "number": "8",
+     "stat_label": "Sentuhan",
+     "stat_value": "84"
+    }
+   },
+   {
+    "seq": 41,
+    "match_id": "SCN-comeback",
+    "minute": 90,
+    "second": 59,
+    "clock": "90:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "ms",
+    "fields": {
+     "clock": "90:59",
+     "minute": "90",
+     "home": "NGC",
+     "away": "KST",
+     "score": "3-2",
+     "momentum": "0.56",
+     "control_home": "0.77",
+     "chaos": "0.79",
+     "phase": "home_control",
+     "phase_label": "Northgate City menguasai permainan"
+    }
+   }
+  ]
+ }
+]
