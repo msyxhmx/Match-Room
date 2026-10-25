@@ -44,6 +44,14 @@ def test_comeback_story_is_detected(engine):
     assert brief.player_of_the_match is not None and brief.turning_points
 
 
+def test_comeback_goals_have_distinct_titles(engine):
+    goals = [c for c in engine.cards(Profile()) if c.type == "goal" and c.team_id == "NGC"]
+    assert [g.variant for g in goals][-2:] == ["equaliser", "late_go_ahead"]
+    tps = engine.brief("fulltime", Profile()).turning_points
+    titles = [t.title for t in tps]
+    assert len(titles) == len(set(titles))
+
+
 def test_halftime_brief_has_projection_and_watch(engine):
     brief = engine.brief("halftime", Profile(language="es"))
     assert brief.projection is not None and brief.what_to_watch

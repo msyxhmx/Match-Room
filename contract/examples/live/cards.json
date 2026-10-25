@@ -947,7 +947,7 @@
   {
     "insight_id": "SCN-comeback-7410-goal-17",
     "type": "goal",
-    "variant": "deserved",
+    "variant": "equaliser",
     "minute": 74,
     "second": 10,
     "clock": "74:10",
@@ -958,7 +958,7 @@
       "L. Quinn",
       "H. Novak"
     ],
-    "headline": "Northgate City make it count",
+    "headline": "Northgate City level it",
     "body": "L. Quinn scores for Northgate City. It's 2-2. Set up by H. Novak.",
     "why": [
       "Their chance of winning moves from 5% to 28%."
@@ -1126,7 +1126,7 @@
   {
     "insight_id": "SCN-comeback-8701-goal-21",
     "type": "goal",
-    "variant": "deserved",
+    "variant": "late_go_ahead",
     "minute": 87,
     "second": 1,
     "clock": "87:01",
@@ -1137,7 +1137,7 @@
       "J. Okafor",
       "F. Moreau"
     ],
-    "headline": "Northgate City make it count",
+    "headline": "Late lead for Northgate City",
     "body": "J. Okafor scores for Northgate City. It's 3-2. Set up by F. Moreau.",
     "why": [
       "Their chance of winning moves from 10% to 96%."

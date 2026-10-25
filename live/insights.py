@@ -183,8 +183,15 @@ class _Detector:
         opp_control = tl.phase[prev] == f"{OTHER[side]}_control"
         xg_for = tl.cum(side, "xg", minute)
         xg_against = tl.cum(OTHER[side], "xg", minute)
+        g = self.ev.loc[:idx]
+        g = g[g["is_goal"]]
+        lead = int((g["side"] == side).sum()) - int((g["side"] == OTHER[side]).sum())
         if mom_for <= -0.2 or opp_control:
             variant = "against_run"
+        elif lead == 0:
+            variant = "equaliser"
+        elif lead == 1:
+            variant = "late_go_ahead" if minute >= 80 else "go_ahead"
         elif xg_for - xg_against >= 0.5 or tl.phase[prev] == f"{side}_control":
             variant = "deserved"
         else:

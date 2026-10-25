@@ -32,7 +32,7 @@
     "player": "L. Quinn"
   },
   "headline": "Northgate City come from behind to win 3-2",
-  "summary": "Northgate City had more of the control: 47 minutes to 2. The key moment came at 87': Northgate City make it count.",
+  "summary": "Northgate City had more of the control: 47 minutes to 2. The key moment came at 87': Late lead for Northgate City.",
   "summary_source": "template",
   "what_happened": [
     {
@@ -303,7 +303,7 @@
     {
       "insight_id": "SCN-comeback-7410-goal-17",
       "type": "goal",
-      "variant": "deserved",
+      "variant": "equaliser",
       "minute": 74,
       "second": 10,
       "clock": "74:10",
@@ -314,7 +314,7 @@
         "L. Quinn",
         "H. Novak"
       ],
-      "headline": "Northgate City make it count",
+      "headline": "Northgate City level it",
       "body": "L. Quinn scores for Northgate City. It's 2-2. Set up by H. Novak.",
       "why": [
         "Their chance of winning moves from 5% to 28%."
@@ -374,7 +374,7 @@
     {
       "insight_id": "SCN-comeback-8701-goal-21",
       "type": "goal",
-      "variant": "deserved",
+      "variant": "late_go_ahead",
       "minute": 87,
       "second": 1,
       "clock": "87:01",
@@ -385,7 +385,7 @@
         "J. Okafor",
         "F. Moreau"
       ],
-      "headline": "Northgate City make it count",
+      "headline": "Late lead for Northgate City",
       "body": "J. Okafor scores for Northgate City. It's 3-2. Set up by F. Moreau.",
       "why": [
         "Their chance of winning moves from 10% to 96%."
@@ -538,7 +538,7 @@
       "insight_id": "SCN-comeback-7410-goal-17",
       "minute": 74,
       "clock": "74:10",
-      "title": "Northgate City make it count",
+      "title": "Northgate City level it",
       "side": "home",
       "win_before": 0.054,
       "win_after": 0.283
@@ -547,7 +547,7 @@
       "insight_id": "SCN-comeback-8701-goal-21",
       "minute": 87,
       "clock": "87:01",
-      "title": "Northgate City make it count",
+      "title": "Late lead for Northgate City",
       "side": "home",
       "win_before": 0.098,
       "win_after": 0.961
