@@ -11,6 +11,7 @@
 //   order       shown moments keep the match's order
 //   stable      planning again after a new tick moves nothing already shown by more than 0.5 m
 //   forced      every goal and card is shown (at ×1 every shot, corner and foul too)
+//   assist      a goal's credited assist ("Set up by …"), when shown, is received by the scorer
 //   replay      the frozen 74' loops the real equaliser (L. Quinn's goal) with its build-up
 
 import { readFileSync } from "node:fs";
@@ -86,6 +87,8 @@ function check(label, tl, moments, speed) {
       const w = g.dots.find((d) => d.id === b.receiver);
       if (!w || dist(w, m.to) > 1.2) fail(`${label} real-spot: winner ${m.winner.player} not at the ball for ${m.id}`);
     }
+    if (m.assistTo && b.receiver !== `${m.side}:${m.assistTo}`)
+      fail(`${label} assist: ${m.id} credits ${m.assistTo} but ${b.receiver} receives it`);
     if (m.t < lastT) fail(`${label} order: ${m.id} after a later moment`);
     lastT = m.t;
     lags.push(b.touch - b.ideal);
@@ -190,6 +193,13 @@ for (const speed of [1, 60]) {
   const goal = r && r.timeline.beats.find((b) => isGoal(b.moment));
   if (!r || !goal || goal.moment.player !== "L. Quinn") fail("replay: 74' doesn't loop L. Quinn's goal");
   else {
+    const pass = r.timeline.beats.find((x) => x.moment.assistTo === "L. Quinn");
+    if (!pass) fail("assist: the 74' loop doesn't show H. Novak's pass to L. Quinn");
+    else {
+      // The ball stays with Quinn from Novak's pass to his shot: visible the whole way.
+      for (let t = pass.land; t <= goal.touch; t += 0.1)
+        if (!frameAt(r.timeline, t).ball) fail(`assist: the ball vanishes at t=${t.toFixed(1)} between the pass and the shot`);
+    }
     console.log(
       `\nreplay 74': ${r.timeline.beats.map((b) => `${b.moment.player} ${b.moment.kind}`).join(" → ")}; loop ${r.length.toFixed(1)} s`,
     );

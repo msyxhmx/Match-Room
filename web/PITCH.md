@@ -23,6 +23,11 @@ decisions behind it. Code: `src/pitch/`. Proof: `npm run test:pitch`. Clips: `np
 - Between seconds the events are independent draws. A pass's end is not the next pass's start.
   For example, H. Novak's pass at 74:07 ends 26 m from where L. Quinn shoots at 74:10. **So the
   ball fades out between moments** rather than travel along a path that never happened.
+- **One exception, so the graphics agree with the dots:** the goal alert names an assist ("Set
+  up by H. Novak"), using the engine's rule in `live/insights.py`: the scoring side's last
+  completed pass from the minute before. The pitch makes the scorer the receiver of that pass,
+  and he carries the ball to his real shooting spot. The shot waits until he gets there.
+  Tested: a credited assist is always received by the scorer.
 - Roles don't constrain spots. Keepers pass from x = 86, and one keeper takes a corner. The
   planner skips a keeper's *filler* pass outside his box. A forced moment always plays, even a
   keeper's corner.
@@ -92,3 +97,4 @@ halves. The data has no ends, and a fixed direction reads better in a short clip
 
 - Which look (gallery): tracking, broadcast or tactical.
 - At ×60, hold the goal alert until the replay's goal lands (on the plate only).
+- The note pill's contrast over the grey sky (white on a 20% scrim) needs checking against DESIGN's 4.5:1.

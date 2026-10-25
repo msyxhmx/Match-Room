@@ -122,5 +122,16 @@ export function frameAt(tl: Timeline, t: number, opts: FrameOptions = {}): Frame
     dots.push({ id, side: s.side, name: s.name, number: s.number, role: s.role, x, y });
   }
   const beat = tl.beats.find((b) => t >= Math.max(b.s, b.touch - 0.45) && t <= b.end) ?? null;
-  return { t, dots, ball: ballAt(tl.ball, t, opts.steps), beat };
+  let ball = ballAt(tl.ball, t, opts.steps);
+  // A carry: the ball at the carrier's feet, a stride ahead, easing onto the real spot at the touch.
+  const i = find(tl.ball, t);
+  const seg = i >= 0 ? tl.ball[i + 1] : undefined;
+  if (ball && seg?.follow && tl.tracks[seg.follow]) {
+    const p = trackAt(tl.tracks[seg.follow].keys, t, opts.steps);
+    const a = tl.ball[i];
+    const u = Math.min(1, Math.max(0, (t - a.t) / Math.max(1e-6, seg.t - a.t)));
+    const k = u * u; // feet → the event's spot as the touch nears
+    ball = { ...ball, x: p.x + (seg.x - p.x) * k, y: p.y + (seg.y - p.y) * k, z: 0 };
+  }
+  return { t, dots, ball, beat };
 }

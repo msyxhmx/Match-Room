@@ -44,6 +44,9 @@ export interface Moment {
   /** The tackle or interception that won the ball at the pass's end, if any. */
   winner: { id: string; player: string; side: Side } | null;
   pressed: boolean;
+  /** A completed pass the match's goal alert credits as the assist ("Set up by …"): the
+   *  scorer, who must be the one shown receiving it. */
+  assistTo: string | null;
   /** Lower is more important: goal 0, card 1, shot 2, corner 3, foul 4, won pass 5, pass 6. */
   priority: number;
 }
@@ -133,6 +136,7 @@ export function toMoments(events: PitchEvent[]): Moment[] {
         speed: e.speed_kmh ? e.speed_kmh / 3.6 : kind === "shot" ? 24 : 15,
         winner: null,
         pressed: false,
+        assistTo: null,
         priority: kind === "pass" ? 6 : isGoal({ kind, outcome: e.outcome }) ? 0 : PRIORITY[kind],
       };
       // Pressure on this passer: same second, the other team, at the passer's (mirrored) spot.
@@ -146,5 +150,25 @@ export function toMoments(events: PitchEvent[]): Moment[] {
       last = m;
     }
   }
+  linkAssists(out);
   return out;
+}
+
+/**
+ * The engine's assist rule (live/insights.py): the last completed pass by the scoring side, from
+ * the minute before the goal. The goal alert names its passer, so the pitch must show the scorer
+ * receiving that pass.
+ */
+function linkAssists(ms: Moment[]) {
+  ms.forEach((g, i) => {
+    if (!isGoal(g)) return;
+    for (let j = i - 1; j >= 0; j--) {
+      const p = ms[j];
+      if (p.minute < g.minute - 1) break;
+      if (p.side === g.side && p.kind === "pass" && p.outcome === "complete") {
+        if (p.player !== g.player) p.assistTo = g.player;
+        break;
+      }
+    }
+  });
 }
