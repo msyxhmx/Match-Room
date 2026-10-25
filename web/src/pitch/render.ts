@@ -41,6 +41,11 @@ export interface DrawOptions {
   /** Inside a page the canvas is shown smaller: draw marks this much larger so they keep their
    *  on-screen size (dots 14 px and up, name pills at 23 px or more). Default 1. */
   boost?: number;
+  /** Follow camera: the caller set the transform and cleared; keep name pills inside these
+   *  plate-pixel bounds (default the video safe area, 100–1820). */
+  bounds?: { x0: number; x1: number };
+  /** Default true. False: the caller already cleared (a camera transform is set). */
+  clear?: boolean;
 }
 
 /** Disc and ball sizes in metres; perspective scales them (14 px and up on the far side). */
@@ -73,7 +78,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
   const DOT_R = DOT_R_M * k;
   const BALL_R = BALL_R_M * k;
   const TAG_PX = TAG_PX_BASE * k;
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  if (o.clear !== false) ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   const colour = (side: "home" | "away") => (side === "home" ? P.home : P.away);
 
   // ---- analyst: each team's back line, midfield and front line, joined, under everything.
@@ -184,7 +189,9 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
       ctx.font = `600 ${TAG_PX}px ${P.family}`;
       const w = ctx.measureText(text).width + 24 * k;
       const h = TAG_PX + 14 * k;
-      const x = Math.max(100, Math.min(1820 - w, c.u - w / 2));
+      const bx0 = o.bounds ? o.bounds.x0 + 8 * k : 100;
+      const bx1 = o.bounds ? o.bounds.x1 - 8 * k : 1820;
+      const x = Math.max(bx0, Math.min(bx1 - w, c.u - w / 2));
       const y = c.v - h - 10;
       const fade = Math.max(0, Math.min(1, (b.end - f.t) / 0.3, (f.t - n.at) / 0.2));
       ctx.globalAlpha = fade;

@@ -1,5 +1,7 @@
 // The pitch's performance budget (handoff §5): a steady 60 fps for the whole match at ×60.
-// Run: npm run perf:pitch      Exits 1 if the budget is missed. Needs a browser; ~2 minutes.
+// Run: npm run perf:pitch            Exits 1 if the budget is missed. Needs a browser; ~2 minutes.
+//      npm run perf:pitch -- phone   the live page on a phone (390 × 844, touch, 4× slower CPU:
+//                                    a mid-range phone), with the follow camera
 //
 // Plays /overlay?plate=1 from kick-off at ×60 to full time (90 match minutes plus the 15-minute
 // break: about 105 s), on the saved match (its own Vite server proxied to a dead API, so the run
@@ -19,9 +21,16 @@ process.env.VITE_API_PROXY = "http://127.0.0.1:9"; // dead: the saved match play
 const server = await createServer({ root, logLevel: "error", server: { port: 0, strictPort: false } });
 await server.listen();
 const base = server.resolvedUrls.local[0].replace(/\/$/, "");
+const phone = process.argv[2] === "phone";
 const browser = await chromium.launch({ args: ["--disable-background-timer-throttling"] });
-const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
-await page.goto(`${base}/overlay?minute=0&plate=1`);
+const page = phone
+  ? await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true })
+  : await browser.newPage({ viewport: { width: 1920, height: 1080 } });
+if (phone) {
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+}
+await page.goto(phone ? `${base}/?minute=0&play=0` : `${base}/overlay?minute=0&plate=1`);
 await page.getByText("Offline").first().waitFor({ timeout: 15000 }).catch(() => undefined);
 await page.locator("[data-pitch] canvas").waitFor({ timeout: 15000 });
 

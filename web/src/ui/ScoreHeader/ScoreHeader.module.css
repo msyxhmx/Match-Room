@@ -317,3 +317,10 @@
   gap: var(--space-1);
   padding-left: var(--space-1);
 }
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .bug {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+}

@@ -33,6 +33,8 @@ export interface LiveScreenProps {
   loading?: boolean;
   /** The live pitch (PitchView + PitchLayer). Present: layout A. */
   pitch?: ReactNode;
+  /** On-page controls for the video frame, placed on the pitch (phones pin their own). */
+  controls?: ReactNode;
 }
 
 export function teamOf(view: Pick<MatchView, "home" | "away">, card: Pick<LiveCard, "side">): Team | undefined {
@@ -97,8 +99,21 @@ export function LiveScreen(props: LiveScreenProps) {
           <div className={styles.pitchScore}>
             <ScoreHeader {...scoreProps} variant="bug" />
           </div>
+          {props.controls && <div className={styles.pitchControls}>{props.controls}</div>}
         </div>
         <div className={styles.pitchMoment}>{moment}</div>
+        {/* Phones scroll, so the timeline has room again under the moment (video: the break screens). */}
+        <div className={styles.pitchTimeline}>
+          <Timeline
+            series={view.series}
+            minute={view.minute}
+            cards={view.cards}
+            selectedId={stage?.insight_id}
+            onSelect={props.onSelect}
+            title={view.control.label}
+            loading={props.loading}
+          />
+        </div>
         {sheet}
       </div>
     );

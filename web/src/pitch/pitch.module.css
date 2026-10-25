@@ -60,15 +60,25 @@
   clip-path: inset(0 round var(--radius-card));
 }
 
-/* Too small for in-picture labels (a phone): the note becomes a caption under the pitch. */
-.view[data-small="true"] .labels {
-  display: none;
+/* Too small for in-picture labels (a phone): they sit in a row under the pitch instead. */
+.captionRow {
+  margin-top: var(--space-1);
+}
+.captionLabels {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+.captionLabels .note,
+.captionLabels .chip,
+.captionLabels .replay {
+  font: var(--type-caption1);
 }
 
-.caption {
-  margin: var(--space-1) 0 0;
-  font: var(--type-caption1);
-  color: var(--text-secondary);
+/* Follow camera: the box is the plate; the canvas draws it. */
+.view[data-follow="true"] {
+  background: var(--surface-fill);
 }
 
 .viewInner {

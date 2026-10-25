@@ -16,6 +16,11 @@ const EN = {
   pitchNote: "Positions illustrative · events from the match feed",
   replay: "Replay",
   analystView: "Analyst view · team shape",
+  play: "Play",
+  pause: "Pause",
+  restart: "Restart from kick-off",
+  speedChoice: "Speed",
+  controls: "Match controls",
   following: "Following",
   casual: "Casual",
   analyst: "Analyst",
@@ -94,6 +99,11 @@ const MS: Labels = {
   pitchNote: "Kedudukan ilustrasi · peristiwa daripada suapan perlawanan", // confirm
   replay: "Ulang tayang", // confirm
   analystView: "Paparan analisis · bentuk pasukan", // confirm
+  play: "Main", // confirm
+  pause: "Jeda",
+  restart: "Mula semula dari sepak mula", // confirm
+  speedChoice: "Kelajuan",
+  controls: "Kawalan perlawanan", // confirm
   following: "Mengikuti", // confirm
   casual: "Kasual",
   analyst: "Penganalisis",
@@ -168,6 +178,11 @@ const ES: Labels = {
   pitchNote: "Posiciones ilustrativas · eventos del partido",
   replay: "Repetición",
   analystView: "Vista de analista · forma del equipo",
+  play: "Reproducir",
+  pause: "Pausa",
+  restart: "Reiniciar desde el saque inicial",
+  speedChoice: "Velocidad",
+  controls: "Controles del partido",
   following: "Siguiendo",
   casual: "Aficionado",
   analyst: "Analista",

@@ -16,12 +16,16 @@ import { PitchView } from "./pitch/PitchView";
 import { moreImportant, overlayAt, OverlayScreen } from "./screens/OverlayScreen";
 import { MatchScreen } from "./screens/MatchScreen";
 import type { LiveCard, OverlayMessage, Score } from "./types/live";
+import { MatchControls } from "./ui";
 import { LabelsProvider } from "./ui/labels";
 import styles from "./App.module.css";
 
 const VIDEO = { width: 1920, height: 1080 };
-/** Under this width the phone layout takes over; above it the 1920 frame scales to fit. */
+/** Under this width the phone layout takes over; above it the 1920 frame scales to fit. A phone
+ *  held sideways (short and wide) also gets the phone layout: the 1920 frame would shrink to
+ *  about 40% and its text to 8 px. */
 const PHONE_MAX = 700;
+const PHONE_MAX_HEIGHT = 500;
 /** How long a moment or a score counts as "just arrived" (its motion is shorter). */
 const ARRIVAL_MS = 1200;
 /** Half-time: one agent step every this long, so the trace reads on camera. */
@@ -50,7 +54,7 @@ function useWindowSize() {
  */
 function Frame({ clubs, transparent, children }: { clubs: [string, string, string]; transparent?: boolean; children: ReactNode }) {
   const { width, height } = useWindowSize();
-  const phone = width < PHONE_MAX;
+  const phone = width < PHONE_MAX || height < PHONE_MAX_HEIGHT;
   const zoom = phone ? 1 : Math.min(width / VIDEO.width, height / VIDEO.height);
   return (
     <div className={styles.window} data-transparent={transparent ? "true" : undefined}>
@@ -200,6 +204,20 @@ function LivePage() {
     return () => clearInterval(t);
   }, [atBreak, steps]);
 
+  // The on-page controls. Phone: always, pinned to the bottom. Video frame: plain visits only (a
+  // director URL or ?rec=1 is a recording: the keys drive it, nothing on screen shows them).
+  const controls = view && (
+    <MatchControls
+      playing={d.playing && running}
+      ended={view.minute >= 90 && !running}
+      speed={d.speed}
+      onPlayPause={d.togglePlay}
+      onRestart={d.restart}
+      onSpeed={(s) => d.setSpeed(s, view.minute)}
+    />
+  );
+  const videoControls = !d.director && !d.rec;
+
   const facts = d.factsOpen ? (factsFor ?? stage) : null;
   const openFacts = (card: LiveCard) => {
     setFactsFor(card);
@@ -225,7 +243,7 @@ function LivePage() {
           <MatchScreen
             pitch={
               hasPitch && fed ? (
-                <PitchView>
+                <PitchView reduced={reducedMotion()}>
                   <PitchLayer
                     view={fed}
                     running={running}
@@ -253,10 +271,12 @@ function LivePage() {
             onSelect={(id) => setPinned(id)}
             onLanguage={d.nextLanguage}
             onPersona={d.togglePersona}
+            controls={videoControls ? controls : undefined}
           />
         ) : (
           <Loading />
         )}
+        {view && <div className={styles.phoneControls}>{controls}</div>}
       </Frame>
     </LabelsProvider>
   );

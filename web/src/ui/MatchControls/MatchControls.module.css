@@ -1,0 +1,74 @@
+/* One row of 48 px touch targets. Phone: pinned to the bottom of the screen above the home
+   indicator (the page pads its bottom by --controls-h so nothing hides behind it). Video: a
+   compact bar the screen places on the pitch. */
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-sheet);
+  font: var(--type-headline);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.button,
+.main,
+.segButton {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--space-6);
+  min-height: var(--space-6);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+  cursor: pointer;
+  touch-action: manipulation;
+  font: inherit;
+}
+
+.main {
+  background: var(--you-tag-fill);
+  color: var(--you-tag-on-fill);
+}
+
+.button:focus-visible,
+.main:focus-visible,
+.segButton:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}
+
+.segment {
+  display: inline-flex;
+  padding: var(--space-half);
+  gap: var(--space-half);
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+}
+
+.segButton {
+  background: transparent;
+  font-variant-numeric: var(--numeric);
+}
+.segButton[aria-pressed="true"] {
+  background: var(--surface-card);
+}
+
+
+/* The video frame: sized to its buttons, not the pitch's width. */
+:global(.video) .bar {
+  display: inline-flex;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .bar {
+    display: inline-flex;
+  }
+}

@@ -41,6 +41,7 @@ const state = (name: string, note: string, render: () => ReactNode, canvases: La
   canvases,
   place: "fill",
   render,
+  phoneHeight: 1240, // the phone page scrolls: the whole of it in one shot
 });
 
 export default {

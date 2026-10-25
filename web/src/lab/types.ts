@@ -26,6 +26,8 @@ export interface LabState {
   language?: Language;
   /** Width of the stage inside the frame, as a CSS length. Default: the full safe width. */
   width?: string;
+  /** Phone only: a taller frame for a page that scrolls, so one shot holds the whole page. */
+  phoneHeight?: number;
 }
 
 export interface LabModule {

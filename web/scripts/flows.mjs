@@ -24,6 +24,11 @@
 //   goal-hold     on the plate at ×60 the 61' goal alert and the score wait for the pitch's replay
 //                 to show the goal; the score never runs ahead of the alert
 //   offline-plate with the API dead the pitch still plays, from the saved events
+//   phone         the preview on a phone (390 × 844, touch): the bare link plays from kick-off at
+//                 ×60, the follow-camera pitch draws, no sideways scroll, tapping pause / ×1 /
+//                 restart / Casual / EN works, the address stays bare, and the page's end clears
+//                 the controls bar
+//   phone-landscape  a phone held sideways (844 × 390) gets the phone layout, not the shrunk frame
 //   offline       with the API dead the saved match shows, and plays on
 //   preview       the VITE_PREVIEW build: "Preview · synthetic match" pill (no "Offline"), Space plays
 //                 the saved match, L switches it to Malay with no API
@@ -288,6 +293,69 @@ function flows(live, dead, preview) {
       },
     },
     {
+      name: "phone",
+      url: `${preview}/`,
+      device: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
+      async run(page) {
+        await page.getByText("Preview · synthetic match").first().waitFor({ timeout: 6000 });
+        const bar = page.locator("[data-role=match-controls]:visible");
+        await bar.waitFor({ timeout: 4000 });
+        await page.locator('[data-pitch][data-follow="true"]').waitFor({ timeout: 4000 });
+        await pitchDrawing(page);
+        const m0 = await headerMinute(page);
+        await sleep(2500);
+        const m1 = await headerMinute(page);
+        if (!(m1 > m0)) throw new Error(`the bare link isn't playing (${m0}' → ${m1}')`);
+        if (!(await body(page)).includes("×60")) throw new Error("no ×60 pill on the bare link");
+        const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+        if (wide > 0) throw new Error(`the page scrolls sideways by ${wide} px`);
+        // Pause holds the clock.
+        await bar.getByRole("button", { name: "Pause" }).tap();
+        const p0 = await headerMinute(page);
+        await sleep(2000);
+        if ((await headerMinute(page)) !== p0) throw new Error("pause didn't stop the clock");
+        // ×1: the speed pill goes (speed honesty: it shows only above ×1).
+        await bar.getByRole("button", { name: "×1" }).tap();
+        await sleep(1500);
+        const status = await page.locator("section[data-period]").first().innerText();
+        if (status.includes("×60")) throw new Error("the ×60 pill stayed after ×1");
+        // Restart: back to kick-off, playing.
+        await bar.getByRole("button", { name: /Restart/ }).tap();
+        await sleep(2500);
+        if ((await headerMinute(page)) > 3) throw new Error("restart didn't go back to kick-off");
+        // The top bar's buttons: persona, then language.
+        await page.getByRole("button", { name: /Change depth/ }).tap();
+        await page.getByText("Analyst view").first().waitFor({ timeout: 3000 }).catch(() => undefined);
+        await page.locator("header").getByText("Analyst").first().waitFor({ timeout: 3000 });
+        await page.getByRole("button", { name: /Change language/ }).tap();
+        await page.getByText("Pratonton").first().waitFor({ timeout: 4000 });
+        if (/minute=|play=/.test(page.url())) throw new Error(`the address isn't bare: ${page.url()}`);
+        // The end of the page clears the bar.
+        await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+        await sleep(400);
+        const clear = await page.evaluate(() => {
+          const barTop = [...document.querySelectorAll("[data-role=match-controls]")]
+            .map((b) => b.getBoundingClientRect())
+            .find((r) => r.height > 0).top;
+          const kids = [...document.querySelectorAll("[data-screen] > *")].map((e) => e.getBoundingClientRect().bottom);
+          return barTop - Math.max(...kids);
+        });
+        if (clear < 0) throw new Error(`the page's end hides ${-clear} px behind the controls`);
+      },
+    },
+    {
+      name: "phone-landscape",
+      url: `${preview}/`,
+      device: { viewport: { width: 844, height: 390 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
+      async run(page) {
+        await page.locator("[data-role=match-controls]:visible").waitFor({ timeout: 4000 });
+        if (await page.locator(".video").count()) throw new Error("a sideways phone got the shrunk video frame");
+        const w = await page.locator("[data-pitch-view]").first().evaluate((e) => e.getBoundingClientRect().width);
+        if (w < 700) throw new Error(`the pitch is only ${Math.round(w)} px wide`);
+        await pitchDrawing(page);
+      },
+    },
+    {
       name: "reconnect",
       url: `${live}/?minute=10&speed=60&play=1`,
       async before(page) {
@@ -339,7 +407,7 @@ try {
   for (const flow of flows(live, dead, preview)) {
     if (!flow.name.includes(filter)) continue;
     const t0 = Date.now();
-    const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+    const ctx = await browser.newContext(flow.device ?? { viewport: { width: 1920, height: 1080 } });
     let page = null;
     let error = null;
     try {

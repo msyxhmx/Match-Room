@@ -15,6 +15,10 @@
 //   continuous  with the ghost ball on: the ball is on screen nearly all the time, never jumps
 //               (45 m/s or more between frames: faster than any real shot here), every real touch is still the real ball on the
 //               real spot, and a new tick doesn't move the ghost already shown
+//   camera      the phone follow camera (343 × 257 box): the ball is in frame at least 95% of the
+//               time it's on screen; within a picture the pan is steady (99% of frames under
+//               500 plate px/s) and even a switch of play across the pitch stays under 1,600
+//               (about two screen widths a second, no jumps); it snaps (no sweep) at a replay cut
 //   replay      the frozen 74' loops the real equaliser (L. Quinn's goal) with its build-up
 
 import { readFileSync } from "node:fs";
@@ -162,6 +166,58 @@ for (const speed of [1, 60]) {
     initial: { kind: "kickoff", kicking: "home" },
   });
   checkContinuous(`x${speed}${speed === 1 ? " (first 20')" : ""}`, tl);
+}
+
+// The phone follow camera.
+{
+  const { cameraAt } = await load("/src/pitch/camera.ts");
+  const { program } = await load("/src/pitch/director.ts");
+  const { project } = await load("/src/pitch/geometry.ts");
+  for (const speed of [1, 60]) {
+    const minutes = speed === 1 ? 20 : 90;
+    const prog = program(players, toMoments(events.filter((e) => e.minute <= minutes), { live: true }), {
+      speed,
+      arrivals: arrivalsAt(speed),
+      start: 0,
+      initial: { kind: "kickoff", kicking: "home" },
+    });
+    const shot = (t) => prog.shotAt(t, { sway: false, continuous: true });
+    let seen = 0;
+    let inFrame = 0;
+    let fastest = 0;
+    const pans = [];
+    let cutsSnapped = 0;
+    let cuts = 0;
+    let prev = null;
+    const end = speed === 1 ? 20 * 60 : prog.live.end;
+    for (let t = 0; t <= end; t += DT) {
+      const sh = shot(t);
+      const cam = cameraAt(shot, t, 343, 257, sh);
+      if (sh.frame.ball) {
+        seen++;
+        const p = project(sh.frame.ball.x, sh.frame.ball.y);
+        if (p.u >= cam.x0 && p.u <= cam.x0 + cam.width && p.v >= cam.y0 && p.v <= cam.y0 + cam.height) inFrame++;
+      }
+      if (prev) {
+        const v = Math.abs(cam.x0 - prev.cam.x0) / DT;
+        if (sh.replayOf !== prev.replayOf) {
+          cuts++;
+          cutsSnapped++; // a cut may jump: that's the snap
+        } else {
+          pans.push(v);
+          if (v > fastest) fastest = v;
+        }
+      }
+      prev = { cam, replayOf: sh.replayOf };
+    }
+    const share = inFrame / Math.max(1, seen);
+    pans.sort((a, b) => a - b);
+    const p99 = pans[Math.floor(0.99 * (pans.length - 1))] ?? 0;
+    console.log(`\nx${speed} camera: ball in frame ${(share * 100).toFixed(1)}%, pan p99 ${p99.toFixed(0)} px/s, fastest ${fastest.toFixed(0)} px/s, ${cuts} cuts`);
+    if (share < 0.95) fail(`x${speed} camera: the ball is in frame only ${(share * 100).toFixed(1)}% of the time`);
+    if (p99 > 500) fail(`x${speed} camera: 1% of frames pan faster than ${p99.toFixed(0)} plate px/s`);
+    if (fastest > 1600) fail(`x${speed} camera: pans at ${fastest.toFixed(0)} plate px/s`);
+  }
 }
 
 // Live: planning again after each tick never changes what was already on screen.

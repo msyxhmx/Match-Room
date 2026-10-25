@@ -120,6 +120,37 @@ cross in midfield).
   lands about 11 s after Space (the goal is at 74:10), not the moment the minute's data arrives.
   S1 is now a longer, truer shot.
 
+## On a phone (mobile pass, 25 Oct)
+
+- **The follow camera.** On a phone held upright (a pitch box under 600 px), the pitch is a 4:3
+  box shown about 2.3× closer. It pans with the ball like a TV camera; during a real pass it
+  frames the whole pass.
+  - It's a pure function of time (`camera.ts`): a triangle-weighted average over the last 2 s,
+    and it snaps at replay cuts.
+  - The canvas draws at the phone's own pixels, not 1920 × 1080.
+  - Under reduced motion it doesn't pan: you see the whole pitch.
+  - Tested: the ball is in frame 97.5–100% of the time; pans stay under 500 plate px/s for 99%
+    of frames; a switch of play peaks around 1,060.
+- **Labels under the picture.** On a small pitch, the honesty note, "Replay 74′" and "Analyst
+  view" sit in a row under it.
+- **Controls.** The playback controls (play / pause, restart, ×1 / ×60) are pinned to the bottom,
+  clear of the home indicator. Language and persona are the top bar's buttons, marked with a
+  small chevron.
+- **The page itself.**
+  - The top bar is two rows.
+  - The timeline is back under the moment card, since the phone page scrolls.
+  - The empty state is one line.
+- **Sideways.** A phone held sideways (under 500 px tall) gets the phone layout: the whole pitch
+  with the score on it, a one-row top bar and compact corner controls.
+- **The address.** A plain visit keeps a bare address, so the link always opens at kick-off at
+  ×60, playing. On the video frame, controls show on plain visits only; director URLs and
+  `?rec=1` record clean.
+- **Proof.**
+  - `npm run flows -- phone`: the phone and phone-landscape flows.
+  - `npm run perf:pitch -- phone`: 390 × 844 with 4× CPU throttling, 59.6 fps, 0.34% dropped
+    frames.
+  - The camera checks in `test:pitch`.
+
 ## Continuous play (the ghost ball)
 
 Between real moments the data has no touches, so a "ghost" ball keeps the game moving:

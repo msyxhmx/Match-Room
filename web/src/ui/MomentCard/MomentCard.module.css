@@ -190,12 +190,15 @@
 .empty {
   margin: auto;
   text-align: center;
-  font: var(--type-title3);
+  font: var(--type-body);
   color: var(--text-secondary);
 }
+:global(.video) .empty {
+  font: var(--type-title3);
+}
 .card[data-variant="empty"] {
-  /* Minimum height: two 80 px steps on the phone, two 96 px steps on video. */
-  min-height: calc(var(--space-10) * 2);
+  /* Phone: one line, no tall placeholder above the fold (the pitch is the show). */
+  min-height: var(--space-10);
   justify-content: center;
 }
 :global(.video) .card[data-variant="empty"] {

@@ -37,6 +37,10 @@ function shotId(mod: LabModule, state: LabState, canvas: Canvas) {
   return `${mod.component}--${state.name}--${canvas}`;
 }
 
+function sizeOf(state: LabState, canvas: Canvas) {
+  return canvas === "phone" && state.phoneHeight ? { ...SIZES.phone, height: state.phoneHeight } : SIZES[canvas];
+}
+
 function canvasesOf(state: LabState): Canvas[] {
   return state.canvases ?? ["video", "phone"];
 }
@@ -49,7 +53,7 @@ export const shots: ShotInfo[] = modules.flatMap((mod) =>
       state: state.name,
       canvas,
       note: state.note,
-      ...SIZES[canvas],
+      ...sizeOf(state, canvas),
       transparent: state.background === "transparent",
     })),
   ),
@@ -82,7 +86,7 @@ function Frame(props: {
   const place = state.place ?? "center";
   const background = state.background ?? "ground";
   const clubs = state.clubs ?? { home: "NGC", away: "KST" };
-  const { width, height } = SIZES[canvas];
+  const { width, height } = sizeOf(state, canvas);
   const classes = [
     "lab-frame",
     "mr-root",

@@ -1,9 +1,10 @@
-import { CloudOff, FlaskConical, Info, RefreshCw } from "lucide-react";
+import { ChevronsUpDown, CloudOff, FlaskConical, Info, RefreshCw } from "lucide-react";
 import type { ReactNode } from "react";
 import markUrl from "../../assets/brand/mark.svg";
 import wordmarkUrl from "../../assets/brand/wordmark.svg";
 import type { Team } from "../../types/halftime";
 import type { MatchMeta, Profile } from "../../types/live";
+import { Icon } from "../Icon/Icon";
 import { Pill } from "../Pill/Pill";
 import { personaLabel, useLabels } from "../labels";
 import styles from "./TopBar.module.css";
@@ -20,10 +21,16 @@ export interface TopBarProps {
 }
 
 function Switch({ onClick, label, children }: { onClick?: () => void; label: string; children: ReactNode }) {
-  if (!onClick) return <>{children}</>;
+  if (!onClick) return <Pill tone="neutral">{children}</Pill>;
   return (
     <button type="button" className={styles.switch} onClick={onClick} aria-label={label}>
-      {children}
+      <Pill tone="neutral">
+        {children}
+        {/* Phones: a small up-down chevron says "tap to change" (the video frame stays as filmed). */}
+        <span className={styles.hint}>
+          <Icon icon={ChevronsUpDown} />
+        </span>
+      </Pill>
     </button>
   );
 }
@@ -67,10 +74,10 @@ export function TopBar({ meta, profile, team, connection, onLanguage, onPersona 
           </span>
         )}
         <Switch onClick={onLanguage} label={`${labels.changeLanguage}: ${profile.language.toUpperCase()}`}>
-          <Pill tone="neutral">{profile.language.toUpperCase()}</Pill>
+          {profile.language.toUpperCase()}
         </Switch>
         <Switch onClick={onPersona} label={`${labels.changeDepth}: ${personaLabel(labels, profile.persona)}`}>
-          <Pill tone="neutral">{personaLabel(labels, profile.persona)}</Pill>
+          {personaLabel(labels, profile.persona)}
         </Switch>
       </div>
       <div className={styles.synthetic}>
