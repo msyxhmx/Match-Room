@@ -13,6 +13,8 @@ const EN = {
   fullTimeLong: "Full-time",
   kickOff: "Kick-off",
   synthetic: "Synthetic data",
+  pitchNote: "Positions illustrative · events from the match feed",
+  replay: "Replay",
   following: "Following",
   casual: "Casual",
   analyst: "Analyst",
@@ -87,6 +89,8 @@ const MS: Labels = {
   fullTimeLong: "Tamat perlawanan", // confirm
   kickOff: "Sepak mula", // Ilham to choose: or "Sepakan permulaan"
   synthetic: "Data sintetik", // confirm
+  pitchNote: "Kedudukan ilustrasi · peristiwa daripada suapan perlawanan", // confirm
+  replay: "Ulang tayang", // confirm
   following: "Mengikuti", // confirm
   casual: "Kasual",
   analyst: "Penganalisis",
@@ -157,6 +161,8 @@ const ES: Labels = {
   fullTimeLong: "Final del partido",
   kickOff: "Saque inicial",
   synthetic: "Datos sintéticos",
+  pitchNote: "Posiciones ilustrativas · eventos del partido",
+  replay: "Repetición",
   following: "Siguiendo",
   casual: "Aficionado",
   analyst: "Analista",
