@@ -568,6 +568,53 @@ against the HIG Typography tables: iOS is Regular (Headline Semibold), and tvOS 
   distances by it and the spring becomes a plain ease. Things fade in place instead of moving,
   as the HIG Accessibility page asks ("replacing transitions… with fades").
 
+### 9.11 Brand assets: crests, wordmark, pitch plate
+Done 25 Oct. Review them in place in the
+[assets mockup](https://claude.ai/artifact/5Fdh9aBkdmYGdVcjGf3oD3). Each source and script lives in
+[assets-src/](assets-src/) so it can be re-made.
+
+- **Crests** ([src/assets/crests/](src/assets/crests/), made by `assets-src/crests.py`): one flat
+  silhouette in the club primary, one white symbol tied to the name, and one initial. All eight
+  silhouettes differ, so the crests tell apart in greyscale:
+
+  | Club | Silhouette | Symbol |
+  |---|---|---|
+  | NGC | shield | north chevron |
+  | KST | roundel | river wave |
+  | RIV | rounded square | compass star |
+  | HAR | hexagon | anchor |
+  | ELM | leaf | vein |
+  | MIL | swallowtail banner | mill wheel |
+  | ASH | diamond | stepping stones |
+  | QNB | arched gate | stone bridge |
+
+  Rules:
+  - no lions, birds, roses, trees, crowns, ships or cannons
+  - flat colour, no gradients
+  - strokes at least 6 of 96 units (1.75 px at 28 px)
+  - the short name always sits beside a crest, so the crest never carries identity alone
+
+  `assets-src/check_crests.py` measures them. Every symbol and edge is at least 3:1 (the lowest
+  is Harbour Gold on the ground, at 4.41:1). In greyscale, the closest pair (KST/RIV) still
+  differs on 27% of its pixels, against a 15% pass mark that we set ourselves.
+- **Wordmark and mark** ([src/assets/brand/](src/assets/brand/), made by `assets-src/brand.py`):
+  - **Wordmark:** "Match-Room **Live**", outlined, so it needs no font.
+  - **Mark:** a match clock. An ink ring, a kick-off tick, the match so far as a blue sector,
+    and a pin at 74'.
+  - **Letters:** **Hanken Grotesk Bold** (SIL OFL), the closest open face to the system font.
+    We can't outline SF Pro or Helvetica for a logo (licence), and §9.1 rules out Inter. The
+    font file isn't committed.
+  - **Favicons:** `public/favicon.svg`, `favicon-32.png` and `apple-touch-icon.png` (180, opaque).
+- **Video stills** (`assets-src/renders/`, made by `render.sh` with headless Chrome):
+  - **End card (S10):** 1920×1080.
+  - **YouTube thumbnail:** 1280×720. It leads with the 74' moment (2–2, 5% → 28%) and the hook
+    "A score doesn't say why", then the name. It passes the shrink test at 320×180.
+- **Pitch plate** (`public/plates/pitch.png`, from `assets-src/pitch.py` in Blender 5.2, Eevee):
+  - a 105×68 m pitch with FIFA markings and 18 stripes
+  - two goals for soft shadows
+  - no stadium, crowd, boards or logos
+  - plainly a render, not footage
+
 ## 10. Rules from the project and the hackathon
 - **Synthetic data only.** Fictional clubs and players ([sim/teams.py](../sim/teams.py)).
 - **No unlicensed trademarks** in the video

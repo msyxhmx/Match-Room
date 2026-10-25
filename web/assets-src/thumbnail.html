@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- YouTube thumbnail, 1280x720. Leads with the 74' moment and the promise, then the name.
+     Rendered to renders/thumbnail.png by render.sh. Shrink-test it at 320x180 (DESIGN 6.4). -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../src/theme.css">
+<style>
+  html, body { margin: 0; width: 1280px; height: 720px; }
+  .frame { position: relative; box-sizing: border-box; width: 1280px; height: 720px; padding: 48px 64px;
+    background: var(--surface-ground); font-family: var(--font-sans); color: var(--text-primary);
+    display: flex; flex-direction: column; overflow: hidden; }
+  h1 { margin: 0; font-size: 92px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; }
+  h1 span { color: var(--home-text); }
+  .card { position: relative; margin-top: 36px; flex: 1; background: var(--surface-card);
+    border-radius: 40px; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; overflow: hidden; }
+  .card::before { content: ""; position: absolute; inset: 0;
+    background: radial-gradient(520px 420px at 0% 50%, rgb(59 130 246 / 0.16), transparent 70%),
+                radial-gradient(520px 420px at 100% 50%, rgb(194 65 94 / 0.12), transparent 70%); }
+  .row { position: relative; display: flex; align-items: center; gap: 44px; }
+  .row img { width: 150px; height: 150px; }
+  .score { font-size: 210px; line-height: 0.9; font-weight: 800; font-stretch: 75%;
+    font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .live { position: absolute; top: 28px; left: 50%; transform: translateX(-50%); display: flex;
+    gap: 12px; align-items: center; font-size: 34px; font-weight: 700; }
+  .live i { font-style: normal; color: var(--live-on-fill); background: var(--live-fill);
+    padding: 4px 14px; border-radius: 999px; font-size: 26px; letter-spacing: 0.04em; }
+  .why { position: relative; margin-top: 18px; font-size: 52px; font-weight: 600; color: var(--text-secondary); }
+  .why b { color: var(--home-text); font-weight: 800; }
+  .foot { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
+  .foot img { height: 52px; }
+  .pill { font-size: 26px; font-weight: 600; color: var(--state-neutral-text);
+    background: var(--state-neutral-tint); padding: 8px 20px; border-radius: 999px; }
+</style></head>
+<body><div class="frame">
+  <h1>A score doesn’t say <span>why.</span></h1>
+  <div class="card">
+    <div class="live"><i>LIVE</i> 74'</div>
+    <div class="row"><img src="../src/assets/crests/NGC.svg" alt="Northgate City">
+      <div class="score">2–2</div><img src="../src/assets/crests/KST.svg" alt="Kingston Vale"></div>
+    <div class="why">Chance to win <b>5% → 28%</b></div>
+  </div>
+  <div class="foot"><img src="../src/assets/brand/wordmark.svg" alt="Match-Room Live">
+    <span class="pill">Synthetic data</span></div>
+</div></body></html>

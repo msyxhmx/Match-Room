@@ -1,0 +1,29 @@
+<!doctype html>
+<!-- Video end card (STORYBOARD S10), 1920x1080. Rendered to renders/endcard.png by render.sh.
+     Text uses the system font, as the app does; the wordmark is outlined SVG. -->
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="../src/theme.css">
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; background: var(--surface-card); }
+  .frame { position: relative; width: 1920px; height: 1080px; font-family: var(--font-sans);
+    color: var(--text-primary); display: flex; flex-direction: column; align-items: center;
+    justify-content: center; overflow: hidden; }
+  /* the two club glows, very soft, from the far corners */
+  .frame::before { content: ""; position: absolute; inset: 0;
+    background: radial-gradient(900px 600px at 0% 100%, rgb(59 130 246 / 0.10), transparent 70%),
+                radial-gradient(900px 600px at 100% 0%, rgb(194 65 94 / 0.09), transparent 70%); }
+  .word { position: relative; height: 150px; }
+  .line { position: relative; font: var(--type-title2); color: var(--text-primary); margin-top: 56px;
+    letter-spacing: -0.01em; }
+  .line b { font-weight: 700; color: var(--home-text); }
+  .foot { position: absolute; left: var(--safe-x); right: var(--safe-x); bottom: var(--safe-y);
+    display: flex; justify-content: space-between; align-items: center; font: var(--type-callout);
+    color: var(--text-secondary); }
+  .pill { font: var(--type-caption1); font-weight: 600; color: var(--state-neutral-text);
+    background: var(--state-neutral-tint); padding: 8px 20px; border-radius: var(--radius-pill); }
+</style></head>
+<body class="video"><div class="frame">
+  <img class="word" src="../src/assets/brand/wordmark.svg" alt="Match-Room Live">
+  <div class="line"><b>Explain the match,</b> don’t just score it.</div>
+  <div class="foot"><span>github.com/msyxhmx/Match-Room</span>
+    <span class="pill">Synthetic data · fictional clubs</span></div>
+</div></body></html>
