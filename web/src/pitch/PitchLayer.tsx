@@ -24,6 +24,8 @@ export interface PitchLayerProps {
   analyst: boolean;
   focus?: string | null;
   reduced?: boolean;
+  /** Continuous play: the ghost ball between real moments (Ilham's pick, 25 Oct). */
+  continuous?: boolean;
   onGoalLanded?: (matchSeconds: number) => void;
 }
 
@@ -39,7 +41,7 @@ function initialAt(moments: Moment[], minute: number) {
     : ({ kind: "kickoff", kicking: "home" } as const);
 }
 
-export function PitchLayer({ view, running, speed, analyst, focus, reduced, onGoalLanded }: PitchLayerProps) {
+export function PitchLayer({ view, running, speed, analyst, focus, reduced, continuous, onGoalLanded }: PitchLayerProps) {
   const players = view.lineups?.players as SquadPlayer[] | undefined;
   // Live play links assists only within a tick (causal); a paused loop knows the whole minute.
   const moments = useMemo(() => toMoments(view.events as unknown as PitchEvent[], { live: true }), [view.events]);
@@ -104,11 +106,12 @@ export function PitchLayer({ view, running, speed, analyst, focus, reduced, onGo
 
   if (!players) return null;
   const steps = !!reduced;
+  const fo = { steps, continuous };
   const shot = (t: number): Shot => {
-    if (live) return live.shotAt(t, { steps });
-    if (loop && "replay" in loop && loop.replay) return loopShot(loop.replay, t - loop.from, { steps });
-    if (loop && "still" in loop && loop.still) return { frame: frameAt(loop.still, t, { sway: !steps }), replayOf: null, opacity: 1 };
+    if (live) return live.shotAt(t, fo);
+    if (loop && "replay" in loop && loop.replay) return loopShot(loop.replay, t - loop.from, fo);
+    if (loop && "still" in loop && loop.still) return { frame: frameAt(loop.still, t, { ...fo, sway: !steps }), replayOf: null, opacity: 1 };
     return { frame: { t, dots: [], ball: null, beat: null, possession: null }, replayOf: null, opacity: 1 };
   };
-  return <PitchCanvas shot={shot} analyst={analyst} focus={focus} epoch={epoch} reduced={reduced} />;
+  return <PitchCanvas shot={shot} analyst={analyst} focus={focus} epoch={epoch} reduced={reduced} ghost="ghost" />;
 }

@@ -54,8 +54,21 @@
 .view {
   position: relative;
   width: 100%;
-  overflow: hidden;
-  border-radius: var(--radius-card);
+  /* The crop: paint containment clips the 1920 × 1080 plate to this box without making it
+     overflow content (nothing here scrolls or is cut text). */
+  contain: paint;
+  clip-path: inset(0 round var(--radius-card));
+}
+
+/* Too small for in-picture labels (a phone): the note becomes a caption under the pitch. */
+.view[data-small="true"] .labels {
+  display: none;
+}
+
+.caption {
+  margin: var(--space-1) 0 0;
+  font: var(--type-caption1);
+  color: var(--text-secondary);
 }
 
 .viewInner {
@@ -70,6 +83,6 @@
 
 /* Inside a page the labels sit just under the crop's top edge. */
 .view .labels {
-  top: calc(318px + var(--space-2));
+  top: calc(328px + var(--space-2));
   transform-origin: 100% 0;
 }

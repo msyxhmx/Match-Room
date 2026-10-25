@@ -106,6 +106,38 @@ reading "Analyst view · team shape" shows while the lines are on. The gallery a
 "tracking" discs (clean but anonymous) and an always-on "tactical" look (the two teams' lines
 cross in midfield).
 
+## On the live match page (Ilham's pick, 25 Oct: layout A "pitch stage")
+
+- The live page leads with the pitch. The top bar comes first, then the pitch at full width with
+  the score riding on it. That score bar is `ScoreHeader variant="bug"`: the same rolling score,
+  and the same Live / minute / ×60 pills, so speed honesty holds. The moment card sits below.
+- The timeline now lives on the half-time and full-time screens only. Without lineups, the page
+  falls back to the old layout B.
+- `PitchView` crops the plate to the pitch and scales it to the box. When it is shown smaller,
+  marks and labels are drawn larger (dots 14 px and up, pills 23 px or more). On a phone the
+  honesty note becomes a caption under the pitch.
+- **The goal card and the score wait for the pitch,** as on the overlay. At ×1 the 74' equaliser
+  lands about 11 s after Space (the goal is at 74:10), not the moment the minute's data arrives.
+  S1 is now a longer, truer shot.
+
+## Continuous play (the ghost ball)
+
+Between real moments the data has no touches, so a "ghost" ball keeps the game moving:
+- It's drawn at half strength.
+- The player who has it carries it and passes to teammates (aimed where they will be).
+- It's played to the next real spot, arriving exactly when the real ball takes over.
+
+Real touches are unchanged: solid, named, with the real pass line. The ghost never depends on a
+moment before that moment is known, so live replanning stays stable. Tested:
+- The ball is on screen 91–97% of the time.
+- There are no jumps (every move is under 45 m/s).
+- Real touches are still the real ball on the real spot.
+
+## Preview build
+
+`npm run build:preview` plays the saved synthetic match as the main source, labelled "Preview ·
+synthetic match", with every language and persona saved, so `L` and `P` work without the API.
+
 ## On the overlay page
 
 - Only on the plate (`?plate=1`). The transparent OBS page never draws a pitch.

@@ -99,3 +99,30 @@
   outline: var(--stroke) solid var(--you-primary);
   outline-offset: var(--stroke);
 }
+
+/* ---- layout A "pitch stage" (25 Oct): top bar, the pitch with the score on it, the moment ---- */
+.screen[data-layout="pitch"] {
+  grid-template-rows: auto auto auto;
+  align-content: start;
+}
+
+.pitchStage {
+  position: relative;
+  min-width: 0;
+}
+
+/* Phone: the score bar sits above the pitch. Video: it rides on the pitch, top left. */
+.pitchStage {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-1);
+}
+:global(.video) .pitchScore {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+}
+
+.pitchMoment {
+  min-width: 0;
+}

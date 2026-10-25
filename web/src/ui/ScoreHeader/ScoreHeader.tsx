@@ -19,6 +19,9 @@ export interface ScoreHeaderProps {
   /** Side that just scored: sets data-state="scored" on it (step 8 animates it). */
   scoredSide?: "home" | "away";
   loading?: boolean;
+  /** "bug": one compact bar that rides on the live pitch (layout A, 25 Oct): badges, codes, the
+   *  same rolling score and the same Live / minute / ×60 pills. Default "full", the hero. */
+  variant?: "full" | "bug";
 }
 
 function Side({
@@ -81,6 +84,7 @@ export function ScoreHeader({
   scorers,
   scoredSide,
   loading,
+  variant = "full",
 }: ScoreHeaderProps) {
   const labels = useLabels();
 
@@ -108,6 +112,42 @@ export function ScoreHeader({
   const homeDim = final && score.home < score.away;
   const awayDim = final && score.away < score.home;
 
+  const status = (
+    <div className={variant === "bug" ? styles.bugStatus : styles.status}>
+      {live && (
+        <>
+          <Pill tone="live">{labels.live}</Pill>
+          <span className={styles.minute}>{formatMinute(minute, period)}</span>
+          {speed !== undefined && speed > 1 && <Pill tone="neutral">×{speed}</Pill>}
+        </>
+      )}
+      {period === "HT" && <Pill tone="neutral">{labels.halfTime}</Pill>}
+      {final && <Pill tone="neutral">{labels.fullTime}</Pill>}
+      {pre && <Pill tone="neutral">{labels.kickOff}</Pill>}
+    </div>
+  );
+
+  if (variant === "bug") {
+    return (
+      <section className={styles.bug} data-period={period} aria-label={`${home.name} ${formatScore(score)} ${away.name}`}>
+        <span className={styles.bugTeam} data-side="home" data-state={scoredSide === "home" ? "scored" : undefined}>
+          <Crest teamId={home.id} size="badge" />
+          <span className={styles.bugCode}>{home.short_name}</span>
+        </span>
+        <p className={styles.bugScore} aria-hidden="true">
+          <Digit value={score.home} dim={homeDim} scored={scoredSide === "home"} />
+          <span>–</span>
+          <Digit value={score.away} dim={awayDim} scored={scoredSide === "away"} />
+        </p>
+        <span className={styles.bugTeam} data-side="away" data-state={scoredSide === "away" ? "scored" : undefined}>
+          <span className={styles.bugCode}>{away.short_name}</span>
+          <Crest teamId={away.id} size="badge" />
+        </span>
+        {status}
+      </section>
+    );
+  }
+
   return (
     <section className={styles.root} data-period={period} aria-label={`${home.name} ${formatScore(score)} ${away.name}`}>
       <Side side="home" team={home} scorers={scorers?.home ?? []} scored={scoredSide === "home"} />
@@ -117,18 +157,7 @@ export function ScoreHeader({
           <span className={styles.dash}>–</span>
           <Digit value={score.away} dim={awayDim} scored={scoredSide === "away"} />
         </p>
-        <div className={styles.status}>
-          {live && (
-            <>
-              <Pill tone="live">{labels.live}</Pill>
-              <span className={styles.minute}>{formatMinute(minute, period)}</span>
-              {speed !== undefined && speed > 1 && <Pill tone="neutral">×{speed}</Pill>}
-            </>
-          )}
-          {period === "HT" && <Pill tone="neutral">{labels.halfTime}</Pill>}
-          {final && <Pill tone="neutral">{labels.fullTime}</Pill>}
-          {pre && <Pill tone="neutral">{labels.kickOff}</Pill>}
-        </div>
+        {status}
       </div>
       <Side side="away" team={away} scorers={scorers?.away ?? []} scored={scoredSide === "away"} />
     </section>

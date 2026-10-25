@@ -9,7 +9,8 @@
 // Exits 1 if any flow fails. Not part of `make check`: it needs a browser and the Python venv.
 //
 // Flows (what each proves):
-//   S1            73' paused; Space plays at real speed to the 2–2 equaliser; no ×60 pill
+//   S1            73' paused, the pitch drawing; Space plays at real speed: the 2–2 waits for the
+//                 pitch's 74:10 goal (not before 5 s, by 17 s); no ×60 pill
 //   S3            kick-off at ×60 reaches the 14' goal against; the ×60 pill shows
 //   S4            F opens the facts sheet with the real event ID and the validator line
 //   S5            minute 45 lands on the half-time screen
@@ -127,8 +128,12 @@ function flows(live, dead, preview) {
       async run(page) {
         await noPill(page);
         if ((await score(page, "1–2").count()) === 0) throw new Error("not at 1–2 before Space");
+        await pitchDrawing(page);
         await pressKey(page, " ");
-        await score(page, "2–2").waitFor({ timeout: 4000 });
+        // The goal is at 74:10: at real speed the score and its card wait for the pitch to show it.
+        await sleep(5000);
+        if ((await score(page, "2–2").count()) > 0) throw new Error("2–2 showed before the pitch's goal");
+        await score(page, "2–2").waitFor({ timeout: 12000 });
         await h2(page, "make it count").waitFor({ timeout: 4000 });
         await noPill(page);
       },

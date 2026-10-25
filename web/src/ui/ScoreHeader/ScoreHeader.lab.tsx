@@ -38,6 +38,21 @@ export default {
     },
     { name: "pre", note: "snapshots.pre: Kick-off pill, 0–0 in secondary.", render: () => from(snapshots.pre) },
     {
+      name: "bug-74",
+      note: "Variant bug (layout A, on the live pitch): m75 2–2, 74', Live pill.",
+      place: "top",
+      background: "plate",
+      render: () => from(m75, { variant: "bug" }),
+    },
+    {
+      name: "bug-x60",
+      note: "Variant bug at ×60: the speed pill stays (speed honesty).",
+      canvases: ["video"],
+      place: "top",
+      background: "plate",
+      render: () => from(snapshots.m15, { variant: "bug", speed: 60 }),
+    },
+    {
       name: "half-time",
       note: "snapshots.ht with its real half-time score.",
       canvases: ["video"],

@@ -12,6 +12,7 @@ import { useDirector } from "./live/useDirector";
 import { useMatchFeed } from "./live/useMatchFeed";
 import type { MatchView } from "./live/feed";
 import { PitchLayer } from "./pitch/PitchLayer";
+import { PitchView } from "./pitch/PitchView";
 import { moreImportant, overlayAt, OverlayScreen } from "./screens/OverlayScreen";
 import { MatchScreen } from "./screens/MatchScreen";
 import type { LiveCard, OverlayMessage, Score } from "./types/live";
@@ -115,11 +116,68 @@ function useReworded(card: LiveCard | null): boolean {
   return on;
 }
 
+/**
+ * Goals the pitch hasn't shown yet (match seconds). Their card and the score wait for the ball to
+ * go in on the pitch, so the page and the dots agree; after GOAL_WAIT they show anyway. Only
+ * goals that arrive while playing are held (a jump to a minute shows what has happened).
+ */
+function useGoalHold(view: MatchView | null, running: boolean, speed: number, on: boolean) {
+  const [landed, setLanded] = useState<Set<number>>(() => new Set());
+  const [, bump] = useState(0);
+  const since = useRef<number | null>(null);
+  const firstSeen = useRef(new Map<number, number>());
+  useEffect(() => {
+    if (!running) {
+      since.current = null;
+      firstSeen.current.clear();
+      setLanded(new Set());
+    } else if (since.current === null && view) since.current = view.minute;
+  }, [running, view]);
+
+  const held = new Set<number>();
+  let next = Infinity;
+  if (on && running && view && since.current !== null) {
+    const wait = speed > 2 ? GOAL_WAIT_FAST_MS : GOAL_WAIT_MS;
+    const now = performance.now();
+    for (const e of view.events) {
+      if (e.type !== "shot" || e.outcome !== "goal" || e.minute <= since.current) continue;
+      const k = e.minute * 60 + e.second;
+      if (landed.has(k)) continue;
+      if (!firstSeen.current.has(k)) firstSeen.current.set(k, now);
+      const due = firstSeen.current.get(k)! + wait;
+      if (due > now) {
+        held.add(k);
+        next = Math.min(next, due - now);
+      }
+    }
+  }
+  // Wake up at the earliest deadline so a goal the pitch never reports still shows.
+  useEffect(() => {
+    if (!Number.isFinite(next)) return;
+    const t = setTimeout(() => bump((n) => n + 1), next);
+    return () => clearTimeout(t);
+  });
+  return { held, onLanded: (t: number) => setLanded((s) => new Set(s).add(t)) };
+}
+
 function LivePage() {
   const d = useDirector();
-  const { view, connection, running } = useMatchFeed(d);
+  const { view: fed, connection, running } = useMatchFeed(d);
   const [pinned, setPinned] = useState<string | null>(null);
   const [factsFor, setFactsFor] = useState<LiveCard | null>(null);
+
+  // Layout A: the live pitch, once the squads are known.
+  const hasPitch = !!fed?.lineups;
+  const hold = useGoalHold(fed, running, d.speed, hasPitch);
+  const view: MatchView | null = fed
+    ? hold.held.size
+      ? {
+          ...fed,
+          score: heldScore(fed, hold.held),
+          cards: fed.cards.filter((c) => !(c.type === "goal" && hold.held.has(c.minute * 60 + c.second))),
+        }
+      : fed
+    : null;
 
   const ruled = view ? pickStage(view.cards, nowSeconds(view)) : null;
   // A pin the viewer tapped holds the stage until the rule picks a new moment.
@@ -165,6 +223,22 @@ function LivePage() {
       <Frame clubs={[home, away, you]}>
         {view ? (
           <MatchScreen
+            pitch={
+              hasPitch && fed ? (
+                <PitchView>
+                  <PitchLayer
+                    view={fed}
+                    running={running}
+                    speed={d.speed}
+                    analyst={d.profile.persona === "analyst"}
+                    focus={d.profile.player}
+                    reduced={reducedMotion()}
+                    continuous
+                    onGoalLanded={hold.onLanded}
+                  />
+                </PitchView>
+              ) : undefined
+            }
             view={view}
             speed={d.speed}
             connection={connection}
@@ -282,6 +356,7 @@ function OverlayPage() {
         analyst={d.profile.persona === "analyst"}
         focus={d.profile.player}
         reduced={reducedMotion()}
+        continuous
         onGoalLanded={(t) => setLanded((s) => new Set(s).add(t))}
       />
     ) : null;
