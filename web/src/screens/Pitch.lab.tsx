@@ -16,7 +16,7 @@ import { loopShot, program, type Shot } from "../pitch/director";
 import { project, HALF_L, HALF_W } from "../pitch/geometry";
 import { toMoments, type PitchEvent, type Moment } from "../pitch/moments";
 import { PitchCanvas } from "../pitch/PitchCanvas";
-import { readPalette } from "../pitch/render";
+import { readPalette, type GhostStyle } from "../pitch/render";
 import { replayMinute, replayMoment } from "../pitch/schedule";
 import type { SquadPlayer } from "../pitch/formation";
 
@@ -43,10 +43,28 @@ const cornerMoment = moments.find((m) => m.kind === "corner" && m.minute > 20)!;
 const corner = replayMoment(players, moments, cornerMoment, 6)!;
 const cornerBeat = corner.timeline.beats.find((b) => b.moment === cornerMoment)!;
 
+/** ×1 from 74:00, continuous play (the ghost ball between real moments), through the equaliser. */
+const live73 = (() => {
+  const arr = new Map<number, number>();
+  for (let m = 74; m <= 76; m++) arr.set(m, (m - 74) * 60);
+  return program(players, toMoments((savedEvents as unknown as PitchEvent[]).filter((e) => e.minute <= 76), { live: true }), {
+    speed: 1,
+    arrivals: arr,
+    start: -2,
+    initial: { kind: "shape", ball: { x: 0, y: 0 }, side: "home" },
+  });
+})();
+const CONT_FROM = -1;
+
 export const PITCH_SCENES = {
   equaliser: { shot: (t: number): Shot => loopShot(equaliser, t), still: equaliserGoal.touch + 0.25, length: equaliser.length },
   flow60: { shot: (t: number): Shot => flow.shotAt(t), still: flow.cuts[0] ? flow.cuts[0].at - 1.2 : 2, length: 11 },
   corner: { shot: (t: number): Shot => loopShot(corner, t), still: cornerBeat.touch + 0.6, length: corner.length },
+  continuous: {
+    shot: (t: number): Shot => live73.shotAt(t + CONT_FROM, { continuous: true }),
+    still: 4.5,
+    length: 20,
+  },
 } as const;
 
 /** S7 as filmed: the overlay paused on 74' (score bug, the goal alert) over the moving pitch. */
@@ -56,9 +74,9 @@ const alert74 = overlayAt(view74.overlays, 74);
 type Persona = "casual" | "analyst";
 const PERSONAS: Persona[] = ["casual", "analyst"];
 
-function Scene({ scene, persona }: { scene: keyof typeof PITCH_SCENES; persona: Persona }) {
+function Scene({ scene, persona, ghost }: { scene: keyof typeof PITCH_SCENES; persona: Persona; ghost?: GhostStyle }) {
   const s = PITCH_SCENES[scene];
-  const pitch = <PitchCanvas shot={s.shot} analyst={persona === "analyst"} focus="L. Quinn" at={s.still} />;
+  const pitch = <PitchCanvas shot={s.shot} analyst={persona === "analyst"} focus="L. Quinn" at={s.still} ghost={ghost} />;
   if (scene !== "equaliser") return pitch;
   return (
     <>
@@ -129,5 +147,10 @@ export default {
       )),
       state(`corner-${p}`, `${NOTES[p]}. A corner set-up`, () => <Scene scene="corner" persona={p} />),
     ]),
+    ...(["solid", "ghost", "ghost-pulse"] as GhostStyle[]).map((g) =>
+      state(`continuous-${g}`, `Continuous play at ×1 from 74:00, the ball between real moments drawn "${g}"`, () => (
+        <Scene scene="continuous" persona="casual" ghost={g} />
+      )),
+    ),
   ],
 } satisfies LabModule;

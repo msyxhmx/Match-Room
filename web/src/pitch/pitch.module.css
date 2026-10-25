@@ -49,3 +49,27 @@
   color: var(--you-tag-on-fill);
   background: var(--you-tag-fill);
 }
+
+/* ---- the pitch inside a page (PitchView): the plate, cropped to the pitch ---- */
+.view {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}
+
+.viewInner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: 0 0;
+  background: url("/plates/pitch.png") 0 0 / 1920px 1080px no-repeat;
+}
+
+/* Inside a page the labels sit just under the crop's top edge. */
+.view .labels {
+  top: calc(318px + var(--space-2));
+  transform-origin: 100% 0;
+}

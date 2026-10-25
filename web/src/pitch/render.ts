@@ -38,15 +38,18 @@ export interface DrawOptions {
   palette: Palette;
   /** The viewer's focus player (a soft halo), e.g. "L. Quinn". */
   focus?: string | null;
+  /** Inside a page the canvas is shown smaller: draw marks this much larger so they keep their
+   *  on-screen size (dots 14 px and up, name pills at 23 px or more). Default 1. */
+  boost?: number;
 }
 
 /** Disc and ball sizes in metres; perspective scales them (14 px and up on the far side). */
-const DOT_R = 0.85;
+const DOT_R_M = 0.85;
 /** Drawn larger than life (as broadcast graphics do) so it survives 8 Mbps video. */
-const BALL_R = 0.6;
+const BALL_R_M = 0.6;
 const MIN_BALL_PX = 8;
 /** Name tags: 24 px text, the video's floor is 23 px. */
-const TAG_PX = 24;
+const TAG_PX_BASE = 24;
 
 function lineUnit(ctx: CanvasRenderingContext2D, pts: Vec[], colour: string, alpha: number, width: number) {
   if (pts.length < 2) return;
@@ -66,6 +69,10 @@ function lineUnit(ctx: CanvasRenderingContext2D, pts: Vec[], colour: string, alp
 
 export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOptions) {
   const { palette: P } = o;
+  const k = o.boost ?? 1;
+  const DOT_R = DOT_R_M * k;
+  const BALL_R = BALL_R_M * k;
+  const TAG_PX = TAG_PX_BASE * k;
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   const colour = (side: "home" | "away") => (side === "home" ? P.home : P.away);
 
@@ -76,7 +83,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
       const defending = f.possession !== null && f.possession !== side;
       for (const role of ["DF", "MF", "FW"] as const) {
         const line = f.dots.filter((d) => d.side === side && d.role === role).sort((a, b) => a.y - b.y);
-        lineUnit(ctx, line, colour(side), (defending ? 0.75 : 0.35) * o.analyst, defending ? 3 : 2);
+        lineUnit(ctx, line, colour(side), (defending ? 0.75 : 0.35) * o.analyst, (defending ? 3 : 2) * k);
       }
     }
   }
@@ -89,7 +96,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
     const k = Math.min(1, (f.t - b.touch) / Math.max(0.01, b.land - b.touch));
     const tip = { x: m.from.x + (m.to!.x - m.from.x) * k, y: m.from.y + (m.to!.y - m.from.y) * k };
     ctx.setLineDash([10, 8]);
-    lineUnit(ctx, [m.from, tip], P.white, 0.85 * fade, 3);
+    lineUnit(ctx, [m.from, tip], P.white, 0.85 * fade, 3 * k);
     ctx.setLineDash([]);
   }
 
@@ -112,7 +119,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
     const a = f.ball.a * (f.ball.ghost && style !== "solid" ? 0.5 : 1);
     const g = project(x, y);
     const s = project(x, y, z + BALL_R);
-    const r = Math.max(MIN_BALL_PX, BALL_R * s.scale);
+    const r = Math.max(MIN_BALL_PX * k, BALL_R * s.scale);
     // A real touch: a ring that opens around the ball for half a second ("this one's real").
     if (style === "ghost-pulse" && b && !f.ball.ghost && f.t >= b.touch && f.t < b.touch + 0.5) {
       const k = (f.t - b.touch) / 0.5;
@@ -175,8 +182,8 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
       const c = project(d.x, d.y, DOT_R * 2);
       const text = d.name;
       ctx.font = `600 ${TAG_PX}px ${P.family}`;
-      const w = ctx.measureText(text).width + 24;
-      const h = TAG_PX + 14;
+      const w = ctx.measureText(text).width + 24 * k;
+      const h = TAG_PX + 14 * k;
       const x = Math.max(100, Math.min(1820 - w, c.u - w / 2));
       const y = c.v - h - 10;
       const fade = Math.max(0, Math.min(1, (b.end - f.t) / 0.3, (f.t - n.at) / 0.2));
@@ -187,7 +194,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
       ctx.fill();
       ctx.fillStyle = P.white;
       ctx.textBaseline = "middle";
-      ctx.fillText(text, x + 12, y + h / 2 + 1);
+      ctx.fillText(text, x + 12 * k, y + h / 2 + 1);
       ctx.globalAlpha = 1;
     }
   }

@@ -6,10 +6,11 @@
 // For the lab and the filming script: `at` freezes one instant, and window.__pitchSeek(t) draws
 // any instant on demand (motion is then driven from outside, frame by frame).
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { PitchScale } from "./PitchView";
 import { useLabels } from "../ui/labels";
 import type { Shot } from "./director";
-import { drawFrame, readPalette, type Palette } from "./render";
+import { drawFrame, readPalette, type GhostStyle, type Palette } from "./render";
 import styles from "./pitch.module.css";
 
 export interface PitchCanvasProps {
@@ -24,6 +25,8 @@ export interface PitchCanvasProps {
   epoch?: number;
   /** Reduced motion: no fades (the shot function already steps the positions). */
   reduced?: boolean;
+  /** How the illustrative ghost ball is drawn (continuous play). */
+  ghost?: GhostStyle;
 }
 
 /** The analyst lines draw in and out over this long (DESIGN §9.6: 200–350 ms). */
@@ -35,12 +38,15 @@ declare global {
   }
 }
 
-export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced }: PitchCanvasProps) {
+export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }: PitchCanvasProps) {
   const labels = useLabels();
+  // Shown smaller inside a page: marks and labels drawn larger to keep their on-screen size.
+  const scale = useContext(PitchScale);
+  const boost = Math.min(1.9, Math.max(1, 0.92 / scale));
   const canvas = useRef<HTMLCanvasElement>(null);
   const [replayMinute, setReplayMinute] = useState<number | null>(null);
-  const latest = useRef({ shot, analyst, focus, reduced });
-  latest.current = { shot, analyst, focus, reduced };
+  const latest = useRef({ shot, analyst, focus, reduced, ghost, boost });
+  latest.current = { shot, analyst, focus, reduced, ghost, boost };
 
   useEffect(() => {
     const el = canvas.current;
@@ -56,13 +62,13 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced }: PitchC
     let lastT: number | null = null;
 
     const paint = (t: number, animate: boolean) => {
-      const { shot: s, analyst: a, focus: f, reduced: r } = latest.current;
+      const { shot: s, analyst: a, focus: f, reduced: r, ghost: g, boost: k } = latest.current;
       const target = a ? 1 : 0;
       if (!animate || r || lastT === null) lines = target;
       else lines += Math.sign(target - lines) * Math.min(Math.abs(target - lines), Math.max(0, t - lastT) / LINES_FADE);
       lastT = t;
       const sh = s(t);
-      drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f });
+      drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k });
       el.style.opacity = r ? "1" : String(sh.opacity);
       const rm = sh.replayOf ? sh.replayOf.minute : null;
       if (rm !== lastReplay) {
@@ -100,7 +106,7 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced }: PitchC
   return (
     <div className={styles.pitch} data-pitch data-analyst={analyst ? "true" : "false"}>
       <canvas ref={canvas} className={styles.canvas} width={1920} height={1080} aria-hidden="true" />
-      <div className={styles.labels}>
+      <div className={styles.labels} style={boost !== 1 ? { transform: `scale(${boost})` } : undefined}>
         <div className={styles.note}>{labels.pitchNote}</div>
         {analyst && <div className={styles.chip}>{labels.analystView}</div>}
         {replayMinute !== null && (
