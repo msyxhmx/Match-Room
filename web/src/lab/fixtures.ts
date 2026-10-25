@@ -19,6 +19,7 @@ import overlaysMs from "./fixtures/overlays.ms.json";
 import briefHt from "./fixtures/brief.halftime.en.json";
 import briefFt from "./fixtures/brief.fulltime.en.json";
 import briefFtMsAnalyst from "./fixtures/brief.fulltime.ms-analyst.json";
+import briefHtMsAnalyst from "./fixtures/brief.halftime.ms-analyst.json";
 
 export const snapshots = {
   pre: snap0 as unknown as LiveSnapshot,
@@ -36,6 +37,7 @@ export const briefs = {
   halftime: briefHt as unknown as MatchBrief,
   fulltime: briefFt as unknown as MatchBrief,
   fulltimeMsAnalyst: briefFtMsAnalyst as unknown as MatchBrief,
+  halftimeMsAnalyst: briefHtMsAnalyst as unknown as MatchBrief,
 };
 
 export const overlays = {

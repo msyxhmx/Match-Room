@@ -1,0 +1,45 @@
+/* The window around the frame. The frame is the 1920 × 1080 video canvas, zoomed to fit (see
+   Frame in App.tsx), or the phone layout under 700 px. Raw sizes here are the canvas itself. */
+
+:global(html),
+:global(body),
+:global(#root) {
+  height: 100%;
+  margin: 0;
+}
+
+.window {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  background: var(--surface-ground);
+}
+
+/* OBS keys out everything that isn't a graphic. */
+.window[data-transparent="true"] {
+  background: transparent;
+}
+:global(body:has([data-transparent="true"])) {
+  background: transparent;
+}
+
+.video {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+}
+
+.phone {
+  width: 100%;
+  min-height: 100%;
+}
+
+.video[data-transparent="true"],
+.phone[data-transparent="true"] {
+  background: transparent;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+}

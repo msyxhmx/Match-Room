@@ -1,4 +1,5 @@
 import { CloudOff, Info, RefreshCw } from "lucide-react";
+import type { ReactNode } from "react";
 import markUrl from "../../assets/brand/mark.svg";
 import wordmarkUrl from "../../assets/brand/wordmark.svg";
 import type { Team } from "../../types/halftime";
@@ -12,9 +13,22 @@ export interface TopBarProps {
   profile: Profile;
   team?: Team;
   connection: "live" | "reconnecting" | "offline";
+  /** Tapping the language pill: next language. Without a handler the pill is a plain label. */
+  onLanguage?: () => void;
+  /** Tapping the persona pill: casual ↔ analyst. */
+  onPersona?: () => void;
 }
 
-export function TopBar({ meta, profile, team, connection }: TopBarProps) {
+function Switch({ onClick, label, children }: { onClick?: () => void; label: string; children: ReactNode }) {
+  if (!onClick) return <>{children}</>;
+  return (
+    <button type="button" className={styles.switch} onClick={onClick} aria-label={label}>
+      {children}
+    </button>
+  );
+}
+
+export function TopBar({ meta, profile, team, connection, onLanguage, onPersona }: TopBarProps) {
   const labels = useLabels();
   const following = [team?.name, profile.player].filter(Boolean).join(" · ");
 
@@ -45,8 +59,12 @@ export function TopBar({ meta, profile, team, connection }: TopBarProps) {
             {labels.following} {following}
           </span>
         )}
-        <Pill tone="neutral">{profile.language.toUpperCase()}</Pill>
-        <Pill tone="neutral">{personaLabel(labels, profile.persona)}</Pill>
+        <Switch onClick={onLanguage} label={`${labels.changeLanguage}: ${profile.language.toUpperCase()}`}>
+          <Pill tone="neutral">{profile.language.toUpperCase()}</Pill>
+        </Switch>
+        <Switch onClick={onPersona} label={`${labels.changeDepth}: ${personaLabel(labels, profile.persona)}`}>
+          <Pill tone="neutral">{personaLabel(labels, profile.persona)}</Pill>
+        </Switch>
       </div>
       <div className={styles.synthetic}>
         <Pill tone="neutral" icon={Info}>

@@ -26,6 +26,8 @@ export interface MomentCardProps {
   /** The projection note, shown exactly as the engine wrote it. */
   note: string;
   onOpenFacts?: () => void;
+  /** The screen sets this for the moment a new card takes the stage (step 8 animates it). */
+  arriving?: boolean;
   loading?: boolean;
   empty?: boolean;
 }
@@ -47,12 +49,12 @@ export function MomentCard({
   team,
   note,
   onOpenFacts,
+  arriving,
   loading,
   empty,
 }: MomentCardProps) {
   const labels = useLabels();
-  // Step 8 hook: the card slides in. No animation in step 6.
-  const state = "arriving";
+  const state = arriving ? "arriving" : "settled";
 
   if (loading || empty) {
     return (

@@ -70,35 +70,50 @@ export function AgentTrace({ steps, revealed, source }: AgentTraceProps) {
   const shown = revealed === undefined ? steps : steps.slice(0, Math.max(0, revealed));
   const lastIndex = steps.length - 1;
 
+  // Consecutive steps by the same agent share one name, so each step is one line: its action,
+  // then its detail. It reads as a conversation: the analyst works, the fact-checker answers.
+  const groups: { agent: AgentStep["agent"]; steps: { step: AgentStep; i: number }[] }[] = [];
+  shown.forEach((step, i) => {
+    const last = groups[groups.length - 1];
+    if (last && last.agent === step.agent) last.steps.push({ step, i });
+    else groups.push({ agent: step.agent, steps: [{ step, i }] });
+  });
+
   return (
     <div className={styles.root}>
       <h3 className={styles.title}>{l.agentsAtWork}</h3>
       <ol className={styles.list}>
-        {shown.map((step, i) => {
-          const { icon, tone } = ACTION[step.action];
-          const isReject = step.action === "reject";
-          const isFinal = step.action === "accept" && i === lastIndex;
-          return (
-            <li key={i} className={styles.row} data-action={step.action} data-final={isFinal || undefined}>
-              <span className={styles.agent}>{agentLabel(l, step.agent)}</span>
-              <span className={styles.action}>
-                {isReject && (
-                  <span className={styles.bigIcon}>
-                    <Icon icon={X} />
-                  </span>
-                )}
-                {isFinal ? (
-                  <Pill tone="positive" icon={Check}>{l.checked}</Pill>
-                ) : (
-                  <Pill tone={tone} icon={isReject ? undefined : icon}>{actionLabel(l, step.action)}</Pill>
-                )}
-              </span>
-              <span className={styles.detail}>
-                {isReject ? <RejectDetail text={step.detail} /> : step.detail}
-              </span>
-            </li>
-          );
-        })}
+        {groups.map((g) => (
+          <li key={g.steps[0].i} className={styles.group} data-agent={g.agent}>
+            <span className={styles.agent}>{agentLabel(l, g.agent)}</span>
+            <ol className={styles.steps}>
+              {g.steps.map(({ step, i }) => {
+                const { icon, tone } = ACTION[step.action];
+                const isReject = step.action === "reject";
+                const isFinal = step.action === "accept" && i === lastIndex;
+                return (
+                  <li key={i} className={styles.row} data-action={step.action} data-final={isFinal || undefined}>
+                    <span className={styles.action}>
+                      {isReject && (
+                        <span className={styles.bigIcon}>
+                          <Icon icon={X} />
+                        </span>
+                      )}
+                      {isFinal ? (
+                        <Pill tone="positive" icon={Check}>{l.checked}</Pill>
+                      ) : (
+                        <Pill tone={tone} icon={isReject ? undefined : icon}>{actionLabel(l, step.action)}</Pill>
+                      )}
+                    </span>{" "}
+                    <span className={styles.detail}>
+                      {isReject ? <RejectDetail text={step.detail} /> : step.detail}
+                    </span>
+                  </li>
+                );
+              })}
+            </ol>
+          </li>
+        ))}
       </ol>
     </div>
   );

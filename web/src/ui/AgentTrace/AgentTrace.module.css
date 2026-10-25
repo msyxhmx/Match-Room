@@ -1,4 +1,4 @@
-/* The half-time agents' steps as a clean log: fixed columns so the action pills line up.
+/* The half-time agents' steps as a log, grouped by agent: one line per step.
    Cards are --surface-card on the ground, no border, no shadow. */
 .root {
   container-type: inline-size;
@@ -6,57 +6,68 @@
   border-radius: var(--radius-card);
   padding: var(--space-2);
   color: var(--text-primary);
-  /* column widths: no token fits, so calc() of space tokens */
-  --agent-col: calc(var(--space-10) + var(--space-1)); /* 88: "Fact-checker" in caption1 */
 }
 
-:global(.video) .root {
-  --agent-col: calc(var(--space-12) * 2 + var(--space-1)); /* 200: "Penyemak fakta" at 25px, one line */
-}
-
+/* Sticky: when a long trace scrolls inside its column, the title stays. */
 .title {
-  margin: 0 0 var(--space-1);
+  position: sticky;
+  top: calc(var(--space-2) * -1);
+  z-index: 1;
+  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) var(--space-1);
+  padding: var(--space-2) var(--space-2) 0;
+  background: var(--surface-card);
   font: var(--type-title3);
 }
 
-.list {
+.list,
+.steps {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: var(--agent-col) minmax(0, 1fr);
-  column-gap: var(--space-1);
-  row-gap: var(--space-half);
-  align-items: center;
-  padding: var(--space-half) var(--space-1);
-  border-radius: var(--radius-small);
+.list {
+  gap: var(--space-1);
+}
+
+/* One agent's turn: its name once, then its steps. */
+.group {
+  display: flex;
+  flex-direction: column;
 }
 
 .agent {
+  padding: 0 var(--space-1);
   font: var(--type-caption1);
   color: var(--text-secondary);
 }
 
-.action {
-  display: flex;
-  align-items: center;
-  gap: var(--space-half);
+/* A step is one line: the action pill, then the detail. A long detail wraps beside its pill
+   (a hanging indent), never under it. */
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: var(--space-1);
+  padding: var(--space-half) var(--space-1);
+  border-radius: var(--radius-small);
 }
 
-/* Two lines per step on both canvases: agent and pill (aligned columns), then the detail.
-   Three columns would leave the detail about 100 px on the phone and 180 px at 600 on video. */
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  align-self: start;
+}
+
 .detail {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  font: var(--type-body);
   min-width: 0;
+  font: var(--type-body);
   overflow-wrap: anywhere;
+  /* Centre a one-line detail on the pill: the pill is a line plus its padding. */
+  padding-top: var(--space-half);
 }
 
 /* A reject is visibly heavier. */
@@ -74,11 +85,6 @@
 }
 .claim {
   text-decoration-thickness: var(--stroke);
-}
-
-/* The final accept: the pill is wide, so it takes the rest of the line and the detail goes below. */
-.row[data-final] .action {
-  grid-column: 2 / -1;
 }
 
 /* ---------- empty: the honest Plan B, a quiet panel ---------- */
@@ -99,10 +105,4 @@
 .emptyText {
   font: var(--type-callout);
   text-align: left;
-}
-
-/* Video: 9 steps in a 600-wide column must fit the 972 px safe height, so the two lines of a
-   step sit touching (the pill and the detail already carry their own leading). */
-:global(.video) .row {
-  row-gap: 0;
 }

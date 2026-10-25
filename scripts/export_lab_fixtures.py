@@ -1,4 +1,5 @@
-"""Write the real engine output the component lab renders (web/src/lab/fixtures/*.json).
+"""Write the real engine output the component lab renders (web/src/lab/fixtures/*.json),
+and the saved match the website plays when the API is down (web/src/live/saved/).
 
     python scripts/export_lab_fixtures.py
 
@@ -17,6 +18,8 @@ from sim.simulator import simulate_scenario
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "web" / "src" / "lab" / "fixtures"
+# The saved match the website falls back to when the API is down: the stream, recorded.
+SAVED = ROOT / "web" / "src" / "live" / "saved"
 
 # The demo profile (STORYBOARD §3), and the switches S7 shows.
 PROFILES = {
@@ -30,10 +33,10 @@ PROFILES = {
 MINUTES = (0, 15, 45, 75, 90)
 
 
-def write(name: str, obj) -> None:
-    data = [o.model_dump(mode="json") for o in obj] if isinstance(obj, list) else obj.model_dump(
-        mode="json")
-    path = OUT / name
+def write(name: str, obj, out: Path = OUT, exclude: set[str] | None = None) -> None:
+    data = ([o.model_dump(mode="json", exclude=exclude) for o in obj] if isinstance(obj, list)
+            else obj.model_dump(mode="json", exclude=exclude))
+    path = out / name
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
     print(f"wrote {path.relative_to(ROOT)}")
@@ -51,6 +54,15 @@ def main() -> None:
     write("brief.halftime.en.json", engine.brief("halftime", en))
     write("brief.fulltime.en.json", engine.brief("fulltime", en))
     write("brief.fulltime.ms-analyst.json", engine.brief("fulltime", PROFILES["ms-analyst"]))
+    write("brief.halftime.ms-analyst.json", engine.brief("halftime", PROFILES["ms-analyst"]))
+
+    # The saved match: kick-off, every tick the stream sends (without the raw events and
+    # metrics, which the screens don't draw), and the two briefs. Demo profile, English.
+    write("snapshot.0.json", engine.snapshot(0, en), SAVED)
+    write("ticks.json", [engine.tick(m, en) for m in range(1, 91)], SAVED,
+          exclude={"new_events", "metrics"})
+    write("brief.halftime.json", engine.brief("halftime", en), SAVED)
+    write("brief.fulltime.json", engine.brief("fulltime", en), SAVED)
 
 
 if __name__ == "__main__":

@@ -209,6 +209,15 @@
   grid-row: 1 / span 2;
 }
 
+/* Video, in the half-time screen's 1080 column: the headline in title2 fits one line
+   ("Kingston Vale lead 0-2 at the break"), so the brief fits beside the agents under the top bar.
+   Full time (1440) keeps title1. */
+@container (max-width: 1100px) {
+  :global(.video) .headline {
+    font: var(--type-title2);
+  }
+}
+
 /* Video: a tighter header keeps the half-time panel inside the 972 px safe height. */
 :global(.video) .header {
   gap: var(--space-half);

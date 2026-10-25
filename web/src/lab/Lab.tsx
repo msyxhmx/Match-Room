@@ -12,7 +12,7 @@ import { LabelsProvider } from "../ui/labels";
 import type { Canvas, LabModule, LabState } from "./types";
 
 const modules = Object.values(
-  import.meta.glob<{ default: LabModule }>("../ui/**/*.lab.tsx", { eager: true }),
+  import.meta.glob<{ default: LabModule }>(["../ui/**/*.lab.tsx", "../screens/**/*.lab.tsx"], { eager: true }),
 )
   .map((m) => m.default)
   .sort((a, b) => a.component.localeCompare(b.component));

@@ -93,3 +93,13 @@
 :global(.video) .scenario {
   white-space: nowrap;
 }
+
+/* The language and persona pills, when the screen makes them switches. */
+.switch {
+  display: inline-flex;
+  border-radius: var(--radius-pill);
+}
+.switch:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}

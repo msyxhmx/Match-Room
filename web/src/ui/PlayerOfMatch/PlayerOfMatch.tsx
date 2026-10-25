@@ -9,9 +9,11 @@ export interface PlayerOfMatchProps {
   player: PlayerLine;
   team: Team;
   focus?: boolean;
+  /** Leave out the involvement chart, where the frame has no room (the full-time screen). */
+  compact?: boolean;
 }
 
-export function PlayerOfMatch({ player, team, focus = false }: PlayerOfMatchProps) {
+export function PlayerOfMatch({ player, team, focus = false, compact = false }: PlayerOfMatchProps) {
   const l = useLabels();
   const peak = Math.max(1, ...player.involvement);
   const summary = `${l.involvement}: ${player.involvement.join(", ")}`;
@@ -43,14 +45,16 @@ export function PlayerOfMatch({ player, team, focus = false }: PlayerOfMatchProp
         </div>
       </dl>
 
-      <figure className={styles.figure} role="img" aria-label={summary}>
-        <div className={styles.bars} aria-hidden="true">
-          {player.involvement.map((n, i) => (
-            <span key={i} className={styles.bar} style={{ height: `${(n / peak) * 100}%` }} />
-          ))}
-        </div>
-        <figcaption className={styles.caption}>{l.involvement}</figcaption>
-      </figure>
+      {!compact && (
+        <figure className={styles.figure} role="img" aria-label={summary}>
+          <div className={styles.bars} aria-hidden="true">
+            {player.involvement.map((n, i) => (
+              <span key={i} className={styles.bar} style={{ height: `${(n / peak) * 100}%` }} />
+            ))}
+          </div>
+          <figcaption className={styles.caption}>{l.involvement}</figcaption>
+        </figure>
+      )}
     </section>
   );
 }

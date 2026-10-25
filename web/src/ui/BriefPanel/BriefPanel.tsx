@@ -11,9 +11,14 @@ export interface BriefPanelProps {
   /** The projection note at full-time, where the brief has no projection of its own. */
   note?: string;
   onOpenFacts?: (point: BriefPoint) => void;
+  /**
+   * Full-time: list the turning points. The full-time screen sets false because its Timeline
+   * already labels each goal with its swing, and a frame says each number once.
+   */
+  turningPoints?: boolean;
 }
 
-export function BriefPanel({ brief, note, onOpenFacts }: BriefPanelProps) {
+export function BriefPanel({ brief, note, onOpenFacts, turningPoints = true }: BriefPanelProps) {
   const l = useLabels();
   const halftime = brief.kind === "halftime";
   const pom = brief.player_of_the_match;
@@ -100,18 +105,20 @@ export function BriefPanel({ brief, note, onOpenFacts }: BriefPanelProps) {
         </>
       ) : (
         <>
-          <section className={styles.group}>
-            <h3 className={styles.groupTitle}>{l.turningPoints}</h3>
-            <ol className={styles.turns}>{brief.turning_points.map(turning)}</ol>
-            {finalNote && (
-              <p className={styles.note} data-role="projection-note">
-                {finalNote}
-              </p>
-            )}
-          </section>
+          {turningPoints && (
+            <section className={styles.group}>
+              <h3 className={styles.groupTitle}>{l.turningPoints}</h3>
+              <ol className={styles.turns}>{brief.turning_points.map(turning)}</ol>
+              {finalNote && (
+                <p className={styles.note} data-role="projection-note">
+                  {finalNote}
+                </p>
+              )}
+            </section>
+          )}
           {pom && pomTeam && (
             <div className={styles.pom}>
-              <PlayerOfMatch player={pom} team={pomTeam} focus={focus} />
+              <PlayerOfMatch player={pom} team={pomTeam} focus={focus} compact={!turningPoints} />
             </div>
           )}
         </>

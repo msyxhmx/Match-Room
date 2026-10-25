@@ -57,6 +57,8 @@ const EN = {
   involvement: "Touches per 15 minutes",
   momentum: "Momentum",
   emptyMoment: "Moments appear here as they happen",
+  changeLanguage: "Change language",
+  changeDepth: "Change depth: casual or analyst",
   speed: (x: number) => `×${x}`,
   /** The tag on a moment card: what kind of moment it is. */
   insight: {
@@ -129,6 +131,8 @@ const MS: Labels = {
   involvement: "Sentuhan setiap 15 minit", // confirm
   momentum: "Momentum",
   emptyMoment: "Detik penting akan muncul di sini", // confirm
+  changeLanguage: "Tukar bahasa", // confirm
+  changeDepth: "Tukar tahap: santai atau analis", // confirm
   insight: {
     goal: "Gol",
     red_card: "Kad merah",
@@ -197,6 +201,8 @@ const ES: Labels = {
   involvement: "Toques cada 15 minutos",
   momentum: "Dominio",
   emptyMoment: "Los momentos clave aparecerán aquí",
+  changeLanguage: "Cambiar idioma",
+  changeDepth: "Cambiar nivel: casual o analista",
   insight: {
     goal: "Gol",
     red_card: "Tarjeta roja",
