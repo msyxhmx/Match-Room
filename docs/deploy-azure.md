@@ -15,6 +15,14 @@ az containerapp up \
   --env-vars CORS_ORIGINS=https://<your-static-web-app>.azurestaticapps.net
 ```
 
+If the build fails with `TasksOperationsNotAllowed` (some subscriptions can't build in Azure),
+use the image that [api-image.yml](../.github/workflows/api-image.yml) pushes to GitHub
+Container Registry instead:
+
+```bash
+az containerapp up --name halftime-api --resource-group halftime-rg --image ghcr.io/msyxhmx/match-room-api:latest --ingress external --target-port 8000
+```
+
 Add Azure OpenAI settings as secrets (`AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`,
 `AZURE_OPENAI_DEPLOYMENT`) in the Container App's configuration. Without them the
 story uses templates.
