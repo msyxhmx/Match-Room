@@ -41,7 +41,9 @@ function initialAt(moments: Moment[], minute: number) {
 
 export function PitchLayer({ view, running, speed, analyst, focus, reduced, onGoalLanded }: PitchLayerProps) {
   const players = view.lineups?.players as SquadPlayer[] | undefined;
-  const moments = useMemo(() => toMoments(view.events as unknown as PitchEvent[]), [view.events]);
+  // Live play links assists only within a tick (causal); a paused loop knows the whole minute.
+  const moments = useMemo(() => toMoments(view.events as unknown as PitchEvent[], { live: true }), [view.events]);
+  const known = useMemo(() => toMoments(view.events as unknown as PitchEvent[]), [view.events]);
   const epoch = useRef(now()).current;
 
   // ---- the live session: tick arrivals on the pitch's clock ----
@@ -81,12 +83,12 @@ export function PitchLayer({ view, running, speed, analyst, focus, reduced, onGo
   // ---- paused: loop the minute's headline ----
   const loop = useMemo(() => {
     if (running || !players) return null;
-    const r = replayMinute(players, moments, view.minute);
+    const r = replayMinute(players, known, view.minute);
     if (r) return { replay: r, from: now() - epoch };
     // Nothing to replay: the teams in shape around the latest moment.
     const still = plan(players, [], { ideal: () => null, speed: 1, start: 0, initial: initialAt(moments, view.minute) });
     return { still };
-  }, [running, players, moments, view.minute, epoch]);
+  }, [running, players, known, moments, view.minute, epoch]);
 
   // ---- goals: tell the page when each one lands ----
   const landed = useRef(onGoalLanded);

@@ -5,6 +5,7 @@
 
 import type { Role } from "./formation";
 import type { Side } from "./geometry";
+import { ghostAt } from "./ghost";
 import { hash01 } from "./moments";
 import type { BallKey, Beat, Key, Timeline } from "./plan";
 
@@ -21,8 +22,9 @@ export interface Dot {
 export interface Frame {
   t: number;
   dots: Dot[];
-  /** null while the ball is hidden between moments. */
-  ball: { x: number; y: number; z: number; a: number } | null;
+  /** null while the ball is hidden between moments. `ghost`: the illustrative ball between
+   *  real moments (continuous play), never at a real event. */
+  ball: { x: number; y: number; z: number; a: number; ghost?: boolean } | null;
   /** The moment on screen (from the ball's fade-in to its end), if any. */
   beat: Beat | null;
   /** Who has the ball after the latest touch (null before the first). */
@@ -34,6 +36,8 @@ export interface FrameOptions {
   sway?: boolean;
   /** Reduced motion: hold each key's picture, no travel between them. */
   steps?: boolean;
+  /** Continuous play: between real moments the ghost ball keeps moving (ghost.ts). */
+  continuous?: boolean;
 }
 
 function find<T extends { t: number }>(keys: T[], t: number): number {
@@ -99,7 +103,7 @@ export function ballAt(keys: BallKey[], t: number, steps = false): Frame["ball"]
   if (steps) u = 0;
   const alpha = a.a + (b.a - a.a) * u;
   if (alpha <= 0.001) return null;
-  const e = b.ease === "out" ? 1 - (1 - u) * (1 - u) : b.ease === "hold" ? u : u;
+  const e = b.ease === "out" ? u + 0.3 * u * (1 - u) : u; // a pass slows a little (starts 1.3× its average)
   const z = b.arc > 0 ? 4 * b.arc * u * (1 - u) : 0;
   return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, z, a: alpha };
 }
@@ -132,8 +136,30 @@ export function frameAt(tl: Timeline, t: number, opts: FrameOptions = {}): Frame
     const p = trackAt(tl.tracks[seg.follow].keys, t, opts.steps);
     const a = tl.ball[i];
     const u = Math.min(1, Math.max(0, (t - a.t) / Math.max(1e-6, seg.t - a.t)));
-    const k = u * u; // feet → the event's spot as the touch nears
-    ball = { ...ball, x: p.x + (seg.x - p.x) * k, y: p.y + (seg.y - p.y) * k, z: 0 };
+    // He's too far from where the pass landed to carry it: it rolls on to the real spot.
+    const start = trackAt(tl.tracks[seg.follow].keys, a.t, opts.steps);
+    if (Math.hypot(start.x - a.x, start.y - a.y) > 3) {
+      const e = u * u * (3 - 2 * u);
+      ball = { ...ball, x: a.x + (seg.x - a.x) * e, y: a.y + (seg.y - a.y) * e, z: 0 };
+      return finish();
+    }
+    // Ease from where the pass landed onto his feet, then onto the event's spot as the touch nears.
+    const w = Math.min(1, (t - a.t) / 0.8);
+    const inn = w * w * (3 - 2 * w);
+    const fx = a.x + (p.x - a.x) * inn;
+    const fy = a.y + (p.y - a.y) * inn;
+    const k = u * u * (3 - 2 * u); // smooth onto the spot (peak 1.5× average, not 2×)
+    ball = { ...ball, x: fx + (seg.x - fx) * k, y: fy + (seg.y - fy) * k, z: 0 };
+  }
+  return finish();
+
+  function finish(): Frame {
+  if (opts.continuous && !opts.steps) {
+    if (ball) ball = { ...ball, a: 1 }; // the ghost hands over: no fade at the real ball's ends
+    else {
+      const g = ghostAt(tl, t);
+      if (g) ball = { x: g.x, y: g.y, z: 0, a: 1, ghost: true };
+    }
   }
   let possession: Side | null = null;
   for (const b of tl.beats) {
@@ -142,4 +168,5 @@ export function frameAt(tl: Timeline, t: number, opts: FrameOptions = {}): Frame
     possession = m.kind === "pass" && m.outcome !== "complete" && t >= b.land ? (m.side === "home" ? "away" : "home") : m.side;
   }
   return { t, dots, ball, beat, possession };
+  }
 }

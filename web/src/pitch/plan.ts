@@ -64,6 +64,8 @@ export interface Timeline {
   dropped: { moment: Moment; reason: string }[];
   start: number;
   end: number;
+  /** Where the ball is, and who has it, in the starting picture (continuous play starts here). */
+  initialBall: { at: Vec; side: Side };
 }
 
 export interface PlanOptions {
@@ -482,15 +484,18 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
   }
   closePrev(naturalFree());
 
-  return { tracks, ball: ballKeys(beats), beats, dropped, start: opts.start, end: cursor };
+  const initialBall =
+    init.kind === "kickoff" ? { at: { x: 0, y: 0 }, side: init.kicking } : { at: init.ball, side: init.side };
+  return { tracks, ball: ballKeys(beats), beats, dropped, start: opts.start, end: cursor, initialBall };
 }
 
 /** The ball: it shows only during moments, at the real spot, along the real pass. */
 function ballKeys(beats: Beat[]): BallKey[] {
   const out: BallKey[] = [];
-  /** The receiver keeps the ball and carries it to his own next touch (illustrative carry). */
+  /** A credited assist: the scorer keeps the ball and carries it to his shot (illustrative
+   *  carry). Only for a linked assist, which is known before the pass is shown. */
   const carries = (b: Beat, next: Beat | undefined) =>
-    !!next && !!b.receiver && b.receiver === next.actor && b.moment.kind === "pass" && b.moment.outcome === "complete";
+    !!next && !!b.moment.assistTo && !!b.receiver && b.receiver === next.actor && b.moment.kind === "pass";
   beats.forEach((b, i) => {
     const m = b.moment;
     const f = m.from;
@@ -499,6 +504,14 @@ function ballKeys(beats: Beat[]): BallKey[] {
       const t0 = Math.max(b.s, b.touch - LEAD);
       out.push({ t: t0, x: f.x, y: f.y, a: 0, ease: "hold", arc: 0 });
       out.push({ t: Math.min(b.touch, t0 + 0.2), x: f.x, y: f.y, a: 1, ease: "hold", arc: 0 });
+    }
+    if (carriedIn) {
+      // The ball rests where the pass landed until that moment ends, then goes with the
+      // receiver to the real spot.
+      const prev = beats[i - 1];
+      const to = prev.moment.to ?? prev.moment.from;
+      const wait = Math.max(prev.land, Math.min(prev.end, b.touch - 0.3));
+      if (wait > prev.land + 1e-3) out.push({ t: wait, x: to.x, y: to.y, a: 1, ease: "hold", arc: 0 });
     }
     out.push({ t: b.touch, x: f.x, y: f.y, a: 1, ease: carriedIn ? "linear" : "hold", arc: 0, follow: carriedIn ? b.actor : undefined });
     const to = m.to ?? f;

@@ -12,6 +12,9 @@
 //   stable      planning again after a new tick moves nothing already shown by more than 0.5 m
 //   forced      every goal and card is shown (at ×1 every shot, corner and foul too)
 //   assist      a goal's credited assist ("Set up by …"), when shown, is received by the scorer
+//   continuous  with the ghost ball on: the ball is on screen nearly all the time, never jumps
+//               (45 m/s or more between frames: faster than any real shot here), every real touch is still the real ball on the
+//               real spot, and a new tick doesn't move the ghost already shown
 //   replay      the frozen 74' loops the real equaliser (L. Quinn's goal) with its build-up
 
 import { readFileSync } from "node:fs";
@@ -121,6 +124,46 @@ for (const speed of [1, 60]) {
   check(`x${speed}`, tl, moments, speed);
 }
 
+// Continuous play: the ghost ball between real moments.
+function checkContinuous(label, tl, until = tl.end) {
+  let seen = 0;
+  let total = 0;
+  let jumps = 0;
+  let worst = 0;
+  let prev = null;
+  for (let t = tl.start; t <= until; t += DT) {
+    const f = frameAt(tl, t, { sway: false, continuous: true });
+    total++;
+    if (f.ball) {
+      seen++;
+      if (prev) {
+        const v = Math.hypot(f.ball.x - prev.x, f.ball.y - prev.y) / DT;
+        if (v > worst) worst = v;
+        if (v >= 45) jumps++;
+      }
+    }
+    prev = f.ball;
+  }
+  for (const b of tl.beats) {
+    const f = frameAt(tl, b.touch, { sway: false, continuous: true });
+    if (!f.ball || f.ball.ghost || dist(f.ball, b.moment.from) > 0.05) fail(`${label} continuous: ${b.moment.id} touch isn't the real ball`);
+  }
+  const share = seen / total;
+  console.log(`\n${label} continuous: ball on screen ${(share * 100).toFixed(0)}% of the time, ${jumps} jumps, fastest ${worst.toFixed(0)} m/s`);
+  if (jumps > 0) fail(`${label} continuous: the ball jumped ${jumps} times`);
+  if (share < 0.85) fail(`${label} continuous: the ball is on screen only ${(share * 100).toFixed(0)}%`);
+}
+for (const speed of [1, 60]) {
+  const minutes = speed === 1 ? 20 : 90;
+  const tl = liveTimeline(players, moments.filter((m) => m.minute <= minutes), {
+    speed,
+    arrivals: arrivalsAt(speed),
+    start: 0,
+    initial: { kind: "kickoff", kicking: "home" },
+  });
+  checkContinuous(`x${speed}${speed === 1 ? " (first 20')" : ""}`, tl);
+}
+
 // Live: planning again after each tick never changes what was already on screen.
 for (const speed of [1, 60]) {
   const all = arrivalsAt(speed);
@@ -133,12 +176,18 @@ for (const speed of [1, 60]) {
   let worst = 0;
   let where = "";
   for (const k of [10, 30, 44, 60, 74, 86]) {
-    const a = liveTimeline(players, moments.filter((m) => m.minute <= k), opts(k));
-    const b = liveTimeline(players, moments.filter((m) => m.minute <= k + 1), opts(k + 1));
+    // As live: each tick's moments built from the events known by then.
+    const upTo = (n) => toMoments(events.filter((e) => e.minute <= n), { live: true });
+    const a = liveTimeline(players, upTo(k), opts(k));
+    const b = liveTimeline(players, upTo(k + 1), opts(k + 1));
     const now = all.get(k + 1);
     for (let t = 0; t <= now; t += 0.1) {
-      const fa = frameAt(a, t, { sway: false });
-      const fb = frameAt(b, t, { sway: false });
+      const fa = frameAt(a, t, { sway: false, continuous: true });
+      const fb = frameAt(b, t, { sway: false, continuous: true });
+      if (fa.ball && fb.ball && dist(fa.ball, fb.ball) > worst) {
+        worst = dist(fa.ball, fb.ball);
+        where = `the ball t=${t.toFixed(1)} after minute ${k}`;
+      }
       for (const d of fa.dots) {
         const e = fb.dots.find((x) => x.id === d.id);
         const gap = e ? dist(d, e) : 99;
@@ -200,6 +249,7 @@ for (const speed of [1, 60]) {
       for (let t = pass.land; t <= goal.touch; t += 0.1)
         if (!frameAt(r.timeline, t).ball) fail(`assist: the ball vanishes at t=${t.toFixed(1)} between the pass and the shot`);
     }
+    checkContinuous("replay 74' (one loop)", r.timeline, r.length);
     console.log(
       `\nreplay 74': ${r.timeline.beats.map((b) => `${b.moment.player} ${b.moment.kind}`).join(" → ")}; loop ${r.length.toFixed(1)} s`,
     );

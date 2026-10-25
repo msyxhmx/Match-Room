@@ -89,7 +89,14 @@ export function shotTarget(side: Side, from: Vec, outcome: string, id: string): 
 
 const PRIORITY = { card: 1, shot: 2, corner: 3, foul: 4 } as const;
 
-export function toMoments(events: PitchEvent[]): Moment[] {
+export interface MomentOptions {
+  /** Live play: link an assist only within the goal's own minute (its tick), so the link is
+   *  known before the pass is shown. Replays and paused loops know everything: the engine's
+   *  full rule (from the minute before). */
+  live?: boolean;
+}
+
+export function toMoments(events: PitchEvent[], o: MomentOptions = {}): Moment[] {
   const sorted = [...events].sort((a, b) => a.minute - b.minute || a.second - b.second);
   const out: Moment[] = [];
   let i = 0;
@@ -150,7 +157,7 @@ export function toMoments(events: PitchEvent[]): Moment[] {
       last = m;
     }
   }
-  linkAssists(out);
+  linkAssists(out, o.live ? 0 : 1);
   return out;
 }
 
@@ -159,12 +166,12 @@ export function toMoments(events: PitchEvent[]): Moment[] {
  * the minute before the goal. The goal alert names its passer, so the pitch must show the scorer
  * receiving that pass.
  */
-function linkAssists(ms: Moment[]) {
+function linkAssists(ms: Moment[], minutesBack: number) {
   ms.forEach((g, i) => {
     if (!isGoal(g)) return;
     for (let j = i - 1; j >= 0; j--) {
       const p = ms[j];
-      if (p.minute < g.minute - 1) break;
+      if (p.minute < g.minute - minutesBack) break;
       if (p.side === g.side && p.kind === "pass" && p.outcome === "complete") {
         if (p.player !== g.player) p.assistTo = g.player;
         break;

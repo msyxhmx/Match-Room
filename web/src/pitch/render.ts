@@ -27,7 +27,12 @@ export function readPalette(el: Element): Palette {
   };
 }
 
+/** How the illustrative ball between real moments is drawn (continuous play). */
+export type GhostStyle = "solid" | "ghost" | "ghost-pulse";
+
 export interface DrawOptions {
+  /** Default "ghost". */
+  ghost?: GhostStyle;
   /** The analyst layer, 0 (off) to 1 (on): it fades in and out with the persona switch. */
   analyst: number;
   palette: Palette;
@@ -102,10 +107,22 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
 
   const drawBall = () => {
     if (!f.ball) return;
-    const { x, y, z, a } = f.ball;
+    const { x, y, z } = f.ball;
+    const style = o.ghost ?? "ghost";
+    const a = f.ball.a * (f.ball.ghost && style !== "solid" ? 0.5 : 1);
     const g = project(x, y);
     const s = project(x, y, z + BALL_R);
     const r = Math.max(MIN_BALL_PX, BALL_R * s.scale);
+    // A real touch: a ring that opens around the ball for half a second ("this one's real").
+    if (style === "ghost-pulse" && b && !f.ball.ghost && f.t >= b.touch && f.t < b.touch + 0.5) {
+      const k = (f.t - b.touch) / 0.5;
+      ctx.globalAlpha = 0.9 * (1 - k);
+      ctx.strokeStyle = P.white;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(s.u, s.v, r + 4 + k * 22, 0, Math.PI * 2);
+      ctx.stroke();
+    }
     ctx.globalAlpha = 0.35 * a;
     ctx.fillStyle = P.ink;
     ctx.beginPath();
