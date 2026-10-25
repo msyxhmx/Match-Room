@@ -2,8 +2,9 @@
 
 Prints a table and writes renders/crest-check.json.
 
-1. Contrast: the white symbol on the club primary, and the crest edge against white and the
-   grey ground. Both need >= 3:1 (WCAG 1.4.11, non-text graphics).
+1. Contrast: every colour a crest uses (other than white) is measured against white and against
+   the grey ground. Inside a crest, detail is always colour on white or white on colour, and
+   every crest's outer edge is coloured, so both pairs need >= 3:1 (WCAG 1.4.11, graphics).
 2. Greyscale: each crest is rendered at 96 px on white and turned to grey. For every pair we
    count the pixels whose grey differs by more than a quarter of the range, as a share of the
    area either crest covers. Under 15% means they'd be told apart mainly by colour: a fail.
@@ -82,15 +83,20 @@ def main():
     rows, masks = [], {}
     for svg in sorted(CRESTS.glob("*.svg")):
         cid = svg.stem
-        primary = re.search(r'fill="(#[0-9A-Fa-f]{6})"', svg.read_text()).group(1)
+        text = svg.read_text()
+        used = sorted({c.upper() for c in re.findall(r'(?:fill|stroke)="(#[0-9A-Fa-f]{6})"', text)})
+        colours = [c for c in used if c != "#FFFFFF"]
+        primary = max(colours, key=lum)  # the field colour; darker ones are text
+        worst = min(colours, key=lambda c: ratio(c, GROUND))
         rows.append(
             {
                 "id": cid,
                 "primary": primary,
+                "colours": colours,
                 "grey_luminance": round(lum(primary), 3),
-                "symbol_on_primary": round(ratio("#FFFFFF", primary), 2),
-                "edge_on_white": round(ratio(primary, "#FFFFFF"), 2),
-                "edge_on_ground": round(ratio(primary, GROUND), 2),
+                "symbol_on_primary": round(min(ratio("#FFFFFF", c) for c in colours), 2),
+                "edge_on_white": round(min(ratio(c, "#FFFFFF") for c in colours), 2),
+                "edge_on_ground": round(ratio(worst, GROUND), 2),
             }
         )
         masks[cid] = mask(svg)

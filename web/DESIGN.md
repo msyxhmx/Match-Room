@@ -573,30 +573,37 @@ Done 25 Oct. Review them in place in the
 [assets mockup](https://claude.ai/artifact/5Fdh9aBkdmYGdVcjGf3oD3). Each source and script lives in
 [assets-src/](assets-src/) so it can be re-made.
 
-- **Crests** ([src/assets/crests/](src/assets/crests/), made by `assets-src/crests.py`): one flat
-  silhouette in the club primary, one white symbol tied to the name, and one initial. All eight
-  silhouettes differ, so the crests tell apart in greyscale:
+- **Crests** ([src/assets/crests/](src/assets/crests/), made by `assets-src/crests.py`).
+  **Round 2, 25 Oct:** Ilham rejected round 1 because all eight used one template (an outline,
+  a symbol and an initial). Now each club differs in container, colour use, lettering and emblem
+  style, the way a real league's set does:
 
-  | Club | Silhouette | Symbol |
-  |---|---|---|
-  | NGC | shield | north chevron |
-  | KST | roundel | river wave |
-  | RIV | rounded square | compass star |
-  | HAR | hexagon | anchor |
-  | ELM | leaf | vein |
-  | MIL | swallowtail banner | mill wheel |
-  | ASH | diamond | stepping stones |
-  | QNB | arched gate | stone bridge |
+  | Club | Container | Colour use | Lettering | Emblem |
+  |---|---|---|---|---|
+  | NGC | heater shield | solid field | none | gatehouse under a north star |
+  | KST | lettered roundel | white field, claret ring | "KINGSTON VALE · VALE ROAD" | the vale and its river |
+  | RIV | none (monogram) | solid letter | R | the river cut through the R |
+  | HAR | round-bottom shield | wavy split field | "HARBOUR" on a scroll | lighthouse over a heraldic sea |
+  | ELM | rounded square | counterchanged diagonal | none | elm leaf |
+  | MIL | octagon | solid field | "MILLBROOK" | mill wheel in the brook |
+  | ASH | lozenge | white field, magenta keyline | none | ash sprig (white for Albion) |
+  | QNB | bridge silhouette | solid, arches cut out | "QBFC" on the deck | the bridge itself |
 
-  Rules:
-  - no lions, birds, roses, trees, crowns, ships or cannons
-  - flat colour, no gradients
-  - strokes at least 6 of 96 units (1.75 px at 28 px)
-  - the short name always sits beside a crest, so the crest never carries identity alone
+  What keeps them a set:
+  - one typeface (Hanken Grotesk, outlined)
+  - flat fills
+  - the club colour plus white only (Harbour's scroll uses its darker text gold)
+  - strokes at least 6 of 96 units
 
-  `assets-src/check_crests.py` measures them. Every symbol and edge is at least 3:1 (the lowest
-  is Harbour Gold on the ground, at 4.41:1). In greyscale, the closest pair (KST/RIV) still
-  differs on 27% of its pixels, against a 15% pass mark that we set ourselves.
+  They avoid look-alikes: no lions, birds, roses, trees, crowns, castles in claret, cannons,
+  hoops, ships, or interlocking RR. Lettering is a bonus at 96 px; at 28 px the emblem carries
+  the crest, and the short name always sits beside it. The sketch round (3 directions each for
+  NGC and KST) is in `assets-src/sketches/` and the mockup.
+
+  `assets-src/check_crests.py` measures them. Every colour in every crest is at least 3:1 on
+  white and on the ground (the lowest is Harbour Gold on the ground, at 4.41:1). In greyscale,
+  the closest pair (HAR/NGC) differs on 45% of its pixels; round 1's closest pair was 27%, and
+  the pass mark, which we set ourselves, is 15%.
 - **Wordmark and mark** ([src/assets/brand/](src/assets/brand/), made by `assets-src/brand.py`):
   - **Wordmark:** "Match-Room **Live**", outlined, so it needs no font.
   - **Mark:** a match clock. An ink ring, a kick-off tick, the match so far as a blue sector,
