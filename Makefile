@@ -16,7 +16,7 @@ train:            ## train on 10k synthetic matches (~7 min)
 	$(PY) -m model.train --n 10000
 
 train-quick:      ## fast smoke-test training
-	$(PY) -m model.train --n 1000 --quick
+	$(PY) -m model.train --n 1000 --quick --out data/quick
 
 schema:           ## regenerate contract JSON schema + sample/mock JSON
 	$(PY) scripts/export_contract.py

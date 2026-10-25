@@ -83,3 +83,12 @@ A small design that fits before the freeze, all in `model/story.py`:
 
 Agent work first, since new features stop at the freeze. Then the P0 simulator fixes and a
 retrain. Fixes are still allowed after the freeze.
+
+## Status (25 Oct)
+
+- P0 3: `llm_rewrite` now has `timeout=10, max_retries=1` too.
+- P0 4: the dataset cache name includes a hash of the simulator and feature code.
+- P0 5: `model.train --out`; `make train-quick` writes to `data/quick/`.
+- P0 6: `load_predictor` falls back to the heuristic when the artifact's features differ.
+- P2: `train.py`'s docstring now says ~7 min.
+- Still open: P0 1 and 2 (simulator fixes; they change every match, so retrain after them).

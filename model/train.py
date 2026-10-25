@@ -1,9 +1,9 @@
 """Train the half-time models on synthetic matches.
 
-    python -m model.train --n 10000          # full run (~4 min to simulate)
-    python -m model.train --n 1000 --quick   # smoke test
+    python -m model.train --n 10000          # full run (~7 min)
+    python -m model.train --n 1000 --quick --out data/quick   # smoke test
 
-Writes artifacts/model.joblib and artifacts/metrics.json. Always compares
+Writes model.joblib and metrics.json to --out (default artifacts/). Always compares
 against the baseline from the plan (half-time score only), so the pitch can
 show the model actually beats it.
 """
@@ -11,6 +11,7 @@ show the model actually beats it.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import time
 from datetime import UTC, datetime
@@ -31,8 +32,17 @@ DATA_DIR = Path("data/processed")
 ARTIFACT_DIR = Path("artifacts")
 
 
+def _code_version() -> str:
+    """Short hash of the code that builds the dataset, so a simulator or feature
+    change never trains on a stale cache."""
+    h = hashlib.sha256()
+    for f in ("sim/simulator.py", "sim/teams.py", "model/features.py"):
+        h.update((Path(__file__).parent.parent / f).read_bytes())
+    return h.hexdigest()[:8]
+
+
 def load_or_build_dataset(n: int, seed: int) -> pd.DataFrame:
-    path = DATA_DIR / f"dataset_n{n}_s{seed}.parquet"
+    path = DATA_DIR / f"dataset_n{n}_s{seed}_{_code_version()}.parquet"
     if path.exists():
         print(f"using cached dataset {path}")
         return pd.read_parquet(path)
@@ -61,6 +71,8 @@ def main() -> None:
     p.add_argument("--n", type=int, default=10_000)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--quick", action="store_true")
+    p.add_argument("--out", type=Path, default=ARTIFACT_DIR,
+                   help="where to write model.joblib and metrics.json")
     args = p.parse_args()
 
     df = load_or_build_dataset(args.n, args.seed)
@@ -84,11 +96,11 @@ def main() -> None:
         "class_balance": df["result"].value_counts(normalize=True).round(3).to_dict(),
     }
     version = f"xgb-{datetime.now(UTC):%Y%m%d-%H%M}"
-    ARTIFACT_DIR.mkdir(exist_ok=True)
+    args.out.mkdir(parents=True, exist_ok=True)
     joblib.dump({"version": version, "result_model": result_model,
                  "next_goal_model": next_goal_model, "features": FEATURE_COLUMNS},
-                ARTIFACT_DIR / "model.joblib")
-    (ARTIFACT_DIR / "metrics.json").write_text(json.dumps({"version": version, **metrics},
+                args.out / "model.joblib")
+    (args.out / "metrics.json").write_text(json.dumps({"version": version, **metrics},
                                                           indent=2))
     print(json.dumps(metrics, indent=2))
     better = (metrics["result"]["xgboost"]["log_loss"]
