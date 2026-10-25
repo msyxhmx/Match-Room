@@ -2,10 +2,11 @@
 // apply each stream tick, take the briefs. The hook (useMatchFeed) feeds these from the API,
 // the websocket or the saved match; the screens never know which.
 
-import type { AgentStep } from "../types/halftime";
+import type { AgentStep, MatchEvent } from "../types/halftime";
 import type {
   LiveCard,
   LiveSnapshot,
+  Lineups,
   MatchBrief,
   OverlayMessage,
   Profile,
@@ -22,6 +23,10 @@ export type MatchView = Omit<LiveSnapshot, "cards" | "overlays" | "recent_events
   fulltime: MatchBrief | null;
   /** The half-time agents' steps. `null` until known; `[]` means they did not run (#9). */
   agentTrace: AgentStep[] | null;
+  /** Every match event so far, chronological by minute then second. */
+  events: MatchEvent[];
+  /** The squads, once known. */
+  lineups: Lineups | null;
 };
 
 const bySeconds = (a: LiveCard, b: LiveCard) => matchSeconds(a) - matchSeconds(b);
@@ -35,7 +40,18 @@ export function fromSnapshot(s: LiveSnapshot): MatchView {
     halftime: null,
     fulltime: null,
     agentTrace: null,
+    events: [],
+    lineups: null,
   };
+}
+
+/** New events onto the list, chronological; ids we already have are skipped (a reconnect). */
+export function addEvents(have: MatchEvent[], incoming: MatchEvent[]): MatchEvent[] {
+  if (!incoming.length) return have;
+  const seen = new Set(have.map((e) => e.event_id));
+  const fresh = incoming.filter((e) => !seen.has(e.event_id));
+  if (!fresh.length) return have;
+  return [...have, ...fresh].sort((a, b) => a.minute - b.minute || a.second - b.second);
 }
 
 /** One match minute from the stream. Series grow by the tick's own values (they match). */
@@ -62,6 +78,7 @@ export function applyTick(v: MatchView, t: StreamTick): MatchView {
     },
     cards: [...v.cards, ...[...t.new_cards].sort(bySeconds)],
     overlays: [...v.overlays, ...t.new_overlays],
+    events: addEvents(v.events, t.new_events ?? []), // the saved ticks carry none
   };
 }
 
@@ -86,6 +103,8 @@ export function relabel(v: MatchView, fresh: MatchView): MatchView {
     overlays: fresh.overlays,
     halftime: fresh.halftime,
     fulltime: fresh.fulltime,
+    events: v.events,
+    lineups: v.lineups,
   };
 }
 
@@ -95,12 +114,14 @@ export function replay(
   ticks: StreamTick[],
   m: number,
   briefs: { halftime?: MatchBrief; fulltime?: MatchBrief } = {},
+  extra: { events?: MatchEvent[]; lineups?: Lineups } = {},
 ): MatchView {
   let v = fromSnapshot(start);
   for (const t of ticks) if (t.minute <= m) v = applyTick(v, t);
   if (m >= 45 && briefs.halftime) v = applyBrief(v, briefs.halftime);
   if (m >= 90 && briefs.fulltime) v = applyBrief(v, briefs.fulltime);
-  return v;
+  // Ticks carry no events offline, so the recorded list stands in; later ones are skipped by id.
+  return { ...v, events: (extra.events ?? []).filter((e) => e.minute <= m), lineups: extra.lineups ?? null };
 }
 
 /** Same profile? Only these four fields matter to the engine. */

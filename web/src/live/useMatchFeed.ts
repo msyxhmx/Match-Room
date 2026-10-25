@@ -13,8 +13,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { api, liveApi } from "../api";
-import type { LiveSnapshot, MatchBrief, Profile, StreamMessage, StreamTick } from "../types/live";
-import { applyBrief, applyTick, fromSnapshot, relabel, replay, sameProfile, type MatchView } from "./feed";
+import type { MatchEvent } from "../types/halftime";
+import type { Lineups, LiveSnapshot, MatchBrief, Profile, StreamMessage, StreamTick } from "../types/live";
+import { addEvents, applyBrief, applyTick, fromSnapshot, relabel, replay, sameProfile, type MatchView } from "./feed";
 
 export type Connection = "live" | "reconnecting" | "offline";
 
@@ -47,21 +48,27 @@ interface Saved {
   ticks: StreamTick[];
   halftime: MatchBrief;
   fulltime: MatchBrief;
+  events: MatchEvent[];
+  lineups: Lineups;
 }
 
 /** The recorded stream (scripts/export_lab_fixtures.py), loaded only when the API is down. */
 async function loadSaved(): Promise<Saved> {
-  const [start, ticks, halftime, fulltime] = await Promise.all([
+  const [start, ticks, halftime, fulltime, events, lineups] = await Promise.all([
     import("./saved/snapshot.0.json"),
     import("./saved/ticks.json"),
     import("./saved/brief.halftime.json"),
     import("./saved/brief.fulltime.json"),
+    import("./saved/events.json"),
+    import("./saved/lineups.json"),
   ]);
   return {
     start: start.default as unknown as LiveSnapshot,
     ticks: ticks.default as unknown as StreamTick[],
     halftime: halftime.default as unknown as MatchBrief,
     fulltime: fulltime.default as unknown as MatchBrief,
+    events: events.default as unknown as MatchEvent[],
+    lineups: lineups.default as unknown as Lineups,
   };
 }
 
@@ -121,13 +128,16 @@ class FeedController {
   /** Everything a screen needs at minute m, from the API. */
   private async fetchAt(m: number, p: Profile): Promise<MatchView> {
     const q = profileQuery(p);
-    const [snap, overlays, ht, ft] = await Promise.all([
+    const [snap, overlays, ht, ft, events, lineups] = await Promise.all([
       liveApi.snapshot(this.matchId, m, q),
       liveApi.overlays(this.matchId, m, q),
       m >= HALF ? liveApi.brief(this.matchId, "halftime", q) : null,
       m >= FULL ? liveApi.brief(this.matchId, "fulltime", q) : null,
+      // The pitch is a bonus: if either call fails, carry on without it.
+      m >= 1 ? api.events(this.matchId, m).catch(() => [] as MatchEvent[]) : ([] as MatchEvent[]),
+      liveApi.lineups(this.matchId).catch(() => null),
     ]);
-    let v = { ...fromSnapshot(snap), overlays };
+    let v = { ...fromSnapshot(snap), overlays, events, lineups };
     if (ht) v = applyBrief(v, ht);
     if (ft) v = applyBrief(v, ft);
     return v;
@@ -142,7 +152,7 @@ class FeedController {
     // Keep our place: the saved match picks up at the minute we're on.
     const at = this.view?.minute ?? this.startMinute;
     const kept = this.view;
-    const v = replay(this.saved.start, this.saved.ticks, at, this.saved);
+    const v = replay(this.saved.start, this.saved.ticks, at, this.saved, this.saved);
     this.set(kept ? { ...v, agentTrace: kept.agentTrace } : v);
   }
 
@@ -275,6 +285,8 @@ class FeedController {
         return;
       }
       let v = applyTick(this.view, next);
+      // The saved ticks carry no events: take that minute's from the recorded list.
+      v = { ...v, events: addEvents(v.events, saved.events.filter((e) => e.minute === next.minute)) };
       if (next.minute === HALF) v = applyBrief(v, saved.halftime);
       if (next.minute === FULL) v = applyBrief(v, saved.fulltime);
       this.set(v);

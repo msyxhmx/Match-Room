@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 from contract import Profile
-from live.engine import MatchEngine
+from live.engine import MatchEngine, to_events
 from sim.simulator import simulate_scenario
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +42,26 @@ def write(name: str, obj, out: Path = OUT, exclude: set[str] | None = None) -> N
     print(f"wrote {path.relative_to(ROOT)}")
 
 
+EVENT_KEYS = ("event_id", "minute", "second", "side", "player", "type", "x", "y", "outcome",
+              "xg", "end_x", "end_y", "speed_kmh")
+
+
+def slim_events(engine: MatchEngine) -> list[dict]:
+    """Every event, minutes 0-90, in the keys the pitch needs: floats to 1 dp, nulls left out."""
+    ev = engine.match.events
+    out = []
+    for e in to_events(ev[ev["minute"] <= 90]):
+        d = e.model_dump(mode="json")
+        row = {}
+        for k in EVENT_KEYS:
+            v = d.get(k)
+            if v is None:
+                continue
+            row[k] = round(v, 1) if isinstance(v, float) else v
+        out.append(row)
+    return out
+
+
 def main() -> None:
     engine = MatchEngine(simulate_scenario("comeback"))
     en = PROFILES["en"]
@@ -63,6 +83,14 @@ def main() -> None:
           exclude={"new_events", "metrics"})
     write("brief.halftime.json", engine.brief("halftime", en), SAVED)
     write("brief.fulltime.json", engine.brief("fulltime", en), SAVED)
+
+    # The pitch simulation's inputs: every event, and the squads (what GET .../lineups returns).
+    events = slim_events(engine)
+    path = SAVED / "events.json"
+    path.write_text(json.dumps(events, separators=(",", ":"), ensure_ascii=False) + "\n")
+    kb = path.stat().st_size / 1024
+    print(f"wrote {path.relative_to(ROOT)} ({len(events)} events, {kb:.1f} KB)")
+    write("lineups.json", engine.lineups(), SAVED)
 
 
 if __name__ == "__main__":
