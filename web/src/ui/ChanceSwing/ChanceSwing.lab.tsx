@@ -17,6 +17,12 @@ export default {
       render: () => <ChanceSwing team={home} side="home" swing={swingOf(cards.equaliser)!} note={note} />,
     },
     {
+      name: "no-numbers",
+      note: "numbers={false}: label, bar with the before tick, and note; no big numbers (the goal cards say them in the why-line).",
+      width: "min(960px, 100%)",
+      render: () => <ChanceSwing team={home} side="home" swing={swingOf(cards.equaliser)!} note={note} numbers={false} />,
+    },
+    {
       name: "against",
       note: "cards.goalAgainst (S3): KST 22% to 69%, away side.",
       width: "min(960px, 100%)",

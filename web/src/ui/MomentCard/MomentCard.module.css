@@ -1,4 +1,4 @@
-/* The root is the size container, so look c can fall back to look a on a narrow card. */
+/* The root is the size container. */
 .root {
   container-type: inline-size;
   width: 100%;
@@ -19,31 +19,6 @@
 :global(.video) .card {
   gap: var(--space-1);
   padding: var(--space-2) var(--space-4);
-}
-
-/* Club glow: soft atmosphere at the top edge only, never behind a whole-card gradient. */
-.card[data-glow="home"] {
-  --glow: color-mix(in srgb, var(--home-glow) 18%, transparent);
-}
-.card[data-glow="away"] {
-  --glow: color-mix(in srgb, var(--away-glow) 18%, transparent);
-}
-.card[data-glow="home"],
-.card[data-glow="away"] {
-  background:
-    radial-gradient(ellipse 55% 90px at 18% 0, var(--glow), transparent) no-repeat,
-    var(--surface-card);
-}
-:global(.video) .card[data-glow="home"],
-:global(.video) .card[data-glow="away"] {
-  background:
-    radial-gradient(ellipse 55% 160px at 18% 0, var(--glow), transparent) no-repeat,
-    var(--surface-card);
-}
-
-/* Look b puts the colour in the band, so the card itself stays plain. */
-.root[data-look="b"] .card[data-glow] {
-  background: var(--surface-card);
 }
 
 /* ---- tag row ---- */
@@ -153,12 +128,12 @@
 :global(.video) .footer > .swing > div {
   display: contents;
 }
-:global(.video) .footer .swing p:nth-of-type(1) {
+:global(.video) .footer .swing [data-role="chance-label"] {
   grid-column: 2;
   grid-row: 1;
   align-self: end;
 }
-:global(.video) .footer .swing p:nth-of-type(2) {
+:global(.video) .footer .swing [data-role="probability"] {
   grid-column: 1;
   grid-row: 1 / span 2;
 }
@@ -168,9 +143,17 @@
   align-self: start;
   margin: var(--space-1) 0 0;
 }
-:global(.video) .footer .swing p:nth-of-type(3) {
+:global(.video) .footer .swing [data-role="projection-note"] {
   grid-column: 1 / 3;
   grid-row: 3;
+  margin-top: var(--space-1); /* clear of the before tick */
+}
+/* No big numbers: the label and bar take the left and middle columns. */
+:global(.video) .footer .swing [data-numbers="false"] [data-role="chance-label"] {
+  grid-column: 1 / 3;
+}
+:global(.video) .footer .swing > div[data-numbers="false"] > div {
+  grid-column: 1 / 3;
 }
 :global(.video) .footer > .facts {
   grid-column: 3;
@@ -178,7 +161,7 @@
   align-self: end;
 }
 
-/* ---- look b: why band ---- */
+/* ---- why band ---- */
 .band {
   display: flex;
   flex-direction: column;
@@ -190,7 +173,8 @@
 :global(.video) .band {
   gap: var(--space-1);
   margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-2));
-  padding: var(--space-2) var(--space-4);
+  /* 8 above and below: the longest analyst card has to stay under 460 px on video. */
+  padding: var(--space-1) var(--space-4);
 }
 .band[data-glow="home"] {
   background: color-mix(in srgb, var(--home-glow) 8%, var(--surface-card));
@@ -198,60 +182,8 @@
 .band[data-glow="away"] {
   background: color-mix(in srgb, var(--away-glow) 8%, var(--surface-card));
 }
-.root[data-look="b"] .card {
+.card {
   gap: var(--space-2);
-}
-
-/* ---- look c: two columns, wide cards only ---- */
-.columns {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-.left {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  min-width: 0;
-}
-.right {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
-.right .swing {
-  flex: 1;
-}
-
-@container (min-width: 720px) {
-  .root[data-look="c"] .columns {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    column-gap: var(--space-8);
-    align-items: stretch;
-  }
-  .root[data-look="c"] .right {
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: var(--space-2);
-  }
-  .root[data-look="c"] .right .facts {
-    align-self: flex-end;
-  }
-  /* The swing drawn large; reset the flat video layout from the footer. */
-  .root[data-look="c"] .swing > div {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-half);
-  }
-  .root[data-look="c"] .swing > div > div {
-    margin-block: var(--space-2) var(--space-1);
-  }
-  .root[data-look="c"] .swing [data-role="probability"] {
-    font: var(--type-title1);
-  }
 }
 
 /* ---- states ---- */

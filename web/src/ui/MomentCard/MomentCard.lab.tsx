@@ -3,11 +3,9 @@ import { cards, snapshots, stoppageCard } from "../../lab/fixtures";
 import type { LiveCard, LiveSnapshot } from "../../types/live";
 import { MomentCard } from "./MomentCard";
 
-type Look = "a" | "b" | "c";
-
-function show(card: LiveCard, snap: LiveSnapshot, look: Look = "a", extra: { empty?: boolean; loading?: boolean } = {}) {
+function show(card: LiveCard, snap: LiveSnapshot, extra: { empty?: boolean; loading?: boolean } = {}) {
   const team = card.side === "away" ? snap.away : card.side === "home" ? snap.home : undefined;
-  return <MomentCard card={card} team={team} note={snap.projection.note} look={look} {...extra} />;
+  return <MomentCard card={card} team={team} note={snap.projection.note} {...extra} />;
 }
 
 function state(
@@ -15,15 +13,15 @@ function state(
   note: string,
   card: LiveCard,
   snap: LiveSnapshot,
-  opts: Partial<LabState> & { look?: Look; empty?: boolean; loading?: boolean } = {},
+  opts: Partial<LabState> & { empty?: boolean; loading?: boolean } = {},
 ): LabState {
-  const { look, empty, loading, ...rest } = opts;
+  const { empty, loading, ...rest } = opts;
   return {
     name,
     note,
     language: card.language,
     width: "min(1440px, 100%)",
-    render: () => show(card, snap, look, { empty, loading }),
+    render: () => show(card, snap, { empty, loading }),
     ...rest,
   };
 }
@@ -34,11 +32,9 @@ const video: LabState["canvases"] = ["video"];
 
 export default {
   component: "MomentCard",
-  summary: "The product: one moment, why it matters, proof one tap away. Three looks.",
+  summary: "The product: one moment, why it matters, proof one tap away.",
   states: [
-    state("equaliser-a", "Look a, stacked: the calmest. NGC equaliser, your player.", cards.equaliser, m75),
-    state("equaliser-b", "Look b, why band: why-line and swing on a tinted band.", cards.equaliser, m75, { look: "b" }),
-    state("equaliser-c", "Look c, two columns; the phone falls back to a.", cards.equaliser, m75, { look: "c" }),
+    state("equaliser", "NGC equaliser, your player: why-line and swing on a tinted band.", cards.equaliser, m75),
     state("goal-against", "S3: goal against your team, muted tag, no glow.", cards.goalAgainst, m15),
     state("chaos", "Chaos phase: neutral tag, no side, no glow.", cards.chaos, m15, { canvases: video }),
     state("momentum-flip", "S6: momentum swings to Northgate City.", cards.momentumFlip, m75, { canvases: video }),

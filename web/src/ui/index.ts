@@ -11,3 +11,8 @@ export { ScoreHeader } from "./ScoreHeader/ScoreHeader";
 export { MomentCard } from "./MomentCard/MomentCard";
 export { ScoreBug } from "./ScoreBug/ScoreBug";
 export { OverlayGraphic } from "./OverlayGraphic/OverlayGraphic";
+export { Timeline } from "./Timeline/Timeline";
+export { TopBar } from "./TopBar/TopBar";
+export { FactsSheet } from "./FactsSheet/FactsSheet";
+export { AgentTrace } from "./AgentTrace/AgentTrace";
+export { PlayerOfMatch } from "./PlayerOfMatch/PlayerOfMatch";

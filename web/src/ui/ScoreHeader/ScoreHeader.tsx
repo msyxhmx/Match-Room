@@ -6,8 +6,6 @@ import { useLabels } from "../labels";
 import { Pill } from "../Pill/Pill";
 import styles from "./ScoreHeader.module.css";
 
-export type ScoreHeaderLook = "a" | "b" | "c";
-
 export interface ScoreHeaderProps {
   home: Team;
   away: Team;
@@ -21,7 +19,6 @@ export interface ScoreHeaderProps {
   /** Side that just scored: sets data-state="scored" on it (step 8 animates it). */
   scoredSide?: "home" | "away";
   loading?: boolean;
-  look: ScoreHeaderLook;
 }
 
 function Side({
@@ -64,13 +61,12 @@ export function ScoreHeader({
   scorers,
   scoredSide,
   loading,
-  look,
 }: ScoreHeaderProps) {
   const labels = useLabels();
 
   if (loading) {
     return (
-      <section className={styles.root} data-look={look} data-loading="true" aria-busy="true" aria-label={labels.loading}>
+      <section className={styles.root} data-loading="true" aria-busy="true" aria-label={labels.loading}>
         <div className={styles.side} data-side="home">
           <span className={`${styles.crest} ${styles.skel} ${styles.skelCrest}`} />
           <span className={`${styles.skel} ${styles.skelName}`} />
@@ -93,7 +89,7 @@ export function ScoreHeader({
   const awayDim = final && score.away < score.home;
 
   return (
-    <section className={styles.root} data-look={look} data-period={period} aria-label={`${home.name} ${formatScore(score)} ${away.name}`}>
+    <section className={styles.root} data-period={period} aria-label={`${home.name} ${formatScore(score)} ${away.name}`}>
       <Side side="home" team={home} scorers={scorers?.home ?? []} scored={scoredSide === "home"} />
       <div className={styles.centre}>
         <p className={styles.score} data-pre={pre ? "true" : undefined} aria-hidden="true">

@@ -141,34 +141,11 @@
   color: var(--text-primary);
 }
 
-/* ---------- look a: card glow ---------- */
-.root[data-look="a"] {
-  background: var(--surface-card);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-}
-.root[data-look="a"]::before,
-.root[data-look="a"]::after {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  width: 30%;
-  z-index: -1;
-}
-.root[data-look="a"]::before {
-  left: 0;
-  background: radial-gradient(ellipse at 0% 50%, var(--glow-home), transparent 70%);
-}
-.root[data-look="a"]::after {
-  right: 0;
-  background: radial-gradient(ellipse at 100% 50%, var(--glow-away), transparent 70%);
-}
-
-/* ---------- look b: open stage ---------- */
-.root[data-look="b"] {
+/* ---------- open stage: glow behind each crest ---------- */
+.root {
   padding-block: var(--space-1);
 }
-.root[data-look="b"] .side::before {
+.root .side::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -180,70 +157,38 @@
   translate: -50% -50%;
   background: radial-gradient(circle, var(--glow-home), transparent 68%);
 }
-.root[data-look="b"] .side[data-side="away"]::before {
+.root .side[data-side="away"]::before {
   background: radial-gradient(circle, var(--glow-away), transparent 68%);
 }
 /* Crests hug the score; names sit outside them. */
-:global(.video) .root[data-look="b"] .side {
+:global(.video) .root .side {
   flex-direction: row-reverse;
   text-align: right;
   justify-content: flex-start;
 }
-:global(.video) .root[data-look="b"] .side[data-side="away"] {
+:global(.video) .root .side[data-side="away"] {
   flex-direction: row;
   text-align: left;
 }
-:global(.video) .root[data-look="b"] .side[data-side="home"] {
+:global(.video) .root .side[data-side="home"] {
   justify-self: end;
 }
-:global(.video) .root[data-look="b"] .side[data-side="home"] .info {
+:global(.video) .root .side[data-side="home"] .info {
   align-items: flex-end;
 }
-:global(.video) .root[data-look="b"] .side[data-side="away"] .info {
+:global(.video) .root .side[data-side="away"] .info {
   align-items: flex-start;
 }
-:global(.video) .root[data-look="b"] .side::before {
+:global(.video) .root .side::before {
   top: 50%;
   left: auto;
   translate: 0 -50%;
 }
-:global(.video) .root[data-look="b"] .side[data-side="home"]::before {
+:global(.video) .root .side[data-side="home"]::before {
   right: calc(-1 * var(--crest-size) / 2 - var(--space-2));
 }
-:global(.video) .root[data-look="b"] .side[data-side="away"]::before {
+:global(.video) .root .side[data-side="away"]::before {
   left: calc(-1 * var(--crest-size) / 2 - var(--space-2));
-}
-
-/* ---------- look c: split tint ---------- */
-.root[data-look="c"] {
-  background: var(--surface-card);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-}
-/* Each half is a flat 6% tint. The split is a gap of card white, not a line. */
-.root[data-look="c"]::before,
-.root[data-look="c"]::after {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  z-index: -1;
-}
-/* The tints stop short of the centre column so the score and status sit on plain white. */
-.root[data-look="c"] {
-  --centre-half: var(--space-6);
-}
-:global(.video) .root[data-look="c"] {
-  --centre-half: calc(var(--space-12) * 2);
-}
-.root[data-look="c"]::before {
-  left: 0;
-  right: calc(50% + var(--centre-half));
-  background: color-mix(in srgb, var(--home-glow) 6%, transparent);
-}
-.root[data-look="c"]::after {
-  left: calc(50% + var(--centre-half));
-  right: 0;
-  background: color-mix(in srgb, var(--away-glow) 6%, transparent);
 }
 
 /* ---------- skeleton ---------- */

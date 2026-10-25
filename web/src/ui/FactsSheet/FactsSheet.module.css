@@ -1,0 +1,127 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+}
+
+.sub {
+  display: flex;
+  gap: var(--space-1);
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+.minute {
+  font-variant-numeric: var(--numeric);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.heading {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+  padding: 0 var(--space-2);
+}
+
+/* Inset grouped list: a ground-coloured block, no lines. */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--surface-ground);
+  list-style: none;
+  margin: 0;
+}
+
+.fact {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+  font: var(--type-body);
+}
+
+.label {
+  color: var(--text-secondary);
+  min-width: 0;
+}
+
+.value {
+  margin: 0;
+  color: var(--text-primary);
+  font-variant-numeric: var(--numeric);
+  text-align: right;
+}
+
+.evidence {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-half);
+}
+
+.description {
+  font: var(--type-body);
+  color: var(--text-primary);
+}
+
+.eventId {
+  font: var(--type-caption1);
+  font-variant-numeric: var(--numeric);
+  color: var(--text-secondary);
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.source {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+.note {
+  font: var(--type-caption2);
+  color: var(--text-secondary);
+}
+
+/* Video: facts and evidence side by side so the proof reads without scrolling far. */
+:global(.video) .root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "sub sub"
+    "facts evidence"
+    "footer footer";
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+}
+
+:global(.video) .sub {
+  grid-area: sub;
+}
+
+:global(.video) .group:nth-of-type(1) {
+  grid-area: facts;
+}
+
+:global(.video) .group:nth-of-type(2) {
+  grid-area: evidence;
+}
+
+:global(.video) .footer {
+  grid-area: footer;
+}
+
+:global(.video) .list {
+  gap: var(--space-1);
+}

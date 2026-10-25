@@ -1,11 +1,11 @@
-import type { LabModule, LabState } from "../../lab/types";
+import type { LabModule } from "../../lab/types";
 import { snapshots } from "../../lab/fixtures";
 import type { LiveSnapshot } from "../../types/live";
 import { scorersFrom } from "../format";
-import { ScoreHeader, type ScoreHeaderLook, type ScoreHeaderProps } from "./ScoreHeader";
+import { ScoreHeader, type ScoreHeaderProps } from "./ScoreHeader";
 
 // A snapshot's real teams, score, period, minute and goal-card scorers; `over` edits one thing.
-function from(s: LiveSnapshot, over: Partial<ScoreHeaderProps> = {}, look: ScoreHeaderLook = "a") {
+function from(s: LiveSnapshot, over: Partial<ScoreHeaderProps> = {}) {
   return (
     <ScoreHeader
       home={s.home}
@@ -14,26 +14,22 @@ function from(s: LiveSnapshot, over: Partial<ScoreHeaderProps> = {}, look: Score
       period={s.period}
       minute={s.minute}
       scorers={scorersFrom(s.cards)}
-      look={look}
       {...over}
     />
   );
 }
 
-const looks: ScoreHeaderLook[] = ["a", "b", "c"];
 const m75 = snapshots.m75;
-
-const live74: LabState[] = looks.map((look) => ({
-  name: `live-74-${look}`,
-  note: `m75: 2–2, 74', real scorers from the m75 cards. Look ${look}.`,
-  render: () => from(m75, {}, look),
-}));
 
 export default {
   component: "ScoreHeader",
-  summary: "The hero: crests, score and match status, in three looks for Ilham to pick from.",
+  summary: "The hero: crests, score and match status on an open stage with a glow behind each crest.",
   states: [
-    ...live74,
+    {
+      name: "live-74",
+      note: "m75: 2–2, 74', real scorers from the m75 cards.",
+      render: () => from(m75),
+    },
     {
       name: "x60",
       note: "m15 at ×60 speed: neutral pill next to Live.",

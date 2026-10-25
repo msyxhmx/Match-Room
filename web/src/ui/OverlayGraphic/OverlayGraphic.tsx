@@ -12,8 +12,6 @@ export interface OverlayGraphicProps {
   message: OverlayMessage;
   home: Team;
   away: Team;
-  /** Only the alert has looks. */
-  look?: "a" | "b" | "c";
 }
 
 const TYPE_ICON: Record<string, LucideIcon> = {
@@ -34,7 +32,7 @@ function sideOf(teamId: string | undefined, home: Team, away: Team): "home" | "a
   return "none";
 }
 
-export function OverlayGraphic({ message, home, away, look = "a" }: OverlayGraphicProps) {
+export function OverlayGraphic({ message, home, away }: OverlayGraphicProps) {
   const labels = useLabels();
   const f = message.fields;
   const side = sideOf(f.team_id, home, away);
@@ -48,28 +46,15 @@ export function OverlayGraphic({ message, home, away, look = "a" }: OverlayGraph
   switch (message.graphic) {
     case "alert":
       body = (
-        <section className={styles.alert} data-look={look} data-side={side} data-state="on">
-          {look === "c" ? (
-            <>
-              <div className={styles.ribbon} data-part="headline">
-                {crest}
-                <h2 className={styles.headline}>{keepScores(f.headline)}</h2>
-              </div>
-              <div className={styles.ribbon} data-part="body">
-                {tag}
-                <p className={styles.text}>{keepScores(f.body)}</p>
-              </div>
-            </>
-          ) : (
-            <div className={styles.panel}>
-              {crest}
-              <div className={styles.copy}>
-                {tag}
-                <h2 className={styles.headline}>{keepScores(f.headline)}</h2>
-                <p className={styles.text}>{keepScores(f.body)}</p>
-              </div>
+        <section className={styles.alert} data-side={side} data-state="on">
+          <div className={styles.panel}>
+            {crest}
+            <div className={styles.copy}>
+              {tag}
+              <h2 className={styles.headline}>{keepScores(f.headline)}</h2>
+              <p className={styles.text}>{keepScores(f.body)}</p>
             </div>
-          )}
+          </div>
         </section>
       );
       break;

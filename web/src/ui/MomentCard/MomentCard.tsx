@@ -28,7 +28,6 @@ export interface MomentCardProps {
   onOpenFacts?: () => void;
   loading?: boolean;
   empty?: boolean;
-  look?: "a" | "b" | "c";
 }
 
 const TYPE_ICON: Partial<Record<InsightType, LucideIcon>> = {
@@ -50,7 +49,6 @@ export function MomentCard({
   onOpenFacts,
   loading,
   empty,
-  look = "a",
 }: MomentCardProps) {
   const labels = useLabels();
   // Step 8 hook: the card slides in. No animation in step 6.
@@ -58,7 +56,7 @@ export function MomentCard({
 
   if (loading || empty) {
     return (
-      <div className={styles.root} data-look={look}>
+      <div className={styles.root}>
         <article
           className={styles.card}
           data-state={state}
@@ -103,16 +101,25 @@ export function MomentCard({
     </div>
   );
 
+  // Numbers once: when a why-line on show already says both percentages, the swing skips its own.
+  const says = (line?: string) => !!swing && !!line && line.includes(swing.before) && line.includes(swing.after);
+  const shownWhy = hasWhy ? (analyst ? card.why.slice(0, 2) : card.why.slice(0, 1)) : [];
+  const sayNumbers = shownWhy.some(says);
+
   const why = hasWhy && (
     <div className={styles.why}>
-      <p className={styles.whyLine}>{keepScores(card.why[0])}</p>
-      {analyst && card.why[1] && <p className={styles.whyMore}>{keepScores(card.why[1])}</p>}
+      <p className={styles.whyLine} data-role={says(card.why[0]) ? "probability" : undefined}>{keepScores(card.why[0])}</p>
+      {analyst && card.why[1] && (
+        <p className={styles.whyMore} data-role={says(card.why[1]) ? "probability" : undefined}>
+          {keepScores(card.why[1])}
+        </p>
+      )}
     </div>
   );
 
   const swingEl = showSwing && (
     <div className={styles.swing}>
-      <ChanceSwing team={team} side={side} swing={swing} note={note} />
+      <ChanceSwing team={team} side={side} swing={swing} note={note} numbers={!sayNumbers} />
     </div>
   );
 
@@ -131,7 +138,7 @@ export function MomentCard({
   );
 
   return (
-    <div className={styles.root} data-look={look}>
+    <div className={styles.root}>
       <article
         className={styles.card}
         data-state={state}
@@ -140,38 +147,14 @@ export function MomentCard({
         data-has-why={hasWhy}
       >
         {tag}
-        {look === "c" ? (
-          <div className={styles.columns}>
-            <div className={styles.left}>
-              {text}
-              {why}
-            </div>
-            <div className={styles.right}>
-              {swingEl}
-              {button}
-            </div>
+        {text}
+        <div className={styles.band} data-glow={glow}>
+          {why}
+          <div className={styles.footer}>
+            {swingEl}
+            {button}
           </div>
-        ) : look === "b" ? (
-          <>
-            {text}
-            <div className={styles.band} data-glow={glow}>
-              {why}
-              <div className={styles.footer}>
-                {swingEl}
-                {button}
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            {text}
-            {why}
-            <div className={styles.footer}>
-              {swingEl}
-              {button}
-            </div>
-          </>
-        )}
+        </div>
       </article>
     </div>
   );

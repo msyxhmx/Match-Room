@@ -31,7 +31,10 @@
 }
 
 .root[data-detent="medium"] .panel {
-  height: 50%;
+  /* At least half the frame, and taller when the content needs it, so the proof is never
+     cut off mid-row on camera (S4). Large is the ceiling. */
+  min-height: 50%;
+  max-height: 88%;
 }
 .root[data-detent="large"] .panel {
   height: 88%;

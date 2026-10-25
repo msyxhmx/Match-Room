@@ -11,23 +11,27 @@ export interface ChanceSwingProps {
   swing: Swing;
   /** The projection note, shown exactly as the engine wrote it. */
   note: string;
+  /** Draw the big before → after numbers. False when the sentence above already says them. */
+  numbers?: boolean;
 }
 
 const pct = (v: string) => `${Math.min(100, Math.max(0, parseFloat(v)))}%`;
 
-export function ChanceSwing({ team, side, swing, note }: ChanceSwingProps) {
+export function ChanceSwing({ team, side, swing, note, numbers = true }: ChanceSwingProps) {
   const labels = useLabels();
   return (
-    <div className={styles.root} data-side={side} data-rising={swing.rising}>
-      <p className={styles.label}>
+    <div className={styles.root} data-side={side} data-rising={swing.rising} data-numbers={numbers}>
+      <p className={styles.label} data-role="chance-label">
         <span className={styles.what}>{labels.chanceToWin}</span>{" "}
         <span className={styles.team}>{team.name}</span>
       </p>
-      <p className={styles.numbers} data-role="probability">
-        <span className={styles.before}>{swing.before}</span>
-        <Icon icon={ArrowRight} />
-        <span className={styles.after}>{swing.after}</span>
-      </p>
+      {numbers && (
+        <p className={styles.numbers} data-role="probability">
+          <span className={styles.before}>{swing.before}</span>
+          <Icon icon={ArrowRight} />
+          <span className={styles.after}>{swing.after}</span>
+        </p>
+      )}
       <div className={styles.track} aria-hidden="true" data-state="to">
         <span className={styles.fill} style={{ width: pct(swing.after) }} />
         <span className={styles.tick} style={{ left: pct(swing.before) }} />

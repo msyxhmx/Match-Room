@@ -140,7 +140,10 @@ function measure(canvas) {
     const view = scroller && scroller !== frame ? scroller.getBoundingClientRect() : null;
     for (const r of rects) {
       if (view && (r.bottom <= view.top || r.top >= view.bottom)) continue;
-      const x1 = r.left - box.left, x2 = r.right - box.left, y1 = r.top - box.top, y2 = r.bottom - box.top;
+      // Only the part a scroll container actually shows.
+      const top = view ? Math.max(r.top, view.top) : r.top;
+      const bottom = view ? Math.min(r.bottom, view.bottom) : r.bottom;
+      const x1 = r.left - box.left, x2 = r.right - box.left, y1 = top - box.top, y2 = bottom - box.top;
       if ((x1 < safe.left - 0.5 || x2 > safe.right + 0.5 || y1 < safe.top - 0.5 || y2 > safe.bottom + 0.5) && !seenSafe.has(el)) {
         seenSafe.add(el);
         add("safe-area", `"${short(text)}" at x ${Math.round(x1)}–${Math.round(x2)}, y ${Math.round(y1)}–${Math.round(y2)}`);
