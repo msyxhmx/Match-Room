@@ -70,3 +70,11 @@ def test_load_predictor_falls_back_on_corrupt_artifact(tmp_path):
     predictor = load_predictor(bad)
     assert isinstance(predictor, HeuristicPredictor)
     assert predictor.version == "heuristic-v0"
+
+
+def test_load_predictor_falls_back_on_feature_mismatch(tmp_path):
+    import joblib
+
+    stale = tmp_path / "model.joblib"
+    joblib.dump({"version": "xgb-old", "features": FEATURE_COLUMNS[:-1]}, stale)
+    assert isinstance(load_predictor(stale), HeuristicPredictor)

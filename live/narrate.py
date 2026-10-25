@@ -26,6 +26,7 @@ log = logging.getLogger(__name__)
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
 PLAYER_RE = re.compile(r"\b[A-Z]\. [A-Z][A-Za-z'\-]+")
 TEAM_NAMES = {t.name for t in LEAGUE}
+LLM_TIMEOUT_S = 10  # per call; a slow rewrite must fall back to the template, not stall the feed
 CASUAL_EXTRAS = {"assist", "player_goals", "player"}
 
 
@@ -222,6 +223,8 @@ def llm_rewrite(text: str, facts: dict[str, Fact], lang: str, persona: str,
             azure_endpoint=os.environ["AZURE_OPENAI_ENDPOINT"],
             api_key=os.environ["AZURE_OPENAI_API_KEY"],
             api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2024-10-21"),
+            timeout=LLM_TIMEOUT_S,
+            max_retries=1,
         )
         allowed = {k: fmt(f, lang) for k, f in facts.items()}
         system = (

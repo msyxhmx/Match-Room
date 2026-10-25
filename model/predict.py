@@ -125,7 +125,12 @@ def load_predictor(path: Path = ARTIFACT_PATH) -> Predictor:
         try:
             import joblib
 
-            return TrainedPredictor(joblib.load(path))
+            bundle = joblib.load(path)
+            if list(bundle.get("features", [])) != list(FEATURE_COLUMNS):
+                log.warning("Model artifact %s was trained on other features; "
+                            "using heuristic predictor. Retrain with `make train`.", path)
+                return HeuristicPredictor()
+            return TrainedPredictor(bundle)
         except Exception as exc:  # noqa: BLE001 - never break half-time on a bad artifact
             log.warning(
                 "Could not load model artifact %s (%s); using heuristic predictor.",
