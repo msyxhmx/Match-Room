@@ -273,7 +273,10 @@ Lab states: `medium` and `large` (with a short body of the 14' card's facts as p
 | `offline` | m75, `connection="offline"` | both |
 | `no-following` | profile with team and player null | video |
 
-### ScoreHeader ★ hero, 3 looks
+### ScoreHeader ★ hero
+
+**Picked 25 Oct (Ilham): look b, "Open stage".** The `look` prop and looks a and c are removed;
+the text on the looks below is kept as the record of what was compared.
 `<ScoreHeader home={Team} away={Team} score={Score} period={Period} minute={number} speed?={number} scorers?={{home: string[], away: string[]}} loading? look="a|b|c" />`
 
 - **Content:** home on the left, always. Each side shows:
@@ -314,7 +317,13 @@ Lab states: `medium` and `large` (with a short body of the 14' card's facts as p
 | `missing-crest` | away id "XXX" | phone |
 | `loading` | `loading` | both |
 
-### MomentCard ★ hero, 3 looks
+### MomentCard ★ hero
+
+**Picked 25 Oct (Ilham): look b, "Why band", and "numbers once".** The `look` prop and
+looks a and c are removed. **Numbers once:** when `why[0]` already contains both the `before`
+and `after` strings of the swing (the goal cards: "moves from 5% to 28%"), ChanceSwing draws
+its label, bar and note but not the big numbers (`numbers={false}`), and the why-line carries
+`data-role="probability"`. Any other card keeps the numbers.
 `<MomentCard card={LiveCard} team?={Team} note={string} onOpenFacts?={() => void} loading? empty? look="a|b|c" />`
 
 The product (DESIGN §5): one moment, why it matters, proof one tap away.
@@ -562,7 +571,10 @@ The strict broadcast bug for `/overlay` (DESIGN §9.7). It's used for every over
 | `on-plate` | the 74:10 alert's fields | plate |
 | `transparent` | same | transparent |
 
-### OverlayGraphic ★ the alert has 3 looks
+### OverlayGraphic ★ the alert
+
+**Picked 25 Oct (Ilham): alert look a, "Lower panel".** The `look` prop and looks b and c are
+removed.
 `<OverlayGraphic message={OverlayMessage} home={Team} away={Team} look?="a|b|c" />`
 
 One graphic for each `message.graphic`. The page shows only one at a time (DESIGN: never
