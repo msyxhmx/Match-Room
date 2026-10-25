@@ -483,7 +483,9 @@ Done 25 Oct. The tokens live in [src/theme.css](src/theme.css), and the club pal
 [src/clubColours.ts](src/clubColours.ts). Components use tokens only, never a raw colour or
 size. `npm run check:tokens` measures every colour pair rather than trusting our eyes. It runs
 in `make lint` and in CI, and fails the build if a text colour drops under 4.5:1 on white or on
-the ground. On 25 Oct, all 64 checks passed.
+the ground. On 25 Oct, all 64 checks passed. The
+[token sheet](https://claude.ai/artifact/EvsxJMVyTgShXUWtLTcAAm) renders the real `theme.css`
+for review.
 
 **Colour.**
 - Neutrals:
@@ -497,8 +499,8 @@ the ground. On 25 Oct, all 64 checks passed.
   are NGC and KST, and the check confirms they match the TS map exactly.
 - **The eight clubs.** "Distinct" means at least ΔE2000 20 from Northgate Blue, Vale Claret and
   Live red. That's the gap between the two locked demo colours and Live (KST to Live is 21.8).
-  Blues and purples all came out under 17 from Northgate Blue, so no other club is blue or
-  purple.
+  Every blue, cyan, slate and purple we tried came out under 20 from Northgate Blue, so no other
+  club uses those hues.
 
   | Club | Name | Primary | Glow | Text | Text on white | Closest of NGC / KST / Live |
   |---|---|---|---|---|---|---|
@@ -524,6 +526,7 @@ the ground. On 25 Oct, all 64 checks passed.
   | Your player | `--you-tag-*`, a black pill with white text | the "Your player" tag |
   | Chaos phase | `--state-neutral-*` | "Chaos" label and a zigzag icon; the timeline shows both clubs' bars |
   | Checked, accepted | `--state-positive-*` `#1F7A35` (the one extra hue) | tick icon and "Checked" |
+  | Agent trace: tool, draft | `--state-neutral-*` | wrench icon and "Tool"; pencil icon and "Draft" |
   | Rejected, retry | `--state-muted-*` | cross or retry icon, with the draft struck through |
   | HT / FT | `--state-neutral-*` | "HT" / "FT" pill; at FT the loser's score is `--text-dimmed-large` |
   | Offline | `--state-muted-*` | an "Offline · showing saved match" notice, never the red pill |
