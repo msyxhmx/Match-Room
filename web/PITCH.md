@@ -93,8 +93,40 @@ projected penalty spot and arcs land on the render's own (the spot at about (293
 45 px on the near one. Home attacks to the right in both
 halves. The data has no ends, and a fixed direction reads better in a short clip.
 
-## Open decisions
+## The look (Ilham's pick, 25 Oct)
 
-- Which look (gallery): tracking, broadcast or tactical.
-- At ×60, hold the goal alert until the replay's goal lands (on the plate only).
-- The note pill's contrast over the grey sky (white on a 20% scrim) needs checking against DESIGN's 4.5:1.
+One look for everyone, **broadcast**: discs in club colours (keepers white with a team ring), a
+dashed line along the real pass, and a 24 px name pill on whoever touches the ball (the real
+event's player). L. Quinn, the focus player, gets a soft halo.
+
+**Analyst** adds the team shape. With the persona switch (`P`, the same switch S7 already
+shows), each team's back line, midfield and front line are joined up, fading in over 300 ms. The
+team without the ball is drawn stronger, because its shape is what an analyst reads. A chip
+reading "Analyst view · team shape" shows while the lines are on. The gallery also tried flat
+"tracking" discs (clean but anonymous) and an always-on "tactical" look (the two teams' lines
+cross in midfield).
+
+## On the overlay page
+
+- Only on the plate (`?plate=1`). The transparent OBS page never draws a pitch.
+- Paused: the minute's headline loops. Playing: the live programme (`PitchLayer.tsx`).
+- **The goal alert and the score wait for the pitch.** On the plate, a goal alert is held until
+  the pitch reports the ball crossing the line, and the score bug doesn't count that goal until
+  then. At ×60 the replay's goal lands about 1.6 s after its cut. If the pitch never reports it,
+  the alert goes up anyway after 6 s (75 s at ×1).
+- Reduced motion: the dots and the ball step between key positions, with no travel, sway, fades
+  or line fade.
+- Offline: the saved match carries every event and both lineups, so the pitch plays without
+  the API.
+
+## Proof
+
+- `npm run test:pitch`: speed, bounds, eleven a side, real spots, forced moments, credited
+  assists, causal replanning, and the replays.
+- `npm run flows`:
+  - `overlay-plate`: the canvas draws, the note shows, and `P` brings in the analyst chip.
+  - `overlay-clear`: no pitch.
+  - `goal-hold`: the score never runs ahead of the alert.
+  - `offline-plate`.
+- `npm run perf:pitch`: 90 minutes at ×60 on the plate, with frame and long-task budgets.
+- `npm run film:pitch`: clips of the lab states at the upload's settings.

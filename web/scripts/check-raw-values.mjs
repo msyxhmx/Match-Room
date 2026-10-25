@@ -1,13 +1,13 @@
 // Fails if a UI component uses a raw colour or font instead of a token from theme.css
 // (DESIGN §9.10: "Components use tokens only"). Run: npm run check:raw
-// Scans src/ui/**/*.{css,tsx,ts} and src/screens/. Skips theme.css, clubColours.ts, the lab and *.lab.tsx files.
+// Scans src/ui/**/*.{css,tsx,ts}, src/screens/ and src/pitch/ (the canvas reads its colours from tokens). Skips theme.css, clubColours.ts, the lab and *.lab.tsx files.
 
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const web = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const scans = [join(web, "src", "ui"), join(web, "src", "screens")];
+const scans = [join(web, "src", "ui"), join(web, "src", "screens"), join(web, "src", "pitch")];
 
 const RULES = [
   [/#[0-9a-fA-F]{3,8}\b(?![-\w])/, "raw hex colour"],

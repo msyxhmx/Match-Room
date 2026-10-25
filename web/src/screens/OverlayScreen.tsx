@@ -2,6 +2,7 @@
 // OBS, or over the pitch plate for the video (?plate=1). Never several graphics at once
 // (DESIGN §9.7). Between graphics the score bug stays up on its own.
 
+import type { ReactNode } from "react";
 import type { OverlayMessage } from "../types/live";
 import { OverlayGraphic, ScoreBug } from "../ui";
 import { formatScore } from "../ui/format";
@@ -12,6 +13,8 @@ export interface OverlayScreenProps {
   view: MatchView;
   message: OverlayMessage | null;
   plate?: boolean;
+  /** The live pitch, drawn on the plate under the graphics (never on the transparent page). */
+  pitch?: ReactNode;
 }
 
 /** Lower priority number = more important (alert is 1). */
@@ -26,9 +29,10 @@ export function overlayAt(overlays: OverlayMessage[], minute: number): OverlayMe
   return best;
 }
 
-export function OverlayScreen({ view, message, plate }: OverlayScreenProps) {
+export function OverlayScreen({ view, message, plate, pitch }: OverlayScreenProps) {
   return (
     <div className={styles.overlay} data-plate={plate ? "true" : "false"} data-screen="overlay">
+      {plate && pitch}
       {message ? (
         <OverlayGraphic key={message.seq} message={message} home={view.home} away={view.away} />
       ) : (

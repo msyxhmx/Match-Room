@@ -14,7 +14,8 @@
     "flows": "node scripts/flows.mjs",
     "motion": "node scripts/motion.mjs",
     "test:pitch": "node scripts/pitch-test.mjs",
-    "film:pitch": "node scripts/pitch-film.mjs"
+    "film:pitch": "node scripts/pitch-film.mjs",
+    "perf:pitch": "node scripts/pitch-perf.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.61.0",

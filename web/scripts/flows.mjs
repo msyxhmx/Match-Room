@@ -16,8 +16,13 @@
 //   S6            half-time at ×60 resumes and the second-half momentum card arrives
 //   S7            L switches to Malay, then L L back to English and P to analyst (xG)
 //   S8            minute 90 is the full-time screen at 3–2
-//   overlay-plate /overlay?plate=1 shows the alert graphic
-//   overlay-clear /overlay without plate is transparent (body and frame), ready for chroma/alpha
+//   overlay-plate /overlay?plate=1 shows the alert graphic over the live pitch: its canvas keeps
+//                 drawing, the honesty note shows, P adds the analyst lines' chip
+//   overlay-clear /overlay without plate is transparent (body and frame), ready for chroma/alpha,
+//                 and has no pitch
+//   goal-hold     on the plate at ×60 the 61' goal alert and the score wait for the pitch's replay
+//                 to show the goal; the score never runs ahead of the alert
+//   offline-plate with the API dead the pitch still plays, from the saved events
 //   offline       with the API dead the saved match shows, and plays on
 //   reconnect     a dropped stream shows "Reconnecting", recovers, and the clock keeps moving
 
@@ -87,6 +92,24 @@ const score = (page, goals) => page.locator(`section[aria-label="Northgate City 
 const headerMinute = async (page) =>
   parseInt(await page.locator('section[data-period] [class*="minute"]').first().innerText(), 10);
 const pressKey = (page, k) => page.keyboard.press(k);
+
+/** The pitch canvas is drawing: its frame count goes up, and it has dots on it. */
+async function pitchDrawing(page, timeout = 5000) {
+  const canvas = page.locator("[data-pitch] canvas");
+  await canvas.waitFor({ timeout });
+  const count = () => canvas.evaluate((c) => Number(c.dataset.frames ?? 0));
+  const a = await count();
+  await sleep(600);
+  const b = await count();
+  if (!(b > a)) throw new Error(`the pitch canvas isn't drawing (frames ${a} → ${b})`);
+  const inked = await canvas.evaluate((c) => {
+    const d = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+    let n = 0;
+    for (let i = 3; i < d.length; i += 4 * 97) if (d[i] > 0) n++;
+    return n;
+  });
+  if (inked < 50) throw new Error("the pitch canvas is empty");
+}
 
 async function noPill(page) {
   const t = await body(page);
@@ -171,6 +194,49 @@ function flows(live, dead) {
         const g = page.locator("[data-graphic=alert]").first();
         await g.waitFor({ timeout: 5000 });
         if (!(await g.innerText()).includes("make it count")) throw new Error('alert lacks "make it count"');
+        await pitchDrawing(page);
+        await page.getByText("Positions illustrative").first().waitFor({ timeout: 2000 });
+        await pressKey(page, "p");
+        await page.locator('[data-pitch][data-analyst="true"]').waitFor({ timeout: 3000 });
+        await page.getByText("Analyst view").first().waitFor({ timeout: 2000 });
+      },
+    },
+    {
+      name: "goal-hold",
+      url: `${live}/overlay?minute=60&plate=1`,
+      async run(page) {
+        await page.locator("[data-pitch] canvas").waitFor({ timeout: 5000 });
+        await pressKey(page, " ");
+        // Sample the score bug and the alert until the alert shows.
+        let sawHeld = false;
+        for (let i = 0; i < 120; i++) {
+          const s = await page.evaluate(() => ({
+            alert: !!document.querySelector("[data-graphic=alert]"),
+            replay: document.body.innerText.includes("61′"),
+            text: document.body.innerText,
+          }));
+          const oneTwo = /1\s*[–-]\s*2/.test(s.text);
+          if (s.alert) {
+            if (!oneTwo) throw new Error("the alert is up but the score isn't 1–2");
+            if (!sawHeld) throw new Error("never saw the 61' replay with the score still 0–2");
+            return;
+          }
+          if (oneTwo) throw new Error("the score went to 1–2 before the goal alert");
+          if (s.replay) sawHeld = true;
+          await sleep(50);
+        }
+        throw new Error("the 61' goal alert never showed");
+      },
+    },
+    {
+      name: "offline-plate",
+      url: `${dead}/overlay?minute=74&plate=1`,
+      offline: true,
+      async run(page) {
+        await pitchDrawing(page, 12000);
+        await pressKey(page, " ");
+        await sleep(1500);
+        await pitchDrawing(page);
       },
     },
     {
@@ -184,6 +250,7 @@ function flows(live, dead) {
         }));
         for (const [k, v] of Object.entries(bg))
           if (v !== "rgba(0, 0, 0, 0)") throw new Error(`${k} background is ${v}`);
+        if (await page.locator("[data-pitch]").count()) throw new Error("the transparent page has a pitch");
       },
     },
     {
