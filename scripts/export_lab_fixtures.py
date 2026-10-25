@@ -1,0 +1,57 @@
+"""Write the real engine output the component lab renders (web/src/lab/fixtures/*.json).
+
+    python scripts/export_lab_fixtures.py
+
+The lab (web/lab.html, dev only) shows every component in every state. Its fixtures come
+from the live engine for the comeback scenario, so the text on every screenshot is text the
+demo will really show. The mocks in web/src/mock/live/ stay as they are: they belong to
+`make schema`. Run this again after a change to live/templates.py.
+"""
+
+import json
+from pathlib import Path
+
+from contract import Profile
+from live.engine import MatchEngine
+from sim.simulator import simulate_scenario
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "web" / "src" / "lab" / "fixtures"
+
+# The demo profile (STORYBOARD §3), and the switches S7 shows.
+PROFILES = {
+    "en": Profile(persona="casual", language="en", team="NGC", player="L. Quinn"),
+    "ms": Profile(persona="casual", language="ms", team="NGC", player="L. Quinn"),
+    "es": Profile(persona="casual", language="es", team="NGC", player="L. Quinn"),
+    "en-analyst": Profile(persona="analyst", language="en", team="NGC", player="L. Quinn"),
+    "ms-analyst": Profile(persona="analyst", language="ms", team="NGC", player="L. Quinn"),
+}
+# Minutes the video stops on: kick-off, the first goal, half-time, the equaliser, full time.
+MINUTES = (0, 15, 45, 75, 90)
+
+
+def write(name: str, obj) -> None:
+    data = [o.model_dump(mode="json") for o in obj] if isinstance(obj, list) else obj.model_dump(
+        mode="json")
+    path = OUT / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
+    print(f"wrote {path.relative_to(ROOT)}")
+
+
+def main() -> None:
+    engine = MatchEngine(simulate_scenario("comeback"))
+    en = PROFILES["en"]
+    for minute in MINUTES:
+        write(f"snapshot.{minute}.en.json", engine.snapshot(minute, en))
+    for key, profile in PROFILES.items():
+        if key != "en":
+            write(f"snapshot.75.{key}.json", engine.snapshot(75, profile))
+        write(f"overlays.{key}.json", engine.overlays(profile))
+    write("brief.halftime.en.json", engine.brief("halftime", en))
+    write("brief.fulltime.en.json", engine.brief("fulltime", en))
+    write("brief.fulltime.ms-analyst.json", engine.brief("fulltime", PROFILES["ms-analyst"]))
+
+
+if __name__ == "__main__":
+    main()

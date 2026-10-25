@@ -20,6 +20,7 @@ artifacts/*
 # Web
 web/node_modules/
 web/dist/
+web/shots/
 
 # OS / editors
 .DS_Store

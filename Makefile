@@ -32,7 +32,7 @@ test:
 
 lint:
 	$(PY) -m ruff check .
-	cd web && npm run typecheck && npm run check:tokens
+	cd web && npm run typecheck && npm run check:tokens && npm run check:raw
 
 format:
 	$(PY) -m ruff check . --fix
