@@ -115,3 +115,9 @@ def test_llm_rewrite_off_without_keys(monkeypatch):
     for k in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_API_KEY", "AZURE_OPENAI_DEPLOYMENT"):
         monkeypatch.delenv(k, raising=False)
     assert llm_rewrite("draft", FACTS, "en", "casual", "a summary") is None
+
+
+def test_possessive_names_are_not_invented_players():
+    facts = {"player": Fact("L. Quinn", "player"), "other": Fact("K. O'Brien", "player")}
+    assert validate("L. Quinn's header beat K. O'Brien.", facts, "en") == []
+    assert validate("M. Smith's header.", facts, "en") == ["player 'M. Smith' not in facts"]

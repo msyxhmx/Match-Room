@@ -41,7 +41,7 @@ MAX_TOOL_ROUNDS = 6  # per analyst turn
 MAX_EVENTS = 25
 
 NUM_RE = re.compile(r"\d+(?:\.\d+)?")
-PLAYER_RE = re.compile(r"\b[A-Z]\. [A-Z][A-Za-z'\-]+")
+PLAYER_RE = re.compile(r"\b[A-Z]\. [A-Z][A-Za-z\-]*(?:'[A-Z][A-Za-z\-]*)?")  # O'Brien, not Quinn's
 
 TOOL_SPECS = [
     {"type": "function", "function": {

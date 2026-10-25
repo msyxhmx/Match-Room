@@ -24,7 +24,7 @@ from sim.teams import LEAGUE
 log = logging.getLogger(__name__)
 
 NUM_RE = re.compile(r"\d+(?:[.,]\d+)?")
-PLAYER_RE = re.compile(r"\b[A-Z]\. [A-Z][A-Za-z'\-]+")
+PLAYER_RE = re.compile(r"\b[A-Z]\. [A-Z][A-Za-z\-]*(?:'[A-Z][A-Za-z\-]*)?")  # O'Brien, not Quinn's
 TEAM_NAMES = {t.name for t in LEAGUE}
 LLM_TIMEOUT_S = 10  # per call; a slow rewrite must fall back to the template, not stall the feed
 CASUAL_EXTRAS = {"assist", "player_goals", "player"}
