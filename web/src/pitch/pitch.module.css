@@ -17,7 +17,7 @@
 /* Top right: the score bug owns the top left, the graphics the bottom. */
 .labels {
   position: absolute;
-  top: var(--space-6);
+  top: var(--space-8);
   right: var(--safe-x);
   display: flex;
   flex-direction: column;
@@ -30,7 +30,15 @@
   border-radius: var(--radius-pill);
   font: var(--type-caption2);
   color: var(--you-tag-on-fill);
-  background: var(--scrim);
+  background: var(--you-tag-fill);
+}
+
+.chip {
+  padding: var(--space-half) var(--space-2);
+  border-radius: var(--radius-pill);
+  font: var(--type-caption2);
+  color: var(--you-tag-on-fill);
+  background: var(--you-tag-fill);
 }
 
 .replay {

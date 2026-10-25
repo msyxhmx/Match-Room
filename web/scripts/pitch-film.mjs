@@ -1,12 +1,12 @@
 // Films the pitch simulation's lab states frame by frame, for the looks gallery and as proof.
 // Run: npm run film:pitch                 (every look, every scene)
-//      npm run film:pitch -- broadcast    (looks/scenes whose id contains "broadcast")
+//      npm run film:pitch -- analyst      (scenes whose id contains "analyst")
 //
-// Starts its own Vite server, opens /lab.html?shot=Pitch--<scene>-<look>--video at 1920x1080 and
+// Starts its own Vite server, opens /lab.html?shot=Pitch--<scene>-<persona>--video at 1920x1080 and
 // draws each instant with window.__pitchSeek(t) (deterministic: no real-time clock involved).
 // Writes, under shots/pitch/:
-//   <scene>-<look>.mp4        30 fps, H.264 at 8 Mbps: what the demo upload will look like
-//   <scene>-<look>.strip.png  a 4x2 filmstrip, 480 px per tile, in time order
+//   <scene>-<persona>.mp4        30 fps, H.264 at 8 Mbps: what the demo upload will look like
+//   <scene>-<persona>.strip.png  a 4x2 filmstrip, 480 px per tile, in time order
 // Needs ffmpeg. Not part of `make check`.
 
 import { execFileSync } from "node:child_process";
@@ -21,7 +21,7 @@ const out = resolve(root, "shots", "pitch");
 const filter = process.argv[2] ?? "";
 const FFMPEG = existsSync("/opt/homebrew/bin/ffmpeg") ? "/opt/homebrew/bin/ffmpeg" : "ffmpeg";
 const FPS = 30;
-const LOOKS = ["tracking", "broadcast", "tactical"];
+const LOOKS = ["casual", "analyst"];
 
 const server = await createServer({ root, logLevel: "error", server: { port: 0, strictPort: false } });
 await server.listen();
@@ -30,7 +30,7 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1920, height: 1080 } });
 
 // Scene lengths come from the lab module itself, so the clip is exactly one loop.
-await page.goto(`${base}/lab.html?shot=Pitch--equaliser-broadcast--video`);
+await page.goto(`${base}/lab.html?shot=Pitch--equaliser-casual--video`);
 await page.waitForFunction(() => typeof window.__pitchSeek === "function");
 const scenes = await page.evaluate(async () => {
   const mod = await import("/src/screens/Pitch.lab.tsx");

@@ -15,6 +15,7 @@ const EN = {
   synthetic: "Synthetic data",
   pitchNote: "Positions illustrative · events from the match feed",
   replay: "Replay",
+  analystView: "Analyst view · team shape",
   following: "Following",
   casual: "Casual",
   analyst: "Analyst",
@@ -91,6 +92,7 @@ const MS: Labels = {
   synthetic: "Data sintetik", // confirm
   pitchNote: "Kedudukan ilustrasi · peristiwa daripada suapan perlawanan", // confirm
   replay: "Ulang tayang", // confirm
+  analystView: "Paparan analisis · bentuk pasukan", // confirm
   following: "Mengikuti", // confirm
   casual: "Kasual",
   analyst: "Penganalisis",
@@ -163,6 +165,7 @@ const ES: Labels = {
   synthetic: "Datos sintéticos",
   pitchNote: "Posiciones ilustrativas · eventos del partido",
   replay: "Repetición",
+  analystView: "Vista de analista · forma del equipo",
   following: "Siguiendo",
   casual: "Aficionado",
   analyst: "Analista",

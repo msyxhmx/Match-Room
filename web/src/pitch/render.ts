@@ -1,13 +1,10 @@
 // Draws one frame on the plate's canvas (1920 × 1080, the plate's own pixels). Imperative and
-// cheap: 22 discs, the ball, a few labels. The three looks are style switches on one drawer,
-// so they render from the same choreography.
+// cheap: 22 discs, the ball, a few labels. One look for everyone (Ilham's pick, 25 Oct:
+// "broadcast"), plus the analyst layer: each team's units joined up, drawn in when the viewer
+// switches to Analyst.
 
 import type { Frame } from "./frame";
 import { dist, project, type Vec } from "./geometry";
-
-export type Look = "tracking" | "broadcast" | "tactical";
-
-export const LOOKS: Look[] = ["tracking", "broadcast", "tactical"];
 
 /** Colours and font from the theme's CSS variables, read once per mount (tokens only). */
 export interface Palette {
@@ -15,7 +12,7 @@ export interface Palette {
   away: string;
   white: string;
   ink: string;
-  font: string;
+  family: string;
 }
 
 export function readPalette(el: Element): Palette {
@@ -26,12 +23,13 @@ export function readPalette(el: Element): Palette {
     away: v("--away-primary"),
     white: v("--surface-card"),
     ink: v("--text-primary"),
-    font: v("--font-sans"),
+    family: v("--font-sans"),
   };
 }
 
 export interface DrawOptions {
-  look: Look;
+  /** The analyst layer, 0 (off) to 1 (on): it fades in and out with the persona switch. */
+  analyst: number;
   palette: Palette;
   /** The viewer's focus player (a soft halo), e.g. "L. Quinn". */
   focus?: string | null;
@@ -62,23 +60,25 @@ function lineUnit(ctx: CanvasRenderingContext2D, pts: Vec[], colour: string, alp
 }
 
 export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOptions) {
-  const { palette: P, look } = o;
+  const { palette: P } = o;
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   const colour = (side: "home" | "away") => (side === "home" ? P.home : P.away);
 
-  // ---- tactical: each team's lines, joined, under everything ----
-  if (look === "tactical") {
+  // ---- analyst: each team's back line, midfield and front line, joined, under everything.
+  // The team without the ball is drawn stronger: its shape is what an analyst reads. ----
+  if (o.analyst > 0.001) {
     for (const side of ["home", "away"] as const) {
+      const defending = f.possession !== null && f.possession !== side;
       for (const role of ["DF", "MF", "FW"] as const) {
         const line = f.dots.filter((d) => d.side === side && d.role === role).sort((a, b) => a.y - b.y);
-        lineUnit(ctx, line, colour(side), 0.55, 3);
+        lineUnit(ctx, line, colour(side), (defending ? 0.75 : 0.35) * o.analyst, defending ? 3 : 2);
       }
     }
   }
 
-  // ---- the real pass, while it travels and rests (broadcast, tactical) ----
+  // ---- the real pass, while it travels and rests ----
   const b = f.beat;
-  if (b && look !== "tracking" && b.moment.to && f.t >= b.touch) {
+  if (b && b.moment.to && f.t >= b.touch) {
     const m = b.moment;
     const fade = Math.max(0, Math.min(1, (b.end - f.t) / 0.4));
     const k = Math.min(1, (f.t - b.touch) / Math.max(0.01, b.land - b.touch));
@@ -126,7 +126,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
     const c = project(d.x, d.y, DOT_R);
     const r = DOT_R * c.scale;
     const keeper = d.role === "GK";
-    if (o.focus && d.name === o.focus && d.side === "home" && look !== "tracking") {
+    if (o.focus && d.name === o.focus && d.side === "home") {
       ctx.globalAlpha = 0.5;
       ctx.fillStyle = P.white;
       ctx.beginPath();
@@ -145,8 +145,8 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
   // The ball last: always visible, even at a player's feet.
   drawBall();
 
-  // ---- who's on the ball: the real event's player (broadcast, tactical) ----
-  if (b && look !== "tracking") {
+  // ---- who's on the ball: the real event's player ----
+  if (b) {
     const names: { id: string; at: number }[] = [{ id: b.actor, at: b.touch - 0.45 }];
     if (b.winnerShown && b.receiver) names.push({ id: b.receiver, at: b.land - 0.15 });
     let shownTag = false;
@@ -157,7 +157,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
       shownTag = true;
       const c = project(d.x, d.y, DOT_R * 2);
       const text = d.name;
-      ctx.font = `600 ${TAG_PX}px ${P.font}`;
+      ctx.font = `600 ${TAG_PX}px ${P.family}`;
       const w = ctx.measureText(text).width + 24;
       const h = TAG_PX + 14;
       const x = Math.max(100, Math.min(1820 - w, c.u - w / 2));

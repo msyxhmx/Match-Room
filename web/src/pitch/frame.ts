@@ -25,6 +25,8 @@ export interface Frame {
   ball: { x: number; y: number; z: number; a: number } | null;
   /** The moment on screen (from the ball's fade-in to its end), if any. */
   beat: Beat | null;
+  /** Who has the ball after the latest touch (null before the first). */
+  possession: Side | null;
 }
 
 export interface FrameOptions {
@@ -133,5 +135,11 @@ export function frameAt(tl: Timeline, t: number, opts: FrameOptions = {}): Frame
     const k = u * u; // feet → the event's spot as the touch nears
     ball = { ...ball, x: p.x + (seg.x - p.x) * k, y: p.y + (seg.y - p.y) * k, z: 0 };
   }
-  return { t, dots, ball, beat };
+  let possession: Side | null = null;
+  for (const b of tl.beats) {
+    if (b.touch > t) break;
+    const m = b.moment;
+    possession = m.kind === "pass" && m.outcome !== "complete" && t >= b.land ? (m.side === "home" ? "away" : "home") : m.side;
+  }
+  return { t, dots, ball, beat, possession };
 }

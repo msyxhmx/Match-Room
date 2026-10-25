@@ -1,5 +1,5 @@
-// The pitch simulation on the plate (web/src/pitch), from the saved comeback match. Each look
-// is the same choreography drawn three ways. A state shows one still; scripts/pitch-film.mjs
+// The pitch simulation on the plate (web/src/pitch), from the saved comeback match, for each
+// persona: casual (the broadcast look) and analyst (plus each team's units joined up). A state shows one still; scripts/pitch-film.mjs
 // films it frame by frame through window.__pitchSeek. Lab-only.
 
 import { useEffect, useRef, type ReactNode } from "react";
@@ -16,7 +16,7 @@ import { loopShot, program, type Shot } from "../pitch/director";
 import { project, HALF_L, HALF_W } from "../pitch/geometry";
 import { toMoments, type PitchEvent, type Moment } from "../pitch/moments";
 import { PitchCanvas } from "../pitch/PitchCanvas";
-import { LOOKS, readPalette, type Look } from "../pitch/render";
+import { readPalette } from "../pitch/render";
 import { replayMinute, replayMoment } from "../pitch/schedule";
 import type { SquadPlayer } from "../pitch/formation";
 
@@ -53,9 +53,12 @@ export const PITCH_SCENES = {
 const view74 = replay(savedStart as unknown as LiveSnapshot, savedTicks as unknown as StreamTick[], 74, briefs);
 const alert74 = overlayAt(view74.overlays, 74);
 
-function Scene({ scene, look }: { scene: keyof typeof PITCH_SCENES; look: Look }) {
+type Persona = "casual" | "analyst";
+const PERSONAS: Persona[] = ["casual", "analyst"];
+
+function Scene({ scene, persona }: { scene: keyof typeof PITCH_SCENES; persona: Persona }) {
   const s = PITCH_SCENES[scene];
-  const pitch = <PitchCanvas shot={s.shot} look={look} focus="L. Quinn" at={s.still} />;
+  const pitch = <PitchCanvas shot={s.shot} analyst={persona === "analyst"} focus="L. Quinn" at={s.still} />;
   if (scene !== "equaliser") return pitch;
   return (
     <>
@@ -98,10 +101,9 @@ function Calibration() {
   return <canvas ref={ref} width={1920} height={1080} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />;
 }
 
-const NOTES: Record<Look, string> = {
-  tracking: "Tracking: flat discs and the ball, nothing else",
-  broadcast: "Broadcast: discs, the real pass drawn, the event's player named",
-  tactical: "Tactical: broadcast plus each unit joined up",
+const NOTES: Record<Persona, string> = {
+  casual: "Casual: discs, the real pass drawn, the event's player named",
+  analyst: "Analyst: the same, plus each team's units joined up (the side without the ball stronger)",
 };
 
 const state = (name: string, note: string, render: () => ReactNode): LabState => ({
@@ -115,17 +117,17 @@ const state = (name: string, note: string, render: () => ReactNode): LabState =>
 
 export default {
   component: "Pitch",
-  summary: "The live pitch: 22 dots and the ball from the real events, three looks.",
+  summary: "The live pitch: 22 dots and the ball from the real events, casual and analyst.",
   states: [
     state("calibration", "The plate camera from pitch.py: projected lines over the render", () => <Calibration />),
-    ...LOOKS.flatMap((look) => [
-      state(`equaliser-${look}`, `${NOTES[look]}. S7 paused on 74': the equaliser loops`, () => (
-        <Scene scene="equaliser" look={look} />
+    ...PERSONAS.flatMap((p) => [
+      state(`equaliser-${p}`, `${NOTES[p]}. S7 paused on 74': the equaliser loops`, () => (
+        <Scene scene="equaliser" persona={p} />
       )),
-      state(`flow60-${look}`, `${NOTES[look]}. ×60 from 70', the 74' goal cut in as a replay`, () => (
-        <Scene scene="flow60" look={look} />
+      state(`flow60-${p}`, `${NOTES[p]}. ×60 from 70', the 74' goal cut in as a replay`, () => (
+        <Scene scene="flow60" persona={p} />
       )),
-      state(`corner-${look}`, `${NOTES[look]}. A corner set-up`, () => <Scene scene="corner" look={look} />),
+      state(`corner-${p}`, `${NOTES[p]}. A corner set-up`, () => <Scene scene="corner" persona={p} />),
     ]),
   ],
 } satisfies LabModule;
