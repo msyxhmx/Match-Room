@@ -13,6 +13,10 @@ Our entry for the Microsoft × Premier League **Inside the Game** developer hack
   casual / analyst.
 - The broadcast page with the pitch: [/overlay?minute=74&plate=1](https://match-room-preview.pages.dev/overlay?minute=74&plate=1).
 
+**Full app on Azure: [victorious-sand-01b516100.2.azurestaticapps.net](https://victorious-sand-01b516100.2.azurestaticapps.net)**
+- The website talks to the real API ([API docs](https://halftime-api.reddesert-2b0a0b71.southeastasia.azurecontainerapps.io/docs)),
+  including the live websocket stream. The first load after a restart takes a few seconds.
+
 What it produces from a stream of synthetic events:
 
 1. **Live cards**: "why it matters" insights as they happen (a goal against the run of play, a
@@ -38,7 +42,7 @@ languages including Malay. Built with Python, FastAPI (REST + websocket), React,
 for the half-time model, and Azure OpenAI as an optional, validated rewriter with a template
 fallback. The half-time story is written by two Azure OpenAI agents: an analyst that investigates
 the first half through tools and a fact-checker that sends unsupported cards back; the page shows
-their trace. Azure deployment is planned but not yet live.
+their trace. It runs on Azure: Container Apps for the API, Static Web Apps for the website.
 
 ## Quick start
 
