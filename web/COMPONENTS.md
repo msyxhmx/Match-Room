@@ -133,10 +133,11 @@ The safe area is 1728 × 972 at (96, 54). Top to bottom, with `--space-3` (24) b
 |---|---|---|
 | TopBar | 1728 | 56 |
 | ScoreHeader | 1728 | 224 |
-| MomentCard | 1440, centred | 420 |
-| Timeline | 1728 | 176 |
+| MomentCard | 1440, centred | 460 |
+| Timeline | 1728 | 160 |
 
-That totals 948 of 972. A component taller than its row breaks the layout: the lab state for
+That totals 972 of 972. MomentCard was 420 and Timeline 176 until the Malay analyst card
+measured 456 with nothing cramped (25 Oct); the slack went to the card. A component taller than its row breaks the layout: the lab state for
 the longest text (Malay analyst) must still fit. On the phone everything stacks at
 `100%` (358 wide with the 16 px gutter).
 
@@ -416,7 +417,7 @@ card that isn't a goal, above the bars.
 **Axis:** 0', 15', 30', HT, 60', 75', 90' (caption2, secondary).
 
 **Sizes:**
-- Video: the full width (1728), 176 high including the title and axis.
+- Video: the full width (1728), 160 high including the title and axis.
 - Phone: 358 wide. Bars are 3 px with 1 px gaps, the axis shows 0', HT and 90' only, and pins
   are hidden on the phone (the phone uses a list instead).
 

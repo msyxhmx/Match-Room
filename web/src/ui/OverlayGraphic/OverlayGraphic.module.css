@@ -1,0 +1,237 @@
+/* Video only. The stage fills the frame; every graphic positions itself inside the safe area
+   (x 96-1824, y 54-1026). Text always sits on a solid --surface-card panel, never on the plate. */
+.stage {
+  position: absolute;
+  inset: 0;
+  color: var(--text-primary);
+}
+
+/* Club colour: a thin edge plus a soft glow at one corner. Never a gradient across the panel. */
+section[data-side="home"] {
+  --side-primary: var(--home-primary);
+  --side-glow: var(--home-glow);
+}
+section[data-side="away"] {
+  --side-primary: var(--away-primary);
+  --side-glow: var(--away-glow);
+}
+section[data-side="none"] {
+  --side-primary: var(--surface-fill-strong);
+  --side-glow: transparent;
+}
+
+.panel,
+.ribbon {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  color: var(--text-primary);
+  background:
+    linear-gradient(var(--side-primary), var(--side-primary)) left / var(--space-half) 100% no-repeat,
+    radial-gradient(ellipse 35% 120% at 0% 100%, color-mix(in srgb, var(--side-glow) 18%, transparent), transparent),
+    var(--surface-card);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.headline {
+  margin: 0;
+  font: var(--type-title1);
+}
+.title {
+  margin: 0;
+  font: var(--type-title2);
+}
+.text {
+  margin: 0;
+  font: var(--type-body);
+}
+.alert .text,
+.lower .text {
+  color: var(--text-secondary);
+}
+
+/* ---- alert ---- */
+.alert {
+  position: absolute;
+  /* a 128 px crest: one space token doubled would hide the intent, so sum two */
+  --crest-size: calc(var(--space-12) + var(--space-4));
+}
+
+/* a, Lower panel: full safe width along the bottom */
+.alert[data-look="a"] {
+  left: var(--safe-x);
+  right: var(--safe-x);
+  bottom: var(--safe-y);
+}
+.alert[data-look="a"] .panel {
+  align-items: flex-start;
+}
+
+/* b, Side card: 720 wide on the right, crest above the headline */
+.alert[data-look="b"] {
+  right: var(--safe-x);
+  bottom: var(--safe-y);
+  /* 720 px: 30 x space-3 */
+  width: calc(var(--space-3) * 30);
+  --crest-size: var(--space-12);
+}
+.alert[data-look="b"] .panel {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+.alert[data-look="b"] .panel {
+  background:
+    linear-gradient(var(--side-primary), var(--side-primary)) top / 100% var(--space-half) no-repeat,
+    radial-gradient(ellipse 120% 35% at 50% 0%, color-mix(in srgb, var(--side-glow) 18%, transparent), transparent),
+    var(--surface-card);
+}
+
+/* c, Ribbon: headline-only ribbon, body on a smaller one beneath */
+.alert[data-look="c"] {
+  left: var(--safe-x);
+  right: var(--safe-x);
+  bottom: var(--safe-y);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  --crest-size: var(--space-8);
+}
+.alert[data-look="c"] .ribbon {
+  border-radius: var(--radius-small);
+  padding: var(--space-1) var(--space-2);
+  gap: var(--space-2);
+}
+.alert[data-look="c"] .headline {
+  font: var(--type-title2);
+}
+.alert[data-look="c"] .ribbon[data-part="body"] .text {
+  color: var(--text-primary);
+}
+
+/* ---- other graphics ---- */
+.lower {
+  position: absolute;
+  left: var(--safe-x);
+  bottom: var(--safe-y);
+  /* 960 px: 40 x space-3 */
+  width: calc(var(--space-3) * 40);
+}
+
+.player {
+  position: absolute;
+  left: var(--safe-x);
+  bottom: var(--safe-y);
+  max-width: calc(var(--space-3) * 40);
+  --crest-size: var(--space-5);
+}
+.player .panel {
+  padding: var(--space-2) var(--space-3);
+  gap: var(--space-2);
+}
+.name {
+  margin: 0;
+  font: var(--type-title3);
+}
+.number {
+  font-variant-numeric: var(--numeric);
+  color: var(--text-secondary);
+}
+.player .text {
+  color: var(--text-secondary);
+}
+
+.stat {
+  position: absolute;
+  left: var(--safe-x);
+  /* under the ScoreBug: its top, its 64 px height, then a gap */
+  top: calc(var(--safe-y) + var(--space-8) + var(--space-2));
+}
+.stat .panel {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-small);
+}
+.statLabel {
+  margin: 0;
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+.statValue {
+  margin: 0;
+  font: var(--type-title3);
+  font-variant-numeric: var(--numeric);
+}
+
+.momentum {
+  position: absolute;
+  left: var(--safe-x);
+  bottom: var(--safe-y);
+  width: calc(var(--space-3) * 40);
+}
+.momentum .panel {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  background: var(--surface-card);
+}
+.phase {
+  margin: 0;
+  font: var(--type-body);
+}
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.code {
+  font: var(--type-caption1);
+}
+.code[data-side="home"] {
+  color: var(--home-text);
+}
+.code[data-side="away"] {
+  color: var(--away-text);
+}
+.track {
+  position: relative;
+  flex: 1;
+  height: var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+  overflow: hidden;
+}
+/* The centre line */
+.track::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: var(--stroke);
+  background: var(--text-secondary);
+}
+.fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.fill[data-side="home"] {
+  right: 50%;
+  background: var(--home-primary);
+}
+.fill[data-side="away"] {
+  left: 50%;
+  background: var(--away-primary);
+}

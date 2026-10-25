@@ -1,0 +1,311 @@
+/* The root is the size container, so look c can fall back to look a on a narrow card. */
+.root {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+:global(.video) .card {
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+}
+
+/* Club glow: soft atmosphere at the top edge only, never behind a whole-card gradient. */
+.card[data-glow="home"] {
+  --glow: color-mix(in srgb, var(--home-glow) 18%, transparent);
+}
+.card[data-glow="away"] {
+  --glow: color-mix(in srgb, var(--away-glow) 18%, transparent);
+}
+.card[data-glow="home"],
+.card[data-glow="away"] {
+  background:
+    radial-gradient(ellipse 55% 90px at 18% 0, var(--glow), transparent) no-repeat,
+    var(--surface-card);
+}
+:global(.video) .card[data-glow="home"],
+:global(.video) .card[data-glow="away"] {
+  background:
+    radial-gradient(ellipse 55% 160px at 18% 0, var(--glow), transparent) no-repeat,
+    var(--surface-card);
+}
+
+/* Look b puts the colour in the band, so the card itself stays plain. */
+.root[data-look="b"] .card[data-glow] {
+  background: var(--surface-card);
+}
+
+/* ---- tag row ---- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  font: var(--type-caption1);
+}
+.minute {
+  color: var(--text-secondary);
+  font-variant-numeric: var(--numeric);
+}
+
+/* ---- text ---- */
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+.headline,
+.body,
+.whyLine,
+.whyMore {
+  margin: 0;
+  overflow-wrap: break-word;
+  text-wrap: pretty; /* no lone last word ("Novak.", "28%.") */
+}
+.headline {
+  font: var(--type-title1);
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.body {
+  font: var(--type-body);
+  color: var(--text-secondary);
+}
+
+/* The why-line is the hero sentence after the headline. */
+.why {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.whyLine {
+  font: var(--type-headline);
+  color: var(--text-primary);
+}
+.whyMore {
+  font: var(--type-body);
+  color: var(--text-secondary);
+}
+
+/* ---- footer: swing and the facts button ---- */
+.footer {
+  display: flex;
+  flex-wrap: wrap; /* phone: the button takes its own row so the bar and note get the width */
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+}
+.swing {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.facts {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+  margin-left: auto;
+  /* 44 px minimum touch target: no space token, so 40 + 4. */
+  min-height: calc(var(--space-5) + var(--space-half));
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--state-muted-tint);
+  color: var(--text-secondary);
+  font: var(--type-callout);
+  white-space: nowrap;
+  cursor: pointer;
+}
+:global(.video) .facts {
+  min-height: var(--space-6);
+  padding: 0 var(--space-2);
+}
+.facts:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}
+
+/* On video the footer is one grid so the card stays under 420 px: the numbers on the left, the
+   label above the track in the middle, the button on the right, and the note under all three.
+   `display: contents` hands ChanceSwing's own elements to this grid; it takes no layout props. */
+:global(.video) .footer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  column-gap: var(--space-2);
+  row-gap: 0;
+  align-items: center;
+}
+:global(.video) .footer > .swing,
+:global(.video) .footer > .swing > div {
+  display: contents;
+}
+:global(.video) .footer .swing p:nth-of-type(1) {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+}
+:global(.video) .footer .swing p:nth-of-type(2) {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+:global(.video) .footer .swing > div > div {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  margin: var(--space-1) 0 0;
+}
+:global(.video) .footer .swing p:nth-of-type(3) {
+  grid-column: 1 / 3;
+  grid-row: 3;
+}
+:global(.video) .footer > .facts {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+  align-self: end;
+}
+
+/* ---- look b: why band ---- */
+.band {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0 calc(-1 * var(--space-3)) calc(-1 * var(--space-3));
+  padding: var(--space-3);
+  background: var(--state-muted-tint);
+}
+:global(.video) .band {
+  gap: var(--space-1);
+  margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-2));
+  padding: var(--space-2) var(--space-4);
+}
+.band[data-glow="home"] {
+  background: color-mix(in srgb, var(--home-glow) 8%, var(--surface-card));
+}
+.band[data-glow="away"] {
+  background: color-mix(in srgb, var(--away-glow) 8%, var(--surface-card));
+}
+.root[data-look="b"] .card {
+  gap: var(--space-2);
+}
+
+/* ---- look c: two columns, wide cards only ---- */
+.columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.right {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.right .swing {
+  flex: 1;
+}
+
+@container (min-width: 720px) {
+  .root[data-look="c"] .columns {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    column-gap: var(--space-8);
+    align-items: stretch;
+  }
+  .root[data-look="c"] .right {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+  .root[data-look="c"] .right .facts {
+    align-self: flex-end;
+  }
+  /* The swing drawn large; reset the flat video layout from the footer. */
+  .root[data-look="c"] .swing > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-half);
+  }
+  .root[data-look="c"] .swing > div > div {
+    margin-block: var(--space-2) var(--space-1);
+  }
+  .root[data-look="c"] .swing [data-role="probability"] {
+    font: var(--type-title1);
+  }
+}
+
+/* ---- states ---- */
+.empty {
+  margin: auto;
+  text-align: center;
+  font: var(--type-title3);
+  color: var(--text-secondary);
+}
+.card[data-variant="empty"] {
+  /* Minimum height: two 80 px steps on the phone, two 96 px steps on video. */
+  min-height: calc(var(--space-10) * 2);
+  justify-content: center;
+}
+:global(.video) .card[data-variant="empty"] {
+  min-height: calc(var(--space-12) * 2);
+}
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.bone {
+  display: block;
+  border-radius: var(--radius-small, var(--space-1));
+  background: var(--surface-fill);
+}
+.bone[data-size="tag"] {
+  width: calc(var(--space-12) * 1.5);
+  height: var(--space-3);
+}
+.bone[data-size="headline"] {
+  width: 80%;
+  height: var(--space-5);
+}
+.bone[data-size="line"] {
+  width: 100%;
+  height: var(--space-3);
+}
+.bone[data-short] {
+  width: 60%;
+}
+:global(.video) .bone[data-size="tag"] {
+  height: var(--space-4);
+}
+:global(.video) .bone[data-size="headline"] {
+  height: var(--space-10);
+}
+:global(.video) .bone[data-size="line"] {
+  height: var(--space-4);
+}
+
+/* On the band the button is white, so it still reads as a button. */
+.band .facts {
+  background: var(--surface-card);
+}

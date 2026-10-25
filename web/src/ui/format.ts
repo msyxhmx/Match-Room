@@ -3,6 +3,14 @@
 
 import type { FactUsed, LiveCard, Score, TurningPoint } from "../types/live";
 
+/**
+ * Engine text with every score's hyphen made non-breaking ("0-1" never splits as "0-" / "1").
+ * U+2011 looks the same as the engine's hyphen, so the words stay exactly as written.
+ */
+export function keepScores(text: string): string {
+  return text.replace(/(\d)-(\d)/g, "$1\u2011$2");
+}
+
 /** "2–2": an en dash in the UI chrome. Card text keeps the engine's hyphen. */
 export function formatScore(score: Score): string {
   return `${score.home}–${score.away}`;

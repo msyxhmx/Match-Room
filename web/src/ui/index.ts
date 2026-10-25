@@ -7,3 +7,7 @@ export { Crest } from "./Crest/Crest";
 export { ChanceSwing } from "./ChanceSwing/ChanceSwing";
 export { ChanceBar } from "./ChanceBar/ChanceBar";
 export { Sheet } from "./Sheet/Sheet";
+export { ScoreHeader } from "./ScoreHeader/ScoreHeader";
+export { MomentCard } from "./MomentCard/MomentCard";
+export { ScoreBug } from "./ScoreBug/ScoreBug";
+export { OverlayGraphic } from "./OverlayGraphic/OverlayGraphic";

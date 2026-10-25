@@ -1,0 +1,50 @@
+/* Video only. Sits top-left inside the safe area; the overlay stage is its positioned ancestor. */
+.bug {
+  position: absolute;
+  top: var(--safe-y);
+  left: var(--safe-x);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  /* About 64 px tall: one 38 px line plus space-1 above and below (callout is the tallest text) */
+  padding: var(--space-half) var(--space-2);
+  border-radius: var(--radius-small);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.team {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  /* A crest-sized square: 40 px badge, a space token */
+  --crest-size: var(--space-5);
+}
+
+/* The thin club-colour edge: left for home, right for away. */
+.team[data-side="home"] {
+  padding-left: var(--space-1);
+  border-left: var(--space-half) solid var(--home-primary);
+}
+.team[data-side="away"] {
+  padding-right: var(--space-1);
+  border-right: var(--space-half) solid var(--away-primary);
+}
+
+.code {
+  font: var(--type-caption1);
+}
+
+.score {
+  font: var(--type-callout);
+  font-stretch: var(--score-stretch);
+  font-variant-numeric: var(--numeric);
+}
+
+.clock {
+  font: var(--type-caption1);
+  font-variant-numeric: var(--numeric);
+  color: var(--text-secondary);
+  padding-left: var(--space-2);
+}
