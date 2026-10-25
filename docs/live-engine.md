@@ -85,7 +85,7 @@ the current settings about 21-24% of minutes are each side in control, 17% chaos
 
 | Type | Fires when | Priority |
 |---|---|---|
-| `goal` | A goal. Variant `against_run` if the scorer's side had momentum <= -0.2 or the opponent was in control; `deserved` if they led xG by 0.5+ or were in control. | 1 |
+| `goal` | A goal. Variant, first match wins: `against_run` if the scorer's side had momentum <= -0.2 or the opponent was in control; `equaliser` if it levels the score; `go_ahead` if it puts them one up (`late_go_ahead` from minute 80); `deserved` if they led xG by 0.5+ or were in control. | 1 |
 | `red_card` | A red card, with the win projection before and after. | 1 |
 | `big_chance` | A missed shot with xG >= 0.30. | 2 |
 | `momentum_flip` | Momentum passes ±0.35 for a new side and holds for 2 minutes (cooldown 8'). | 2 |
