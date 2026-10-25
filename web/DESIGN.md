@@ -608,7 +608,9 @@ Done 25 Oct. Review them in place in the
 - **Video stills** (`assets-src/renders/`, made by `render.sh` with headless Chrome):
   - **End card (S10):** 1920×1080.
   - **YouTube thumbnail:** 1280×720. It leads with the 74' moment (2–2, 5% → 28%) and the hook
-    "A score doesn't say why", then the name. It passes the shrink test at 320×180.
+    "A score doesn't say why", then the name. Like every chance figure, it carries the
+    `projection.note` (§7). It passes the shrink test at 320×180, though the note itself can't be
+    read at that size.
 - **Pitch plate** (`public/plates/pitch.png`, from `assets-src/pitch.py` in Blender 5.2, Eevee):
   - a 105×68 m pitch with FIFA markings and 18 stripes
   - two goals for soft shadows

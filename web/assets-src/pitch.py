@@ -278,7 +278,8 @@ def scene():
     sc.camera = co
 
     sc.render.filepath = str(OUT.with_name("pitch-preview.png") if PREVIEW else OUT)
-    bpy.ops.wm.save_as_mainfile(filepath=str(HERE / "pitch.blend"))
+    if not PREVIEW:  # a preview must not overwrite the committed full-size scene
+        bpy.ops.wm.save_as_mainfile(filepath=str(HERE / "pitch.blend"))
     bpy.ops.render.render(write_still=True)
     print("WROTE", sc.render.filepath)
 
