@@ -3,7 +3,7 @@
 // Sentence case, the engine's own words where it has one ("chance to win", not "odds").
 
 import { createContext, useContext, type ReactNode } from "react";
-import type { Language, Persona } from "../types/live";
+import type { InsightType, Language, Persona } from "../types/live";
 
 const EN = {
   live: "Live",
@@ -58,6 +58,22 @@ const EN = {
   momentum: "Momentum",
   emptyMoment: "Moments appear here as they happen",
   speed: (x: number) => `×${x}`,
+  /** The tag on a moment card: what kind of moment it is. */
+  insight: {
+    goal: "Goal",
+    red_card: "Red card",
+    big_chance: "Big chance",
+    shot_speed: "Shot",
+    pass_of_the_moment: "Pass",
+    momentum_flip: "Momentum",
+    control_shift: "Control",
+    chaos_phase: "Chaos",
+    pressure_spike: "Pressing",
+    win_prob_swing: "Swing",
+    tempo_shift: "Tempo",
+    player_milestone: "Milestone",
+    player_focus: "Player",
+  } as Record<InsightType, string>,
 };
 
 export type Labels = typeof EN;
@@ -113,6 +129,21 @@ const MS: Labels = {
   involvement: "Sentuhan setiap 15 minit", // confirm
   momentum: "Momentum",
   emptyMoment: "Detik penting akan muncul di sini", // confirm
+  insight: {
+    goal: "Gol",
+    red_card: "Kad merah",
+    big_chance: "Peluang keemasan", // confirm
+    shot_speed: "Rembatan",
+    pass_of_the_moment: "Hantaran",
+    momentum_flip: "Momentum",
+    control_shift: "Penguasaan", // confirm
+    chaos_phase: "Permainan terbuka", // confirm, DESIGN §8.5 (not "huru-hara")
+    pressure_spike: "Tekanan tinggi", // confirm
+    win_prob_swing: "Perubahan peluang", // confirm
+    tempo_shift: "Rentak",
+    player_milestone: "Pencapaian", // confirm
+    player_focus: "Pemain",
+  },
 };
 
 const ES: Labels = {
@@ -166,6 +197,21 @@ const ES: Labels = {
   involvement: "Toques cada 15 minutos",
   momentum: "Dominio",
   emptyMoment: "Los momentos clave aparecerán aquí",
+  insight: {
+    goal: "Gol",
+    red_card: "Tarjeta roja",
+    big_chance: "Ocasión clara",
+    shot_speed: "Disparo",
+    pass_of_the_moment: "Pase",
+    momentum_flip: "Dominio",
+    control_shift: "Control",
+    chaos_phase: "Ida y vuelta",
+    pressure_spike: "Presión alta",
+    win_prob_swing: "Vuelco",
+    tempo_shift: "Ritmo",
+    player_milestone: "Hito",
+    player_focus: "Jugador",
+  },
 };
 
 export const LABELS: Record<Language, Labels> = { en: EN, ms: MS, es: ES };

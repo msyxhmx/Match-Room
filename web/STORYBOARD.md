@@ -166,7 +166,7 @@ Rubric codes:
 - **See risk R2** for the Malay headline.
 
 ### S8 · 1:37–1:45 · Full time
-- **On screen:** "Northgate City come from behind to win 3-2". The losing score is dimmed. Turning points, each with its win-chance swing: 14' (22→68%), 37' (61→88%), 74' (5→28%), 87' (10→96%). Player of the match: L. Quinn.
+- **On screen:** "Northgate City come from behind to win 3-2". The losing score is dimmed. Turning points, each with its win-chance swing: 14' (22→69%, as its card says; the raw turning point rounds to 68%), 37' (61→88%), 74' (5→28%), 87' (10→96%). Player of the match: L. Quinn.
 - **Data:** stream `fulltime` message, or `GET /brief/fulltime`.
 - **VO:** "Full time: three-two. The story lists every turning point and how much it moved the chance to win."
 - **Serves:** C (Explain), U.
