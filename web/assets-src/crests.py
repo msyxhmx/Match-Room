@@ -363,11 +363,7 @@ def ash(t, c):
         for side in (-1, 1):
             keys += p(leaflet(48, y, side * 58, 23, 9), mag)
     keys += p(leaflet(48, 30, 0, 22, 9), mag)
-    return (
-        p(lozenge, W)
-        + st(lozenge, mag, 8)
-        + keys
-    )
+    return p(lozenge, W) + st(lozenge, mag, 8) + keys
 
 
 def qnb(t, c):
