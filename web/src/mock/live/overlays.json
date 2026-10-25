@@ -438,7 +438,7 @@
     "language": "en",
     "fields": {
       "headline": "L. Quinn so far",
-      "body": "L. Quinn has had 38 touches and won the ball back 2 times.",
+      "body": "L. Quinn has had 39 touches and won the ball back 2 times.",
       "clock": "45:00",
       "minute": "45",
       "type": "player_focus",
@@ -450,7 +450,7 @@
       "player": "L. Quinn",
       "number": "8",
       "stat_label": "Touches",
-      "stat_value": "38"
+      "stat_value": "39"
     }
   },
   {
@@ -590,7 +590,7 @@
     "language": "en",
     "fields": {
       "headline": "L. Quinn so far",
-      "body": "L. Quinn has had 57 touches and won the ball back 2 times.",
+      "body": "L. Quinn has had 58 touches and won the ball back 2 times.",
       "clock": "60:00",
       "minute": "60",
       "type": "player_focus",
@@ -602,7 +602,7 @@
       "player": "L. Quinn",
       "number": "8",
       "stat_label": "Touches",
-      "stat_value": "57"
+      "stat_value": "58"
     }
   },
   {
@@ -776,7 +776,7 @@
       "home": "NGC",
       "away": "KST",
       "score": "1-2",
-      "momentum": "0.79",
+      "momentum": "0.80",
       "control_home": "0.76",
       "chaos": "0.78",
       "phase": "home_control",
@@ -822,7 +822,7 @@
     "language": "en",
     "fields": {
       "headline": "L. Quinn so far",
-      "body": "L. Quinn has had 72 touches and won the ball back 2 times.",
+      "body": "L. Quinn has had 73 touches and won the ball back 2 times.",
       "clock": "75:00",
       "minute": "75",
       "type": "player_focus",
@@ -834,7 +834,7 @@
       "player": "L. Quinn",
       "number": "8",
       "stat_label": "Touches",
-      "stat_value": "72"
+      "stat_value": "73"
     }
   },
   {
@@ -930,7 +930,7 @@
       "score": "2-2",
       "momentum": "0.67",
       "control_home": "0.76",
-      "chaos": "0.67",
+      "chaos": "0.68",
       "phase": "home_control",
       "phase_label": "Northgate City in control"
     }
@@ -1002,7 +1002,7 @@
     "language": "en",
     "fields": {
       "headline": "L. Quinn so far",
-      "body": "L. Quinn has had 84 touches and won the ball back 2 times.",
+      "body": "L. Quinn has had 85 touches and won the ball back 2 times.",
       "clock": "90:00",
       "minute": "90",
       "type": "player_focus",
@@ -1014,7 +1014,7 @@
       "player": "L. Quinn",
       "number": "8",
       "stat_label": "Touches",
-      "stat_value": "84"
+      "stat_value": "85"
     }
   },
   {

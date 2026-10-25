@@ -20,3 +20,18 @@ def test_goal_rate_is_football_like():
     matches = simulate_season(150, seed=3)
     avg = sum(sum(m.final_score()) for m in matches) / len(matches)
     assert 2.0 < avg < 3.8
+
+
+def test_cards_follow_their_foul():
+    for m in simulate_season(20, seed=3):
+        ev = m.events.reset_index(drop=True)
+        for i in ev.index[ev["type"] == "card"]:
+            foul = ev.loc[:i - 1][ev.loc[:i - 1]["type"] == "foul"].iloc[-1]
+            card = ev.loc[i]
+            assert (foul["minute"], foul["second"], foul["player"]) == (
+                card["minute"], card["second"], card["player"])
+
+
+def test_shots_stay_on_the_pitch():
+    for m in simulate_season(20, seed=3):
+        assert m.events["x"].max() <= 100

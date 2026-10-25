@@ -934,7 +934,7 @@
         "L. Quinn"
       ],
       "headline": "L. Quinn so far",
-      "body": "L. Quinn has had 57 touches and won the ball back 2 times.",
+      "body": "L. Quinn has had 58 touches and won the ball back 2 times.",
       "why": [],
       "facts_used": [
         {
@@ -945,7 +945,7 @@
         {
           "key": "touches",
           "label": "Touches",
-          "value": "57"
+          "value": "58"
         },
         {
           "key": "ball_wins",
@@ -1095,7 +1095,7 @@
         "L. Quinn"
       ],
       "headline": "L. Quinn so far",
-      "body": "L. Quinn has had 38 touches and won the ball back 2 times.",
+      "body": "L. Quinn has had 39 touches and won the ball back 2 times.",
       "why": [],
       "facts_used": [
         {
@@ -1106,7 +1106,7 @@
         {
           "key": "touches",
           "label": "Touches",
-          "value": "38"
+          "value": "39"
         },
         {
           "key": "ball_wins",
@@ -1678,7 +1678,7 @@
     "position": "MF",
     "team_id": "NGC",
     "side": "home",
-    "touches": 66,
+    "touches": 67,
     "passes": 46,
     "passes_completed": 30,
     "pass_accuracy": 65,
@@ -1692,12 +1692,14 @@
     "involvement": [
       18,
       9,
-      11,
+      12,
       19,
       9,
       0
     ],
-    "cards": []
+    "cards": [
+      "yellow"
+    ]
   },
   "recent_events": [
     {

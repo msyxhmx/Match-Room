@@ -595,8 +595,8 @@
     {
       "key": "xt",
       "label": "Expected threat added (xT)",
-      "home": 3.93,
-      "away": 2.48,
+      "home": 3.92,
+      "away": 2.47,
       "unit": null,
       "definition": "How much completed passes increased the chance of scoring, from a 12x8 zone grid."
     },
@@ -628,7 +628,7 @@
       "key": "avg_pass_length",
       "label": "Average pass length",
       "home": 20.3,
-      "away": 20.0,
+      "away": 19.9,
       "unit": "m",
       "definition": "Mean distance of attempted passes."
     },
@@ -696,7 +696,7 @@
     "position": "MF",
     "team_id": "NGC",
     "side": "home",
-    "touches": 84,
+    "touches": 85,
     "passes": 60,
     "passes_completed": 40,
     "pass_accuracy": 67,
@@ -710,12 +710,14 @@
     "involvement": [
       18,
       9,
-      11,
+      12,
       19,
       15,
       12
     ],
-    "cards": []
+    "cards": [
+      "yellow"
+    ]
   },
   "focus_player": {
     "name": "L. Quinn",
@@ -723,7 +725,7 @@
     "position": "MF",
     "team_id": "NGC",
     "side": "home",
-    "touches": 84,
+    "touches": 85,
     "passes": 60,
     "passes_completed": 40,
     "pass_accuracy": 67,
@@ -737,11 +739,13 @@
     "involvement": [
       18,
       9,
-      11,
+      12,
       19,
       15,
       12
     ],
-    "cards": []
+    "cards": [
+      "yellow"
+    ]
   }
 }
