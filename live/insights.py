@@ -21,6 +21,11 @@ import pandas as pd
 from live import metrics as M
 from live.metrics import SIDES, Timeline
 
+try:  # change-point detection for momentum flips; without it, the threshold rule is used
+    import ruptures
+except ImportError:  # pragma: no cover - exercised by test_momentum_fallback
+    ruptures = None
+
 OTHER = {"home": "away", "away": "home"}
 
 PRIORITY = {
@@ -37,7 +42,13 @@ TTL_S = {1: 20, 2: 14, 3: 10}  # how long an overlay for this priority stays on 
 # thresholds (published in docs/live-engine.md)
 BIG_CHANCE_XG = 0.30
 SHOT_SPEED_KMH = 115
-MOMENTUM_LEAD = 0.35
+MOMENTUM_LEAD = 0.35  # fallback rule only (no ruptures)
+# Momentum flips by change-point detection (PELT, l2 cost) on the per-minute threat difference,
+# re-run every minute on minutes 1..m only. A flip needs a new segment of CP_MIN_SEG+ minutes in
+# which one side has CP_SHARE+ of the threat. Tuned in scripts/card_value.py on held-out seeds.
+CP_PENALTY = 0.08
+CP_MIN_SEG = 4
+CP_SHARE = 0.65
 PASS_DIFFICULTY = 0.50
 PASS_XT = 0.04
 PPDA_INTENSE = 4.8
@@ -238,6 +249,45 @@ class _Detector:
         self.milestones(minute)
 
     def momentum(self, m: int) -> None:
+        if ruptures is None:
+            return self.momentum_threshold(m)
+        if m < 10 or not hasattr(self, "_threat_diff"):
+            if not hasattr(self, "_threat_diff"):
+                pm = self.tl.per_min
+                self._threat_diff = pm["home"]["threat"] - pm["away"]["threat"]
+            if m < 10:
+                return
+        d = self._threat_diff[1: m + 1].reshape(-1, 1)
+        bkps = ruptures.Pelt(model="l2", min_size=CP_MIN_SEG, jump=1).fit(d).predict(
+            pen=CP_PENALTY)
+        start = (bkps[-2] if len(bkps) > 1 else 0) + 1  # first minute of the current segment
+        if m - start + 1 < CP_MIN_SEG:
+            return
+        t = {s: self.tl.per_min[s]["threat"][start: m + 1].sum() for s in SIDES}
+        total = t["home"] + t["away"]
+        if total <= 0:
+            return
+        share_home = t["home"] / total
+        cur = "home" if share_home >= CP_SHARE else "away" if share_home <= 1 - CP_SHARE else None
+        prev_leader = getattr(self, "_mom_leader", None)
+        if cur is None or cur == prev_leader or not self.ready("momentum_flip", m):
+            return
+        window = m - start + 1
+        facts = {"team": self.team(cur),
+                 "share": Fact(round(share_home if cur == "home" else 1 - share_home, 2), "pct"),
+                 "team_threat": Fact(round(t[cur], 2), "dec2"),
+                 "opp_threat": Fact(round(t[OTHER[cur]], 2), "dec2"),
+                 "window": Fact(window, "int")}
+        top = self.top_player(cur, start, m)
+        if top:
+            facts["player"] = Fact(top, "player")
+        ev = self.top_threat(cur, start, m)
+        self.emit("momentum_flip", "flip" if prev_leader else "first", m, 59, cur, facts,
+                  list(ev["event_id"]), [top] if top else [])
+        self._mom_leader = cur
+
+    def momentum_threshold(self, m: int) -> None:
+        """The original rule: momentum passes +-MOMENTUM_LEAD for a new side for 2 minutes."""
         mom = self.tl.momentum
 
         def leader(i: int) -> str | None:

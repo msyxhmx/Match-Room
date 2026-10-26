@@ -225,20 +225,20 @@ T: dict[str, dict[str, dict[str, dict]]] = {
             "en": {"casual": "{team} are on top now.",
                    "analyst": "{team} have {share} of the recent threat: {team_threat} v "
                               "{opp_threat} over the last {window} minutes.",
-                   "why": ["Momentum weights recent threat (xT gained plus xG) most heavily, "
-                           "so it reacts quickly."],
+                   "why": ["A change-point test on threat (xT gained plus xG) found a shift "
+                           "that has lasted several minutes, not a single spike."],
                    "why_casual": "Most of the dangerous play is now coming from {team}."},
             "ms": {"casual": "{team} kini menguasai permainan.",
                    "analyst": "{team} memiliki {share} daripada ancaman terkini: {team_threat} "
                               "berbanding {opp_threat} dalam {window} minit terakhir.",
-                   "why": ["Momentum memberi pemberat lebih kepada ancaman terkini (xT "
-                           "ditambah xG), jadi ia cepat berubah."],
+                   "why": ["Ujian titik perubahan pada ancaman (xT ditambah xG) mengesan "
+                           "peralihan yang bertahan beberapa minit, bukan lonjakan sekali."],
                    "why_casual": "Kebanyakan serangan berbahaya kini datang daripada {team}."},
             "es": {"casual": "{team} mandan ahora.",
                    "analyst": "{team} acumulan el {share} de la amenaza reciente: {team_threat} "
                               "frente a {opp_threat} en los últimos {window} minutos.",
-                   "why": ["El impulso pondera más la amenaza reciente (xT ganado más xG), "
-                           "así que reacciona rápido."],
+                   "why": ["Una prueba de punto de cambio sobre la amenaza (xT ganado más xG) "
+                           "detectó un cambio que dura varios minutos, no un pico aislado."],
                    "why_casual": "Casi todo el peligro llega ahora de {team}."},
         },
     },
