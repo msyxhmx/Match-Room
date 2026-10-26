@@ -15,6 +15,15 @@
   background: var(--surface-ground);
 }
 
+/* The live view kept behind the Matches and Table views: no box of its own, so the window
+   still fills the page. */
+.kept {
+  display: contents;
+}
+.kept[hidden] {
+  display: none;
+}
+
 /* OBS keys out everything that isn't a graphic. */
 .window[data-transparent="true"] {
   background: transparent;

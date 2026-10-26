@@ -129,6 +129,30 @@ export function useDirector() {
     [update],
   );
 
+  /** Switch to another match: kick-off, paused, following its home side, no player picked.
+   *  The URL says so too, so a reload opens the same match. */
+  const pick = useCallback(
+    (matchId: string, teamId: string) => {
+      const q = new URLSearchParams(location.search);
+      q.set("match", matchId);
+      q.set("team", teamId);
+      q.set("player", "");
+      history.replaceState(null, "", `${location.pathname}?${q}`);
+      update((x) => ({
+        ...x,
+        matchId,
+        profile: { ...x.profile, team: teamId, player: null },
+        minute: 0,
+        playing: false,
+        factsOpen: false,
+        epoch: x.epoch + 1,
+      }));
+    },
+    [update],
+  );
+  /** Stop the clock, e.g. when the page leaves the live view. */
+  const pause = useCallback(() => update((x) => (x.playing ? { ...x, playing: false } : x)), [update]);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey || typing(e)) return;
@@ -152,5 +176,5 @@ export function useDirector() {
 
   useEffect(() => writeUrl(d), [d]);
 
-  return { ...d, nextLanguage, togglePersona, setFacts, togglePlay, restart, setSpeed };
+  return { ...d, nextLanguage, togglePersona, setFacts, togglePlay, restart, setSpeed, pick, pause };
 }

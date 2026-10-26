@@ -7,6 +7,7 @@ import type { MatchMeta, Profile } from "../../types/live";
 import { Icon } from "../Icon/Icon";
 import { Pill } from "../Pill/Pill";
 import { personaLabel, useLabels } from "../labels";
+import { useViewSwitch, ViewSwitch } from "../ViewSwitch/ViewSwitch";
 import styles from "./TopBar.module.css";
 
 export interface TopBarProps {
@@ -37,10 +38,11 @@ function Switch({ onClick, label, children }: { onClick?: () => void; label: str
 
 export function TopBar({ meta, profile, team, connection, onLanguage, onPersona }: TopBarProps) {
   const labels = useLabels();
+  const views = useViewSwitch();
   const following = [team?.name, profile.player].filter(Boolean).join(" · ");
 
   return (
-    <header className={styles.root} data-connection={connection}>
+    <header className={styles.root} data-connection={connection} data-views={views ? "true" : undefined}>
       <div className={styles.brand}>
         <img className={styles.wordmark} src={wordmarkUrl} alt="Match-Room Live" />
         <img className={styles.mark} src={markUrl} alt="" />
@@ -79,6 +81,7 @@ export function TopBar({ meta, profile, team, connection, onLanguage, onPersona 
         <Switch onClick={onPersona} label={`${labels.changeDepth}: ${personaLabel(labels, profile.persona)}`}>
           {personaLabel(labels, profile.persona)}
         </Switch>
+        {views && <ViewSwitch {...views} />}
       </div>
       <div className={styles.synthetic}>
         <Pill tone="neutral" icon={Info}>

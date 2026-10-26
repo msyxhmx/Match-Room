@@ -1,0 +1,240 @@
+/* The Matches and Table views. Phone first; the video frame (a plain desktop visit) gets more
+   columns and scrolls inside the 1080 frame. */
+
+.screen {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--space-3);
+  width: 100%;
+  height: 100%;
+  padding: var(--space-2);
+  box-sizing: border-box;
+}
+:global(.video) .screen {
+  padding: var(--safe-y) var(--safe-x);
+}
+
+.body {
+  min-height: 0;
+  min-width: 0;
+}
+:global(.video) .body {
+  overflow-y: auto;
+}
+
+.picker {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+}
+
+.heading {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  margin: var(--space-1) 0 0;
+  font: var(--type-headline);
+  color: var(--text-primary);
+}
+
+.tag {
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+}
+
+.title {
+  margin: 0;
+  font: var(--type-headline);
+  color: var(--text-primary);
+}
+.names {
+  font: var(--type-callout);
+  color: var(--text-primary);
+}
+.blurb {
+  margin: 0;
+  font: var(--type-callout);
+  color: var(--text-secondary);
+}
+
+/* ---- scripted storylines: one card each ---- */
+.cards,
+.rows,
+.stories {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cards {
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-12) * 2), 1fr));
+}
+/* The video frame: the four storylines side by side, the other matches two to a row. */
+:global(.video) .cards {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+:global(.video) .rows {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.card {
+  all: unset;
+  box-sizing: border-box;
+  display: grid;
+  gap: var(--space-half);
+  align-content: start;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.card[aria-current="true"] {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: calc(var(--stroke) * -1);
+}
+.card:focus-visible,
+.row:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}
+.card:disabled,
+.row:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.crests {
+  display: flex;
+  gap: var(--space-2);
+  --crest-size: var(--space-8);
+}
+
+/* ---- the other matches: compact rows ---- */
+.row {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-small);
+  background: var(--surface-card);
+  cursor: pointer;
+  touch-action: manipulation;
+  /* 36: no token; a space-4 crest and half a space-1 */
+  --crest-size: calc(var(--space-4) + var(--space-half));
+}
+.row[aria-current="true"] {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: calc(var(--stroke) * -1);
+}
+.rowNames {
+  flex: 1 1 auto;
+  min-width: 0;
+  font: var(--type-callout);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- the table ---- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font: var(--type-callout);
+  font-variant-numeric: var(--numeric);
+  color: var(--text-primary);
+  background: var(--surface-card);
+  border-radius: var(--radius-card);
+}
+.table th {
+  padding: var(--space-1) var(--space-half);
+  font: var(--type-caption1);
+  color: var(--text-secondary);
+  text-align: right;
+}
+.table td {
+  padding: var(--space-half);
+  border-top: var(--stroke) solid var(--surface-ground);
+}
+.table th.club {
+  text-align: left;
+}
+.table .pos {
+  width: var(--space-3);
+  text-align: center;
+}
+.num {
+  width: var(--space-4);
+  text-align: right;
+}
+/* The video frame's type is larger: two-digit counts and signed GD need the room. */
+:global(.video) .num {
+  width: var(--space-8);
+}
+td.pts {
+  font: var(--type-headline);
+}
+/* Phone: the xG column drops; the video frame has the room. */
+.xg {
+  display: none;
+}
+:global(.video) .xg {
+  display: table-cell;
+  width: var(--space-10);
+  text-align: right;
+}
+.club {
+  text-align: left;
+}
+.clubCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  --crest-size: var(--space-4);
+}
+/* Names wrap to two lines on a phone rather than cut off. */
+.clubName {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+.table tr[data-you="true"] td {
+  background: var(--state-neutral-tint);
+}
+.table tr[data-you="true"] td:first-child {
+  box-shadow: inset var(--space-half) 0 0 var(--you-primary);
+}
+.table tr[data-you="true"] .clubName,
+.table tr[data-you="true"] .pts {
+  color: var(--you-text);
+}
+
+/* ---- the season's storylines ---- */
+.stories {
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--space-12) * 2), 1fr));
+}
+:global(.video) .stories {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.story {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--surface-card);
+  --crest-size: var(--space-5);
+}
+.story > div {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-half);
+}

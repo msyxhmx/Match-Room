@@ -75,7 +75,7 @@ export function OverlayGraphic({ message, home, away }: OverlayGraphicProps) {
       body = (
         <section className={styles.player} data-side={side}>
           <div className={styles.panel}>
-            {f.team_id && <Crest teamId={f.team_id} size="badge" name={f.team} />}
+            {f.team_id && <Crest teamId={f.team_id} size="full" name={f.team} />}
             <div className={styles.copy}>
               <p className={styles.name}>
                 <span className={styles.number}>#{f.number}</span> {f.player}

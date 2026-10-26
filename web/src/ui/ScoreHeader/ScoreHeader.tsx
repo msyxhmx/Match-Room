@@ -131,7 +131,7 @@ export function ScoreHeader({
     return (
       <section className={styles.bug} data-period={period} aria-label={`${home.name} ${formatScore(score)} ${away.name}`}>
         <span className={styles.bugTeam} data-side="home" data-state={scoredSide === "home" ? "scored" : undefined}>
-          <Crest teamId={home.id} size="badge" />
+          <Crest teamId={home.id} size="full" />
           <span className={styles.bugCode}>{home.short_name}</span>
         </span>
         <p className={styles.bugScore} aria-hidden="true">
@@ -141,7 +141,7 @@ export function ScoreHeader({
         </p>
         <span className={styles.bugTeam} data-side="away" data-state={scoredSide === "away" ? "scored" : undefined}>
           <span className={styles.bugCode}>{away.short_name}</span>
-          <Crest teamId={away.id} size="badge" />
+          <Crest teamId={away.id} size="full" />
         </span>
         {status}
       </section>
