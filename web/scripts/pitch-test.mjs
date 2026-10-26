@@ -10,6 +10,8 @@
 //               ball when it arrives
 //   order       shown moments keep the match's order
 //   stable      planning again after a new tick moves nothing already shown by more than 0.5 m
+//   resume      each tick's plan carried on from the last (as the live page does) is the same
+//               plan as one made from the start
 //   forced      every goal and card is shown (at ×1 every shot, corner and foul too)
 //   assist      a goal's credited assist ("Set up by …"), when shown, is received by the scorer
 //   continuous  with the ghost ball on: the ball is on screen nearly all the time, never jumps
@@ -32,10 +34,10 @@
 //               a lofted pass's receiver jumps at the right beat (not a second early); the keeper
 //               is set while the ball is in his third, not when it's at the other end, and
 //               gathers a save; reduced motion: no stride or lean, the slide held
-//   motion      like real football: the 74' loop and ×1 from 70' to 80', measured as drawn against
-//               six real DFL passages played through the same frames (src/pitch/real): standing
-//               and same-way co-movement within the real passages' range, the spread of speeds
-//               no further from real than a real passage is, 8% or less sprinting
+//   motion      like real football: the 74' loop and ×1 from 71' to 80', measured as drawn in play,
+//               against every 40 s of play in 7 DFL matches (src/pitch/real/stats.json): standing,
+//               sprinting and same-way co-movement in the real middle 90%, the spread of speeds no
+//               further from real than 95% of real windows are
 //   around      the ball: the nearest opponent to a passer, the receiver's speed and approach,
 //               and each pass's height for its length, in the real middle half (7 DFL matches)
 
@@ -241,6 +243,41 @@ for (const speed of [1, 60]) {
   }
 }
 
+// Resume: as on the live page, each tick's plan carries on from the last one (schedule.ts,
+// PlanOptions.resume). It must be the same plan as one made from the start: every dot, the ball
+// and the ghost within 1 mm at every 0.1 s, and the same moments at the same touches.
+for (const speed of [1, 60]) {
+  const all = arrivalsAt(speed);
+  const ticks = speed === 1 ? 25 : 90;
+  const upTo = (n) => toMoments(events.filter((e) => e.minute <= n), { live: true });
+  const o = (k, fresh) => ({ speed, arrivals: new Map([...all].filter(([m]) => m <= k)), start: 0, initial: { kind: "kickoff", kicking: "home" }, fresh });
+  let worst = 0;
+  let where = "";
+  let checked = 0;
+  for (let k = 1; k <= ticks; k++) {
+    const resumed = liveTimeline(players, upTo(k), o(k, false));
+    if (k % (speed === 1 ? 6 : 15) !== 0 && k !== ticks) continue;
+    const fresh = liveTimeline(players, upTo(k), o(k, true));
+    checked++;
+    const ids = (tl) => tl.beats.map((b) => `${b.moment.id}@${b.touch.toFixed(3)}`).join();
+    if (ids(resumed) !== ids(fresh)) fail(`x${speed} resume: after minute ${k} the moments shown differ from a plan made from the start`);
+    for (let t = 0; t <= fresh.end + 5; t += 0.1) {
+      const fa = frameAt(resumed, t, { continuous: true });
+      const fb = frameAt(fresh, t, { continuous: true });
+      const gap = (a, b) => (a && b ? dist(a, b) : a || b ? 99 : 0);
+      const gb = gap(fa.ball, fb.ball);
+      if (gb > worst) [worst, where] = [gb, `the ball t=${t.toFixed(1)} after minute ${k}`];
+      for (const d of fb.dots) {
+        const e = fa.dots.find((x) => x.id === d.id);
+        const g = e ? dist(d, e) : 99;
+        if (g > worst) [worst, where] = [g, `${d.id} t=${t.toFixed(1)} after minute ${k}`];
+      }
+    }
+  }
+  if (worst > 0.001) fail(`x${speed} resume: a resumed plan differs from one made from the start by ${worst.toFixed(3)} m (${where})`);
+  else console.log(`\nx${speed} resume: ${checked} resumed plans match plans made from the start (within ${worst.toFixed(4)} m)`);
+}
+
 // Live: planning again after each tick never changes what was already on screen.
 for (const speed of [1, 60]) {
   const all = arrivalsAt(speed);
@@ -249,6 +286,7 @@ for (const speed of [1, 60]) {
     arrivals: new Map([...all].filter(([m]) => m <= upTo)),
     start: 0,
     initial: { kind: "kickoff", kicking: "home" },
+    fresh: true, // the planner itself, not the resume
   });
   let worst = 0;
   let where = "";
@@ -486,13 +524,16 @@ for (const speed of [1, 60]) {
   console.log(`\nbody: gaits ${want.map(([v, g]) => `${v}→${g}`).join(", ")}; cadence ${cadence.map((c) => c.toFixed(2)).join(" < ")} strides/s; sprint lean ${((lean * 180) / Math.PI).toFixed(0)}°; ${backs} back views on the loop; tackle ${tackle?.moment.id}, header ${lofted?.moment.id}, save ${saved?.moment.id ?? "none"}; ${held} still poses held`);
 }
 
-// Motion: does it move like real football? Measured the same way on real tracking (the six DFL
-// passages in src/pitch/real/slice.json, played through the same frameAt) and on ours: the 74'
-// loop and ×1 live from 70' to 80'. Outfield players, frames 1/15 s apart, as drawn. Speed bands
-// (m/s): standing under 0.5, walk to 2, jog to 4, run to 6, sprint 6 and up. Co-movement: in each
-// frame where 3 or more of a team's outfield players move, the largest share of the movers
-// heading within 25 degrees of one of them (1 = all one way).
-// The bands are the real passages' own range, so they can't be tuned by hand.
+// Motion: does it move like real football? Ours: the 74' loop and ×1 live from 71' to 80',
+// outfield players, frames 1/15 s apart, as drawn, while the ball is in play (not the first
+// second, when everyone starts still by construction, nor a goal's celebration and reset). Speed
+// bands (m/s): standing under 0.5, walk to 2, jog to 4, run to 6, sprint 6 and up. Co-movement:
+// in each frame where 3 or more of a team's outfield players move, the largest share of the
+// movers heading within 25 degrees of one of them (1 = all one way).
+// The bands are real football's: the middle 90% of every 40 s window of play in the 7 DFL
+// matches (stats.json "per40s", the same measures at 5 Hz), so they can't be tuned by hand. The
+// six real passages in slice.json, played through the same frameAt, are measured here too, as a
+// check that the measure itself agrees.
 {
   const { realTimeline } = await load("/src/pitch/real.ts");
   const slice = JSON.parse(readFileSync(resolve(root, "src/pitch/real/slice.json"), "utf8"));
@@ -501,13 +542,14 @@ for (const speed of [1, 60]) {
   const q = (xs, p) => [...xs].sort((a, b) => a - b)[Math.floor(p * (xs.length - 1))];
   const pc = (x) => `${(x * 100).toFixed(0)}%`;
   const BANDS = [[0, 0.5], [0.5, 2], [2, 4], [4, 6], [6, Infinity]];
+  const dead = (tl, t) => t < tl.start + 1 || tl.beats.some((b) => isGoal(b.moment) && t >= b.land && t < b.end + 6);
   const motionOf = (tl) => {
     const speeds = [];
     const together = [];
     let prevF = null;
     for (let t = tl.start; t <= tl.end; t += STEP) {
       const f = frameAt(tl, t);
-      if (prevF) {
+      if (prevF && !dead(tl, t)) {
         const before = new Map(prevF.dots.map((d) => [d.id, d]));
         for (const side of ["home", "away"]) {
           const movers = [];
@@ -536,17 +578,23 @@ for (const speed of [1, 60]) {
   const tv = (a, b) => a.reduce((s, x, i) => s + Math.abs(x - b[i]), 0) / 2;
   const said = (m) => `standing ${pc(m.bands[0])}, walk ${pc(m.bands[1])}, jog ${pc(m.bands[2])}, run ${pc(m.bands[3])}, sprint ${pc(m.bands[4])}; co-movement ${pc(m.co)}`;
 
-  const passages = slice.passages.map((p) => ({ kind: p.kind, tl: realTimeline(p) }));
-  const per = passages.map((p) => ({ kind: p.kind, ...motionOf(p.tl) }));
-  const pooled = BANDS.map((_, i) => per.reduce((s, m) => s + m.bands[i] * m.speeds.length, 0) / per.reduce((s, m) => s + m.speeds.length, 0));
-  const range = (f) => [Math.min(...per.map(f)), Math.max(...per.map(f))];
+  const W = real.per40s;
+  const pooled = W.pooled;
   const want = {
-    standing: range((m) => m.bands[0]),
-    co: range((m) => m.co),
-    tv: Math.max(...per.map((m) => tv(m.bands, pooled))),
+    standing: [W.standing.p5, W.standing.p95],
+    co: [W.together.p5, W.together.p95],
+    tv: W.spread.p95,
+    sprint: W.sprint.p95,
   };
-  console.log(`\nmotion, real (${per.length} DFL passages): standing ${pc(want.standing[0])}–${pc(want.standing[1])}, co-movement ${pc(want.co[0])}–${pc(want.co[1])}, spread within ${want.tv.toFixed(2)} of all six`);
-  for (const m of per) console.log(`  ${m.kind}: ${said(m)}`);
+  console.log(
+    `\nmotion, real (${W.windows} windows of ${W.seconds} s, 7 DFL matches, middle 90%): standing ${pc(want.standing[0])}–${pc(want.standing[1])}, ` +
+      `sprint up to ${pc(want.sprint)}, co-movement ${pc(want.co[0])}–${pc(want.co[1])}, spread within ${want.tv.toFixed(2)} of all of them`,
+  );
+  const passages = slice.passages.map((p) => ({ kind: p.kind, tl: realTimeline(p) }));
+  for (const p of passages) {
+    const m = motionOf(p.tl);
+    console.log(`  real passage, ${p.kind}: ${said(m)}; spread ${tv(m.bands, pooled).toFixed(2)}`);
+  }
 
   const r74 = replayMinute(players, moments, 74).timeline;
   const live70 = liveTimeline(players, moments.filter((m) => m.minute > 70 && m.minute <= 80), {
@@ -560,9 +608,9 @@ for (const speed of [1, 60]) {
     const d = tv(m.bands, pooled);
     console.log(`motion, ours (${label}): ${said(m)}; spread ${d.toFixed(2)} from real`);
     if (m.bands[0] < want.standing[0] || m.bands[0] > want.standing[1]) fail(`motion (${label}): ${pc(m.bands[0])} standing (real ${pc(want.standing[0])}–${pc(want.standing[1])})`);
-    if (m.bands[4] > 0.08) fail(`motion (${label}): ${pc(m.bands[4])} sprinting (want 8% or less)`);
+    if (m.bands[4] > want.sprint) fail(`motion (${label}): ${pc(m.bands[4])} sprinting (real up to ${pc(want.sprint)})`);
     if (m.co < want.co[0] || m.co > want.co[1]) fail(`motion (${label}): a median ${pc(m.co)} of movers go the same way (real ${pc(want.co[0])}–${pc(want.co[1])})`);
-    if (d > want.tv) fail(`motion (${label}): the spread of speeds is ${d.toFixed(2)} from real (real passages within ${want.tv.toFixed(2)})`);
+    if (d > want.tv) fail(`motion (${label}): the spread of speeds is ${d.toFixed(2)} from real (real windows within ${want.tv.toFixed(2)})`);
   }
 
   // Around the ball, on every completed pass with a receiver: the nearest opponent to the passer

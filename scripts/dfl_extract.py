@@ -387,6 +387,57 @@ def q(xs, p: float) -> float:
     return float(np.quantile(xs, p)) if len(xs) else float("nan")
 
 
+BANDS = {"standing": (0, 0.5), "walk": (0.5, 2), "jog": (2, 4), "run": (4, 6), "sprint": (6, 99)}
+WINDOW_S = 40  # as long as a slice passage: what test:pitch judges a clip of ours against
+
+
+def windows40(matches: list[Match]) -> dict:
+    """The same numbers per 40 s of play (both sides' outfield players, frames in play), over
+    every such window in every match: how much they vary from one passage of football to the
+    next. test:pitch takes its bands from here (the middle 90%)."""
+    n = int(WINDOW_S / DT)
+    rows = []
+    for m in matches:
+        for h in m.halves:
+            cols = [j for j, p in enumerate(m.pids) if not m.keeper[p]]
+            sides = np.array([m.side[m.pids[j]] == "home" for j in cols])
+            for i0 in range(0, len(h.t) - n - 1, n // 2):
+                sl = slice(i0, i0 + n + 1)
+                ok = h.alive[sl][1:] & h.alive[sl][:-1]
+                if ok.mean() < 0.8:
+                    continue
+                vx = np.diff(h.px[sl][:, cols], axis=0)[ok] / DT
+                vy = np.diff(h.py[sl][:, cols], axis=0)[ok] / DT
+                v = np.hypot(vx, vy)
+                vv = v[~np.isnan(v)]
+                if len(vv) < 1000:
+                    continue
+                shares = [float(((vv >= lo) & (vv < hi)).mean()) for lo, hi in BANDS.values()]
+                together = []
+                ang = np.arctan2(vy, vx)
+                for f in range(len(v)):
+                    for home in (True, False):
+                        sel = (sides == home) & (v[f] >= 0.5) & ~np.isnan(v[f])
+                        ms = ang[f][sel]
+                        if len(ms) < 3:
+                            continue
+                        d = np.abs(np.angle(np.exp(1j * (ms[:, None] - ms[None, :]))))
+                        together.append((d <= math.radians(25)).sum(axis=1).max() / len(ms))
+                if together:
+                    rows.append([*shares, float(np.median(together))])
+    x = np.array(rows)
+    pct = lambda c: {f"p{p}": round(q(x[:, c], p / 100), 3) for p in (5, 50, 95)}  # noqa: E731
+    out = {"windows": len(x), "seconds": WINDOW_S}
+    for c, k in enumerate([*BANDS, "together"]):
+        out[k] = pct(c)
+    # How far one window's spread of speeds is from all of them pooled (total variation).
+    pooled = x[:, :5].mean(axis=0)
+    tv = np.abs(x[:, :5] - pooled).sum(axis=1) / 2
+    out["pooled"] = [round(float(v), 4) for v in pooled]
+    out["spread"] = {f"p{p}": round(q(tv, p / 100), 3) for p in (50, 95)}
+    return out
+
+
 def stats(matches: list[Match]) -> dict:
     """Speeds, speeding up and braking, how a team moves together, and the ball: outfield
     players with the ball in play, 5 Hz (the planner's step)."""
@@ -656,6 +707,8 @@ def main() -> None:
     s = stats(matches)
     print(json.dumps(s, indent=1))
     s["pass"] = pass_numbers(matches)
+    s["per40s"] = windows40(matches)
+    print(json.dumps(s["per40s"], indent=1))
     print(json.dumps(s["pass"], indent=1))
     write("stats.json", {"matches": len(matches), **s})
     write("shape.json", shape_table(matches))
