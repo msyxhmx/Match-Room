@@ -59,6 +59,7 @@ def calibration(y_true, proba, classes: list[str]) -> dict:
 def score(y_true, proba, ordered: bool = False) -> dict[str, float]:
     """Log loss and accuracy, plus RPS when the classes are ordered."""
     proba = np.asarray(proba, dtype=float)
+    proba = proba / proba.sum(axis=1, keepdims=True)  # float32 model output can miss 1 by 1e-7
     out = {"log_loss": round(log_loss(y_true, proba, labels=list(range(proba.shape[1]))), 4),
            "accuracy": round(accuracy_score(y_true, proba.argmax(axis=1)), 4)}
     if ordered:

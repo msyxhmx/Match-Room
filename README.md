@@ -92,15 +92,28 @@ docs/       live engine, frontend guide, architecture, API contract, workflow, d
 ## Model performance (half-time model)
 
 Trained on 10,000 synthetic matches, evaluated on a held-out 20%
-(from `artifacts/metrics.json`; regenerate with `make train`):
+(from `artifacts/metrics.json`; regenerate with `make train`). Lower is better for log loss,
+RPS (ranked probability score, the standard for home / draw / away) and calibration error
+(the average gap between the probability we said and how often it happened).
 
-| Final result | Log loss (lower is better) | Accuracy |
-|---|---|---|
-| Baseline: half-time score only | 0.730 | 65.8% |
-| XGBoost on first-half features | **0.665** | **69.1%** |
+| Final result | Log loss | RPS | Accuracy | Calibration error |
+|---|---|---|---|---|
+| Heuristic fallback | 0.700 | 0.126 | 69.2% | 0.051 |
+| Baseline: pre-match strength only | 0.879 | 0.177 | 61.6% | 0.018 |
+| Baseline: half-time score only | 0.730 | 0.135 | 65.8% | 0.027 |
+| Baseline: Dixon-Coles (score + strengths) | **0.664** | **0.120** | **70.0%** | 0.019 |
+| XGBoost on first-half features | 0.666 | 0.120 | 69.0% | 0.025 |
+
+XGBoost beats the score-only baseline but only ties Dixon-Coles, which knows nothing about how
+the first half was played. In the current simulator, first-half play adds almost nothing once
+you know the score and the team strengths, which is what the next simulator upgrade targets.
 
 Next-goal model (home / away / none): log loss 1.016, accuracy 51.6%.
 Simulated outcomes: 44.9% home wins, 20.7% draws, 34.4% away wins, ~3.1 goals per match.
+
+**Live win projection** (`make live-calibration`, 2,000 fresh matches,
+`artifacts/live_calibration.json`): calibration error stays at or below 0.034 from minute 10
+to 85, and the average draw probability (20.7-21.8%) matches the real draw rate (20.9%).
 
 ## Docs
 
