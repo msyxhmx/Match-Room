@@ -71,3 +71,17 @@ def test_chain_totals_are_football_like():
     passes = sum((m.events["type"] == "pass").sum() for m in ms) / n
     shots = sum((m.events["type"] == "shot").sum() for m in ms) / n
     assert 2.4 < goals < 3.8 and 650 < passes < 950 and 18 < shots < 32
+
+
+def test_nobody_receives_their_own_pass():
+    for m in simulate_season(10, seed=3, engine="chain"):
+        last, half = None, 1
+        for row in m.events.itertuples():
+            if row.minute > 45 and half == 1:
+                half, last = 2, None
+            if row.type in ("pass", "shot") and last is not None and row.side == last[0]:
+                assert row.player != last[1], (row.minute, row.player)
+            if row.type == "pass":
+                last = (row.side, row.player) if row.outcome == "complete" else None
+            elif row.type in ("shot", "interception", "tackle"):
+                last = None

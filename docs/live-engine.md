@@ -56,6 +56,11 @@ from where the ball is.
 Totals over simulated matches: ~3.2 goals, ~820 passes, ~25 shots (0.13 xG per shot), ~19
 fouls and ~10 corners per match.
 
+**Real feeds.** `sim/kloppy_io.py` converts our events to and from kloppy's standard event
+model (`pip install -e ".[adapters]"`). `match_from_kloppy(dataset)` gives the live engine a match
+from any provider kloppy reads; missing xG comes from our location model, and stoppage time folds
+into 45' and 90'. Tested only with a round trip on simulated matches, as the brief requires.
+
 The v1 minute-by-minute simulator (counts per minute, shot location derived from xG) is kept in
 `sim/simulator.py` for comparison: pass `engine="minute"` or set `SIM_ENGINE=minute`.
 
@@ -170,5 +175,9 @@ a graphics template (`${headline}`, `${player}`, `${stat_value}`...) or the HTML
   simulator, tackles and interceptions follow failed passes automatically, so defensive
   actions earn little VAEP credit (about 3% of the positive value).
 - No tracking data, so no player speed or distance covered; speed metrics are ball speeds.
+  Pitch control was considered and not built: computed from invented positions it would only
+  reflect the invented shape, and agent-based tracking (Google Research Football) needs a C++
+  build with system libraries and is no longer maintained.
+- The live projection under-predicts draws a little (about 21% said, 25% in simulated matches).
 - The win projection is a simple Poisson model, deliberately explainable rather than optimal.
   The trained XGBoost half-time model (`/api/matches/{id}/halftime`) is still available.

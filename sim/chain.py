@@ -91,6 +91,7 @@ class _Match:
         self.rows: list[dict] = []
         self.t = 0.0
         self.last_minute = 45  # events stay inside their half
+        self.last_passer: tuple[str, str] | None = None  # (side, name) of the last completed pass
         self.corner_next = False
 
     # ---------- helpers ----------
@@ -105,6 +106,20 @@ class _Match:
             w = np.array([_ZONE_WEIGHTS[kind][p.position] for p in team.players])
             _cache[key] = w / w.sum()
         return team.players[int(self.rng.choice(len(team.players), p=_cache[key]))].name
+
+    def receiver(self, side: str, kind: str, name: str) -> str:
+        """Nobody receives their own pass: if `name` just passed, the next teammate who plays
+        this kind of action takes it instead. No random draw, so the match stays the same."""
+        if self.last_passer != (side, name):
+            return name
+        players = self.teams[side].players
+        weights = _ZONE_WEIGHTS["deep" if kind == "gk" else kind]  # keeper passed: a defender
+        i = next(k for k, p in enumerate(players) if p.name == name)
+        for step in range(1, len(players)):
+            p = players[(i + step) % len(players)]
+            if weights[p.position] > 0:
+                return p.name
+        return name
 
     def minute(self) -> int:
         return min(int(self.t // 60) + 1, self.last_minute)
@@ -173,7 +188,12 @@ class _Match:
         dist = math.hypot((100 - x) * PITCH_L / 100, (y - 50) * PITCH_W / 100)
         speed = float(np.clip(self.rng.normal(74 + 0.9 * dist, 13), 35, 132))
         shooter = self.player(side, "shot")  # drawn even when scripted: same random stream
-        self.emit(side, "shot", x, y, outcome, scorer or shooter, xg=round(xg, 3),
+        if scorer is not None and self.last_passer == (side, scorer):
+            last = next(r for r in reversed(self.rows) if r["type"] == "pass")
+            last["player"] = self.receiver(side, "final", scorer)  # the scorer can't assist
+        shooter = scorer or self.receiver(side, "shot", shooter)
+        self.last_passer = None
+        self.emit(side, "shot", x, y, outcome, shooter, xg=round(xg, 3),
                   speed_kmh=round(speed, 1))
         u = float(self.rng.random())
         if outcome == "goal":
@@ -234,7 +254,8 @@ class _Match:
             done = not fail
 
         zone = "deep" if x < 33 else "final" if x > 66 else "mid"
-        passer = self.player(side, "gk" if (x <= 8 and not corner_kick) else zone)
+        kind = "gk" if (x <= 8 and not corner_kick) else zone
+        passer = self.receiver(side, kind, self.player(side, kind))
         if pressured:
             self.emit(opp, "pressure", 100 - x, 100 - y, "applied" if done else "forced_error",
                       self.player(opp, "foul"))
@@ -242,6 +263,7 @@ class _Match:
         self.emit(side, "pass", x, y, "complete" if done else "incomplete", passer,
                   end_x=round(ex, 1), end_y=round(ey, 1), speed_kmh=round(speed, 1),
                   under_pressure=pressured)
+        self.last_passer = (side, passer) if done else None
         if done:
             carry = max(rng.normal(1.2, 2.0), 0.0)
             return side, min(ex + carry, 99.0), ey, True
@@ -258,10 +280,13 @@ class _Match:
             on_ball, x, y, _ = self.pass_(on_ball, x, y, fail=True)
         targets = [(min(max(x, 40) + 18, 80), rng.normal(50, 15)),
                    (rng.normal(88, 3), rng.normal(50, 8))]
-        for tx, ty in targets:
-            self.tick_clock(3)
+        travel = 0.0
+        for tx, ty in targets:  # ~1 s per 10 m of the previous pass: players can keep up
+            self.tick_clock(2 + travel / 10)
+            sx, sy = x, y
             _, x, y, _ = self.pass_(side, x, y, forced=(tx, ty))
-        self.tick_clock(2)
+            travel = math.hypot((x - sx) * PITCH_L / 100, (y - sy) * PITCH_W / 100)
+        self.tick_clock(2 + travel / 10)
         xg = float(rng.uniform(0.18, 0.55))
         return self.shoot(side, x, y, force_goal=True, xg=xg,
                           scorer=self.scorers.get(self.minute()))
@@ -271,6 +296,7 @@ class _Match:
         self.t = start
         end = start + HALF_S
         self.last_minute = 45 if start < HALF_S else 90
+        self.last_passer = None
         self.corner_next = False
         side, x, y = kick_off, 50.0, 50.0
         rng = self.rng

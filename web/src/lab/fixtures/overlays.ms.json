@@ -16,15 +16,39 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-0",
-   "momentum": "-0.39",
-   "control_home": "0.56",
-   "chaos": "0.63",
-   "phase": "balanced",
-   "phase_label": "Seimbang"
+   "momentum": "-0.11",
+   "control_home": "0.66",
+   "chaos": "0.62",
+   "phase": "home_control",
+   "phase_label": "Northgate City menguasai permainan"
   }
  },
  {
   "seq": 2,
+  "match_id": "SCN-comeback",
+  "minute": 6,
+  "second": 59,
+  "clock": "6:59",
+  "graphic": "lower_third",
+  "priority": 2,
+  "ttl_s": 14,
+  "insight_id": "SCN-comeback-0659-control_shift-0",
+  "language": "ms",
+  "fields": {
+   "headline": "Northgate City menguasai permainan",
+   "body": "Northgate City menguasai bola dan kawasan.",
+   "clock": "6:59",
+   "minute": "6",
+   "type": "control_shift",
+   "team": "Northgate City",
+   "team_id": "NGC",
+   "home": "NGC",
+   "away": "KST",
+   "score": "0-0"
+  }
+ },
+ {
+  "seq": 3,
   "match_id": "SCN-comeback",
   "minute": 10,
   "second": 59,
@@ -40,61 +64,37 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-0",
-   "momentum": "0.29",
-   "control_home": "0.56",
-   "chaos": "0.80",
+   "momentum": "0.24",
+   "control_home": "0.59",
+   "chaos": "0.65",
    "phase": "balanced",
    "phase_label": "Seimbang"
-  }
- },
- {
-  "seq": 3,
-  "match_id": "SCN-comeback",
-  "minute": 11,
-  "second": 59,
-  "clock": "11:59",
-  "graphic": "lower_third",
-  "priority": 2,
-  "ttl_s": 14,
-  "insight_id": "SCN-comeback-1159-chaos_phase-0",
-  "language": "ms",
-  "fields": {
-   "headline": "Fasa huru-hara",
-   "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
-   "clock": "11:59",
-   "minute": "11",
-   "type": "chaos_phase",
-   "team": "",
-   "team_id": "",
-   "home": "NGC",
-   "away": "KST",
-   "score": "0-0"
   }
  },
  {
   "seq": 4,
   "match_id": "SCN-comeback",
   "minute": 13,
-  "second": 57,
-  "clock": "13:57",
-  "graphic": "player_tag",
-  "priority": 3,
-  "ttl_s": 10,
-  "insight_id": "SCN-comeback-1357-pass_of_the_moment-1",
+  "second": 59,
+  "clock": "13:59",
+  "graphic": "lower_third",
+  "priority": 2,
+  "ttl_s": 14,
+  "insight_id": "SCN-comeback-1359-momentum_flip-1",
   "language": "ms",
   "fields": {
-   "headline": "Hantaran terbaik: L. Quinn",
-   "body": "L. Quinn melepaskan hantaran 45 m yang jarang dicuba pemain lain.",
-   "clock": "13:57",
+   "headline": "Northgate City mula mengambil inisiatif",
+   "body": "Northgate City kini menguasai permainan. N. Vidal menjadi penggeraknya.",
+   "clock": "13:59",
    "minute": "13",
-   "type": "pass_of_the_moment",
+   "type": "momentum_flip",
    "team": "Northgate City",
    "team_id": "NGC",
    "home": "NGC",
    "away": "KST",
    "score": "0-0",
-   "player": "L. Quinn",
-   "number": "8"
+   "player": "N. Vidal",
+   "number": "10"
   }
  },
  {
@@ -109,8 +109,8 @@
   "insight_id": "SCN-comeback-1413-goal-2",
   "language": "ms",
   "fields": {
-   "headline": "Di luar jangkaan: Kingston Vale menjaringkan gol",
-   "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-1. Hantaran daripada K. Kovac.",
+   "headline": "Kingston Vale menjaringkan gol walaupun ditekan",
+   "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-1. Hantaran daripada L. Novak.",
    "clock": "14:13",
    "minute": "14",
    "type": "goal",
@@ -136,7 +136,7 @@
   "language": "ms",
   "fields": {
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn telah menyentuh bola 18 kali dan merampas semula bola 2 kali.",
+   "body": "L. Quinn telah menyentuh bola 11 kali dan merampas semula bola 1 kali.",
    "clock": "15:00",
    "minute": "15",
    "type": "player_focus",
@@ -148,7 +148,7 @@
    "player": "L. Quinn",
    "number": "8",
    "stat_label": "Sentuhan",
-   "stat_value": "18"
+   "stat_value": "11"
   }
  },
  {
@@ -168,11 +168,11 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-1",
-   "momentum": "-0.28",
-   "control_home": "0.52",
-   "chaos": "0.95",
-   "phase": "chaos",
-   "phase_label": "Fasa huru-hara"
+   "momentum": "-0.65",
+   "control_home": "0.53",
+   "chaos": "0.70",
+   "phase": "balanced",
+   "phase_label": "Seimbang"
   }
  },
  {
@@ -192,11 +192,11 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-1",
-   "momentum": "-0.22",
-   "control_home": "0.46",
-   "chaos": "0.87",
-   "phase": "chaos",
-   "phase_label": "Fasa huru-hara"
+   "momentum": "-0.45",
+   "control_home": "0.49",
+   "chaos": "0.65",
+   "phase": "balanced",
+   "phase_label": "Seimbang"
   }
  },
  {
@@ -216,9 +216,9 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-1",
-   "momentum": "0.01",
-   "control_home": "0.47",
-   "chaos": "0.45",
+   "momentum": "-0.22",
+   "control_home": "0.52",
+   "chaos": "0.48",
    "phase": "balanced",
    "phase_label": "Seimbang"
   }
@@ -226,19 +226,19 @@
  {
   "seq": 10,
   "match_id": "SCN-comeback",
-  "minute": 26,
+  "minute": 27,
   "second": 59,
-  "clock": "26:59",
+  "clock": "27:59",
   "graphic": "lower_third",
   "priority": 2,
   "ttl_s": 14,
-  "insight_id": "SCN-comeback-2659-pressure_spike-5",
+  "insight_id": "SCN-comeback-2759-pressure_spike-3",
   "language": "ms",
   "fields": {
    "headline": "Northgate City meningkatkan tekanan",
    "body": "Northgate City memburu bola jauh di kawasan lawan.",
-   "clock": "26:59",
-   "minute": "26",
+   "clock": "27:59",
+   "minute": "27",
    "type": "pressure_spike",
    "team": "Northgate City",
    "team_id": "NGC",
@@ -260,7 +260,7 @@
   "language": "ms",
   "fields": {
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn telah menyentuh bola 27 kali dan merampas semula bola 2 kali.",
+   "body": "L. Quinn telah menyentuh bola 22 kali dan merampas semula bola 4 kali.",
    "clock": "30:00",
    "minute": "30",
    "type": "player_focus",
@@ -272,39 +272,11 @@
    "player": "L. Quinn",
    "number": "8",
    "stat_label": "Sentuhan",
-   "stat_value": "27"
+   "stat_value": "22"
   }
  },
  {
   "seq": 12,
-  "match_id": "SCN-comeback",
-  "minute": 30,
-  "second": 4,
-  "clock": "30:04",
-  "graphic": "player_tag",
-  "priority": 3,
-  "ttl_s": 10,
-  "insight_id": "SCN-comeback-3004-shot_speed-6",
-  "language": "ms",
-  "fields": {
-   "headline": "Rembatan 116 km/h oleh N. Ekwueme",
-   "body": "N. Ekwueme melepaskan rembatan 116 km/h dari jarak 38 m.",
-   "clock": "30:04",
-   "minute": "30",
-   "type": "shot_speed",
-   "team": "Northgate City",
-   "team_id": "NGC",
-   "home": "NGC",
-   "away": "KST",
-   "score": "0-1",
-   "player": "N. Ekwueme",
-   "number": "9",
-   "stat_label": "Kelajuan bola",
-   "stat_value": "116 km/h"
-  }
- },
- {
-  "seq": 13,
   "match_id": "SCN-comeback",
   "minute": 30,
   "second": 59,
@@ -320,39 +292,43 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-1",
-   "momentum": "0.02",
-   "control_home": "0.59",
-   "chaos": "0.56",
-   "phase": "home_control",
-   "phase_label": "Northgate City menguasai permainan"
+   "momentum": "-0.09",
+   "control_home": "0.56",
+   "chaos": "0.52",
+   "phase": "balanced",
+   "phase_label": "Seimbang"
   }
  },
  {
-  "seq": 14,
+  "seq": 13,
   "match_id": "SCN-comeback",
-  "minute": 31,
+  "minute": 34,
   "second": 59,
-  "clock": "31:59",
-  "graphic": "lower_third",
-  "priority": 2,
-  "ttl_s": 14,
-  "insight_id": "SCN-comeback-3159-control_shift-7",
+  "clock": "34:59",
+  "graphic": "player_tag",
+  "priority": 3,
+  "ttl_s": 10,
+  "insight_id": "SCN-comeback-3459-player_milestone-6",
   "language": "ms",
   "fields": {
-   "headline": "Northgate City menguasai permainan",
-   "body": "Northgate City menguasai bola dan kawasan.",
-   "clock": "31:59",
-   "minute": "31",
-   "type": "control_shift",
+   "headline": "G. Ferreira: 8 rampasan bola",
+   "body": "G. Ferreira terus merampas semula bola untuk Northgate City.",
+   "clock": "34:59",
+   "minute": "34",
+   "type": "player_milestone",
    "team": "Northgate City",
    "team_id": "NGC",
    "home": "NGC",
    "away": "KST",
-   "score": "0-1"
+   "score": "0-1",
+   "player": "G. Ferreira",
+   "number": "3",
+   "stat_label": "Jumlah",
+   "stat_value": "8"
   }
  },
  {
-  "seq": 15,
+  "seq": 14,
   "match_id": "SCN-comeback",
   "minute": 35,
   "second": 59,
@@ -368,28 +344,28 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-1",
-   "momentum": "-0.03",
-   "control_home": "0.54",
-   "chaos": "0.53",
+   "momentum": "-0.10",
+   "control_home": "0.57",
+   "chaos": "0.52",
    "phase": "balanced",
    "phase_label": "Seimbang"
   }
  },
  {
-  "seq": 16,
+  "seq": 15,
   "match_id": "SCN-comeback",
   "minute": 37,
-  "second": 13,
-  "clock": "37:13",
+  "second": 19,
+  "clock": "37:19",
   "graphic": "alert",
   "priority": 1,
   "ttl_s": 20,
-  "insight_id": "SCN-comeback-3713-goal-8",
+  "insight_id": "SCN-comeback-3719-goal-7",
   "language": "ms",
   "fields": {
-   "headline": "Gol untuk Kingston Vale",
-   "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-2. Hantaran daripada D. Ekwueme. Itu gol ke-2 untuk K. Quinn hari ini.",
-   "clock": "37:13",
+   "headline": "Gol yang wajar buat Kingston Vale",
+   "body": "L. Novak menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-2. Hantaran daripada B. Barros.",
+   "clock": "37:19",
    "minute": "37",
    "type": "goal",
    "team": "Kingston Vale",
@@ -397,8 +373,32 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-2",
-   "player": "K. Quinn",
-   "number": "8"
+   "player": "L. Novak",
+   "number": "11"
+  }
+ },
+ {
+  "seq": 16,
+  "match_id": "SCN-comeback",
+  "minute": 38,
+  "second": 59,
+  "clock": "38:59",
+  "graphic": "lower_third",
+  "priority": 2,
+  "ttl_s": 14,
+  "insight_id": "SCN-comeback-3859-chaos_phase-8",
+  "language": "ms",
+  "fields": {
+   "headline": "Fasa huru-hara",
+   "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
+   "clock": "38:59",
+   "minute": "38",
+   "type": "chaos_phase",
+   "team": "",
+   "team_id": "",
+   "home": "NGC",
+   "away": "KST",
+   "score": "0-2"
   }
  },
  {
@@ -418,11 +418,11 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-2",
-   "momentum": "-0.37",
-   "control_home": "0.45",
-   "chaos": "0.73",
-   "phase": "balanced",
-   "phase_label": "Seimbang"
+   "momentum": "-0.12",
+   "control_home": "0.58",
+   "chaos": "0.79",
+   "phase": "chaos",
+   "phase_label": "Fasa huru-hara"
   }
  },
  {
@@ -438,7 +438,7 @@
   "language": "ms",
   "fields": {
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn telah menyentuh bola 38 kali dan merampas semula bola 2 kali.",
+   "body": "L. Quinn telah menyentuh bola 33 kali dan merampas semula bola 5 kali.",
    "clock": "45:00",
    "minute": "45",
    "type": "player_focus",
@@ -450,7 +450,7 @@
    "player": "L. Quinn",
    "number": "8",
    "stat_label": "Sentuhan",
-   "stat_value": "38"
+   "stat_value": "33"
   }
  },
  {
@@ -470,37 +470,37 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-2",
-   "momentum": "-0.15",
-   "control_home": "0.61",
-   "chaos": "0.66",
-   "phase": "home_control",
-   "phase_label": "Northgate City menguasai permainan"
+   "momentum": "-0.02",
+   "control_home": "0.54",
+   "chaos": "0.73",
+   "phase": "balanced",
+   "phase_label": "Seimbang"
   }
  },
  {
   "seq": 20,
   "match_id": "SCN-comeback",
-  "minute": 48,
-  "second": 26,
-  "clock": "48:26",
-  "graphic": "player_tag",
-  "priority": 3,
-  "ttl_s": 10,
-  "insight_id": "SCN-comeback-4826-pass_of_the_moment-11",
+  "minute": 49,
+  "second": 59,
+  "clock": "49:59",
+  "graphic": "lower_third",
+  "priority": 2,
+  "ttl_s": 14,
+  "insight_id": "SCN-comeback-4959-momentum_flip-9",
   "language": "ms",
   "fields": {
-   "headline": "Hantaran terbaik: F. Hart",
-   "body": "F. Hart melepaskan hantaran 36 m yang jarang dicuba pemain lain.",
-   "clock": "48:26",
-   "minute": "48",
-   "type": "pass_of_the_moment",
+   "headline": "Momentum beralih kepada Northgate City",
+   "body": "Northgate City kini menguasai permainan. L. Quinn menjadi penggeraknya.",
+   "clock": "49:59",
+   "minute": "49",
+   "type": "momentum_flip",
    "team": "Northgate City",
    "team_id": "NGC",
    "home": "NGC",
    "away": "KST",
    "score": "0-2",
-   "player": "F. Hart",
-   "number": "1"
+   "player": "L. Quinn",
+   "number": "8"
   }
  },
  {
@@ -520,37 +520,35 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-2",
-   "momentum": "0.38",
-   "control_home": "0.76",
-   "chaos": "0.71",
-   "phase": "home_control",
-   "phase_label": "Northgate City menguasai permainan"
+   "momentum": "0.73",
+   "control_home": "0.50",
+   "chaos": "0.81",
+   "phase": "chaos",
+   "phase_label": "Fasa huru-hara"
   }
  },
  {
   "seq": 22,
   "match_id": "SCN-comeback",
-  "minute": 51,
+  "minute": 52,
   "second": 59,
-  "clock": "51:59",
+  "clock": "52:59",
   "graphic": "lower_third",
   "priority": 2,
   "ttl_s": 14,
-  "insight_id": "SCN-comeback-5159-momentum_flip-12",
+  "insight_id": "SCN-comeback-5259-pressure_spike-10",
   "language": "ms",
   "fields": {
-   "headline": "Momentum beralih kepada Northgate City",
-   "body": "Northgate City kini menguasai permainan. F. Moreau menjadi penggeraknya.",
-   "clock": "51:59",
-   "minute": "51",
-   "type": "momentum_flip",
+   "headline": "Northgate City meningkatkan tekanan",
+   "body": "Northgate City memburu bola jauh di kawasan lawan.",
+   "clock": "52:59",
+   "minute": "52",
+   "type": "pressure_spike",
    "team": "Northgate City",
    "team_id": "NGC",
    "home": "NGC",
    "away": "KST",
-   "score": "0-2",
-   "player": "F. Moreau",
-   "number": "2"
+   "score": "0-2"
   }
  },
  {
@@ -570,11 +568,11 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-2",
-   "momentum": "0.44",
-   "control_home": "0.77",
-   "chaos": "0.64",
-   "phase": "home_control",
-   "phase_label": "Northgate City menguasai permainan"
+   "momentum": "0.70",
+   "control_home": "0.64",
+   "chaos": "0.84",
+   "phase": "chaos",
+   "phase_label": "Fasa huru-hara"
   }
  },
  {
@@ -590,7 +588,7 @@
   "language": "ms",
   "fields": {
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn telah menyentuh bola 57 kali dan merampas semula bola 2 kali.",
+   "body": "L. Quinn telah menyentuh bola 58 kali dan merampas semula bola 10 kali.",
    "clock": "60:00",
    "minute": "60",
    "type": "player_focus",
@@ -602,7 +600,7 @@
    "player": "L. Quinn",
    "number": "8",
    "stat_label": "Sentuhan",
-   "stat_value": "57"
+   "stat_value": "58"
   }
  },
  {
@@ -622,9 +620,9 @@
    "home": "NGC",
    "away": "KST",
    "score": "0-2",
-   "momentum": "0.55",
-   "control_home": "0.76",
-   "chaos": "0.48",
+   "momentum": "0.82",
+   "control_home": "0.71",
+   "chaos": "0.62",
    "phase": "home_control",
    "phase_label": "Northgate City menguasai permainan"
   }
@@ -633,17 +631,17 @@
   "seq": 26,
   "match_id": "SCN-comeback",
   "minute": 61,
-  "second": 43,
-  "clock": "61:43",
+  "second": 14,
+  "clock": "61:14",
   "graphic": "alert",
   "priority": 1,
   "ttl_s": 20,
-  "insight_id": "SCN-comeback-6143-goal-13",
+  "insight_id": "SCN-comeback-6114-goal-11",
   "language": "ms",
   "fields": {
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "G. Ferreira menjaringkan gol untuk Northgate City. Kedudukan kini 1-2. Hantaran daripada N. Ekwueme.",
-   "clock": "61:43",
+   "headline": "Gol yang wajar buat Northgate City",
+   "body": "R. Mensah menjaringkan gol untuk Northgate City. Kedudukan kini 1-2. Hantaran daripada L. Gallo.",
+   "clock": "61:14",
    "minute": "61",
    "type": "goal",
    "team": "Northgate City",
@@ -651,64 +649,12 @@
    "home": "NGC",
    "away": "KST",
    "score": "1-2",
-   "player": "G. Ferreira",
-   "number": "3"
+   "player": "R. Mensah",
+   "number": "11"
   }
  },
  {
   "seq": 27,
-  "match_id": "SCN-comeback",
-  "minute": 64,
-  "second": 59,
-  "clock": "64:59",
-  "graphic": "player_tag",
-  "priority": 3,
-  "ttl_s": 10,
-  "insight_id": "SCN-comeback-6459-player_milestone-14",
-  "language": "ms",
-  "fields": {
-   "headline": "L. Gallo: 40 hantaran berjaya",
-   "body": "L. Gallo mengemudi permainan Northgate City.",
-   "clock": "64:59",
-   "minute": "64",
-   "type": "player_milestone",
-   "team": "Northgate City",
-   "team_id": "NGC",
-   "home": "NGC",
-   "away": "KST",
-   "score": "1-2",
-   "player": "L. Gallo",
-   "number": "7",
-   "stat_label": "Jumlah",
-   "stat_value": "40"
-  }
- },
- {
-  "seq": 28,
-  "match_id": "SCN-comeback",
-  "minute": 65,
-  "second": 59,
-  "clock": "65:59",
-  "graphic": "lower_third",
-  "priority": 2,
-  "ttl_s": 14,
-  "insight_id": "SCN-comeback-6559-chaos_phase-15",
-  "language": "ms",
-  "fields": {
-   "headline": "Fasa huru-hara",
-   "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
-   "clock": "65:59",
-   "minute": "65",
-   "type": "chaos_phase",
-   "team": "",
-   "team_id": "",
-   "home": "NGC",
-   "away": "KST",
-   "score": "1-2"
-  }
- },
- {
-  "seq": 29,
   "match_id": "SCN-comeback",
   "minute": 65,
   "second": 59,
@@ -724,43 +670,15 @@
    "home": "NGC",
    "away": "KST",
    "score": "1-2",
-   "momentum": "0.73",
-   "control_home": "0.76",
-   "chaos": "0.81",
-   "phase": "chaos",
-   "phase_label": "Fasa huru-hara"
+   "momentum": "0.70",
+   "control_home": "0.59",
+   "chaos": "0.66",
+   "phase": "balanced",
+   "phase_label": "Seimbang"
   }
  },
  {
-  "seq": 30,
-  "match_id": "SCN-comeback",
-  "minute": 67,
-  "second": 53,
-  "clock": "67:53",
-  "graphic": "player_tag",
-  "priority": 3,
-  "ttl_s": 10,
-  "insight_id": "SCN-comeback-6753-shot_speed-16",
-  "language": "ms",
-  "fields": {
-   "headline": "Rembatan 117 km/h oleh N. Ekwueme",
-   "body": "N. Ekwueme melepaskan rembatan 117 km/h dari jarak 31 m.",
-   "clock": "67:53",
-   "minute": "67",
-   "type": "shot_speed",
-   "team": "Northgate City",
-   "team_id": "NGC",
-   "home": "NGC",
-   "away": "KST",
-   "score": "1-2",
-   "player": "N. Ekwueme",
-   "number": "9",
-   "stat_label": "Kelajuan bola",
-   "stat_value": "117 km/h"
-  }
- },
- {
-  "seq": 31,
+  "seq": 28,
   "match_id": "SCN-comeback",
   "minute": 70,
   "second": 59,
@@ -776,28 +694,54 @@
    "home": "NGC",
    "away": "KST",
    "score": "1-2",
-   "momentum": "0.79",
-   "control_home": "0.76",
-   "chaos": "0.78",
+   "momentum": "0.76",
+   "control_home": "0.68",
+   "chaos": "0.54",
    "phase": "home_control",
    "phase_label": "Northgate City menguasai permainan"
   }
  },
  {
-  "seq": 32,
+  "seq": 29,
+  "match_id": "SCN-comeback",
+  "minute": 73,
+  "second": 27,
+  "clock": "73:27",
+  "graphic": "player_tag",
+  "priority": 2,
+  "ttl_s": 14,
+  "insight_id": "SCN-comeback-7327-big_chance-13",
+  "language": "ms",
+  "fields": {
+   "headline": "Peluang keemasan untuk Northgate City",
+   "body": "Percubaan N. Ekwueme diselamatkan oleh penjaga gol.",
+   "clock": "73:27",
+   "minute": "73",
+   "type": "big_chance",
+   "team": "Northgate City",
+   "team_id": "NGC",
+   "home": "NGC",
+   "away": "KST",
+   "score": "1-2",
+   "player": "N. Ekwueme",
+   "number": "9"
+  }
+ },
+ {
+  "seq": 30,
   "match_id": "SCN-comeback",
   "minute": 74,
-  "second": 10,
-  "clock": "74:10",
+  "second": 13,
+  "clock": "74:13",
   "graphic": "alert",
   "priority": 1,
   "ttl_s": 20,
-  "insight_id": "SCN-comeback-7410-goal-17",
+  "insight_id": "SCN-comeback-7413-goal-14",
   "language": "ms",
   "fields": {
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "L. Quinn menjaringkan gol untuk Northgate City. Kedudukan kini 2-2. Hantaran daripada H. Novak.",
-   "clock": "74:10",
+   "headline": "Northgate City menyamakan kedudukan",
+   "body": "L. Quinn menjaringkan gol untuk Northgate City. Kedudukan kini 2-2. Hantaran daripada R. Mensah.",
+   "clock": "74:13",
    "minute": "74",
    "type": "goal",
    "team": "Northgate City",
@@ -810,7 +754,7 @@
   }
  },
  {
-  "seq": 33,
+  "seq": 31,
   "match_id": "SCN-comeback",
   "minute": 75,
   "second": 0,
@@ -822,7 +766,7 @@
   "language": "ms",
   "fields": {
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn telah menyentuh bola 72 kali dan merampas semula bola 2 kali.",
+   "body": "L. Quinn telah menyentuh bola 74 kali dan merampas semula bola 11 kali.",
    "clock": "75:00",
    "minute": "75",
    "type": "player_focus",
@@ -834,37 +778,11 @@
    "player": "L. Quinn",
    "number": "8",
    "stat_label": "Sentuhan",
-   "stat_value": "72"
+   "stat_value": "74"
   }
  },
  {
-  "seq": 34,
-  "match_id": "SCN-comeback",
-  "minute": 75,
-  "second": 37,
-  "clock": "75:37",
-  "graphic": "player_tag",
-  "priority": 3,
-  "ttl_s": 10,
-  "insight_id": "SCN-comeback-7537-pass_of_the_moment-19",
-  "language": "ms",
-  "fields": {
-   "headline": "Hantaran terbaik: L. Quinn",
-   "body": "L. Quinn melepaskan hantaran 40 m yang jarang dicuba pemain lain.",
-   "clock": "75:37",
-   "minute": "75",
-   "type": "pass_of_the_moment",
-   "team": "Northgate City",
-   "team_id": "NGC",
-   "home": "NGC",
-   "away": "KST",
-   "score": "2-2",
-   "player": "L. Quinn",
-   "number": "8"
-  }
- },
- {
-  "seq": 35,
+  "seq": 32,
   "match_id": "SCN-comeback",
   "minute": 75,
   "second": 59,
@@ -880,11 +798,91 @@
    "home": "NGC",
    "away": "KST",
    "score": "2-2",
-   "momentum": "0.82",
-   "control_home": "0.73",
-   "chaos": "0.50",
+   "momentum": "0.95",
+   "control_home": "0.80",
+   "chaos": "0.66",
    "phase": "home_control",
    "phase_label": "Northgate City menguasai permainan"
+  }
+ },
+ {
+  "seq": 33,
+  "match_id": "SCN-comeback",
+  "minute": 76,
+  "second": 11,
+  "clock": "76:11",
+  "graphic": "player_tag",
+  "priority": 2,
+  "ttl_s": 14,
+  "insight_id": "SCN-comeback-7611-big_chance-15",
+  "language": "ms",
+  "fields": {
+   "headline": "Peluang keemasan untuk Northgate City",
+   "body": "Percubaan L. Gallo diselamatkan oleh penjaga gol.",
+   "clock": "76:11",
+   "minute": "76",
+   "type": "big_chance",
+   "team": "Northgate City",
+   "team_id": "NGC",
+   "home": "NGC",
+   "away": "KST",
+   "score": "2-2",
+   "player": "L. Gallo",
+   "number": "7"
+  }
+ },
+ {
+  "seq": 34,
+  "match_id": "SCN-comeback",
+  "minute": 76,
+  "second": 59,
+  "clock": "76:59",
+  "graphic": "player_tag",
+  "priority": 3,
+  "ttl_s": 10,
+  "insight_id": "SCN-comeback-7659-player_milestone-16",
+  "language": "ms",
+  "fields": {
+   "headline": "L. Gallo: 40 hantaran berjaya",
+   "body": "L. Gallo mengemudi permainan Northgate City.",
+   "clock": "76:59",
+   "minute": "76",
+   "type": "player_milestone",
+   "team": "Northgate City",
+   "team_id": "NGC",
+   "home": "NGC",
+   "away": "KST",
+   "score": "2-2",
+   "player": "L. Gallo",
+   "number": "7",
+   "stat_label": "Jumlah",
+   "stat_value": "40"
+  }
+ },
+ {
+  "seq": 35,
+  "match_id": "SCN-comeback",
+  "minute": 78,
+  "second": 6,
+  "clock": "78:06",
+  "graphic": "player_tag",
+  "priority": 2,
+  "ttl_s": 14,
+  "insight_id": "SCN-comeback-7806-big_chance-17",
+  "language": "ms",
+  "fields": {
+   "headline": "Peluang keemasan untuk Northgate City",
+   "body": "Percubaan L. Quinn diselamatkan oleh penjaga gol.",
+   "clock": "78:06",
+   "minute": "78",
+   "type": "big_chance",
+   "team": "Northgate City",
+   "team_id": "NGC",
+   "home": "NGC",
+   "away": "KST",
+   "score": "2-2",
+   "player": "L. Quinn",
+   "number": "8"
   }
  },
  {
@@ -904,15 +902,42 @@
    "home": "NGC",
    "away": "KST",
    "score": "2-2",
-   "momentum": "0.72",
-   "control_home": "0.74",
-   "chaos": "0.69",
+   "momentum": "0.95",
+   "control_home": "0.77",
+   "chaos": "0.68",
    "phase": "home_control",
    "phase_label": "Northgate City menguasai permainan"
   }
  },
  {
   "seq": 37,
+  "match_id": "SCN-comeback",
+  "minute": 83,
+  "second": 59,
+  "clock": "83:59",
+  "graphic": "stat_bug",
+  "priority": 3,
+  "ttl_s": 10,
+  "insight_id": "SCN-comeback-8359-win_prob_swing-18",
+  "language": "ms",
+  "fields": {
+   "headline": "Peluang Northgate City semakin pudar",
+   "body": "Tanpa sebarang gol, peluang Northgate City untuk menang berubah daripada 30% kepada 19%.",
+   "clock": "83:59",
+   "minute": "83",
+   "type": "win_prob_swing",
+   "team": "Northgate City",
+   "team_id": "NGC",
+   "home": "NGC",
+   "away": "KST",
+   "score": "2-2",
+   "stat_label": "Peluang menang selepas",
+   "value_before": "30%",
+   "value_after": "19%"
+  }
+ },
+ {
+  "seq": 38,
   "match_id": "SCN-comeback",
   "minute": 85,
   "second": 59,
@@ -928,28 +953,28 @@
    "home": "NGC",
    "away": "KST",
    "score": "2-2",
-   "momentum": "0.67",
+   "momentum": "0.83",
    "control_home": "0.76",
-   "chaos": "0.67",
+   "chaos": "0.75",
    "phase": "home_control",
    "phase_label": "Northgate City menguasai permainan"
   }
  },
  {
-  "seq": 38,
+  "seq": 39,
   "match_id": "SCN-comeback",
   "minute": 87,
-  "second": 1,
-  "clock": "87:01",
+  "second": 13,
+  "clock": "87:13",
   "graphic": "alert",
   "priority": 1,
   "ttl_s": 20,
-  "insight_id": "SCN-comeback-8701-goal-21",
+  "insight_id": "SCN-comeback-8713-goal-19",
   "language": "ms",
   "fields": {
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "J. Okafor menjaringkan gol untuk Northgate City. Kedudukan kini 3-2. Hantaran daripada F. Moreau.",
-   "clock": "87:01",
+   "headline": "Northgate City mendahului di saat-saat akhir",
+   "body": "N. Ekwueme menjaringkan gol untuk Northgate City. Kedudukan kini 3-2. Hantaran daripada N. Vidal.",
+   "clock": "87:13",
    "minute": "87",
    "type": "goal",
    "team": "Northgate City",
@@ -957,36 +982,8 @@
    "home": "NGC",
    "away": "KST",
    "score": "3-2",
-   "player": "J. Okafor",
-   "number": "6"
-  }
- },
- {
-  "seq": 39,
-  "match_id": "SCN-comeback",
-  "minute": 89,
-  "second": 23,
-  "clock": "89:23",
-  "graphic": "player_tag",
-  "priority": 3,
-  "ttl_s": 10,
-  "insight_id": "SCN-comeback-8923-shot_speed-22",
-  "language": "ms",
-  "fields": {
-   "headline": "Rembatan 132 km/h oleh L. Gallo",
-   "body": "L. Gallo melepaskan rembatan 132 km/h dari jarak 36 m.",
-   "clock": "89:23",
-   "minute": "89",
-   "type": "shot_speed",
-   "team": "Northgate City",
-   "team_id": "NGC",
-   "home": "NGC",
-   "away": "KST",
-   "score": "3-2",
-   "player": "L. Gallo",
-   "number": "7",
-   "stat_label": "Kelajuan bola",
-   "stat_value": "132 km/h"
+   "player": "N. Ekwueme",
+   "number": "9"
   }
  },
  {
@@ -1002,7 +999,7 @@
   "language": "ms",
   "fields": {
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn telah menyentuh bola 84 kali dan merampas semula bola 2 kali.",
+   "body": "L. Quinn telah menyentuh bola 88 kali dan merampas semula bola 12 kali.",
    "clock": "90:00",
    "minute": "90",
    "type": "player_focus",
@@ -1014,7 +1011,7 @@
    "player": "L. Quinn",
    "number": "8",
    "stat_label": "Sentuhan",
-   "stat_value": "84"
+   "stat_value": "88"
   }
  },
  {
@@ -1034,9 +1031,9 @@
    "home": "NGC",
    "away": "KST",
    "score": "3-2",
-   "momentum": "0.56",
+   "momentum": "0.81",
    "control_home": "0.77",
-   "chaos": "0.79",
+   "chaos": "0.48",
    "phase": "home_control",
    "phase_label": "Northgate City menguasai permainan"
   }

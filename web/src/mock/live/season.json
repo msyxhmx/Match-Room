@@ -17,33 +17,14 @@
       "won": 6,
       "drawn": 1,
       "lost": 0,
-      "goals_for": 15,
-      "goals_against": 2,
+      "goals_for": 17,
+      "goals_against": 6,
       "points": 19,
-      "xg_for": 16.27,
-      "xg_against": 4.53,
-      "control_share": 0.41,
-      "chaos_share": 0.157,
-      "wins_against_run": 0
-    },
-    {
-      "team": {
-        "id": "NGC",
-        "name": "Northgate City",
-        "short_name": "NGC"
-      },
-      "played": 7,
-      "won": 5,
-      "drawn": 2,
-      "lost": 0,
-      "goals_for": 19,
-      "goals_against": 5,
-      "points": 17,
-      "xg_for": 13.9,
-      "xg_against": 6.02,
-      "control_share": 0.181,
-      "chaos_share": 0.248,
-      "wins_against_run": 2
+      "xg_for": 9.46,
+      "xg_against": 4.81,
+      "control_share": 0.354,
+      "chaos_share": 0.119,
+      "wins_against_run": 1
     },
     {
       "team": {
@@ -52,35 +33,16 @@
         "short_name": "ELM"
       },
       "played": 7,
-      "won": 3,
-      "drawn": 1,
-      "lost": 3,
-      "goals_for": 13,
-      "goals_against": 10,
-      "points": 10,
-      "xg_for": 13.97,
-      "xg_against": 9.77,
-      "control_share": 0.221,
-      "chaos_share": 0.144,
-      "wins_against_run": 3
-    },
-    {
-      "team": {
-        "id": "MIL",
-        "name": "Millbrook Town",
-        "short_name": "MIL"
-      },
-      "played": 7,
-      "won": 3,
-      "drawn": 1,
-      "lost": 3,
-      "goals_for": 10,
-      "goals_against": 10,
-      "points": 10,
-      "xg_for": 8.61,
-      "xg_against": 15.91,
-      "control_share": 0.073,
-      "chaos_share": 0.184,
+      "won": 5,
+      "drawn": 0,
+      "lost": 2,
+      "goals_for": 12,
+      "goals_against": 6,
+      "points": 15,
+      "xg_for": 10.33,
+      "xg_against": 8.9,
+      "control_share": 0.214,
+      "chaos_share": 0.135,
       "wins_against_run": 2
     },
     {
@@ -90,16 +52,35 @@
         "short_name": "ASH"
       },
       "played": 7,
-      "won": 2,
-      "drawn": 3,
+      "won": 4,
+      "drawn": 1,
       "lost": 2,
-      "goals_for": 6,
+      "goals_for": 13,
       "goals_against": 8,
-      "points": 9,
-      "xg_for": 5.47,
-      "xg_against": 12.02,
-      "control_share": 0.23,
-      "chaos_share": 0.138,
+      "points": 13,
+      "xg_for": 12.89,
+      "xg_against": 7.13,
+      "control_share": 0.314,
+      "chaos_share": 0.176,
+      "wins_against_run": 0
+    },
+    {
+      "team": {
+        "id": "NGC",
+        "name": "Northgate City",
+        "short_name": "NGC"
+      },
+      "played": 7,
+      "won": 3,
+      "drawn": 1,
+      "lost": 3,
+      "goals_for": 13,
+      "goals_against": 13,
+      "points": 10,
+      "xg_for": 14.25,
+      "xg_against": 11.55,
+      "control_share": 0.313,
+      "chaos_share": 0.194,
       "wins_against_run": 1
     },
     {
@@ -109,16 +90,54 @@
         "short_name": "HAR"
       },
       "played": 7,
-      "won": 1,
-      "drawn": 3,
-      "lost": 3,
-      "goals_for": 4,
-      "goals_against": 10,
+      "won": 2,
+      "drawn": 1,
+      "lost": 4,
+      "goals_for": 8,
+      "goals_against": 11,
+      "points": 7,
+      "xg_for": 9.96,
+      "xg_against": 12.0,
+      "control_share": 0.224,
+      "chaos_share": 0.138,
+      "wins_against_run": 0
+    },
+    {
+      "team": {
+        "id": "MIL",
+        "name": "Millbrook Town",
+        "short_name": "MIL"
+      },
+      "played": 7,
+      "won": 2,
+      "drawn": 1,
+      "lost": 4,
+      "goals_for": 7,
+      "goals_against": 13,
+      "points": 7,
+      "xg_for": 7.19,
+      "xg_against": 11.27,
+      "control_share": 0.084,
+      "chaos_share": 0.13,
+      "wins_against_run": 1
+    },
+    {
+      "team": {
+        "id": "KST",
+        "name": "Kingston Vale",
+        "short_name": "KST"
+      },
+      "played": 7,
+      "won": 2,
+      "drawn": 0,
+      "lost": 5,
+      "goals_for": 6,
+      "goals_against": 14,
       "points": 6,
-      "xg_for": 13.09,
-      "xg_against": 7.94,
-      "control_share": 0.368,
-      "chaos_share": 0.222,
+      "xg_for": 8.07,
+      "xg_against": 10.7,
+      "control_share": 0.159,
+      "chaos_share": 0.141,
       "wins_against_run": 0
     },
     {
@@ -131,32 +150,13 @@
       "won": 1,
       "drawn": 1,
       "lost": 5,
-      "goals_for": 3,
-      "goals_against": 17,
+      "goals_for": 6,
+      "goals_against": 11,
       "points": 4,
-      "xg_for": 5.35,
-      "xg_against": 15.51,
-      "control_share": 0.208,
-      "chaos_share": 0.167,
-      "wins_against_run": 1
-    },
-    {
-      "team": {
-        "id": "KST",
-        "name": "Kingston Vale",
-        "short_name": "KST"
-      },
-      "played": 7,
-      "won": 0,
-      "drawn": 2,
-      "lost": 5,
-      "goals_for": 5,
-      "goals_against": 13,
-      "points": 2,
-      "xg_for": 7.46,
-      "xg_against": 12.42,
-      "control_share": 0.214,
-      "chaos_share": 0.219,
+      "xg_for": 5.58,
+      "xg_against": 11.38,
+      "control_share": 0.13,
+      "chaos_share": 0.151,
       "wins_against_run": 0
     }
   ],
@@ -164,7 +164,7 @@
     {
       "id": "season_yours",
       "title": "Your team",
-      "body": "Northgate City sit in position 2 with 17 points, 13.9 xG for and 6.0 against.",
+      "body": "Northgate City sit in position 4 with 10 points, 14.2 xG for and 11.6 against.",
       "team_id": "NGC",
       "facts_used": [
         {
@@ -175,22 +175,22 @@
         {
           "key": "position",
           "label": "Position",
-          "value": "2"
+          "value": "4"
         },
         {
           "key": "points",
           "label": "Points",
-          "value": "17"
+          "value": "10"
         },
         {
           "key": "xg",
           "label": "Shot xG",
-          "value": "13.9"
+          "value": "14.2"
         },
         {
           "key": "xga",
           "label": "xG against",
-          "value": "6.0"
+          "value": "11.6"
         }
       ]
     },
@@ -220,7 +220,7 @@
     {
       "id": "season_control",
       "title": "Masters of control",
-      "body": "Riverside Rovers are in control for 41% of their minutes, more than anyone.",
+      "body": "Riverside Rovers are in control for 35% of their minutes, more than anyone.",
       "team_id": "RIV",
       "facts_used": [
         {
@@ -231,14 +231,14 @@
         {
           "key": "share",
           "label": "Share of threat",
-          "value": "41%"
+          "value": "35%"
         }
       ]
     },
     {
       "id": "season_run",
       "title": "Winning without the ball",
-      "body": "Elmstead United have won 3 matches while having less of the control.",
+      "body": "Elmstead United have won 2 matches while having less of the control.",
       "team_id": "ELM",
       "facts_used": [
         {
@@ -249,37 +249,37 @@
         {
           "key": "count",
           "label": "Count",
-          "value": "3"
+          "value": "2"
         }
       ]
     },
     {
       "id": "season_finish",
       "title": "Beating their chances",
-      "body": "Northgate City have scored 19 from 13.9 xG: clinical, or lucky.",
-      "team_id": "NGC",
+      "body": "Riverside Rovers have scored 17 from 9.5 xG: clinical, or lucky.",
+      "team_id": "RIV",
       "facts_used": [
         {
           "key": "team",
           "label": "Team",
-          "value": "Northgate City"
+          "value": "Riverside Rovers"
         },
         {
           "key": "goals",
           "label": "Goals",
-          "value": "19"
+          "value": "17"
         },
         {
           "key": "xg",
           "label": "Shot xG",
-          "value": "13.9"
+          "value": "9.5"
         }
       ]
     },
     {
       "id": "season_chaos",
       "title": "Chaos merchants",
-      "body": "Northgate City spend 25% of their minutes in chaos, the most in the league.",
+      "body": "Northgate City spend 19% of their minutes in chaos, the most in the league.",
       "team_id": "NGC",
       "facts_used": [
         {
@@ -290,7 +290,7 @@
         {
           "key": "share",
           "label": "Share of threat",
-          "value": "25%"
+          "value": "19%"
         }
       ]
     }

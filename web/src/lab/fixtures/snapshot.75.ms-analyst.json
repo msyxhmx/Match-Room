@@ -19,9 +19,9 @@
  },
  "meta": {
   "venue": "Northgate Stadium",
-  "referee": "P. Okonjo",
-  "attendance": 23047,
-  "weather": "Clear",
+  "referee": "M. Castell",
+  "attendance": 47575,
+  "weather": "Windy",
   "scenario": "comeback",
   "scenario_title": "The comeback",
   "synthetic": true
@@ -44,23 +44,23 @@
   {
    "key": "xg",
    "label": "Jangkaan gol (xG)",
-   "home": 2.14,
-   "away": 1.29,
+   "home": 2.42,
+   "away": 0.9,
    "unit": null,
    "definition": "Jumlah kualiti peluang bagi setiap rembatan: kebarangkalian rembatan itu menjadi gol."
   },
   {
    "key": "shots",
    "label": "Rembatan",
-   "home": 19.0,
-   "away": 7.0,
+   "home": 24.0,
+   "away": 4.0,
    "unit": null,
    "definition": "Semua percubaan ke arah gol."
   },
   {
    "key": "sot",
    "label": "Rembatan tepat",
-   "home": 8.0,
+   "home": 14.0,
    "away": 3.0,
    "unit": null,
    "definition": "Rembatan yang menjadi gol atau diselamatkan."
@@ -68,80 +68,80 @@
   {
    "key": "xt",
    "label": "Jangkaan ancaman (xT)",
-   "home": 3.37,
-   "away": 2.21,
+   "home": 1.25,
+   "away": 0.3,
    "unit": null,
    "definition": "Sejauh mana hantaran berjaya menaikkan peluang menjaringkan gol, daripada grid zon padang."
   },
   {
    "key": "possession",
    "label": "Penguasaan bola",
-   "home": 61.0,
-   "away": 39.0,
+   "home": 55.0,
+   "away": 45.0,
    "unit": "%",
    "definition": "Bahagian daripada semua hantaran."
   },
   {
    "key": "field_tilt",
    "label": "Kecondongan padang",
-   "home": 76.0,
-   "away": 24.0,
+   "home": 70.0,
+   "away": 30.0,
    "unit": "%",
    "definition": "Bahagian hantaran di sepertiga akhir."
   },
   {
    "key": "pass_accuracy",
    "label": "Ketepatan hantaran",
-   "home": 77.0,
-   "away": 82.0,
+   "home": 78.0,
+   "away": 68.0,
    "unit": "%",
    "definition": "Hantaran berjaya / hantaran dicuba."
   },
   {
    "key": "avg_pass_length",
    "label": "Purata jarak hantaran",
-   "home": 20.3,
-   "away": 20.1,
+   "home": 18.5,
+   "away": 21.2,
    "unit": "m",
    "definition": "Purata jarak hantaran yang dicuba."
   },
   {
    "key": "pass_difficulty",
    "label": "Purata kesukaran hantaran",
-   "home": 20.0,
-   "away": 17.0,
+   "home": 16.0,
+   "away": 16.0,
    "unit": "%",
    "definition": "Satu tolak kebarangkalian jangkaan hantaran berjaya."
   },
   {
    "key": "ppda",
    "label": "PPDA (tekanan)",
-   "home": 10.1,
-   "away": 10.8,
+   "home": 3.7,
+   "away": 6.7,
    "unit": null,
    "definition": "Hantaran lawan yang dibenarkan bagi setiap tindakan bertahan di kawasan tinggi. Lebih rendah = tekanan lebih kuat."
   },
   {
    "key": "pressures",
    "label": "Tekanan",
-   "home": 95.0,
-   "away": 155.0,
+   "home": 108.0,
+   "away": 146.0,
    "unit": null,
    "definition": "Kali pemain menekan pembawa bola."
   },
   {
    "key": "ball_wins",
    "label": "Rampasan bola",
-   "home": 45.0,
-   "away": 90.0,
+   "home": 97.0,
+   "away": 81.0,
    "unit": null,
    "definition": "Terjahan dan pintasan."
   },
   {
    "key": "top_shot_speed",
    "label": "Rembatan terpantas",
-   "home": 121.4,
-   "away": 107.3,
+   "home": 114.5,
+   "away": 108.5,
    "unit": "km/h",
    "definition": "Kelajuan bola tertinggi bagi rembatan."
   },
@@ -149,31 +149,31 @@
    "key": "corners",
    "label": "Sepakan sudut",
    "home": 6.0,
-   "away": 4.0,
+   "away": 2.0,
    "unit": null,
    "definition": "Sepakan sudut diperoleh."
   },
   {
    "key": "fouls",
    "label": "Kekasaran",
-   "home": 6.0,
-   "away": 7.0,
+   "home": 3.0,
+   "away": 11.0,
    "unit": null,
    "definition": "Kekasaran dilakukan."
   }
  ],
  "control": {
-  "home_share": 0.727,
-  "chaos": 0.502,
-  "tempo": 6.7,
-  "momentum": 0.824,
+  "home_share": 0.801,
+  "chaos": 0.664,
+  "tempo": 8.3,
+  "momentum": 0.947,
   "phase": "home_control",
   "label": "Northgate City menguasai permainan"
  },
  "projection": {
-  "home_win": 0.27,
+  "home_win": 0.292,
   "draw": 0.578,
-  "away_win": 0.152,
+  "away_win": 0.13,
   "drivers": [
    {
     "key": "score",
@@ -188,17 +188,17 @@
    {
     "key": "home_rate",
     "label": "Jangkaan gol Northgate City setiap 90",
-    "value": "2.40"
+    "value": "2.55"
    },
    {
     "key": "away_rate",
     "label": "Jangkaan gol Kingston Vale setiap 90",
-    "value": "1.47"
+    "value": "1.27"
    },
    {
     "key": "live_weight",
     "label": "Pemberat data langsung",
-    "value": "71%"
+    "value": "45%"
    }
   ],
   "note": "Unjuran berdasarkan kedudukan, masa berbaki dan peluang yang dicipta, bukan odds pertaruhan."
@@ -284,534 +284,474 @@
   ],
   "momentum": [
    0.0,
-   -0.681,
-   -0.613,
-   -0.73,
-   -0.549,
-   -0.388,
-   -0.497,
-   -0.082,
-   -0.386,
-   0.232,
-   0.291,
-   0.353,
-   0.169,
-   0.307,
-   -0.219,
-   -0.282,
-   -0.276,
-   -0.194,
-   -0.22,
-   -0.317,
-   -0.216,
-   -0.18,
-   -0.132,
-   -0.131,
-   -0.204,
-   0.012,
-   0.028,
-   -0.157,
-   0.057,
-   0.206,
-   0.016,
-   0.015,
-   -0.092,
-   -0.173,
+   0.478,
+   -0.485,
+   -0.233,
+   -0.144,
+   -0.11,
+   0.104,
+   0.228,
+   0.475,
+   0.35,
+   0.238,
+   0.288,
+   0.462,
+   0.382,
+   -0.717,
+   -0.649,
+   -0.584,
+   -0.585,
+   -0.6,
+   -0.563,
+   -0.451,
+   -0.453,
+   -0.479,
+   -0.298,
    -0.158,
+   -0.218,
+   -0.228,
+   -0.126,
+   -0.151,
+   -0.115,
+   -0.09,
+   -0.072,
    -0.029,
-   -0.028,
-   -0.488,
-   -0.504,
-   -0.534,
-   -0.368,
-   -0.366,
-   -0.332,
-   -0.322,
-   -0.323,
-   -0.148,
-   -0.05,
-   0.301,
-   0.413,
-   0.269,
-   0.379,
-   0.385,
-   0.425,
-   0.379,
-   0.398,
-   0.439,
-   0.501,
-   0.472,
-   0.519,
-   0.518,
-   0.552,
-   0.578,
-   0.662,
-   0.698,
-   0.689,
-   0.726,
-   0.761,
-   0.765,
-   0.764,
-   0.763,
-   0.794,
-   0.722,
-   0.714,
-   0.781,
-   0.782,
-   0.824
+   0.04,
+   0.168,
+   -0.103,
+   -0.357,
+   -0.818,
+   -0.781,
+   -0.666,
+   -0.12,
+   -0.054,
+   -0.06,
+   -0.034,
+   -0.019,
+   -0.023,
+   -0.049,
+   -0.085,
+   0.489,
+   0.635,
+   0.732,
+   0.736,
+   0.74,
+   0.768,
+   0.696,
+   0.699,
+   0.74,
+   0.631,
+   0.621,
+   0.568,
+   0.818,
+   0.883,
+   0.858,
+   0.83,
+   0.749,
+   0.701,
+   0.713,
+   0.743,
+   0.723,
+   0.741,
+   0.755,
+   0.786,
+   0.901,
+   0.949,
+   0.96,
+   0.947
   ],
   "control_home": [
    0.5,
-   0.282,
-   0.293,
-   0.495,
-   0.53,
-   0.557,
-   0.513,
-   0.543,
-   0.528,
-   0.551,
-   0.557,
-   0.557,
-   0.538,
-   0.52,
-   0.535,
-   0.524,
-   0.547,
-   0.527,
-   0.518,
-   0.486,
-   0.463,
-   0.473,
-   0.494,
-   0.539,
-   0.487,
-   0.465,
-   0.475,
-   0.492,
-   0.541,
-   0.571,
-   0.593,
-   0.591,
-   0.564,
+   0.964,
    0.51,
+   0.596,
+   0.642,
+   0.663,
+   0.688,
+   0.693,
+   0.685,
+   0.643,
+   0.593,
+   0.592,
+   0.66,
+   0.586,
+   0.541,
+   0.525,
+   0.522,
+   0.456,
+   0.368,
+   0.417,
+   0.495,
+   0.459,
+   0.435,
+   0.482,
+   0.553,
+   0.519,
+   0.506,
+   0.501,
+   0.545,
+   0.573,
+   0.564,
+   0.563,
+   0.581,
+   0.605,
+   0.554,
+   0.567,
    0.533,
-   0.54,
-   0.534,
-   0.465,
-   0.447,
-   0.451,
-   0.445,
-   0.455,
-   0.524,
-   0.565,
-   0.588,
-   0.613,
-   0.627,
-   0.699,
-   0.71,
-   0.757,
-   0.764,
-   0.777,
-   0.78,
-   0.78,
-   0.777,
-   0.771,
-   0.777,
-   0.779,
-   0.776,
-   0.76,
+   0.551,
+   0.605,
+   0.587,
+   0.577,
+   0.535,
+   0.509,
+   0.487,
+   0.501,
+   0.538,
+   0.596,
+   0.542,
+   0.537,
+   0.506,
+   0.503,
+   0.575,
+   0.64,
+   0.665,
+   0.642,
+   0.642,
+   0.655,
+   0.66,
+   0.678,
+   0.667,
+   0.707,
+   0.708,
+   0.668,
+   0.616,
+   0.615,
+   0.592,
+   0.592,
+   0.647,
+   0.61,
+   0.687,
+   0.683,
+   0.721,
+   0.721,
    0.756,
-   0.75,
-   0.752,
-   0.749,
-   0.754,
-   0.76,
-   0.756,
-   0.755,
-   0.763,
-   0.773,
-   0.764,
-   0.775,
-   0.768,
-   0.747,
-   0.734,
-   0.727
+   0.79,
+   0.801
   ],
   "chaos": [
    0.0,
-   0.213,
-   0.24,
-   0.547,
-   0.547,
-   0.629,
-   0.638,
-   0.752,
-   0.75,
-   0.825,
-   0.797,
-   0.816,
-   0.846,
-   0.84,
-   0.945,
-   0.951,
-   0.881,
-   0.904,
-   0.868,
-   0.836,
-   0.869,
-   0.824,
-   0.745,
-   0.524,
-   0.409,
-   0.447,
-   0.481,
-   0.517,
-   0.537,
-   0.554,
-   0.563,
-   0.553,
-   0.581,
-   0.598,
-   0.568,
-   0.529,
-   0.528,
-   0.637,
-   0.745,
-   0.76,
-   0.733,
-   0.715,
-   0.686,
-   0.669,
-   0.684,
-   0.663,
+   0.182,
+   0.685,
    0.665,
-   0.711,
-   0.66,
-   0.72,
-   0.709,
-   0.708,
-   0.716,
+   0.665,
+   0.62,
+   0.648,
+   0.685,
+   0.715,
+   0.674,
+   0.654,
+   0.622,
+   0.538,
+   0.511,
+   0.69,
+   0.697,
+   0.656,
+   0.611,
+   0.592,
+   0.619,
+   0.65,
+   0.663,
+   0.588,
+   0.451,
+   0.437,
+   0.485,
+   0.512,
+   0.523,
+   0.509,
+   0.525,
+   0.516,
+   0.533,
+   0.501,
+   0.495,
+   0.517,
+   0.515,
+   0.546,
+   0.736,
+   0.785,
+   0.768,
+   0.785,
+   0.817,
    0.756,
+   0.738,
    0.719,
-   0.637,
-   0.57,
+   0.73,
+   0.738,
+   0.642,
+   0.749,
+   0.783,
+   0.805,
+   0.806,
+   0.864,
+   0.88,
+   0.869,
+   0.844,
+   0.806,
+   0.681,
+   0.604,
    0.568,
-   0.594,
-   0.506,
-   0.476,
-   0.575,
-   0.721,
-   0.795,
-   0.793,
-   0.811,
-   0.82,
-   0.815,
-   0.795,
-   0.781,
-   0.777,
+   0.621,
+   0.712,
+   0.705,
+   0.652,
+   0.644,
    0.662,
-   0.553,
-   0.471,
-   0.487,
-   0.502
+   0.713,
+   0.685,
+   0.646,
+   0.587,
+   0.539,
+   0.475,
+   0.566,
+   0.705,
+   0.689,
+   0.664
   ],
   "home_win": [
-   0.543,
+   0.562,
+   0.558,
+   0.555,
+   0.552,
+   0.549,
+   0.545,
+   0.542,
+   0.539,
+   0.539,
    0.536,
-   0.529,
-   0.49,
-   0.484,
-   0.479,
-   0.474,
-   0.493,
-   0.487,
-   0.482,
-   0.504,
-   0.525,
-   0.519,
-   0.513,
-   0.141,
-   0.138,
-   0.135,
-   0.132,
-   0.129,
-   0.126,
-   0.137,
-   0.133,
-   0.13,
-   0.126,
-   0.123,
-   0.157,
-   0.153,
-   0.142,
-   0.159,
-   0.177,
+   0.531,
+   0.527,
+   0.53,
+   0.527,
+   0.234,
+   0.232,
+   0.23,
+   0.226,
+   0.222,
+   0.218,
+   0.216,
+   0.212,
+   0.208,
+   0.207,
+   0.203,
+   0.199,
+   0.194,
+   0.192,
+   0.187,
    0.183,
-   0.177,
-   0.172,
-   0.167,
-   0.161,
-   0.161,
+   0.179,
+   0.175,
+   0.171,
+   0.166,
+   0.164,
+   0.16,
    0.156,
+   0.038,
+   0.037,
+   0.035,
    0.033,
-   0.031,
+   0.033,
+   0.032,
+   0.03,
    0.029,
-   0.028,
+   0.027,
    0.026,
+   0.024,
+   0.023,
+   0.026,
+   0.029,
+   0.027,
    0.025,
    0.023,
    0.022,
    0.02,
-   0.021,
    0.02,
-   0.02,
-   0.019,
+   0.018,
    0.017,
-   0.016,
    0.015,
-   0.014,
-   0.013,
-   0.012,
-   0.017,
-   0.016,
-   0.015,
-   0.014,
-   0.014,
-   0.103,
-   0.098,
-   0.092,
-   0.086,
-   0.081,
-   0.075,
-   0.074,
-   0.069,
+   0.018,
+   0.101,
+   0.095,
+   0.09,
+   0.085,
+   0.08,
+   0.076,
+   0.073,
+   0.068,
    0.063,
-   0.065,
-   0.059,
-   0.054,
-   0.054,
-   0.283,
-   0.27
+   0.058,
+   0.053,
+   0.055,
+   0.061,
+   0.306,
+   0.292
   ],
   "draw": [
-   0.218,
-   0.224,
-   0.23,
-   0.236,
-   0.242,
-   0.248,
-   0.254,
-   0.252,
-   0.258,
-   0.264,
-   0.26,
-   0.255,
-   0.261,
-   0.268,
-   0.173,
-   0.175,
-   0.177,
-   0.179,
-   0.181,
-   0.183,
-   0.19,
-   0.192,
-   0.193,
-   0.195,
-   0.196,
+   0.2,
+   0.203,
+   0.206,
+   0.209,
    0.212,
+   0.215,
+   0.218,
+   0.222,
+   0.223,
+   0.227,
+   0.23,
+   0.233,
+   0.234,
+   0.238,
    0.213,
-   0.207,
+   0.214,
    0.216,
+   0.218,
+   0.219,
+   0.221,
+   0.222,
    0.224,
+   0.225,
+   0.227,
    0.228,
-   0.229,
+   0.23,
    0.231,
    0.232,
    0.233,
+   0.235,
    0.236,
    0.237,
-   0.082,
-   0.081,
-   0.079,
-   0.078,
-   0.076,
-   0.074,
-   0.073,
-   0.071,
-   0.069,
-   0.071,
-   0.069,
-   0.07,
-   0.068,
-   0.066,
-   0.064,
-   0.062,
-   0.059,
-   0.057,
-   0.055,
-   0.067,
-   0.067,
-   0.064,
-   0.061,
-   0.061,
-   0.245,
-   0.243,
-   0.241,
+   0.238,
    0.239,
-   0.237,
-   0.234,
-   0.234,
-   0.231,
-   0.227,
-   0.231,
-   0.226,
-   0.221,
+   0.24,
+   0.241,
+   0.241,
+   0.096,
+   0.094,
+   0.092,
+   0.091,
+   0.092,
+   0.09,
+   0.088,
+   0.086,
+   0.084,
+   0.082,
+   0.08,
+   0.078,
+   0.085,
+   0.089,
+   0.087,
+   0.084,
+   0.082,
+   0.079,
+   0.077,
+   0.076,
+   0.073,
+   0.07,
+   0.067,
+   0.073,
+   0.253,
+   0.251,
+   0.249,
+   0.247,
+   0.244,
+   0.241,
+   0.24,
+   0.236,
+   0.232,
+   0.228,
    0.222,
-   0.558,
+   0.227,
+   0.238,
+   0.559,
    0.578
   ],
   "away_win": [
+   0.238,
+   0.238,
+   0.239,
+   0.239,
+   0.239,
    0.24,
    0.24,
    0.24,
-   0.274,
-   0.274,
-   0.273,
-   0.272,
-   0.255,
-   0.255,
-   0.254,
-   0.236,
-   0.22,
-   0.22,
-   0.219,
-   0.685,
-   0.686,
-   0.688,
-   0.689,
-   0.69,
-   0.692,
-   0.673,
-   0.675,
-   0.677,
-   0.679,
-   0.681,
-   0.631,
-   0.634,
-   0.651,
-   0.625,
-   0.6,
-   0.59,
-   0.593,
-   0.597,
-   0.601,
-   0.605,
-   0.602,
-   0.607,
+   0.237,
+   0.238,
+   0.239,
+   0.239,
+   0.235,
+   0.235,
+   0.553,
+   0.554,
+   0.554,
+   0.557,
+   0.559,
+   0.562,
+   0.562,
+   0.564,
+   0.567,
+   0.566,
+   0.569,
+   0.572,
+   0.575,
+   0.576,
+   0.579,
+   0.582,
+   0.585,
+   0.588,
+   0.592,
+   0.595,
+   0.596,
+   0.599,
+   0.603,
+   0.866,
+   0.869,
+   0.873,
+   0.876,
+   0.875,
+   0.878,
+   0.881,
    0.885,
    0.888,
+   0.892,
+   0.895,
+   0.899,
+   0.888,
+   0.882,
+   0.886,
    0.891,
-   0.894,
-   0.898,
-   0.901,
-   0.904,
-   0.907,
-   0.911,
-   0.907,
-   0.911,
+   0.895,
+   0.899,
+   0.903,
+   0.905,
+   0.909,
+   0.914,
+   0.918,
    0.91,
-   0.913,
-   0.917,
-   0.92,
-   0.923,
-   0.927,
-   0.93,
-   0.934,
-   0.917,
-   0.917,
-   0.921,
-   0.925,
-   0.926,
-   0.652,
-   0.659,
-   0.667,
-   0.674,
-   0.682,
-   0.691,
-   0.692,
+   0.646,
+   0.654,
+   0.661,
+   0.668,
+   0.676,
+   0.683,
+   0.687,
+   0.696,
+   0.705,
+   0.714,
+   0.725,
+   0.719,
    0.701,
-   0.71,
-   0.704,
-   0.715,
-   0.726,
-   0.724,
-   0.159,
-   0.152
+   0.135,
+   0.13
   ]
  },
  "cards": [
-  {
-   "insight_id": "SCN-comeback-7537-pass_of_the_moment-19",
-   "type": "pass_of_the_moment",
-   "variant": "pass",
-   "minute": 75,
-   "second": 37,
-   "clock": "75:37",
-   "priority": 3,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "L. Quinn"
-   ],
-   "headline": "Hantaran terbaik: L. Quinn",
-   "body": "L. Quinn: hantaran 40 m pada 87 km/h, kesukaran 62%, menambah 0.20 xT.",
-   "why": [
-    "Kesukaran ialah satu tolak kadar jangkaan hantaran berjaya, berdasarkan jarak, kedalaman dan tekanan."
-   ],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Pemain",
-     "value": "L. Quinn"
-    },
-    {
-     "key": "length",
-     "label": "Jarak hantaran",
-     "value": "40 m"
-    },
-    {
-     "key": "speed",
-     "label": "Kelajuan bola",
-     "value": "87 km/h"
-    },
-    {
-     "key": "difficulty",
-     "label": "Kesukaran hantaran",
-     "value": "62%"
-    },
-    {
-     "key": "xt",
-     "label": "xT ditambah",
-     "value": "0.20"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-1065",
-     "minute": 75,
-     "description": "75' L. Quinn (NGC) hantaran 40 m"
-    }
-   ],
-   "tags": [
-    "your_team",
-    "focus_player"
-   ],
-   "language": "ms",
-   "persona": "analyst",
-   "source": "template"
-  },
   {
    "insight_id": "SCN-comeback-7500-player_focus-L. Quinn",
    "type": "player_focus",
@@ -826,7 +766,7 @@
     "L. Quinn"
    ],
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn: 72 sentuhan, 32 hantaran berjaya (65%), 0.76 xT ditambah, 2 rembatan, 2 rampasan bola.",
+   "body": "L. Quinn: 74 sentuhan, 33 hantaran berjaya (73%), 0.49 xT ditambah, 3 rembatan, 11 rampasan bola.",
    "why": [],
    "facts_used": [
     {
@@ -837,49 +777,49 @@
     {
      "key": "touches",
      "label": "Sentuhan",
-     "value": "72"
+     "value": "74"
     },
     {
      "key": "passes_completed",
      "label": "Hantaran berjaya",
-     "value": "32"
+     "value": "33"
     },
     {
      "key": "pass_accuracy",
      "label": "Ketepatan hantaran",
-     "value": "65%"
+     "value": "73%"
     },
     {
      "key": "xt",
      "label": "xT ditambah",
-     "value": "0.76"
+     "value": "0.49"
     },
     {
      "key": "shots",
      "label": "Rembatan",
-     "value": "2"
+     "value": "3"
     },
     {
      "key": "ball_wins",
      "label": "Rampasan bola",
-     "value": "2"
+     "value": "11"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-1046",
+     "event_id": "SCN-comeback-1107",
+     "minute": 71,
+     "description": "71' L. Quinn (NGC) hantaran 11 m"
+    },
+    {
+     "event_id": "SCN-comeback-1133",
+     "minute": 73,
+     "description": "73' L. Quinn (NGC) hantaran 16 m"
+    },
+    {
+     "event_id": "SCN-comeback-1149",
      "minute": 74,
-     "description": "74' L. Quinn (NGC) menekan"
-    },
-    {
-     "event_id": "SCN-comeback-1054",
-     "minute": 75,
-     "description": "75' L. Quinn (NGC) menekan"
-    },
-    {
-     "event_id": "SCN-comeback-1065",
-     "minute": 75,
-     "description": "75' L. Quinn (NGC) hantaran 40 m"
+     "description": "74' L. Quinn (NGC) menjaringkan gol (0.35 xG)"
     }
    ],
    "tags": [
@@ -891,63 +831,24 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-7459-tempo_shift-18",
-   "type": "tempo_shift",
-   "variant": "down",
-   "minute": 74,
-   "second": 59,
-   "clock": "74:59",
-   "priority": 3,
-   "side": null,
-   "team_id": null,
-   "players": [],
-   "headline": "Rentak permainan menjadi perlahan",
-   "body": "6.7 hantaran seminit dalam 10 minit terakhir, berbanding 9.8.",
-   "why": [
-    "Rentak ialah jumlah hantaran seminit oleh kedua-dua pasukan."
-   ],
-   "facts_used": [
-    {
-     "key": "tempo",
-     "label": "Hantaran seminit",
-     "value": "6.7"
-    },
-    {
-     "key": "tempo_before",
-     "label": "Hantaran seminit sebelum",
-     "value": "9.8"
-    },
-    {
-     "key": "window",
-     "label": "Tempoh (minit)",
-     "value": "10"
-    }
-   ],
-   "evidence": [],
-   "tags": [],
-   "language": "ms",
-   "persona": "analyst",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-7410-goal-17",
+   "insight_id": "SCN-comeback-7413-goal-14",
    "type": "goal",
-   "variant": "deserved",
+   "variant": "equaliser",
    "minute": 74,
-   "second": 10,
-   "clock": "74:10",
+   "second": 13,
+   "clock": "74:13",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
     "L. Quinn",
-    "H. Novak"
+    "R. Mensah"
    ],
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "L. Quinn menjaringkan gol daripada peluang 0.22 xG, dengan kelajuan 89 km/h. Kedudukan: 2-2. Hantaran daripada H. Novak.",
+   "headline": "Northgate City menyamakan kedudukan",
+   "body": "L. Quinn menjaringkan gol daripada peluang 0.35 xG, dengan kelajuan 105 km/h. Kedudukan: 2-2. Hantaran daripada R. Mensah.",
    "why": [
-    "Northgate City mencipta lebih banyak peluang: 2.14 xG berbanding 1.29.",
-    "Peluang Northgate City untuk menang: 5% → 28%."
+    "Kedudukan kembali seri, 2-2.",
+    "Peluang Northgate City untuk menang: 6% → 31%."
    ],
    "facts_used": [
     {
@@ -968,49 +869,39 @@
     {
      "key": "xg",
      "label": "xG rembatan",
-     "value": "0.22"
+     "value": "0.35"
     },
     {
      "key": "speed",
      "label": "Kelajuan bola",
-     "value": "89 km/h"
+     "value": "105 km/h"
     },
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "5%"
+     "value": "6%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "28%"
-    },
-    {
-     "key": "team_xg",
-     "label": "xG pasukan",
-     "value": "2.14"
-    },
-    {
-     "key": "opp_xg",
-     "label": "xG lawan",
-     "value": "1.29"
+     "value": "31%"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "H. Novak"
+     "value": "R. Mensah"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-1041",
+     "event_id": "SCN-comeback-1148",
      "minute": 74,
-     "description": "74' H. Novak (NGC) hantaran 22 m"
+     "description": "74' R. Mensah (NGC) hantaran 7 m"
     },
     {
-     "event_id": "SCN-comeback-1042",
+     "event_id": "SCN-comeback-1149",
      "minute": 74,
-     "description": "74' L. Quinn (NGC) menjaringkan gol (0.22 xG)"
+     "description": "74' L. Quinn (NGC) menjaringkan gol (0.35 xG)"
     }
    ],
    "tags": [
@@ -1022,22 +913,22 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-6753-shot_speed-16",
-   "type": "shot_speed",
-   "variant": "blocked",
-   "minute": 67,
-   "second": 53,
-   "clock": "67:53",
-   "priority": 3,
+   "insight_id": "SCN-comeback-7327-big_chance-13",
+   "type": "big_chance",
+   "variant": "saved",
+   "minute": 73,
+   "second": 27,
+   "clock": "73:27",
+   "priority": 2,
    "side": "home",
    "team_id": "NGC",
    "players": [
     "N. Ekwueme"
    ],
-   "headline": "Rembatan 117 km/h oleh N. Ekwueme",
-   "body": "N. Ekwueme: rembatan 117 km/h dari jarak 31 m.",
+   "headline": "Peluang keemasan untuk Northgate City",
+   "body": "N. Ekwueme mensia-siakan peluang 0.50 xG.",
    "why": [
-    "Kelajuan bola daripada suapan sintetik; pada kelajuan ini penjaga gol hampir tiada masa untuk bertindak."
+    "Kebarangkalian peluang seperti ini menjadi gol: 50%."
    ],
    "facts_used": [
     {
@@ -1046,21 +937,26 @@
      "value": "N. Ekwueme"
     },
     {
-     "key": "speed",
-     "label": "Kelajuan bola",
-     "value": "117 km/h"
+     "key": "team",
+     "label": "Pasukan",
+     "value": "Northgate City"
     },
     {
-     "key": "distance",
-     "label": "Jarak",
-     "value": "31 m"
+     "key": "xg",
+     "label": "xG rembatan",
+     "value": "0.50"
+    },
+    {
+     "key": "chance_pct",
+     "label": "Kebarangkalian gol",
+     "value": "50%"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0966",
-     "minute": 67,
-     "description": "67' N. Ekwueme (NGC) rembatan disekat (0.08 xG)"
+     "event_id": "SCN-comeback-1134",
+     "minute": 73,
+     "description": "73' N. Ekwueme (NGC) rembatan diselamatkan (0.50 xG)"
     }
    ],
    "tags": [
@@ -1071,36 +967,31 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-6559-chaos_phase-15",
-   "type": "chaos_phase",
-   "variant": "chaos",
-   "minute": 65,
+   "insight_id": "SCN-comeback-6959-tempo_shift-12",
+   "type": "tempo_shift",
+   "variant": "down",
+   "minute": 69,
    "second": 59,
-   "clock": "65:59",
-   "priority": 2,
+   "clock": "69:59",
+   "priority": 3,
    "side": null,
    "team_id": null,
    "players": [],
-   "headline": "Fasa huru-hara",
-   "body": "Indeks huru-hara 81%: 25 kehilangan bola dan 6 rembatan dalam 10 minit terakhir.",
+   "headline": "Rentak permainan menjadi perlahan",
+   "body": "7.6 hantaran seminit dalam 10 minit terakhir, berbanding 10.5.",
    "why": [
-    "Huru-hara menggabungkan kehilangan bola, perubahan momentum dan jumlah ancaman. Tiada pasukan yang menguasai permainan."
+    "Rentak ialah jumlah hantaran seminit oleh kedua-dua pasukan."
    ],
    "facts_used": [
     {
-     "key": "chaos",
-     "label": "Indeks huru-hara",
-     "value": "81%"
+     "key": "tempo",
+     "label": "Hantaran seminit",
+     "value": "7.6"
     },
     {
-     "key": "turnovers",
-     "label": "Kehilangan bola",
-     "value": "25"
-    },
-    {
-     "key": "shots",
-     "label": "Rembatan",
-     "value": "6"
+     "key": "tempo_before",
+     "label": "Hantaran seminit sebelum",
+     "value": "10.5"
     },
     {
      "key": "window",
@@ -1110,19 +1001,14 @@
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0802",
-     "minute": 57,
-     "description": "57' N. Vidal (NGC) rembatan tersasar (0.07 xG)"
-    },
-    {
-     "event_id": "SCN-comeback-0830",
+     "event_id": "SCN-comeback-0934",
      "minute": 60,
-     "description": "60' N. Vidal (NGC) rembatan disekat (0.05 xG)"
+     "description": "60' G. Ferreira (NGC) hantaran 12 m"
     },
     {
-     "event_id": "SCN-comeback-0856",
-     "minute": 61,
-     "description": "61' G. Ferreira (NGC) menjaringkan gol (0.45 xG)"
+     "event_id": "SCN-comeback-1075",
+     "minute": 69,
+     "description": "69' J. Okafor (NGC) hantaran 2 m"
     }
    ],
    "tags": [],
@@ -1131,82 +1017,30 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-6459-player_milestone-14",
-   "type": "player_milestone",
-   "variant": "passes",
-   "minute": 64,
-   "second": 59,
-   "clock": "64:59",
-   "priority": 3,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "L. Gallo"
-   ],
-   "headline": "L. Gallo: 40 hantaran berjaya",
-   "body": "L. Gallo mencapai 40 hantaran berjaya.",
-   "why": [],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Pemain",
-     "value": "L. Gallo"
-    },
-    {
-     "key": "count",
-     "label": "Jumlah",
-     "value": "40"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0870",
-     "minute": 62,
-     "description": "62' L. Gallo (NGC) hantaran 18 m"
-    },
-    {
-     "event_id": "SCN-comeback-0905",
-     "minute": 63,
-     "description": "63' L. Gallo (NGC) hantaran 14 m"
-    },
-    {
-     "event_id": "SCN-comeback-0919",
-     "minute": 64,
-     "description": "64' L. Gallo (NGC) hantaran 9 m"
-    }
-   ],
-   "tags": [
-    "your_team"
-   ],
-   "language": "ms",
-   "persona": "analyst",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-6143-goal-13",
+   "insight_id": "SCN-comeback-6114-goal-11",
    "type": "goal",
    "variant": "deserved",
    "minute": 61,
-   "second": 43,
-   "clock": "61:43",
+   "second": 14,
+   "clock": "61:14",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
-    "G. Ferreira",
-    "N. Ekwueme"
+    "R. Mensah",
+    "L. Gallo"
    ],
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "G. Ferreira menjaringkan gol daripada peluang 0.45 xG, dengan kelajuan 100 km/h. Kedudukan: 1-2. Hantaran daripada N. Ekwueme.",
+   "headline": "Gol yang wajar buat Northgate City",
+   "body": "R. Mensah menjaringkan gol daripada peluang 0.32 xG, dengan kelajuan 88 km/h. Kedudukan: 1-2. Hantaran daripada L. Gallo.",
    "why": [
-    "Northgate City mencipta lebih banyak peluang: 1.55 xG berbanding 1.27.",
-    "Peluang Northgate City untuk menang: 1% → 10%."
+    "Northgate City mencipta lebih banyak peluang: 1.21 xG berbanding 0.90.",
+    "Peluang Northgate City untuk menang: 2% → 10%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Pemain",
-     "value": "G. Ferreira"
+     "value": "R. Mensah"
     },
     {
      "key": "team",
@@ -1221,17 +1055,17 @@
     {
      "key": "xg",
      "label": "xG rembatan",
-     "value": "0.45"
+     "value": "0.32"
     },
     {
      "key": "speed",
      "label": "Kelajuan bola",
-     "value": "100 km/h"
+     "value": "88 km/h"
     },
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "1%"
+     "value": "2%"
     },
     {
      "key": "win_after",
@@ -1241,29 +1075,29 @@
     {
      "key": "team_xg",
      "label": "xG pasukan",
-     "value": "1.55"
+     "value": "1.21"
     },
     {
      "key": "opp_xg",
      "label": "xG lawan",
-     "value": "1.27"
+     "value": "0.90"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "N. Ekwueme"
+     "value": "L. Gallo"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0855",
+     "event_id": "SCN-comeback-0953",
      "minute": 61,
-     "description": "61' N. Ekwueme (NGC) hantaran 15 m"
+     "description": "61' L. Gallo (NGC) hantaran 12 m"
     },
     {
-     "event_id": "SCN-comeback-0856",
+     "event_id": "SCN-comeback-0954",
      "minute": 61,
-     "description": "61' G. Ferreira (NGC) menjaringkan gol (0.45 xG)"
+     "description": "61' R. Mensah (NGC) menjaringkan gol (0.32 xG)"
     }
    ],
    "tags": [
@@ -1287,7 +1121,7 @@
     "L. Quinn"
    ],
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn: 57 sentuhan, 26 hantaran berjaya (70%), 0.56 xT ditambah, 1 rembatan, 2 rampasan bola.",
+   "body": "L. Quinn: 58 sentuhan, 23 hantaran berjaya (68%), 0.27 xT ditambah, 2 rembatan, 10 rampasan bola.",
    "why": [],
    "facts_used": [
     {
@@ -1298,49 +1132,49 @@
     {
      "key": "touches",
      "label": "Sentuhan",
-     "value": "57"
+     "value": "58"
     },
     {
      "key": "passes_completed",
      "label": "Hantaran berjaya",
-     "value": "26"
+     "value": "23"
     },
     {
      "key": "pass_accuracy",
      "label": "Ketepatan hantaran",
-     "value": "70%"
+     "value": "68%"
     },
     {
      "key": "xt",
      "label": "xT ditambah",
-     "value": "0.56"
+     "value": "0.27"
     },
     {
      "key": "shots",
      "label": "Rembatan",
-     "value": "1"
+     "value": "2"
     },
     {
      "key": "ball_wins",
      "label": "Rampasan bola",
-     "value": "2"
+     "value": "10"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0820",
-     "minute": 59,
-     "description": "59' L. Quinn (NGC) hantaran 36 m"
+     "event_id": "SCN-comeback-0912",
+     "minute": 58,
+     "description": "58' L. Quinn (NGC) hantaran 48 m"
     },
     {
-     "event_id": "SCN-comeback-0822",
-     "minute": 59,
-     "description": "59' L. Quinn (NGC) hantaran 12 m"
-    },
-    {
-     "event_id": "SCN-comeback-0829",
+     "event_id": "SCN-comeback-0935",
      "minute": 60,
-     "description": "60' L. Quinn (NGC) hantaran 10 m"
+     "description": "60' L. Quinn (NGC) hantaran 9 m"
+    },
+    {
+     "event_id": "SCN-comeback-0945",
+     "minute": 60,
+     "description": "60' L. Quinn (NGC) hantaran 13 m"
     }
    ],
    "tags": [
@@ -1352,20 +1186,92 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-5159-momentum_flip-12",
+   "insight_id": "SCN-comeback-5259-pressure_spike-10",
+   "type": "pressure_spike",
+   "variant": "press",
+   "minute": 52,
+   "second": 59,
+   "clock": "52:59",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [],
+   "headline": "Northgate City meningkatkan tekanan",
+   "body": "PPDA 3.4 dalam 10 minit terakhir: 10 rampasan bola di kawasan tinggi, 8 kesilapan dipaksa. Sebelum itu ia 6.8 dalam sepuluh minit.",
+   "why": [
+    "PPDA ialah bilangan hantaran lawan yang dibenarkan bagi setiap tindakan bertahan; lebih rendah bermakna tekanan lebih kuat."
+   ],
+   "facts_used": [
+    {
+     "key": "team",
+     "label": "Pasukan",
+     "value": "Northgate City"
+    },
+    {
+     "key": "ppda",
+     "label": "PPDA",
+     "value": "3.4"
+    },
+    {
+     "key": "ball_wins",
+     "label": "Rampasan bola",
+     "value": "10"
+    },
+    {
+     "key": "forced_errors",
+     "label": "Kesilapan dipaksa",
+     "value": "8"
+    },
+    {
+     "key": "window",
+     "label": "Tempoh (minit)",
+     "value": "10"
+    },
+    {
+     "key": "ppda_before",
+     "label": "PPDA sebelum",
+     "value": "6.8"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0782",
+     "minute": 52,
+     "description": "52' L. Quinn (NGC) terjahan"
+    },
+    {
+     "event_id": "SCN-comeback-0789",
+     "minute": 52,
+     "description": "52' J. Okafor (NGC) pintasan"
+    },
+    {
+     "event_id": "SCN-comeback-0798",
+     "minute": 52,
+     "description": "52' G. Ferreira (NGC) terjahan"
+    }
+   ],
+   "tags": [
+    "your_team"
+   ],
+   "language": "ms",
+   "persona": "analyst",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-4959-momentum_flip-9",
    "type": "momentum_flip",
    "variant": "flip",
-   "minute": 51,
+   "minute": 49,
    "second": 59,
-   "clock": "51:59",
+   "clock": "49:59",
    "priority": 2,
    "side": "home",
    "team_id": "NGC",
    "players": [
-    "F. Moreau"
+    "L. Quinn"
    ],
    "headline": "Momentum beralih kepada Northgate City",
-   "body": "Northgate City memiliki 69% daripada ancaman terkini: 0.94 berbanding 0.25 dalam 5 minit terakhir. F. Moreau menjadi penggeraknya.",
+   "body": "Northgate City memiliki 82% daripada ancaman terkini: 0.50 berbanding 0.03 dalam 5 minit terakhir. L. Quinn menjadi penggeraknya.",
    "why": [
     "Momentum memberi pemberat lebih kepada ancaman terkini (xT ditambah xG), jadi ia cepat berubah."
    ],
@@ -1378,17 +1284,17 @@
     {
      "key": "share",
      "label": "Bahagian ancaman",
-     "value": "69%"
+     "value": "82%"
     },
     {
      "key": "team_threat",
      "label": "Ancaman pasukan",
-     "value": "0.94"
+     "value": "0.50"
     },
     {
      "key": "opp_threat",
      "label": "Ancaman lawan",
-     "value": "0.25"
+     "value": "0.03"
     },
     {
      "key": "window",
@@ -1398,87 +1304,29 @@
     {
      "key": "player",
      "label": "Pemain",
-     "value": "F. Moreau"
+     "value": "L. Quinn"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0658",
-     "minute": 47,
-     "description": "47' F. Moreau (NGC) hantaran 26 m"
-    },
-    {
-     "event_id": "SCN-comeback-0674",
-     "minute": 49,
-     "description": "49' H. Moreau (NGC) hantaran 31 m"
-    },
-    {
-     "event_id": "SCN-comeback-0699",
-     "minute": 50,
-     "description": "50' L. Quinn (NGC) hantaran 20 m"
-    }
-   ],
-   "tags": [
-    "your_team"
-   ],
-   "language": "ms",
-   "persona": "analyst",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-4826-pass_of_the_moment-11",
-   "type": "pass_of_the_moment",
-   "variant": "pass",
-   "minute": 48,
-   "second": 26,
-   "clock": "48:26",
-   "priority": 3,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "F. Hart"
-   ],
-   "headline": "Hantaran terbaik: F. Hart",
-   "body": "F. Hart: hantaran 36 m pada 63 km/h, kesukaran 52%, menambah 0.11 xT.",
-   "why": [
-    "Kesukaran ialah satu tolak kadar jangkaan hantaran berjaya, berdasarkan jarak, kedalaman dan tekanan."
-   ],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Pemain",
-     "value": "F. Hart"
-    },
-    {
-     "key": "length",
-     "label": "Jarak hantaran",
-     "value": "36 m"
-    },
-    {
-     "key": "speed",
-     "label": "Kelajuan bola",
-     "value": "63 km/h"
-    },
-    {
-     "key": "difficulty",
-     "label": "Kesukaran hantaran",
-     "value": "52%"
-    },
-    {
-     "key": "xt",
-     "label": "xT ditambah",
-     "value": "0.11"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0663",
+     "event_id": "SCN-comeback-0733",
      "minute": 48,
-     "description": "48' F. Hart (NGC) hantaran 36 m"
+     "description": "48' L. Quinn (NGC) hantaran 25 m"
+    },
+    {
+     "event_id": "SCN-comeback-0737",
+     "minute": 48,
+     "description": "48' N. Vidal (NGC) hantaran 15 m"
+    },
+    {
+     "event_id": "SCN-comeback-0738",
+     "minute": 49,
+     "description": "49' L. Quinn (NGC) rembatan tersasar (0.21 xG)"
     }
    ],
    "tags": [
-    "your_team"
+    "your_team",
+    "focus_player"
    ],
    "language": "ms",
    "persona": "analyst",
@@ -1498,7 +1346,7 @@
     "L. Quinn"
    ],
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn: 38 sentuhan, 15 hantaran berjaya (75%), 0.24 xT ditambah, 0 rembatan, 2 rampasan bola.",
+   "body": "L. Quinn: 33 sentuhan, 14 hantaran berjaya (67%), 0.02 xT ditambah, 1 rembatan, 5 rampasan bola.",
    "why": [],
    "facts_used": [
     {
@@ -1509,49 +1357,49 @@
     {
      "key": "touches",
      "label": "Sentuhan",
-     "value": "38"
+     "value": "33"
     },
     {
      "key": "passes_completed",
      "label": "Hantaran berjaya",
-     "value": "15"
+     "value": "14"
     },
     {
      "key": "pass_accuracy",
      "label": "Ketepatan hantaran",
-     "value": "75%"
+     "value": "67%"
     },
     {
      "key": "xt",
      "label": "xT ditambah",
-     "value": "0.24"
+     "value": "0.02"
     },
     {
      "key": "shots",
      "label": "Rembatan",
-     "value": "0"
+     "value": "1"
     },
     {
      "key": "ball_wins",
      "label": "Rampasan bola",
-     "value": "2"
+     "value": "5"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0597",
-     "minute": 42,
-     "description": "42' L. Quinn (NGC) hantaran 10 m"
+     "event_id": "SCN-comeback-0650",
+     "minute": 43,
+     "description": "43' L. Quinn (NGC) hantaran 9 m"
     },
     {
-     "event_id": "SCN-comeback-0633",
-     "minute": 45,
-     "description": "45' L. Quinn (NGC) hantaran 15 m"
+     "event_id": "SCN-comeback-0664",
+     "minute": 44,
+     "description": "44' L. Quinn (NGC) hantaran 22 m"
     },
     {
-     "event_id": "SCN-comeback-0635",
+     "event_id": "SCN-comeback-0676",
      "minute": 45,
-     "description": "45' L. Quinn (NGC) hantaran 23 m"
+     "description": "45' L. Quinn (NGC) hantaran 16 m"
     }
    ],
    "tags": [
@@ -1563,90 +1411,36 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-4418-pass_of_the_moment-10",
-   "type": "pass_of_the_moment",
-   "variant": "pass",
-   "minute": 44,
-   "second": 18,
-   "clock": "44:18",
-   "priority": 3,
-   "side": "away",
-   "team_id": "KST",
-   "players": [
-    "K. Kovac"
-   ],
-   "headline": "Hantaran terbaik: K. Kovac",
-   "body": "K. Kovac: hantaran 61 m pada 91 km/h, kesukaran 69%, menambah 0.12 xT.",
-   "why": [
-    "Kesukaran ialah satu tolak kadar jangkaan hantaran berjaya, berdasarkan jarak, kedalaman dan tekanan."
-   ],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Pemain",
-     "value": "K. Kovac"
-    },
-    {
-     "key": "length",
-     "label": "Jarak hantaran",
-     "value": "61 m"
-    },
-    {
-     "key": "speed",
-     "label": "Kelajuan bola",
-     "value": "91 km/h"
-    },
-    {
-     "key": "difficulty",
-     "label": "Kesukaran hantaran",
-     "value": "69%"
-    },
-    {
-     "key": "xt",
-     "label": "xT ditambah",
-     "value": "0.12"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0618",
-     "minute": 44,
-     "description": "44' K. Kovac (KST) hantaran 61 m"
-    }
-   ],
-   "tags": [
-    "against_your_team"
-   ],
-   "language": "ms",
-   "persona": "analyst",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-4159-tempo_shift-9",
-   "type": "tempo_shift",
-   "variant": "up",
-   "minute": 41,
+   "insight_id": "SCN-comeback-3859-chaos_phase-8",
+   "type": "chaos_phase",
+   "variant": "chaos",
+   "minute": 38,
    "second": 59,
-   "clock": "41:59",
-   "priority": 3,
+   "clock": "38:59",
+   "priority": 2,
    "side": null,
    "team_id": null,
    "players": [],
-   "headline": "Rentak permainan semakin laju",
-   "body": "8.9 hantaran seminit dalam 10 minit terakhir, berbanding 6.9.",
+   "headline": "Fasa huru-hara",
+   "body": "Indeks huru-hara 79%: 28 kehilangan bola dan 2 rembatan dalam 10 minit terakhir.",
    "why": [
-    "Rentak ialah jumlah hantaran seminit oleh kedua-dua pasukan."
+    "Huru-hara menggabungkan kehilangan bola, perubahan momentum dan jumlah ancaman. Tiada pasukan yang menguasai permainan."
    ],
    "facts_used": [
     {
-     "key": "tempo",
-     "label": "Hantaran seminit",
-     "value": "8.9"
+     "key": "chaos",
+     "label": "Indeks huru-hara",
+     "value": "79%"
     },
     {
-     "key": "tempo_before",
-     "label": "Hantaran seminit sebelum",
-     "value": "6.9"
+     "key": "turnovers",
+     "label": "Kehilangan bola",
+     "value": "28"
+    },
+    {
+     "key": "shots",
+     "label": "Rembatan",
+     "value": "2"
     },
     {
      "key": "window",
@@ -1654,37 +1448,53 @@
      "value": "10"
     }
    ],
-   "evidence": [],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0516",
+     "minute": 34,
+     "description": "34' N. Vidal (NGC) rembatan tersasar (0.02 xG)"
+    },
+    {
+     "event_id": "SCN-comeback-0560",
+     "minute": 37,
+     "description": "37' L. Novak (KST) menjaringkan gol (0.42 xG)"
+    },
+    {
+     "event_id": "SCN-comeback-0571",
+     "minute": 38,
+     "description": "38' K. Kovac (KST) pintasan"
+    }
+   ],
    "tags": [],
    "language": "ms",
    "persona": "analyst",
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-3713-goal-8",
+   "insight_id": "SCN-comeback-3719-goal-7",
    "type": "goal",
-   "variant": "neutral",
+   "variant": "deserved",
    "minute": 37,
-   "second": 13,
-   "clock": "37:13",
+   "second": 19,
+   "clock": "37:19",
    "priority": 1,
    "side": "away",
    "team_id": "KST",
    "players": [
-    "K. Quinn",
-    "D. Ekwueme"
+    "L. Novak",
+    "B. Barros"
    ],
-   "headline": "Gol untuk Kingston Vale",
-   "body": "K. Quinn menjaringkan gol daripada peluang 0.48 xG, dengan kelajuan 85 km/h. Kedudukan: 0-2. Hantaran daripada D. Ekwueme. Itu gol ke-2 untuk K. Quinn hari ini.",
+   "headline": "Gol yang wajar buat Kingston Vale",
+   "body": "L. Novak menjaringkan gol daripada peluang 0.42 xG, dengan kelajuan 76 km/h. Kedudukan: 0-2. Hantaran daripada B. Barros.",
    "why": [
-    "Kebarangkalian peluang seperti ini menjadi gol: 48%.",
-    "Peluang Kingston Vale untuk menang: 61% → 88%."
+    "Kingston Vale mencipta lebih banyak peluang: 0.89 xG berbanding 0.15.",
+    "Peluang Kingston Vale untuk menang: 60% → 87%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Pemain",
-     "value": "K. Quinn"
+     "value": "L. Novak"
     },
     {
      "key": "team",
@@ -1699,49 +1509,49 @@
     {
      "key": "xg",
      "label": "xG rembatan",
-     "value": "0.48"
-    },
-    {
-     "key": "chance_pct",
-     "label": "Kebarangkalian gol",
-     "value": "48%"
+     "value": "0.42"
     },
     {
      "key": "speed",
      "label": "Kelajuan bola",
-     "value": "85 km/h"
+     "value": "76 km/h"
     },
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "61%"
+     "value": "60%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "88%"
+     "value": "87%"
     },
     {
-     "key": "player_goals",
-     "label": "Gol pemain",
-     "value": "2"
+     "key": "team_xg",
+     "label": "xG pasukan",
+     "value": "0.89"
+    },
+    {
+     "key": "opp_xg",
+     "label": "xG lawan",
+     "value": "0.15"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "D. Ekwueme"
+     "value": "B. Barros"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0519",
+     "event_id": "SCN-comeback-0559",
      "minute": 37,
-     "description": "37' D. Ekwueme (KST) hantaran 8 m"
+     "description": "37' B. Barros (KST) hantaran 41 m"
     },
     {
-     "event_id": "SCN-comeback-0520",
+     "event_id": "SCN-comeback-0560",
      "minute": 37,
-     "description": "37' K. Quinn (KST) menjaringkan gol (0.48 xG)"
+     "description": "37' L. Novak (KST) menjaringkan gol (0.42 xG)"
     }
    ],
    "tags": [
@@ -1752,63 +1562,48 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-3159-control_shift-7",
-   "type": "control_shift",
-   "variant": "control",
-   "minute": 31,
+   "insight_id": "SCN-comeback-3459-player_milestone-6",
+   "type": "player_milestone",
+   "variant": "ball_wins",
+   "minute": 34,
    "second": 59,
-   "clock": "31:59",
-   "priority": 2,
+   "clock": "34:59",
+   "priority": 3,
    "side": "home",
    "team_id": "NGC",
-   "players": [],
-   "headline": "Northgate City menguasai permainan",
-   "body": "Kawalan 59% dalam 10 minit terakhir: 54% penguasaan bola, 71% kecondongan padang.",
-   "why": [
-    "Kawalan menggabungkan penguasaan bola, kecondongan padang dan ketepatan hantaran dalam 10 minit terakhir."
+   "players": [
+    "G. Ferreira"
    ],
+   "headline": "G. Ferreira: 8 rampasan bola",
+   "body": "G. Ferreira mencapai 8 terjahan dan pintasan.",
+   "why": [],
    "facts_used": [
     {
-     "key": "team",
-     "label": "Pasukan",
-     "value": "Northgate City"
+     "key": "player",
+     "label": "Pemain",
+     "value": "G. Ferreira"
     },
     {
-     "key": "control",
-     "label": "Kawalan",
-     "value": "59%"
-    },
-    {
-     "key": "possession",
-     "label": "Penguasaan bola",
-     "value": "54%"
-    },
-    {
-     "key": "tilt",
-     "label": "Kecondongan padang",
-     "value": "71%"
-    },
-    {
-     "key": "window",
-     "label": "Tempoh (minit)",
-     "value": "10"
+     "key": "count",
+     "label": "Jumlah",
+     "value": "8"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0354",
-     "minute": 25,
-     "description": "25' J. Okafor (NGC) rembatan disekat (0.15 xG)"
+     "event_id": "SCN-comeback-0450",
+     "minute": 30,
+     "description": "30' G. Ferreira (NGC) terjahan"
     },
     {
-     "event_id": "SCN-comeback-0400",
-     "minute": 28,
-     "description": "28' N. Vidal (NGC) rembatan tersasar (0.10 xG)"
+     "event_id": "SCN-comeback-0481",
+     "minute": 32,
+     "description": "32' G. Ferreira (NGC) terjahan"
     },
     {
-     "event_id": "SCN-comeback-0411",
-     "minute": 29,
-     "description": "29' N. Vidal (NGC) rembatan diselamatkan (0.10 xG)"
+     "event_id": "SCN-comeback-0519",
+     "minute": 34,
+     "description": "34' G. Ferreira (NGC) terjahan"
     }
    ],
    "tags": [
@@ -1819,49 +1614,122 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-3004-shot_speed-6",
-   "type": "shot_speed",
-   "variant": "saved",
-   "minute": 30,
-   "second": 4,
-   "clock": "30:04",
+   "insight_id": "SCN-comeback-3259-tempo_shift-5",
+   "type": "tempo_shift",
+   "variant": "up",
+   "minute": 32,
+   "second": 59,
+   "clock": "32:59",
    "priority": 3,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "N. Ekwueme"
-   ],
-   "headline": "Rembatan 116 km/h oleh N. Ekwueme",
-   "body": "N. Ekwueme: rembatan 116 km/h dari jarak 38 m.",
+   "side": null,
+   "team_id": null,
+   "players": [],
+   "headline": "Rentak permainan semakin laju",
+   "body": "10.2 hantaran seminit dalam 10 minit terakhir, berbanding 7.9.",
    "why": [
-    "Kelajuan bola daripada suapan sintetik; pada kelajuan ini penjaga gol hampir tiada masa untuk bertindak."
+    "Rentak ialah jumlah hantaran seminit oleh kedua-dua pasukan."
    ],
    "facts_used": [
     {
-     "key": "player",
-     "label": "Pemain",
-     "value": "N. Ekwueme"
+     "key": "tempo",
+     "label": "Hantaran seminit",
+     "value": "10.2"
     },
     {
-     "key": "speed",
-     "label": "Kelajuan bola",
-     "value": "116 km/h"
+     "key": "tempo_before",
+     "label": "Hantaran seminit sebelum",
+     "value": "7.9"
     },
     {
-     "key": "distance",
-     "label": "Jarak",
-     "value": "38 m"
+     "key": "window",
+     "label": "Tempoh (minit)",
+     "value": "10"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0413",
-     "minute": 30,
-     "description": "30' N. Ekwueme (NGC) rembatan diselamatkan (0.05 xG)"
+     "event_id": "SCN-comeback-0322",
+     "minute": 23,
+     "description": "23' L. Novak (KST) hantaran 65 m"
+    },
+    {
+     "event_id": "SCN-comeback-0498",
+     "minute": 32,
+     "description": "32' L. Quinn (NGC) hantaran 47 m"
+    }
+   ],
+   "tags": [],
+   "language": "ms",
+   "persona": "analyst",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-3259-pressure_spike-4",
+   "type": "pressure_spike",
+   "variant": "press",
+   "minute": 32,
+   "second": 59,
+   "clock": "32:59",
+   "priority": 2,
+   "side": "away",
+   "team_id": "KST",
+   "players": [],
+   "headline": "Kingston Vale meningkatkan tekanan",
+   "body": "PPDA 4.0 dalam 10 minit terakhir: 9 rampasan bola di kawasan tinggi, 12 kesilapan dipaksa. Sebelum itu ia 6.3 dalam sepuluh minit.",
+   "why": [
+    "PPDA ialah bilangan hantaran lawan yang dibenarkan bagi setiap tindakan bertahan; lebih rendah bermakna tekanan lebih kuat."
+   ],
+   "facts_used": [
+    {
+     "key": "team",
+     "label": "Pasukan",
+     "value": "Kingston Vale"
+    },
+    {
+     "key": "ppda",
+     "label": "PPDA",
+     "value": "4.0"
+    },
+    {
+     "key": "ball_wins",
+     "label": "Rampasan bola",
+     "value": "9"
+    },
+    {
+     "key": "forced_errors",
+     "label": "Kesilapan dipaksa",
+     "value": "12"
+    },
+    {
+     "key": "window",
+     "label": "Tempoh (minit)",
+     "value": "10"
+    },
+    {
+     "key": "ppda_before",
+     "label": "PPDA sebelum",
+     "value": "6.3"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0483",
+     "minute": 32,
+     "description": "32' K. Kovac (KST) pintasan"
+    },
+    {
+     "event_id": "SCN-comeback-0491",
+     "minute": 32,
+     "description": "32' D. Okafor (KST) terjahan"
+    },
+    {
+     "event_id": "SCN-comeback-0499",
+     "minute": 32,
+     "description": "32' K. Quinn (KST) terjahan"
     }
    ],
    "tags": [
-    "your_team"
+    "against_your_team"
    ],
    "language": "ms",
    "persona": "analyst",
@@ -1881,7 +1749,7 @@
     "L. Quinn"
    ],
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn: 27 sentuhan, 8 hantaran berjaya (67%), 0.18 xT ditambah, 0 rembatan, 2 rampasan bola.",
+   "body": "L. Quinn: 22 sentuhan, 9 hantaran berjaya (75%), 0.02 xT ditambah, 1 rembatan, 4 rampasan bola.",
    "why": [],
    "facts_used": [
     {
@@ -1892,49 +1760,49 @@
     {
      "key": "touches",
      "label": "Sentuhan",
-     "value": "27"
+     "value": "22"
     },
     {
      "key": "passes_completed",
      "label": "Hantaran berjaya",
-     "value": "8"
+     "value": "9"
     },
     {
      "key": "pass_accuracy",
      "label": "Ketepatan hantaran",
-     "value": "67%"
+     "value": "75%"
     },
     {
      "key": "xt",
      "label": "xT ditambah",
-     "value": "0.18"
+     "value": "0.02"
     },
     {
      "key": "shots",
      "label": "Rembatan",
-     "value": "0"
+     "value": "1"
     },
     {
      "key": "ball_wins",
      "label": "Rampasan bola",
-     "value": "2"
+     "value": "4"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0365",
-     "minute": 26,
-     "description": "26' L. Quinn (NGC) menekan"
+     "event_id": "SCN-comeback-0413",
+     "minute": 28,
+     "description": "28' L. Quinn (NGC) menekan"
     },
     {
-     "event_id": "SCN-comeback-0388",
-     "minute": 27,
-     "description": "27' L. Quinn (NGC) hantaran 4 m"
-    },
-    {
-     "event_id": "SCN-comeback-0425",
+     "event_id": "SCN-comeback-0451",
      "minute": 30,
-     "description": "30' L. Quinn (NGC) menekan"
+     "description": "30' L. Quinn (NGC) hantaran 14 m"
+    },
+    {
+     "event_id": "SCN-comeback-0456",
+     "minute": 30,
+     "description": "30' L. Quinn (NGC) hantaran 31 m"
     }
    ],
    "tags": [
@@ -1946,18 +1814,18 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-2659-pressure_spike-5",
+   "insight_id": "SCN-comeback-2759-pressure_spike-3",
    "type": "pressure_spike",
    "variant": "press",
-   "minute": 26,
+   "minute": 27,
    "second": 59,
-   "clock": "26:59",
+   "clock": "27:59",
    "priority": 2,
    "side": "home",
    "team_id": "NGC",
    "players": [],
    "headline": "Northgate City meningkatkan tekanan",
-   "body": "PPDA 4.4 dalam 10 minit terakhir: 7 rampasan bola di kawasan tinggi, 7 kesilapan dipaksa. Sebelum itu ia 8.7 dalam sepuluh minit.",
+   "body": "PPDA 3.5 dalam 10 minit terakhir: 10 rampasan bola di kawasan tinggi, 5 kesilapan dipaksa. Sebelum itu ia 13.7 dalam sepuluh minit.",
    "why": [
     "PPDA ialah bilangan hantaran lawan yang dibenarkan bagi setiap tindakan bertahan; lebih rendah bermakna tekanan lebih kuat."
    ],
@@ -1970,17 +1838,17 @@
     {
      "key": "ppda",
      "label": "PPDA",
-     "value": "4.4"
+     "value": "3.5"
     },
     {
      "key": "ball_wins",
      "label": "Rampasan bola",
-     "value": "7"
+     "value": "10"
     },
     {
      "key": "forced_errors",
      "label": "Kesilapan dipaksa",
-     "value": "7"
+     "value": "5"
     },
     {
      "key": "window",
@@ -1990,87 +1858,28 @@
     {
      "key": "ppda_before",
      "label": "PPDA sebelum",
-     "value": "8.7"
+     "value": "13.7"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0355",
-     "minute": 25,
-     "description": "25' H. Novak (NGC) kekasaran"
-    },
-    {
-     "event_id": "SCN-comeback-0358",
-     "minute": 25,
-     "description": "25' G. Ferreira (NGC) terjahan"
-    },
-    {
-     "event_id": "SCN-comeback-0364",
+     "event_id": "SCN-comeback-0384",
      "minute": 26,
-     "description": "26' H. Moreau (NGC) pintasan"
+     "description": "26' L. Gallo (NGC) kekasaran"
+    },
+    {
+     "event_id": "SCN-comeback-0399",
+     "minute": 27,
+     "description": "27' H. Moreau (NGC) pintasan"
+    },
+    {
+     "event_id": "SCN-comeback-0406",
+     "minute": 27,
+     "description": "27' H. Novak (NGC) terjahan"
     }
    ],
    "tags": [
     "your_team"
-   ],
-   "language": "ms",
-   "persona": "analyst",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1914-pass_of_the_moment-4",
-   "type": "pass_of_the_moment",
-   "variant": "pass",
-   "minute": 19,
-   "second": 14,
-   "clock": "19:14",
-   "priority": 3,
-   "side": "away",
-   "team_id": "KST",
-   "players": [
-    "K. Kovac"
-   ],
-   "headline": "Hantaran terbaik: K. Kovac",
-   "body": "K. Kovac: hantaran 42 m pada 84 km/h, kesukaran 65%, menambah 0.11 xT.",
-   "why": [
-    "Kesukaran ialah satu tolak kadar jangkaan hantaran berjaya, berdasarkan jarak, kedalaman dan tekanan."
-   ],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Pemain",
-     "value": "K. Kovac"
-    },
-    {
-     "key": "length",
-     "label": "Jarak hantaran",
-     "value": "42 m"
-    },
-    {
-     "key": "speed",
-     "label": "Kelajuan bola",
-     "value": "84 km/h"
-    },
-    {
-     "key": "difficulty",
-     "label": "Kesukaran hantaran",
-     "value": "65%"
-    },
-    {
-     "key": "xt",
-     "label": "xT ditambah",
-     "value": "0.11"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0277",
-     "minute": 19,
-     "description": "19' K. Kovac (KST) hantaran 42 m"
-    }
-   ],
-   "tags": [
-    "against_your_team"
    ],
    "language": "ms",
    "persona": "analyst",
@@ -2090,7 +1899,7 @@
     "L. Quinn"
    ],
    "headline": "L. Quinn setakat ini",
-   "body": "L. Quinn: 18 sentuhan, 5 hantaran berjaya (62%), 0.15 xT ditambah, 0 rembatan, 2 rampasan bola.",
+   "body": "L. Quinn: 11 sentuhan, 6 hantaran berjaya (75%), 0.02 xT ditambah, 0 rembatan, 1 rampasan bola.",
    "why": [],
    "facts_used": [
     {
@@ -2101,22 +1910,22 @@
     {
      "key": "touches",
      "label": "Sentuhan",
-     "value": "18"
+     "value": "11"
     },
     {
      "key": "passes_completed",
      "label": "Hantaran berjaya",
-     "value": "5"
+     "value": "6"
     },
     {
      "key": "pass_accuracy",
      "label": "Ketepatan hantaran",
-     "value": "62%"
+     "value": "75%"
     },
     {
      "key": "xt",
      "label": "xT ditambah",
-     "value": "0.15"
+     "value": "0.02"
     },
     {
      "key": "shots",
@@ -2126,81 +1935,29 @@
     {
      "key": "ball_wins",
      "label": "Rampasan bola",
-     "value": "2"
+     "value": "1"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0160",
-     "minute": 11,
-     "description": "11' L. Quinn (NGC) hantaran 12 m"
+     "event_id": "SCN-comeback-0180",
+     "minute": 12,
+     "description": "12' L. Quinn (NGC) hantaran 27 m"
     },
     {
-     "event_id": "SCN-comeback-0172",
+     "event_id": "SCN-comeback-0190",
      "minute": 12,
      "description": "12' L. Quinn (NGC) menekan"
     },
     {
-     "event_id": "SCN-comeback-0207",
+     "event_id": "SCN-comeback-0196",
      "minute": 13,
-     "description": "13' L. Quinn (NGC) hantaran 45 m"
+     "description": "13' L. Quinn (NGC) menekan"
     }
    ],
    "tags": [
     "your_team",
     "focus_player"
-   ],
-   "language": "ms",
-   "persona": "analyst",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1459-player_milestone-3",
-   "type": "player_milestone",
-   "variant": "ball_wins",
-   "minute": 14,
-   "second": 59,
-   "clock": "14:59",
-   "priority": 3,
-   "side": "away",
-   "team_id": "KST",
-   "players": [
-    "H. Carter"
-   ],
-   "headline": "H. Carter: 8 rampasan bola",
-   "body": "H. Carter mencapai 8 terjahan dan pintasan.",
-   "why": [],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Pemain",
-     "value": "H. Carter"
-    },
-    {
-     "key": "count",
-     "label": "Jumlah",
-     "value": "8"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0129",
-     "minute": 8,
-     "description": "8' H. Carter (KST) pintasan"
-    },
-    {
-     "event_id": "SCN-comeback-0214",
-     "minute": 14,
-     "description": "14' H. Carter (KST) pintasan"
-    },
-    {
-     "event_id": "SCN-comeback-0219",
-     "minute": 14,
-     "description": "14' H. Carter (KST) pintasan"
-    }
-   ],
-   "tags": [
-    "against_your_team"
    ],
    "language": "ms",
    "persona": "analyst",
@@ -2218,13 +1975,13 @@
    "team_id": "KST",
    "players": [
     "K. Quinn",
-    "K. Kovac"
+    "L. Novak"
    ],
-   "headline": "Di luar jangkaan: Kingston Vale menjaringkan gol",
-   "body": "K. Quinn menjaringkan gol daripada peluang 0.52 xG, dengan kelajuan 82 km/h. Kedudukan: 0-1. Hantaran daripada K. Kovac.",
+   "headline": "Kingston Vale menjaringkan gol walaupun ditekan",
+   "body": "K. Quinn menjaringkan gol daripada peluang 0.46 xG, dengan kelajuan 92 km/h. Kedudukan: 0-1. Hantaran daripada L. Novak.",
    "why": [
     "Northgate City lebih menguasai permainan sebelum ini, jadi gol ini mengubah cerita perlawanan.",
-    "Peluang Kingston Vale untuk menang: 22% → 69%."
+    "Peluang Kingston Vale untuk menang: 24% → 55%."
    ],
    "facts_used": [
     {
@@ -2245,22 +2002,22 @@
     {
      "key": "xg",
      "label": "xG rembatan",
-     "value": "0.52"
+     "value": "0.46"
     },
     {
      "key": "speed",
      "label": "Kelajuan bola",
-     "value": "82 km/h"
+     "value": "92 km/h"
     },
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "22%"
+     "value": "24%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "69%"
+     "value": "55%"
     },
     {
      "key": "opponent",
@@ -2270,19 +2027,19 @@
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "K. Kovac"
+     "value": "L. Novak"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0206",
-     "minute": 13,
-     "description": "13' K. Kovac (KST) hantaran 26 m"
+     "event_id": "SCN-comeback-0215",
+     "minute": 14,
+     "description": "14' L. Novak (KST) hantaran 24 m"
     },
     {
-     "event_id": "SCN-comeback-0208",
+     "event_id": "SCN-comeback-0216",
      "minute": 14,
-     "description": "14' K. Quinn (KST) menjaringkan gol (0.52 xG)"
+     "description": "14' K. Quinn (KST) menjaringkan gol (0.46 xG)"
     }
    ],
    "tags": [
@@ -2293,96 +2050,115 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-1357-pass_of_the_moment-1",
-   "type": "pass_of_the_moment",
-   "variant": "pass",
+   "insight_id": "SCN-comeback-1359-momentum_flip-1",
+   "type": "momentum_flip",
+   "variant": "first",
    "minute": 13,
-   "second": 57,
-   "clock": "13:57",
-   "priority": 3,
+   "second": 59,
+   "clock": "13:59",
+   "priority": 2,
    "side": "home",
    "team_id": "NGC",
    "players": [
-    "L. Quinn"
+    "N. Vidal"
    ],
-   "headline": "Hantaran terbaik: L. Quinn",
-   "body": "L. Quinn: hantaran 45 m pada 95 km/h, kesukaran 52%, menambah 0.12 xT.",
+   "headline": "Northgate City mula mengambil inisiatif",
+   "body": "Northgate City memiliki 69% daripada ancaman terkini: 0.07 berbanding 0.04 dalam 5 minit terakhir. N. Vidal menjadi penggeraknya.",
    "why": [
-    "Kesukaran ialah satu tolak kadar jangkaan hantaran berjaya, berdasarkan jarak, kedalaman dan tekanan."
+    "Momentum memberi pemberat lebih kepada ancaman terkini (xT ditambah xG), jadi ia cepat berubah."
    ],
    "facts_used": [
     {
+     "key": "team",
+     "label": "Pasukan",
+     "value": "Northgate City"
+    },
+    {
+     "key": "share",
+     "label": "Bahagian ancaman",
+     "value": "69%"
+    },
+    {
+     "key": "team_threat",
+     "label": "Ancaman pasukan",
+     "value": "0.07"
+    },
+    {
+     "key": "opp_threat",
+     "label": "Ancaman lawan",
+     "value": "0.04"
+    },
+    {
+     "key": "window",
+     "label": "Tempoh (minit)",
+     "value": "5"
+    },
+    {
      "key": "player",
      "label": "Pemain",
-     "value": "L. Quinn"
-    },
-    {
-     "key": "length",
-     "label": "Jarak hantaran",
-     "value": "45 m"
-    },
-    {
-     "key": "speed",
-     "label": "Kelajuan bola",
-     "value": "95 km/h"
-    },
-    {
-     "key": "difficulty",
-     "label": "Kesukaran hantaran",
-     "value": "52%"
-    },
-    {
-     "key": "xt",
-     "label": "xT ditambah",
-     "value": "0.12"
+     "value": "N. Vidal"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0207",
-     "minute": 13,
-     "description": "13' L. Quinn (NGC) hantaran 45 m"
+     "event_id": "SCN-comeback-0177",
+     "minute": 11,
+     "description": "11' L. Gallo (NGC) hantaran 17 m"
+    },
+    {
+     "event_id": "SCN-comeback-0183",
+     "minute": 12,
+     "description": "12' R. Mensah (NGC) hantaran 18 m"
+    },
+    {
+     "event_id": "SCN-comeback-0184",
+     "minute": 12,
+     "description": "12' N. Vidal (NGC) rembatan tersasar (0.04 xG)"
     }
    ],
    "tags": [
-    "your_team",
-    "focus_player"
+    "your_team"
    ],
    "language": "ms",
    "persona": "analyst",
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-1159-chaos_phase-0",
-   "type": "chaos_phase",
-   "variant": "chaos",
-   "minute": 11,
+   "insight_id": "SCN-comeback-0659-control_shift-0",
+   "type": "control_shift",
+   "variant": "control",
+   "minute": 6,
    "second": 59,
-   "clock": "11:59",
+   "clock": "6:59",
    "priority": 2,
-   "side": null,
-   "team_id": null,
+   "side": "home",
+   "team_id": "NGC",
    "players": [],
-   "headline": "Fasa huru-hara",
-   "body": "Indeks huru-hara 82%: 23 kehilangan bola dan 4 rembatan dalam 10 minit terakhir.",
+   "headline": "Northgate City menguasai permainan",
+   "body": "Kawalan 69% dalam 10 minit terakhir: 73% penguasaan bola, 67% kecondongan padang.",
    "why": [
-    "Huru-hara menggabungkan kehilangan bola, perubahan momentum dan jumlah ancaman. Tiada pasukan yang menguasai permainan."
+    "Kawalan menggabungkan penguasaan bola, kecondongan padang dan ketepatan hantaran dalam 10 minit terakhir."
    ],
    "facts_used": [
     {
-     "key": "chaos",
-     "label": "Indeks huru-hara",
-     "value": "82%"
+     "key": "team",
+     "label": "Pasukan",
+     "value": "Northgate City"
     },
     {
-     "key": "turnovers",
-     "label": "Kehilangan bola",
-     "value": "23"
+     "key": "control",
+     "label": "Kawalan",
+     "value": "69%"
     },
     {
-     "key": "shots",
-     "label": "Rembatan",
-     "value": "4"
+     "key": "possession",
+     "label": "Penguasaan bola",
+     "value": "73%"
+    },
+    {
+     "key": "tilt",
+     "label": "Kecondongan padang",
+     "value": "67%"
     },
     {
      "key": "window",
@@ -2392,22 +2168,24 @@
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0122",
-     "minute": 7,
-     "description": "7' N. Vidal (NGC) rembatan disekat (0.04 xG)"
+     "event_id": "SCN-comeback-0011",
+     "minute": 1,
+     "description": "1' L. Quinn (NGC) hantaran 31 m"
     },
     {
-     "event_id": "SCN-comeback-0147",
-     "minute": 10,
-     "description": "10' N. Vidal (NGC) rembatan disekat (0.05 xG)"
+     "event_id": "SCN-comeback-0028",
+     "minute": 3,
+     "description": "3' L. Quinn (NGC) hantaran 42 m"
     },
     {
-     "event_id": "SCN-comeback-0158",
-     "minute": 11,
-     "description": "11' G. Ferreira (NGC) rembatan tersasar (0.05 xG)"
+     "event_id": "SCN-comeback-0078",
+     "minute": 6,
+     "description": "6' J. Okafor (NGC) hantaran 20 m"
     }
    ],
-   "tags": [],
+   "tags": [
+    "your_team"
+   ],
    "language": "ms",
    "persona": "analyst",
    "source": "template"
@@ -2415,7 +2193,7 @@
  ],
  "overlays": [
   {
-   "seq": 38,
+   "seq": 34,
    "match_id": "SCN-comeback",
    "minute": 75,
    "second": 0,
@@ -2427,7 +2205,7 @@
    "language": "ms",
    "fields": {
     "headline": "L. Quinn setakat ini",
-    "body": "L. Quinn: 72 sentuhan, 32 hantaran berjaya (65%), 0.76 xT ditambah, 2 rembatan, 2 rampasan bola.",
+    "body": "L. Quinn: 74 sentuhan, 33 hantaran berjaya (73%), 0.49 xT ditambah, 3 rembatan, 11 rampasan bola.",
     "clock": "75:00",
     "minute": "75",
     "type": "player_focus",
@@ -2439,39 +2217,11 @@
     "player": "L. Quinn",
     "number": "8",
     "stat_label": "Sentuhan",
-    "stat_value": "72"
+    "stat_value": "74"
    }
   },
   {
-   "seq": 39,
-   "match_id": "SCN-comeback",
-   "minute": 75,
-   "second": 37,
-   "clock": "75:37",
-   "graphic": "player_tag",
-   "priority": 3,
-   "ttl_s": 10,
-   "insight_id": "SCN-comeback-7537-pass_of_the_moment-19",
-   "language": "ms",
-   "fields": {
-    "headline": "Hantaran terbaik: L. Quinn",
-    "body": "L. Quinn: hantaran 40 m pada 87 km/h, kesukaran 62%, menambah 0.20 xT.",
-    "clock": "75:37",
-    "minute": "75",
-    "type": "pass_of_the_moment",
-    "team": "Northgate City",
-    "team_id": "NGC",
-    "home": "NGC",
-    "away": "KST",
-    "score": "2-2",
-    "player": "L. Quinn",
-    "number": "8",
-    "stat_label": "Kesukaran hantaran",
-    "stat_value": "62%"
-   }
-  },
-  {
-   "seq": 40,
+   "seq": 35,
    "match_id": "SCN-comeback",
    "minute": 75,
    "second": 59,
@@ -2487,9 +2237,9 @@
     "home": "NGC",
     "away": "KST",
     "score": "2-2",
-    "momentum": "0.82",
-    "control_home": "0.73",
-    "chaos": "0.50",
+    "momentum": "0.95",
+    "control_home": "0.80",
+    "chaos": "0.66",
     "phase": "home_control",
     "phase_label": "Northgate City menguasai permainan"
    }
@@ -2501,134 +2251,154 @@
   "position": "MF",
   "team_id": "NGC",
   "side": "home",
-  "touches": 72,
-  "passes": 49,
-  "passes_completed": 32,
-  "pass_accuracy": 65,
-  "xt_added": 0.757,
-  "shots": 2,
+  "touches": 74,
+  "passes": 45,
+  "passes_completed": 33,
+  "pass_accuracy": 73,
+  "xt_added": 0.486,
+  "shots": 3,
   "goals": 1,
-  "xg": 0.28,
-  "ball_wins": 2,
-  "pressures": 16,
-  "top_shot_speed_kmh": 89.0,
+  "xg": 0.58,
+  "ball_wins": 11,
+  "pressures": 12,
+  "top_shot_speed_kmh": 114.5,
   "involvement": [
-   18,
-   9,
    11,
-   19,
-   15,
+   11,
+   11,
+   25,
+   16,
    0
   ],
-  "cards": []
+  "cards": [
+   "yellow"
+  ]
  },
  "recent_events": [
   {
-   "event_id": "SCN-comeback-0957",
+   "event_id": "SCN-comeback-1015",
    "match_id": "SCN-comeback",
-   "minute": 67,
-   "second": 21,
-   "side": "away",
-   "team_id": "KST",
-   "player": "L. Jensen",
-   "type": "shot",
-   "x": 70.1,
-   "y": 64.1,
-   "outcome": "saved",
-   "xg": 0.026,
-   "end_x": null,
-   "end_y": null,
-   "speed_kmh": 90.2,
-   "under_pressure": null
-  },
-  {
-   "event_id": "SCN-comeback-0966",
-   "match_id": "SCN-comeback",
-   "minute": 67,
-   "second": 53,
+   "minute": 66,
+   "second": 9,
    "side": "home",
    "team_id": "NGC",
    "player": "N. Ekwueme",
    "type": "shot",
-   "x": 70.6,
-   "y": 46.4,
-   "outcome": "blocked",
-   "xg": 0.079,
-   "end_x": null,
-   "end_y": null,
-   "speed_kmh": 117.0,
-   "under_pressure": null
-  },
-  {
-   "event_id": "SCN-comeback-0989",
-   "match_id": "SCN-comeback",
-   "minute": 70,
-   "second": 10,
-   "side": "away",
-   "team_id": "KST",
-   "player": "J. Ibrahim",
-   "type": "card",
-   "x": 28.6,
-   "y": 50.0,
-   "outcome": "yellow",
-   "xg": null,
-   "end_x": null,
-   "end_y": null,
-   "speed_kmh": null,
-   "under_pressure": null
-  },
-  {
-   "event_id": "SCN-comeback-0993",
-   "match_id": "SCN-comeback",
-   "minute": 70,
-   "second": 31,
-   "side": "home",
-   "team_id": "NGC",
-   "player": "N. Vidal",
-   "type": "shot",
-   "x": 77.0,
-   "y": 53.8,
+   "x": 70.2,
+   "y": 55.7,
    "outcome": "saved",
-   "xg": 0.147,
+   "xg": 0.015,
    "end_x": null,
    "end_y": null,
-   "speed_kmh": 112.7,
+   "speed_kmh": 112.4,
    "under_pressure": null
   },
   {
-   "event_id": "SCN-comeback-1030",
+   "event_id": "SCN-comeback-1039",
    "match_id": "SCN-comeback",
-   "minute": 73,
-   "second": 16,
+   "minute": 67,
+   "second": 10,
    "side": "home",
    "team_id": "NGC",
    "player": "L. Gallo",
    "type": "shot",
-   "x": 71.8,
-   "y": 31.1,
+   "x": 81.8,
+   "y": 61.1,
    "outcome": "saved",
-   "xg": 0.139,
+   "xg": 0.065,
    "end_x": null,
    "end_y": null,
-   "speed_kmh": 107.3,
+   "speed_kmh": 102.7,
    "under_pressure": null
   },
   {
-   "event_id": "SCN-comeback-1042",
+   "event_id": "SCN-comeback-1076",
+   "match_id": "SCN-comeback",
+   "minute": 69,
+   "second": 36,
+   "side": "home",
+   "team_id": "NGC",
+   "player": "N. Ekwueme",
+   "type": "shot",
+   "x": 96.7,
+   "y": 99.0,
+   "outcome": "off_target",
+   "xg": 0.01,
+   "end_x": null,
+   "end_y": null,
+   "speed_kmh": 84.9,
+   "under_pressure": null
+  },
+  {
+   "event_id": "SCN-comeback-1119",
+   "match_id": "SCN-comeback",
+   "minute": 72,
+   "second": 10,
+   "side": "home",
+   "team_id": "NGC",
+   "player": "N. Ekwueme",
+   "type": "shot",
+   "x": 77.1,
+   "y": 53.9,
+   "outcome": "saved",
+   "xg": 0.04,
+   "end_x": null,
+   "end_y": null,
+   "speed_kmh": 99.6,
+   "under_pressure": null
+  },
+  {
+   "event_id": "SCN-comeback-1122",
+   "match_id": "SCN-comeback",
+   "minute": 72,
+   "second": 38,
+   "side": "home",
+   "team_id": "NGC",
+   "player": "R. Mensah",
+   "type": "shot",
+   "x": 94.3,
+   "y": 40.8,
+   "outcome": "saved",
+   "xg": 0.215,
+   "end_x": null,
+   "end_y": null,
+   "speed_kmh": 86.2,
+   "under_pressure": null
+  },
+  {
+   "event_id": "SCN-comeback-1134",
+   "match_id": "SCN-comeback",
+   "minute": 73,
+   "second": 27,
+   "side": "home",
+   "team_id": "NGC",
+   "player": "N. Ekwueme",
+   "type": "shot",
+   "x": 99.0,
+   "y": 43.7,
+   "outcome": "saved",
+   "xg": 0.496,
+   "end_x": null,
+   "end_y": null,
+   "speed_kmh": 75.3,
+   "under_pressure": null
+  },
+  {
+   "event_id": "SCN-comeback-1149",
    "match_id": "SCN-comeback",
    "minute": 74,
-   "second": 10,
+   "second": 13,
    "side": "home",
    "team_id": "NGC",
    "player": "L. Quinn",
    "type": "shot",
-   "x": 77.8,
-   "y": 53.3,
+   "x": 94.6,
+   "y": 49.8,
    "outcome": "goal",
-   "xg": 0.222,
+   "xg": 0.352,
    "end_x": null,
    "end_y": null,
-   "speed_kmh": 89.0,
+   "speed_kmh": 105.0,
    "under_pressure": null
   }
  ]

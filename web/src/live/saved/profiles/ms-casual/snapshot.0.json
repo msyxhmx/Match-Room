@@ -19,9 +19,9 @@
  },
  "meta": {
   "venue": "Northgate Stadium",
-  "referee": "P. Okonjo",
-  "attendance": 23047,
-  "weather": "Clear",
+  "referee": "M. Castell",
+  "attendance": 47575,
+  "weather": "Windy",
   "scenario": "comeback",
   "scenario_title": "The comeback",
   "synthetic": true
@@ -171,9 +171,9 @@
   "label": "Seimbang"
  },
  "projection": {
-  "home_win": 0.543,
-  "draw": 0.218,
-  "away_win": 0.24,
+  "home_win": 0.562,
+  "draw": 0.2,
+  "away_win": 0.238,
   "drivers": [
    {
     "key": "score",
@@ -188,12 +188,12 @@
    {
     "key": "home_rate",
     "label": "Jangkaan gol Northgate City setiap 90",
-    "value": "1.98"
+    "value": "2.25"
    },
    {
     "key": "away_rate",
     "label": "Jangkaan gol Kingston Vale setiap 90",
-    "value": "1.25"
+    "value": "1.42"
    },
    {
     "key": "live_weight",
@@ -217,13 +217,13 @@
    0.0
   ],
   "home_win": [
-   0.543
+   0.562
   ],
   "draw": [
-   0.218
+   0.2
   ],
   "away_win": [
-   0.24
+   0.238
   ]
  },
  "cards": [],
