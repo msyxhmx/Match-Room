@@ -94,7 +94,13 @@ export interface LiveOptions {
   start: number;
   /** The picture to start from: kick-off at minute 0 (or after the break), else the shape. */
   initial: { kind: "kickoff"; kicking: Side } | { kind: "shape"; ball: Vec; side: Side };
+  /** Plan from the start, not on from the last plan (tests compare the two). */
+  fresh?: boolean;
 }
+
+/** Per lineup, the last live plan and what it was planned from: the next tick's plan carries on
+ *  from it (PlanOptions.resume) instead of replanning the whole session. */
+const lastLive = new WeakMap<SquadPlayer[], { o: LiveOptions; arrivals: Map<number, number>; tl: Timeline }>();
 
 export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveOptions): Timeline {
   // Play goes on till well after the next tick is due (two ticks' time); at the end of a half it
@@ -103,7 +109,18 @@ export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveO
   for (const m of o.arrivals.keys()) last = Math.max(last, m);
   const tick = 60 / o.speed;
   const until = last < 0 ? undefined : o.arrivals.get(last)! + (last === 45 || last >= 90 ? tick : 2 * tick);
-  return plan(players, moments, {
+  // Carry on from the last plan when this one only adds ticks to it.
+  let resume: { from: Timeline; after: number } | undefined;
+  const L = o.fresh ? undefined : lastLive.get(players);
+  if (L && L.o.speed === o.speed && L.o.start === o.start && JSON.stringify(L.o.initial) === JSON.stringify(o.initial)) {
+    let same = true;
+    let after = Infinity;
+    for (const [m, t] of L.arrivals) if (o.arrivals.get(m) !== t) same = false;
+    for (const [m, t] of o.arrivals) if (!L.arrivals.has(m)) after = Math.min(after, t);
+    if (same && after < Infinity) resume = { from: L.tl, after };
+  }
+  const tl = plan(players, moments, {
+    resume,
     until,
     ideal: (m) => {
       const at = o.arrivals.get(m.minute);
@@ -114,4 +131,7 @@ export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveO
     start: o.start,
     initial: o.initial,
   });
+  // A copy: the live page adds to its arrivals in place.
+  lastLive.set(players, { o, arrivals: new Map(o.arrivals), tl });
+  return tl;
 }
