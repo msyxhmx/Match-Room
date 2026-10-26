@@ -302,9 +302,12 @@ SHAPE_WINDOW = int(60 / DT)  # slots are re-fitted every minute (substitutions)
 
 def shape_table(matches: list[Match]) -> dict:
     """Mean own-frame spot of each slot per ball cell, with and without the ball. Only frames
-    with the ball in play and a team in possession."""
+    with the ball in play and a team in possession. Then how far players wander off that mean
+    (per slot, pooled over cells) and for how long a wander lasts (the lag at which a player's
+    offset is half correlated with itself)."""
     acc = {k: np.zeros((NX, NY, 11, 2)) for k in ("with", "without")}
     cnt = {k: np.zeros((NX, NY)) for k in ("with", "without")}
+    seen = []  # (in play, in possession, ball x, y, players' x, y) per window and side
     for m in matches:
         for h in m.halves:
             for i0, slots in windows(m, h, SHAPE_WINDOW):
@@ -312,21 +315,68 @@ def shape_table(matches: list[Match]) -> dict:
                 ok = h.alive[sl] & np.isin(h.poss[sl], (1, 2))
                 for side, cols in slots.items():
                     k = 1.0 if side == "home" else -1.0
-                    bx, by = k * h.bx[sl][ok], k * h.by[sl][ok]
+                    bx, by = k * h.bx[sl], k * h.by[sl]
                     cx = np.clip(((bx + LENGTH / 2) / LENGTH * NX).astype(int), 0, NX - 1)
                     cy = np.clip(((by + WIDTH / 2) / WIDTH * NY).astype(int), 0, NY - 1)
-                    mine = h.poss[sl][ok] == (1 if side == "home" else 2)
-                    xs = k * h.px[sl][ok][:, cols]
-                    ys = k * h.py[sl][ok][:, cols]
-                    for key, sel in (("with", mine), ("without", ~mine)):
+                    mine = h.poss[sl] == (1 if side == "home" else 2)
+                    xs = k * h.px[sl][:, cols]
+                    ys = k * h.py[sl][:, cols]
+                    seen.append((ok, mine, bx, by, xs, ys))
+                    for key, sel in (("with", ok & mine), ("without", ok & ~mine)):
                         np.add.at(acc[key], (cx[sel], cy[sel], slice(None), 0), xs[sel])
                         np.add.at(acc[key], (cx[sel], cy[sel], slice(None), 1), ys[sel])
                         np.add.at(cnt[key], (cx[sel], cy[sel]), 1)
     out = {"cells": [NX, NY], "roles": SLOT_ROLE}
+    mean = {}
     for key in ("with", "without"):
-        mean = acc[key] / np.maximum(cnt[key], 1)[..., None, None]
-        out[key] = np.round(mean, 1).tolist()
+        mean[key] = acc[key] / np.maximum(cnt[key], 1)[..., None, None]
+        out[key] = np.round(mean[key], 1).tolist()
         out[f"{key}Frames"] = cnt[key].astype(int).tolist()
+
+    # Second pass: each frame's offset from the smooth spot (read between cell centres, as
+    # web/src/pitch/formation.ts does), less the player's own average offset over the minute:
+    # how he wanders, not where his team or the ball's cell puts him.
+    def smooth(key, bx, by):
+        u = np.clip((bx + LENGTH / 2) / (LENGTH / NX) - 0.5, 0, NX - 1)
+        v = np.clip((by + WIDTH / 2) / (WIDTH / NY) - 0.5, 0, NY - 1)
+        i0, j0 = np.floor(u).astype(int), np.floor(v).astype(int)
+        i1, j1 = np.minimum(i0 + 1, NX - 1), np.minimum(j0 + 1, NY - 1)
+        fu, fv = (u - i0)[:, None, None], (v - j0)[:, None, None]
+        t = mean[key]
+        return (t[i0, j0] * (1 - fu) + t[i1, j0] * fu) * (1 - fv) + (
+            t[i0, j1] * (1 - fu) + t[i1, j1] * fu
+        ) * fv
+
+    sq = {k: np.zeros((11, 2)) for k in ("with", "without")}
+    n = {k: 0 for k in ("with", "without")}
+    lags = np.arange(1, 151)  # 0.2 s to 30 s
+    ac_num = np.zeros(len(lags))
+    ac_den = 0.0
+    team_var = ind_var = 0.0
+    for ok, mine, bx, by, xs, ys in seen:
+        off = np.stack([xs, ys], axis=-1)
+        for key, sel in (("with", mine), ("without", ~mine)):
+            off[sel] -= smooth(key, bx[sel], by[sel])
+        off = off - np.nanmean(off[ok], axis=0)
+        for key, sel in (("with", mine & ok), ("without", ~mine & ok)):
+            sq[key] += (off[sel] ** 2).sum(axis=0)
+            n[key] += int(sel.sum())
+        o = off[:, 1:, :]  # outfield
+        ac_den += float((o * o).sum())
+        # The team's common part: the variance of the outfield's mean offset, less what ten
+        # independent players' would leave by chance.
+        live = o[ok]
+        team_var += float((live.mean(axis=1) ** 2).sum())
+        ind_var += float((live**2).mean(axis=1).sum())
+        for j, lag in enumerate(lags):
+            ac_num[j] += float((o[lag:] * o[:-lag]).sum()) * len(o) / max(1, len(o) - lag)
+    for key in ("with", "without"):
+        out[f"{key}Spread"] = np.round(np.sqrt(sq[key] / max(1, n[key])), 2).tolist()
+    ac = ac_num / max(ac_den, 1e-9)
+    half = next((int(lag) for lag, a in zip(lags, ac, strict=True) if a < 0.5), int(lags[-1]))
+    out["wanderHalfLife"] = round(half * DT, 1)
+    n_out = 10
+    out["wanderShared"] = round((team_var / ind_var - 1 / n_out) / (1 - 1 / n_out), 2)
     return out
 
 

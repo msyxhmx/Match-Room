@@ -53,7 +53,7 @@ export function realTimeline(p: Passage): Timeline {
     const keys: Key[] = [];
     for (let i = 0; i < n; i++) keys.push({ t: i * dt, x: p.x[k][i] / 10, y: p.y[k][i] / 10 });
     tracks[realId(pl)] = {
-      slot: { id: realId(pl), side: pl.side, name: `#${pl.number}`, number: pl.number, role: pl.role, ax: 0, ay: 0 },
+      slot: { id: realId(pl), side: pl.side, name: `#${pl.number}`, number: pl.number, role: pl.role, ax: 0, ay: 0, k: -1 },
       keys,
       offAt: null,
     };
@@ -110,6 +110,7 @@ export function realTimeline(p: Passage): Timeline {
   return {
     tracks,
     ball,
+    ghost: [],
     beats,
     dropped: [],
     start: 0,

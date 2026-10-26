@@ -97,7 +97,14 @@ export interface LiveOptions {
 }
 
 export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveOptions): Timeline {
+  // Play goes on till well after the next tick is due (two ticks' time); at the end of a half it
+  // stops a tick after the last one.
+  let last = -1;
+  for (const m of o.arrivals.keys()) last = Math.max(last, m);
+  const tick = 60 / o.speed;
+  const until = last < 0 ? undefined : o.arrivals.get(last)! + (last === 45 || last >= 90 ? tick : 2 * tick);
   return plan(players, moments, {
+    until,
     ideal: (m) => {
       const at = o.arrivals.get(m.minute);
       return at === undefined ? null : at + (m.t - m.minute * 60) / o.speed;
