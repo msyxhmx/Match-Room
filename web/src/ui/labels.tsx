@@ -42,6 +42,8 @@ const EN = {
   whatToWatch: "What to watch",
   playerOfMatch: "Player of the match",
   agentsAtWork: "The agents at work",
+  showAgents: "See how the agents wrote this",
+  hideAgents: "Hide the agents",
   agentAnalyst: "Analyst",
   agentFactChecker: "Fact-checker",
   agentPipeline: "Pipeline",
@@ -125,6 +127,8 @@ const MS: Labels = {
   whatToWatch: "Perlu diperhatikan", // confirm
   playerOfMatch: "Pemain terbaik perlawanan",
   agentsAtWork: "Ejen sedang bekerja", // confirm
+  showAgents: "Lihat cara ejen menulis ini", // confirm
+  hideAgents: "Sembunyikan ejen", // confirm
   agentAnalyst: "Penganalisis",
   agentFactChecker: "Penyemak fakta", // confirm
   agentPipeline: "Saluran", // confirm
@@ -204,6 +208,8 @@ const ES: Labels = {
   whatToWatch: "Qué vigilar",
   playerOfMatch: "Jugador del partido",
   agentsAtWork: "Los agentes en acción",
+  showAgents: "Ver cómo lo escribieron los agentes", // confirm
+  hideAgents: "Ocultar los agentes", // confirm
   agentAnalyst: "Analista",
   agentFactChecker: "Verificador",
   agentPipeline: "Sistema",

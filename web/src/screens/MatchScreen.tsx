@@ -4,7 +4,7 @@
 import { FullTimeScreen, HalfTimeScreen } from "./BreakScreens";
 import { LiveScreen, type LiveScreenProps } from "./LiveScreen";
 
-export type MatchScreenProps = LiveScreenProps & { revealed?: number };
+export type MatchScreenProps = LiveScreenProps & { revealed?: number; agentsOpen?: boolean };
 
 export function MatchScreen(props: MatchScreenProps) {
   const { view } = props;

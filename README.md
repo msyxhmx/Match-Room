@@ -8,7 +8,7 @@ Our entry for the Microsoft × Premier League **Inside the Game** developer hack
 
 **Try it: [match-room-preview.pages.dev](https://match-room-preview.pages.dev)**
 - It's a preview build that plays the saved synthetic match in your browser, with no backend
-  needed. It opens at kick-off at ×60, on desktop or phone.
+  needed. It opens at kick-off at ×60 and waits for its Kick off button, on desktop or phone.
 - The on-page controls play, pause, restart and switch speed. The top bar switches language and
   casual / analyst.
 - The broadcast page with the pitch: [/overlay?minute=74&plate=1](https://match-room-preview.pages.dev/overlay?minute=74&plate=1).

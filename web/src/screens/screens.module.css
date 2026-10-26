@@ -37,7 +37,28 @@
 
 /* ---- half-time: brief 1080 | agents 600 ---- */
 .screen[data-screen="halftime"] {
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+/* Shows or hides the agents' column: a quiet pill under the brief, bottom right. */
+.agentsToggle {
+  all: unset;
+  box-sizing: border-box;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--space-6);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--surface-fill);
+  color: var(--text-secondary);
+  font: var(--type-callout);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.agentsToggle:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
 }
 
 .halftime {
@@ -135,6 +156,15 @@
 .pitchMoment {
   min-width: 0;
 }
+/* The moment card under the pitch, a step down from the tvOS scale (Syahmi's note, 26 Oct: the
+   card read too big and its foot ran off a laptop screen). Still nothing under 23 px. */
+:global(.video) .pitchMoment {
+  --type-title1: 500 57px/66px var(--font-sans);
+  --type-title3: 500 38px/46px var(--font-sans);
+  --type-headline: 500 31px/38px var(--font-sans);
+  --type-body: 500 26px/32px var(--font-sans);
+  --type-callout: 500 26px/32px var(--font-sans);
+}
 
 /* The on-page controls on the video frame: bottom right of the pitch (phones pin their own). */
 .pitchControls {
@@ -145,6 +175,19 @@
   position: absolute;
   right: var(--space-2);
   bottom: var(--space-2);
+}
+
+/* A plain visit's Kick off button, centred on the pitch until the first play. */
+.pitchStart {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.pitchStart > * {
+  pointer-events: auto;
 }
 
 /* A phone held sideways: the score rides on the pitch, as on the video frame. */

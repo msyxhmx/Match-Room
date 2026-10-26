@@ -143,7 +143,7 @@ cross in midfield).
 - **Sideways.** A phone held sideways (under 500 px tall) gets the phone layout: the whole pitch
   with the score on it, a one-row top bar and compact corner controls.
 - **The address.** A plain visit keeps a bare address, so the link always opens at kick-off at
-  ×60, playing. On the video frame, controls show on plain visits only; director URLs and
+  ×60, still, behind a Kick off button. On the video frame, controls show on plain visits only; director URLs and
   `?rec=1` record clean.
 - **Proof.**
   - `npm run flows -- phone`: the phone and phone-landscape flows.

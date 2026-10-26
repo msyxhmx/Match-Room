@@ -69,8 +69,9 @@ two rules stay in `stage.ts` for now, as the record of what was compared.
   re-fetches the snapshot at the current minute, so the card on stage is re-worded in place.
 - **The frame.** Wider than 700 px, the page is the 1920 × 1080 frame zoomed to fit the window
   (CSS `zoom`), so a laptop sees the same composition as the video. Narrower, the phone layout.
-- **A plain visit** plays the comeback from kick-off at ×60. A URL with `minute` waits for
-  `Space`.
+- **A plain visit** opens still at kick-off at ×60 behind a Kick off button; pausing freezes the
+  pitch where it is. A URL with `minute` waits for `Space`, and its pause loops the minute's
+  headline. At half-time a plain visit shows the brief alone, with a button for the agents.
 - **Timeline pins** put that moment on stage until the rule picks a new one.
 - **The TopBar's language and persona pills** are buttons in the app (the viewer switcher
   DESIGN §5 requires).

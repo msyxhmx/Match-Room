@@ -302,10 +302,19 @@ function flows(live, dead, preview) {
         await bar.waitFor({ timeout: 4000 });
         await page.locator('[data-pitch][data-follow="true"]').waitFor({ timeout: 4000 });
         await pitchDrawing(page);
+        // The bare link waits on its Kick off button, then plays.
+        const kick = page.locator("[data-role=kick-off]");
+        await kick.waitFor({ timeout: 4000 });
+        await sleep(1500);
+        const clock = page.locator('section[data-period] [class*="minute"]');
+        if (await clock.count()) throw new Error("the bare link played before Kick off");
+        await kick.tap();
+        await clock.first().waitFor({ timeout: 4000 });
         const m0 = await headerMinute(page);
         await sleep(2500);
         const m1 = await headerMinute(page);
-        if (!(m1 > m0)) throw new Error(`the bare link isn't playing (${m0}' → ${m1}')`);
+        if (!(m1 > m0)) throw new Error(`Kick off didn't start the match (${m0}' → ${m1}')`);
+        if (await kick.count()) throw new Error("the Kick off button stayed after kick-off");
         if (!(await body(page)).includes("×60")) throw new Error("no ×60 pill on the bare link");
         const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if (wide > 0) throw new Error(`the page scrolls sideways by ${wide} px`);
@@ -314,6 +323,12 @@ function flows(live, dead, preview) {
         const p0 = await headerMinute(page);
         await sleep(2000);
         if ((await headerMinute(page)) !== p0) throw new Error("pause didn't stop the clock");
+        // ...and the pitch: a plain visit's pause freezes the picture (no headline loop).
+        const frames = () => page.locator("[data-pitch] canvas").first().getAttribute("data-frames");
+        const f0 = await frames();
+        await sleep(1500);
+        if ((await frames()) !== f0) throw new Error("the pitch kept moving while paused");
+        await bar.getByRole("button", { name: "Play" }).tap();
         // ×1: the speed pill goes (speed honesty: it shows only above ×1).
         await bar.getByRole("button", { name: "×1" }).tap();
         await sleep(1500);

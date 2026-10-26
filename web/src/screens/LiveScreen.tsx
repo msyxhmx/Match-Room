@@ -35,6 +35,8 @@ export interface LiveScreenProps {
   pitch?: ReactNode;
   /** On-page controls for the video frame, placed on the pitch (phones pin their own). */
   controls?: ReactNode;
+  /** A plain visit before the first play: the Kick off button over the pitch. */
+  start?: ReactNode;
 }
 
 export function teamOf(view: Pick<MatchView, "home" | "away">, card: Pick<LiveCard, "side">): Team | undefined {
@@ -100,6 +102,7 @@ export function LiveScreen(props: LiveScreenProps) {
             <ScoreHeader {...scoreProps} variant="bug" />
           </div>
           {props.controls && <div className={styles.pitchControls}>{props.controls}</div>}
+          {props.start && <div className={styles.pitchStart}>{props.start}</div>}
         </div>
         <div className={styles.pitchMoment}>{moment}</div>
         {/* Phones scroll, so the timeline has room again under the moment (video: the break screens). */}

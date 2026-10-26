@@ -54,3 +54,15 @@ export function MatchControls(p: MatchControlsProps) {
     </nav>
   );
 }
+
+/** A plain visit's first play: one big button on the still kick-off picture (Syahmi's note,
+ *  26 Oct), so the viewer reads the match-up before anything moves. */
+export function KickOffButton({ onKickOff }: { onKickOff: () => void }) {
+  const labels = useLabels();
+  return (
+    <button type="button" className={styles.kickOff} onClick={onKickOff} data-role="kick-off">
+      <Icon icon={Play} />
+      {labels.kickOff}
+    </button>
+  );
+}

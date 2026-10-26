@@ -3,12 +3,13 @@
 //
 // Half-time: the brief on the left (1080), the agents on the right (600). No score header: the
 //   brief's headline already says "Kingston Vale lead 0-2 at the break", and both columns need
-//   the height.
+//   the height. Plain visits open with the brief alone and a button that shows the agents
+//   (Syahmi's note, 26 Oct); director URLs (S5) and the lab show them from the start.
 // Full-time: the score header (the loser dims), the brief's headline and the player of the
 //   match, then the timeline with every turning point and its swing. The swings are said once,
 //   on the timeline; the brief leaves its own list out.
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import type { BriefPoint, LiveCard } from "../types/live";
 import { AgentTrace, BriefPanel, FactsSheet, ScoreHeader, Timeline, TopBar } from "../ui";
 import { scorersFrom } from "../ui/format";
@@ -70,8 +71,9 @@ export function pointAsCard(point: BriefPoint, view: MatchView): LiveCard {
   };
 }
 
-export function HalfTimeScreen(props: BreakProps & { revealed?: number }) {
+export function HalfTimeScreen(props: BreakProps & { revealed?: number; agentsOpen?: boolean }) {
   const { view, facts, revealed } = props;
+  const [open, setOpen] = useState(props.agentsOpen ?? true);
   const sheetCard = useLastFacts(facts);
   const brief = view.halftime!;
   const labels = useLabels();
@@ -80,19 +82,19 @@ export function HalfTimeScreen(props: BreakProps & { revealed?: number }) {
   useLayoutEffect(() => {
     const el = trace.current;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [revealed, view.agentTrace]);
+  }, [revealed, view.agentTrace, open]);
   // Plan B (#9): the agents didn't run. The brief's own source line already says "written from
   // templates", so the brief stands alone at full width rather than beside an empty panel.
   const alone = view.agentTrace !== null && view.agentTrace.length === 0;
   return (
     <div className={styles.screen} data-screen="halftime">
       <Bar {...props} />
-      <div className={styles.halftime} data-alone={alone || undefined}>
+      <div className={styles.halftime} data-alone={alone || !open || undefined}>
         {/* The longest brief (Malay analyst) runs past the column, so it scrolls; English fits. */}
         <div className={styles.brief} tabIndex={0} role="region" aria-label={labels.halfTimeLong}>
           <BriefPanel brief={brief} onOpenFacts={(p) => props.onOpenFacts?.(pointAsCard(p, view))} />
         </div>
-        {!alone && (
+        {!alone && open && (
           // Focusable, so a keyboard can scroll a long trace (WCAG 2.1.1).
           <div className={styles.trace} ref={trace} tabIndex={0} role="region" aria-label={labels.agentsAtWork}>
             {view.agentTrace && (
@@ -101,6 +103,11 @@ export function HalfTimeScreen(props: BreakProps & { revealed?: number }) {
           </div>
         )}
       </div>
+      {!alone && view.agentTrace && (
+        <button type="button" className={styles.agentsToggle} aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+          {open ? labels.hideAgents : labels.showAgents}
+        </button>
+      )}
       {sheetCard && <FactsSheet open={!!facts} card={sheetCard} note={view.projection.note} onClose={props.onCloseFacts} />}
     </div>
   );

@@ -23,8 +23,9 @@ export interface Direction {
   /** Bumps on every scene jump, so the same scene twice restarts the take. */
   epoch: number;
   /** A director URL (it named a minute, speed or play state) rather than a plain visit. Plain
-   *  visits keep a bare address, so the link always opens at kick-off at ×60, and show the
-   *  on-page controls; director URLs are for recording and show none on the video frame. */
+   *  visits keep a bare address, so the link always opens at kick-off at ×60 behind a Kick off
+   *  button, and show the on-page controls; director URLs are for recording and show none on
+   *  the video frame. */
   director: boolean;
   /** `?rec=1`: recording, no on-page controls whatever the URL. */
   rec: boolean;
@@ -61,8 +62,9 @@ export function readDirection(search: string): Direction {
     },
     minute: num(q.get("minute"), 0, 0, 90),
     speed: num(q.get("speed"), 60, 1, 6000),
-    // A plain visit plays the match; a director URL with a minute waits for Space.
-    playing: q.has("play") ? q.get("play") === "1" : !q.has("minute"),
+    // A plain visit waits on its Kick off button (Syahmi's note, 26 Oct); ?rec=1 plays at once;
+    // a director URL with a minute waits for Space.
+    playing: q.has("play") ? q.get("play") === "1" : q.get("rec") === "1" && !q.has("minute"),
     factsOpen: q.get("facts") === "1",
     epoch: 0,
     director: q.has("minute") || q.has("speed") || q.has("play"),
@@ -78,7 +80,7 @@ function writeUrl(d: Direction) {
     q.set("play", d.playing ? "1" : "0");
   }
   // A plain visit keeps a bare address (language and persona only, and only when changed), so a
-  // refresh or a copied link opens at kick-off at ×60, playing.
+  // refresh or a copied link opens at kick-off at ×60, waiting on its Kick off button.
   if (d.director || d.profile.language !== "en") q.set("lang", d.profile.language);
   else q.delete("lang");
   if (d.director || d.profile.persona !== "casual") q.set("persona", d.profile.persona);
