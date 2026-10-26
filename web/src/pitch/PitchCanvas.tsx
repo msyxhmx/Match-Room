@@ -171,7 +171,10 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
 
   const chips = (
     <>
-      <div className={styles.note}>{labels.pitchNote}</div>
+      <div className={styles.note}>
+        {labels.pitchNote}
+        <span className={styles.credit}>{labels.pitchCredit}</span>
+      </div>
       {analyst && <div className={styles.chip}>{labels.analystView}</div>}
       {replayMinute !== null && (
         <div className={styles.replay}>

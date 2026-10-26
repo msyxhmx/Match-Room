@@ -14,6 +14,8 @@ const EN = {
   kickOff: "Kick-off",
   synthetic: "Synthetic data",
   pitchNote: "Positions illustrative · events from the match feed",
+  /** The movement's source: CC BY 4.0 needs the credit on screen. */
+  pitchCredit: "Movement modelled on DFL tracking data (CC BY 4.0)",
   replay: "Replay",
   analystView: "Analyst view · team shape",
   play: "Play",
@@ -117,6 +119,7 @@ const MS: Labels = {
   kickOff: "Sepak mula", // Ilham to choose: or "Sepakan permulaan"
   synthetic: "Data sintetik", // confirm
   pitchNote: "Kedudukan ilustrasi · peristiwa daripada suapan perlawanan", // confirm
+  pitchCredit: "Pergerakan dimodelkan pada data penjejakan DFL (CC BY 4.0)", // confirm
   replay: "Ulang tayang", // confirm
   analystView: "Paparan analisis · bentuk pasukan", // confirm
   play: "Main", // confirm
@@ -216,6 +219,7 @@ const ES: Labels = {
   kickOff: "Saque inicial",
   synthetic: "Datos sintéticos",
   pitchNote: "Posiciones ilustrativas · eventos del partido",
+  pitchCredit: "Movimiento modelado con datos de seguimiento de la DFL (CC BY 4.0)",
   replay: "Repetición",
   analystView: "Vista de analista · forma del equipo",
   play: "Reproducir",
