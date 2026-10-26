@@ -380,8 +380,10 @@ def stats(matches: list[Match]) -> dict:
             "p999": q(v, 0.999),
             **{k: float(((v >= lo) & (v < hi)).mean()) for k, (lo, hi) in bands.items()},
         },
-        "accel": {"p50": q(np.concatenate(acc), 0.5), "p90": q(np.concatenate(acc), 0.9)},
-        "brake": {"p50": q(np.concatenate(dec), 0.5), "p90": q(np.concatenate(dec), 0.9)},
+        # The typical speed inside each band: the gaits.
+        "gait": {k: q(v[(v >= lo) & (v < hi)], 0.5) for k, (lo, hi) in bands.items()},
+        "accel": {f"p{p}": q(np.concatenate(acc), p / 100) for p in (50, 90, 99)},
+        "brake": {f"p{p}": q(np.concatenate(dec), p / 100) for p in (50, 90, 99)},
         "together": {"median": q(together, 0.5), "p90": q(together, 0.9)},
     }
 
@@ -473,6 +475,8 @@ def pass_numbers(matches: list[Match]) -> dict:
                 "to": hi,
                 "n": int(sel.sum()),
                 "speed": pct(x[sel, 3]),
+                # Lofted: peaks over 1 m above the ground.
+                "lofted": round(float((x[sel, 4] > 1).mean()), 3),
                 "height": pct(x[sel, 4]),
             }
         )

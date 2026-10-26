@@ -30,11 +30,12 @@ interface Gap {
   t1: number;
 }
 
-/** Illustrative passes are struck at about this speed (m/s); none faster than MAX_SPEED. */
-const PASS_SPEED = 16;
+/** Illustrative passes go at a real pass's average speed for their length (DFL: 6 m/s over
+ *  5 m, 9.5 over 25 m, 16 over 50 m); none faster than MAX_SPEED. */
+const passSpeed = (d: number) => 4.9 + 0.19 * d;
 const MAX_SPEED = 20;
-/** A carrier passes on after roughly this long. */
-const PASS_EVERY = 2.6;
+/** A carrier passes on after roughly this long (real receivers keep it 0.7–2.4 s, median 1.35). */
+const PASS_EVERY = 1.6;
 /** A pass slows a little as it travels (starts at 1.3× its average speed, not 2×). */
 const ease = (u: number) => u + 0.3 * u * (1 - u);
 /** After a goal: no ball while they celebrate and reset. */
@@ -103,7 +104,9 @@ const posIn = (tl: Timeline, segs: Seg[], t: number): Vec | null => {
 function openPlay(tl: Timeline, t0: number, from: Vec, holder: string, seed: string): Seg[] {
   const segs: Seg[] = [];
   const f0 = feet(tl, holder, t0) ?? from;
-  const blendTill = t0 + Math.min(1.5, Math.max(0.3, dist(from, f0) / 10));
+  // Onto the holder at no more than 12 m/s on average, however far he is (no 1.5 s cap: a
+  // holder 40 m away would make the ball fly at 40 m/s).
+  const blendTill = t0 + Math.max(0.3, dist(from, f0) / 12);
   let t = t0;
   let by = holder;
   let first = true;
@@ -123,7 +126,7 @@ function openPlay(tl: Timeline, t0: number, from: Vec, holder: string, seed: str
       if (!guess) continue;
       const d = dist(at, guess);
       if (d < 10 || d > 30) continue;
-      const flight = Math.max(0.6, d / PASS_SPEED);
+      const flight = Math.max(0.6, d / passSpeed(d));
       const to = feet(tl, k, pass + flight) ?? guess;
       const forward = own(side, to).x - own(side, at).x;
       const score = -0.35 * forward + 8 * hash01(`${k}:${seed}:${n}`);
@@ -178,7 +181,7 @@ function planGap(tl: Timeline, i: number): Gap | null {
   let cut = Math.max(start, b.s, arrive - 1);
   for (let k = 0; k < 2; k++) {
     const p = posIn(tl, segs, cut) ?? from;
-    const flight = Math.min(2.2, Math.max(0.4, dist(p, b.moment.from) / PASS_SPEED));
+    const flight = Math.min(2.2, Math.max(0.4, dist(p, b.moment.from) / passSpeed(dist(p, b.moment.from))));
     cut = Math.max(start, b.s, arrive - flight);
   }
   const p = posIn(tl, segs, cut) ?? from;

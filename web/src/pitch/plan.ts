@@ -109,16 +109,19 @@ const RESET = 3.2;
 /** After a goal: the scorer is mobbed this long before everyone heads back. */
 const GOAL_MOB = 1.6;
 
-/** The movement model. Gaits in m/s; a run is V_RUN. */
-export const GAIT = { walk: 1.5, jog: 3.5, run: V_RUN } as const;
+/** The movement model. Gaits in m/s: the typical speed inside each real speed band (DFL,
+ *  real/stats.json "gait": walk 1.35, jog 2.93, run 4.64). */
+export const GAIT = { walk: 1.35, jog: 2.9, run: 4.6 } as const;
 /** Simulation step (s): a key every step while a player moves. */
 const SUB = 0.2;
 /** Within this of his spot a standing player stays put (near the ball; up to FAR_BAND far
- *  from it); a moving one stops this close. */
-export const DEADBAND = 3;
-const FAR_BAND = 7;
+ *  from it); a moving one stops this close. Real players stand 2–10% of the time (DFL): they
+ *  keep adjusting, so the bands are tight. */
+export const DEADBAND = 1.5;
+const FAR_BAND = 4;
 const STOP = 0.6;
-/** m/s² speeding up and slowing down: 0 to a run takes about 1.7 s. */
+/** m/s² speeding up and slowing down: 0 to a run takes about 1.5 s. Real players (DFL, over
+ *  0.2 s): speeding up p90 2.1, p99 4.2; braking p90 2.2, p99 5.1. */
 const ACC = 3;
 const DEC = 4.5;
 /** Reaction to a new picture (s): this per role, plus up to 0.4 more per player. */
@@ -315,7 +318,8 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     legNo++;
     const bend = I.map((i) => {
       const hb = (seed[i] + legNo * 0.618034) % 1; // a new, well-spread draw each picture
-      return (hb < 0.5 ? -1 : 1) * (0.26 + 0.7 * Math.abs(2 * hb - 1));
+      // 5–25°: real teams move more together than apart (co-movement 60–70%, DFL).
+      return (hb < 0.5 ? -1 : 1) * (0.09 + 0.35 * Math.abs(2 * hb - 1));
     });
 
     /** One step toward a due spot; false: not yet, or out of reach. */
@@ -639,18 +643,24 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       } else {
         // The nearest one or two opponents close the ball down, goal side.
         const n = m.kind === "foul" ? 1 : m.pressed ? 2 : 1;
-        const gap = m.kind === "foul" ? 1.1 : m.pressed ? 1.6 : 4;
-        for (const pr of nearest(def, m.from, n, used)) {
-          // Goal side; for a shot, from the side, out of the ball's path.
+        // Real passers have the nearest opponent 2.7–9 m away (median 5, DFL); under pressure, close.
+        const gap = m.kind === "foul" ? 1.1 : m.pressed ? 2.6 : 6;
+        nearest(def, m.from, n, used).forEach((pr, i) => {
+          // Goal side (between the ball and his own goal); for a shot, from the side, out of the
+          // ball's path. A second presser cuts the lane inside, a few metres further off.
+          const sg = attackSign(m.side);
+          const inside = m.from.y > 0 ? -1 : 1;
           const goalSide =
             m.kind === "shot"
-              ? { x: m.from.x - attackSign(m.side) * 0.6, y: m.from.y + (m.from.y > 0 ? -1.8 : 1.8) }
-              : { x: m.from.x - attackSign(m.side) * gap, y: m.from.y };
+              ? { x: m.from.x - sg * 0.6, y: m.from.y + inside * 1.8 }
+              : i === 0
+                ? { x: m.from.x + sg * gap, y: m.from.y }
+                : { x: m.from.x + sg * (gap + 2.5), y: m.from.y + inside * 4 };
           targets[pr.id] = goalSide;
           caps[pr.id] = V_ACTOR;
           pace[pr.id] = "urgent";
           used.add(pr.id);
-        }
+        });
         // The second man covers: a few metres goal side of the press, toward the middle.
         if (m.kind !== "shot")
           for (const cv of nearest(def, m.from, 1, used)) {
@@ -786,10 +796,29 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
   return { tracks, ball: ballKeys(beats), beats, dropped, start: opts.start, end, initialBall };
 }
 
-/** Peak height (m) of a moment's ball in flight: long passes are lofted. */
+/** The share of real passes lofted (over 1 m) by length (DFL, real/stats.json "byLength"):
+ *  a chip or a throw now and then, a third of passes of 30–45 m, every pass past 45 m. */
+const LOFTED: [number, number][] = [[5, 0.2], [15, 0.1], [25, 0.13], [37.5, 0.4], [50, 1]];
+const loftedShare = (d: number) => {
+  if (d <= LOFTED[0][0]) return LOFTED[0][1];
+  for (let i = 1; i < LOFTED.length; i++)
+    if (d <= LOFTED[i][0]) {
+      const [d0, p0] = LOFTED[i - 1];
+      const [d1, p1] = LOFTED[i];
+      return p0 + ((p1 - p0) * (d - d0)) / (d1 - d0);
+    }
+  return 1;
+};
+
+/** A ball peaking above this (m) is met in the air (a header); lower, it's controlled. */
+export const HEAD = 1.8;
+
+/** Peak height (m) of a moment's ball in flight. The data has no height, so it's illustrative:
+ *  lofted as often as real passes of its length are, about 0.16 m per metre (8 m at 50 m). */
 export const loft = (m: Moment) => {
   const d = m.to ? dist(m.from, m.to) : 0;
-  return m.kind === "pass" && d > 28 ? Math.min(7, d * 0.12) : 0;
+  if (m.kind !== "pass" || hash01(`${m.id}:loft`) >= loftedShare(d)) return 0;
+  return clamp(d * 0.16, 1.5, 11);
 };
 
 /** The ball: it shows only during moments, at the real spot, along the real pass. */

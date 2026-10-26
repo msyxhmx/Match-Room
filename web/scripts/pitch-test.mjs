@@ -413,7 +413,7 @@ for (const speed of [1, 60]) {
 {
   const { figurePose, gaitOf, PREV_DT } = await load("/src/pitch/figures.ts");
   const { strideM } = await load("/src/pitch/frame.ts");
-  const { loft } = await load("/src/pitch/plan.ts");
+  const { loft, HEAD } = await load("/src/pitch/plan.ts");
   const r = replayMinute(players, moments, 74);
   const tl = r.timeline;
   const poseAt = (timeline, t, id, still = false) => {
@@ -449,14 +449,14 @@ for (const speed of [1, 60]) {
   // Actions at their beats, on the ×1 match.
   const a1 = arrivalsAt(1);
   const full = liveTimeline(players, moments, { speed: 1, arrivals: a1, start: 0, initial: { kind: "kickoff", kicking: "home" } });
-  const tackle = full.beats.find((b) => b.winnerShown && loft(b.moment) === 0);
+  const tackle = full.beats.find((b) => b.winnerShown && loft(b.moment) <= HEAD);
   if (!tackle) fail("figures: no shown tackle to check");
   else {
     if (poseAt(full, tackle.land, tackle.receiver)?.tackle == null) fail(`figures: ${tackle.moment.winner.player} doesn't slide in at ${tackle.moment.id}`);
     if (poseAt(full, tackle.land - 1.2, tackle.receiver)?.tackle != null) fail("figures: the tackle starts a second early");
     if (poseAt(full, tackle.land, tackle.actor)?.tackle != null) fail("figures: the passer slides too");
   }
-  const lofted = full.beats.find((b) => loft(b.moment) > 0 && b.receiver);
+  const lofted = full.beats.find((b) => loft(b.moment) > HEAD && b.receiver);
   if (!lofted) fail("figures: no lofted pass to check");
   else {
     if (poseAt(full, lofted.land - 0.15, lofted.receiver)?.header == null) fail(`figures: nobody jumps for the lofted ball at ${lofted.moment.id}`);
@@ -614,8 +614,8 @@ for (const speed of [1, 60]) {
     if (mt < P.receiverMeets.p25 || mt > P.receiverMeets.p75) fail(`around the ball (${label}): the receiver moves ${mt.toFixed(1)} m/s toward the pass (real ${P.receiverMeets.p25}–${P.receiverMeets.p75})`);
   }
 
-  // The ball in the air: each pass's peak height above the ground (loft) against real passes of
-  // its length, by median.
+  // The ball in the air: by pass length, the share of passes lofted (peaking over 1 m above
+  // the ground) against real passes of that length, within 0.15.
   {
     const { loft } = await load("/src/pitch/plan.ts");
     const byLen = new Map(P.byLength.map((b) => [b, []]));
@@ -626,12 +626,10 @@ for (const speed of [1, 60]) {
       if (bin) byLen.get(bin).push(loft(m));
     }
     for (const [bin, hs] of byLen) {
-      if (hs.length < 5) continue;
-      const h = med(hs);
-      console.log(`  loft ${bin.from}–${bin.to} m: ours median ${h.toFixed(1)} m over ${hs.length} passes, real ${bin.height.p25}–${bin.height.p75} (median ${bin.height.p50})`);
-      // Real passes this long mostly stay on the ground (under 0.3 m: a bobble, not a loft).
-      const low = bin.height.p75 < 0.3;
-      if (low ? h >= 0.3 : h < bin.height.p25 || h > bin.height.p75) fail(`loft: passes of ${bin.from}–${bin.to} m peak at a median ${h.toFixed(1)} m above the ground (real ${bin.height.p25}–${bin.height.p75})`);
+      if (hs.length < 20) continue;
+      const share = hs.filter((h) => h > 1).length / hs.length;
+      console.log(`  lofted ${bin.from}–${bin.to} m: ours ${pc(share)} of ${hs.length} passes, real ${pc(bin.lofted)}`);
+      if (Math.abs(share - bin.lofted) > 0.15) fail(`loft: ${pc(share)} of passes of ${bin.from}–${bin.to} m are lofted (real ${pc(bin.lofted)})`);
     }
   }
 }
