@@ -143,7 +143,7 @@ export function ballAt(keys: BallKey[], t: number, steps = false): Frame["ball"]
   const alpha = a.a + (b.a - a.a) * u;
   if (alpha <= 0.001) return null;
   const e = b.ease === "out" ? u + 0.3 * u * (1 - u) : u; // a pass slows a little (starts 1.3× its average)
-  const z = b.arc > 0 ? 4 * b.arc * u * (1 - u) : 0;
+  const z = a.z !== undefined && b.z !== undefined ? a.z + (b.z - a.z) * u : b.arc > 0 ? 4 * b.arc * u * (1 - u) : 0;
   return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, z, a: alpha };
 }
 

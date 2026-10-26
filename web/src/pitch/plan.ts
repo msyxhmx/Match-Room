@@ -43,6 +43,9 @@ export interface BallKey {
   ease: "hold" | "linear" | "out";
   /** Peak height (m) of the segment that ends here: lofted long passes. */
   arc: number;
+  /** Measured height (m) at this key (real tracking, real.ts): a segment whose ends both have
+   *  one goes linearly between them, instead of the arc. */
+  z?: number;
   /** The segment that ends here is a carry: the ball sits at this player's feet. */
   follow?: string;
 }
