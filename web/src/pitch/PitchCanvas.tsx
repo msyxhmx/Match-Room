@@ -12,7 +12,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLabels } from "../ui/labels";
-import { cameraAt, FOLLOW_SCALE } from "./camera";
+import { cameraAt, FOLLOW_SCALE, type ShotOptions } from "./camera";
 import type { Shot } from "./director";
 import { PitchScale } from "./PitchView";
 import { PREV_DT } from "./figures";
@@ -21,7 +21,7 @@ import styles from "./pitch.module.css";
 
 export interface PitchCanvasProps {
   /** The picture at display time t (seconds since `epoch`, unless `at`/seek). */
-  shot: (t: number) => Shot;
+  shot: (t: number, o?: ShotOptions) => Shot;
   /** The analyst layer (each team's units joined up). Fades in and out over LINES_FADE. */
   analyst: boolean;
   focus?: string | null;
@@ -89,8 +89,9 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
       else lines += Math.sign(target - lines) * Math.min(Math.abs(target - lines), Math.max(0, t - lastT) / LINES_FADE);
       lastT = t;
       const sh = s(t);
-      // A moment earlier, for the players' speed and facing (figures.ts).
+      // A moment earlier, for the players' speed and facing, and one more for the lean (figures.ts).
       const prev = s(t - PREV_DT).frame;
+      const earlier = s(t - 2 * PREV_DT).frame;
       if (fol) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, el.width, el.height);
@@ -108,11 +109,12 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
           clear: false,
           bounds: { x0: cam.x0, x1: cam.x0 + cam.width },
           prev,
+          earlier,
           still: r,
         });
         ctx.setTransform(1, 0, 0, 1, 0, 0);
       } else {
-        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k, prev, still: r });
+        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k, prev, earlier, still: r });
       }
       el.style.opacity = r ? "1" : String(sh.opacity);
       const rm = sh.replayOf ? sh.replayOf.minute : null;

@@ -38,7 +38,13 @@ export const clampToPitch = (p: Vec, margin = 0.5): Vec => ({
   y: Math.max(-HALF_W - margin, Math.min(HALF_W + margin, p.y)),
 });
 
-export const dist = (a: Vec, b: Vec) => Math.hypot(a.x - b.x, a.y - b.y);
+/** Distance in metres (Math.sqrt: Math.hypot is several times slower, and the planner and the
+ *  ghost call this a lot). */
+export const dist = (a: Vec, b: Vec) => {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  return Math.sqrt(dx * dx + dy * dy);
+};
 
 // ---------- the plate camera (pitch.py: lens 23.5 mm, sensor 36 mm, at (0, −72, 30), tilt 66°) ----------
 

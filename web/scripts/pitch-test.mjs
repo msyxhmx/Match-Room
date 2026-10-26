@@ -3,7 +3,7 @@
 //
 // On the saved comeback match (every event, both lineups), at ×1 and ×60, from kick-off:
 //   on-pitch    no player ever leaves the pitch (sampled every 1/30 s)
-//   speed       nobody moves faster than a sprint (9.5 m/s, sway off)
+//   speed       nobody moves faster than a sprint (9.5 m/s)
 //   eleven      at most 11 dots per team, and a red card takes one off for good
 //   real-spot   at every shown moment's touch the ball is at the event's real coordinates and
 //               the named player's dot is on it; a shown tackle/interception's player is at the
@@ -25,6 +25,15 @@
 //               scorer's own keeper doesn't; the scorer celebrates once it's in; a runner faces
 //               his run on screen; a replay cut reads as standing, not a sprint; reduced motion
 //               holds every leg still
+//   body        gaits by speed (stand, walk, jog, sprint) with cadence rising; a sprint leans
+//               about 15°, speeding up leans forward and braking back; the back view running away
+//               from the camera, the front toward it; on the ×1 match the real tackler slides and
+//               a lofted pass's receiver jumps at the right beat (not a second early); the keeper
+//               is set while the ball is in his third, not when it's at the other end, and
+//               gathers a save; reduced motion: no stride or lean, the slide held
+//   motion      on the 74' loop as drawn (outfield, frames 1/15 s apart): 25–35% of the time
+//               standing (under 0.5 m/s), 8% or less sprinting (6 m/s and up), and a median of
+//               50% or less of a team's movers heading the same way (within 25 degrees)
 
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -65,7 +74,7 @@ function check(label, tl, moments, speed) {
   let maxV = 0;
   let maxAt = "";
   for (let t = tl.start; t <= tl.end; t += DT) {
-    const f = frameAt(tl, t, { sway: false });
+    const f = frameAt(tl, t);
     const per = { home: 0, away: 0 };
     for (const d of f.dots) {
       per[d.side]++;
@@ -90,12 +99,12 @@ function check(label, tl, moments, speed) {
   let lags = [];
   for (const b of tl.beats) {
     const m = b.moment;
-    const f = frameAt(tl, b.touch, { sway: false });
+    const f = frameAt(tl, b.touch);
     if (!f.ball || dist(f.ball, m.from) > 0.05) fail(`${label} real-spot: ball not at ${m.id} at its touch`);
     const actor = f.dots.find((d) => d.id === b.actor);
     if (!actor || dist(actor, m.from) > 1.2) fail(`${label} real-spot: ${m.player} not on the ball for ${m.id}`);
     if (b.winnerShown) {
-      const g = frameAt(tl, b.land, { sway: false });
+      const g = frameAt(tl, b.land);
       const w = g.dots.find((d) => d.id === b.receiver);
       if (!w || dist(w, m.to) > 1.2) fail(`${label} real-spot: winner ${m.winner.player} not at the ball for ${m.id}`);
     }
@@ -141,7 +150,7 @@ function checkContinuous(label, tl, until = tl.end) {
   let worst = 0;
   let prev = null;
   for (let t = tl.start; t <= until; t += DT) {
-    const f = frameAt(tl, t, { sway: false, continuous: true });
+    const f = frameAt(tl, t, { continuous: true });
     total++;
     if (f.ball) {
       seen++;
@@ -154,7 +163,7 @@ function checkContinuous(label, tl, until = tl.end) {
     prev = f.ball;
   }
   for (const b of tl.beats) {
-    const f = frameAt(tl, b.touch, { sway: false, continuous: true });
+    const f = frameAt(tl, b.touch, { continuous: true });
     if (!f.ball || f.ball.ghost || dist(f.ball, b.moment.from) > 0.05) fail(`${label} continuous: ${b.moment.id} touch isn't the real ball`);
   }
   const share = seen / total;
@@ -186,7 +195,7 @@ for (const speed of [1, 60]) {
       start: 0,
       initial: { kind: "kickoff", kicking: "home" },
     });
-    const shot = (t) => prog.shotAt(t, { sway: false, continuous: true });
+    const shot = (t, o) => prog.shotAt(t, { continuous: true, ...o });
     let seen = 0;
     let inFrame = 0;
     let fastest = 0;
@@ -243,8 +252,8 @@ for (const speed of [1, 60]) {
     const b = liveTimeline(players, upTo(k + 1), opts(k + 1));
     const now = all.get(k + 1);
     for (let t = 0; t <= now; t += 0.1) {
-      const fa = frameAt(a, t, { sway: false, continuous: true });
-      const fb = frameAt(b, t, { sway: false, continuous: true });
+      const fa = frameAt(a, t, { continuous: true });
+      const fb = frameAt(b, t, { continuous: true });
       if (fa.ball && fb.ball && dist(fa.ball, fb.ball) > worst) {
         worst = dist(fa.ball, fb.ball);
         where = `the ball t=${t.toFixed(1)} after minute ${k}`;
@@ -325,8 +334,8 @@ for (const speed of [1, 60]) {
   const r = replayMinute(players, moments, 74);
   const tl = r.timeline;
   const poseAt = (t, id, still = false) => {
-    const f = frameAt(tl, t, { sway: false });
-    const before = frameAt(tl, t - PREV_DT, { sway: false }).dots.find((d) => d.id === id);
+    const f = frameAt(tl, t);
+    const before = frameAt(tl, t - PREV_DT).dots.find((d) => d.id === id);
     const d = f.dots.find((x) => x.id === id);
     return d && figurePose(d, before, f, still);
   };
@@ -334,8 +343,8 @@ for (const speed of [1, 60]) {
   for (const b of tl.beats) {
     const m = b.moment;
     if (m.kind !== "pass" && m.kind !== "shot") continue;
-    const f = frameAt(tl, b.touch, { sway: false });
-    const prev = frameAt(tl, b.touch - PREV_DT, { sway: false });
+    const f = frameAt(tl, b.touch);
+    const prev = frameAt(tl, b.touch - PREV_DT);
     for (const d of f.dots) {
       const p = figurePose(d, prev.dots.find((x) => x.id === d.id), f);
       if (d.id === b.actor && p.kick === null) fail(`figures: ${m.player} doesn't kick at the ${m.minute}' ${m.kind}`);
@@ -344,7 +353,7 @@ for (const speed of [1, 60]) {
     kicks++;
   }
   const goal = tl.beats.find((b) => isGoal(b.moment));
-  const f = frameAt(tl, goal.land, { sway: false });
+  const f = frameAt(tl, goal.land);
   const keeperOf = (side) => f.dots.find((d) => d.role === "GK" && d.side === side);
   const beaten = keeperOf(goal.moment.side === "home" ? "away" : "home");
   const ownKeeper = keeperOf(goal.moment.side);
@@ -360,8 +369,8 @@ for (const speed of [1, 60]) {
   let runners = 0;
   let wrong = 0;
   for (let t = tl.start + 0.5; t < tl.end; t += 0.25) {
-    const fr = frameAt(tl, t, { sway: false });
-    const pr = frameAt(tl, t - PREV_DT, { sway: false });
+    const fr = frameAt(tl, t);
+    const pr = frameAt(tl, t - PREV_DT);
     for (const d of fr.dots) {
       const b = pr.dots.find((x) => x.id === d.id);
       const p = figurePose(d, b, fr);
@@ -383,14 +392,141 @@ for (const speed of [1, 60]) {
 
   // Reduced motion: no stride anywhere, the dive already made.
   for (let t = tl.start + 0.5; t < tl.end; t += 0.5) {
-    const fr = frameAt(tl, t, { sway: false });
-    const pr = frameAt(tl, t - PREV_DT, { sway: false });
+    const fr = frameAt(tl, t);
+    const pr = frameAt(tl, t - PREV_DT);
     for (const d of fr.dots)
       if (figurePose(d, pr.dots.find((x) => x.id === d.id), fr, true).stride !== 0) fail(`figures: ${d.id} strides under reduced motion`);
   }
   const heldDive = poseAt(goal.land - 0.3, beaten.id, true).dive;
   if (!heldDive || heldDive.p !== 1) fail("figures: reduced motion doesn't show the dive already made");
   console.log(`\nfigures: ${kicks} kicks checked, ${beaten.name} dives, facing checked on ${runners} runners`);
+}
+
+// The body (figures.ts): gaits, views, action poses, reduced motion.
+{
+  const { figurePose, gaitOf, PREV_DT } = await load("/src/pitch/figures.ts");
+  const { strideM } = await load("/src/pitch/frame.ts");
+  const { loft } = await load("/src/pitch/plan.ts");
+  const r = replayMinute(players, moments, 74);
+  const tl = r.timeline;
+  const poseAt = (timeline, t, id, still = false) => {
+    const f = frameAt(timeline, t);
+    const d = f.dots.find((x) => x.id === id);
+    const b = frameAt(timeline, t - PREV_DT).dots.find((x) => x.id === id);
+    const e = frameAt(timeline, t - 2 * PREV_DT).dots.find((x) => x.id === id);
+    return d && figurePose(d, b, f, still, e);
+  };
+  // A player in mid-pitch, moved by hand: a run at v m/s along (dx, dy).
+  const f0 = frameAt(tl, 1);
+  const d0 = { ...f0.dots.find((d) => d.role === "MF"), x: 0, y: 0 };
+  const moved = (v, dx, dy) => figurePose(d0, { ...d0, x: -dx * v * PREV_DT, y: -dy * v * PREV_DT }, { ...f0, ball: null, beat: null });
+
+  // Gait by speed, and cadence and stride rising with it.
+  const want = [[0, "stand"], [1.5, "walk"], [3.5, "jog"], [7, "sprint"]];
+  for (const [v, g] of want) if (moved(v, 1, 0).gait !== g) fail(`figures: ${v} m/s is drawn as a ${moved(v, 1, 0).gait}, not a ${g}`);
+  const cadence = want.slice(1).map(([v]) => v / strideM(v));
+  if (!(cadence[0] < cadence[1] && cadence[1] < cadence[2])) fail(`figures: cadence doesn't rise with speed (${cadence.map((c) => c.toFixed(2))})`);
+  const lean = moved(7, 1, 0).lean;
+  if (lean < 0.2 || lean > 0.33) fail(`figures: a sprint leans ${((lean * 180) / Math.PI).toFixed(0)}° (about 15° wanted)`);
+  if (moved(0, 1, 0).lean !== 0) fail("figures: a standing player leans");
+
+  // Views: away from the camera is the back (the number), toward it the front.
+  if (moved(5, 0, 1).view !== "back") fail(`figures: running away from the camera is drawn ${moved(5, 0, 1).view}, not back`);
+  if (moved(5, 0, -1).view !== "front") fail(`figures: running toward the camera is drawn ${moved(5, 0, -1).view}, not front`);
+  if (moved(5, 1, 0).view !== "side") fail(`figures: running across is drawn ${moved(5, 1, 0).view}, not side`);
+
+  // Speeding up leans forward, braking leans back.
+  const vAt = (a) => figurePose(d0, { ...d0, x: -4 * PREV_DT }, { ...f0, ball: null, beat: null }, false, { ...d0, x: -(8 - a * PREV_DT) * PREV_DT });
+  if (!(vAt(6).lean > moved(4, 1, 0).lean && vAt(-6).lean < moved(4, 1, 0).lean)) fail("figures: no lean into speeding up or back when braking");
+
+  // Actions at their beats, on the ×1 match.
+  const a1 = arrivalsAt(1);
+  const full = liveTimeline(players, moments, { speed: 1, arrivals: a1, start: 0, initial: { kind: "kickoff", kicking: "home" } });
+  const tackle = full.beats.find((b) => b.winnerShown && loft(b.moment) === 0);
+  if (!tackle) fail("figures: no shown tackle to check");
+  else {
+    if (poseAt(full, tackle.land, tackle.receiver)?.tackle == null) fail(`figures: ${tackle.moment.winner.player} doesn't slide in at ${tackle.moment.id}`);
+    if (poseAt(full, tackle.land - 1.2, tackle.receiver)?.tackle != null) fail("figures: the tackle starts a second early");
+    if (poseAt(full, tackle.land, tackle.actor)?.tackle != null) fail("figures: the passer slides too");
+  }
+  const lofted = full.beats.find((b) => loft(b.moment) > 0 && b.receiver);
+  if (!lofted) fail("figures: no lofted pass to check");
+  else {
+    if (poseAt(full, lofted.land - 0.15, lofted.receiver)?.header == null) fail(`figures: nobody jumps for the lofted ball at ${lofted.moment.id}`);
+    if (poseAt(full, lofted.land - 1.5, lofted.receiver)?.header != null) fail("figures: the jump comes early");
+  }
+  // The keeper: set while the ball is in his third, not when it's at the other end.
+  const goal = tl.beats.find((b) => isGoal(b.moment));
+  const keeper = (side) => frameAt(tl, goal.touch).dots.find((d) => d.role === "GK" && d.side === side);
+  const beaten = keeper(goal.moment.side === "home" ? "away" : "home");
+  const far = keeper(goal.moment.side);
+  if (!poseAt(tl, goal.touch - 0.4, beaten.id)?.crouch) fail(`figures: ${beaten.name} isn't set as L. Quinn shoots`);
+  if (poseAt(tl, goal.touch - 0.4, far.id)?.crouch) fail(`figures: ${far.name} crouches with the ball at the other end`);
+  const saved = full.beats.find((b) => b.moment.kind === "shot" && b.moment.outcome === "saved" && b.receiver);
+  if (saved && poseAt(full, saved.land, saved.receiver)?.catch == null) fail(`figures: the keeper doesn't catch the save at ${saved.moment.id}`);
+
+  // Reduced motion: no stride, no lean, every action held.
+  let held = 0;
+  for (let t = tl.start + 0.5; t < tl.end; t += 0.5)
+    for (const d of frameAt(tl, t).dots) {
+      const p = poseAt(tl, t, d.id, true);
+      if (p.stride !== 0 || p.phase !== 0 || p.lean !== 0) fail(`figures: ${d.id} moves under reduced motion at t=${t.toFixed(1)}`);
+      held++;
+    }
+  if (tackle && poseAt(full, tackle.land, tackle.receiver, true)?.tackle !== 0.5) fail("figures: reduced motion doesn't hold the slide");
+  let backs = 0;
+  for (let t = tl.start + 0.5; t < tl.end; t += 0.25) for (const d of frameAt(tl, t).dots) if (poseAt(tl, t, d.id)?.view === "back") backs++;
+  console.log(`\nbody: gaits ${want.map(([v, g]) => `${v}→${g}`).join(", ")}; cadence ${cadence.map((c) => c.toFixed(2)).join(" < ")} strides/s; sprint lean ${((lean * 180) / Math.PI).toFixed(0)}°; ${backs} back views on the loop; tackle ${tackle?.moment.id}, header ${lofted?.moment.id}, save ${saved?.moment.id ?? "none"}; ${held} still poses held`);
+}
+
+// Motion: does it move like football? On the 74' loop, outfield players, frames 1/15 s apart,
+// drawn as on screen. Speed bands (m/s): standing under 0.5, walk to 2, jog to 4, run to 6,
+// sprint 6 and up. Co-movement: in each frame where 3 or more of a team's outfield players move,
+// the largest share of the movers heading within 25 degrees of one of them (1 = all one way).
+{
+  const r = replayMinute(players, moments, 74);
+  const tl = r.timeline;
+  const STEP = 1 / 15;
+  const speeds = [];
+  const together = [];
+  let prevF = null;
+  for (let t = 0; t <= tl.end; t += STEP) {
+    const f = frameAt(tl, t);
+    if (prevF) {
+      const before = new Map(prevF.dots.map((d) => [d.id, d]));
+      for (const side of ["home", "away"]) {
+        const movers = [];
+        for (const d of f.dots) {
+          const b = before.get(d.id);
+          if (!b || d.side !== side || d.role === "GK") continue;
+          const v = Math.hypot(d.x - b.x, d.y - b.y) / STEP;
+          speeds.push(v);
+          if (v >= 0.5) movers.push(Math.atan2(d.y - b.y, d.x - b.x));
+        }
+        if (movers.length < 3) continue;
+        let best = 0;
+        for (const a of movers) {
+          const n = movers.filter((c) => Math.abs(Math.atan2(Math.sin(c - a), Math.cos(c - a))) <= (25 * Math.PI) / 180).length;
+          best = Math.max(best, n);
+        }
+        together.push(best / movers.length);
+      }
+    }
+    prevF = f;
+  }
+  const q = (xs, p) => [...xs].sort((a, b) => a - b)[Math.floor(p * (xs.length - 1))];
+  const share = (lo, hi) => speeds.filter((v) => v >= lo && v < hi).length / speeds.length;
+  const pc = (x) => `${(x * 100).toFixed(0)}%`;
+  const bands = { standing: share(0, 0.5), walk: share(0.5, 2), jog: share(2, 4), run: share(4, 6), sprint: share(6, Infinity) };
+  const co = q(together, 0.5);
+  console.log(
+    `\nmotion (74' loop): speed median ${q(speeds, 0.5).toFixed(1)} m/s, p90 ${q(speeds, 0.9).toFixed(1)}; ` +
+      Object.entries(bands).map(([k, v]) => `${k} ${pc(v)}`).join(", ") +
+      `; same-way co-movement median ${pc(co)}`,
+  );
+  if (bands.standing < 0.25 || bands.standing > 0.35) fail(`motion: ${pc(bands.standing)} standing (want 25–35%)`);
+  if (bands.sprint > 0.08) fail(`motion: ${pc(bands.sprint)} sprinting (want 8% or less)`);
+  if (co > 0.5) fail(`motion: a median ${pc(co)} of movers go the same way (want 50% or less)`);
 }
 
 await server.close();
