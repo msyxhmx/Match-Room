@@ -39,7 +39,7 @@ def _code_version() -> str:
     """Short hash of the code that builds the dataset, so a simulator or feature
     change never trains on a stale cache."""
     h = hashlib.sha256()
-    for f in ("sim/simulator.py", "sim/teams.py", "model/features.py"):
+    for f in ("sim/simulator.py", "sim/chain.py", "sim/teams.py", "model/features.py"):
         h.update((Path(__file__).parent.parent / f).read_bytes())
     return h.hexdigest()[:8]
 

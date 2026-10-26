@@ -21,7 +21,7 @@ flowchart LR
 
 | Stage | Where | What it does |
 |---|---|---|
-| Ingest | `sim/` | Football-realistic synthetic events (passes with end point, speed and pressure; shots with xG and speed; pressures, tackles, interceptions, fouls, cards, corners), match metadata, scripted scenarios |
+| Ingest | `sim/` | Possession-chain synthetic events, where the ball moves from event to event (passes with end point, speed and pressure; shots with xG and speed; pressures, tackles, interceptions, fouls, cards, corners), match metadata, scripted scenarios |
 | Interpret | `live/metrics.py`, `model/features.py` | xG, xT, possession, field tilt, PPDA, pass difficulty, momentum, control vs chaos, tempo, win projection, player lines |
 | Explain | `live/insights.py`, `model/predict.py` | Typed insights with facts and evidence (goal against the run of play, momentum flip, pressure spike...); SHAP factors for the half-time model |
 | Render | `live/narrate.py`, `live/engine.py`, `api/`, `web/` | Validated cards, timed overlay messages, snapshots, websocket stream, briefs |
@@ -43,6 +43,7 @@ Details of every metric and rule: [live-engine.md](live-engine.md).
   event no tool returned, or a number, player or team missing from the tool output, then asks an
   LLM whether the evidence supports the claim. One retry; fewer than 3 cards → templates.
 - **Evidence or it didn't happen.** Every card cites event IDs.
-- **The core match never changes.** Simulator enrichment uses its own random stream, so the
-  trained model stays valid.
+- **A simulator change means a retrain.** Any change to `sim/` changes the matches, so retrain
+  (`make train`), rerun `make live-calibration` and `scripts/calibrate_live.py`, and recheck
+  the scenarios. The training cache is keyed on a hash of the simulator code.
 - **Beat the baseline.** `model/train.py` always reports the score-only baseline next to XGBoost.

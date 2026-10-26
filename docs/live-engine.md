@@ -30,25 +30,38 @@ live cards, the briefs and the season story never disagree.
 3. **Evidence or it didn't happen.** Every card cites the event IDs that prove it.
 4. **Always a fallback.** No Azure OpenAI keys, an error, or an LLM sentence that fails
    validation: the template text is used. The live feed never breaks.
-5. **The core match never changes.** The v1 simulator adds detail from a separate random
-   stream, so goals, shots and cards for any seed are identical to v0 and the trained
-   half-time model stays valid.
+5. **A simulator change means a retrain.** The v2 simulator (26 Oct) changed every match, so
+   the half-time model was retrained and the live thresholds recalibrated with it. The cached
+   training data is named after a hash of the simulator code, so a stale cache is never used.
 
 ## Synthetic data (Ingest)
 
-`sim/simulator.py` runs in two passes:
+`sim/chain.py` (v2, the default) plays the match as a **possession chain**: one action at a
+time on a match clock. The team on the ball shoots or passes; a completed pass moves the ball to
+where it ends (plus a short carry), and a failed one hands it to the other side at that spot,
+via a `tackle` or `interception`. So every event starts where the last one ended, and shots come
+from where the ball is.
 
-- **Core** (unchanged from v0): passes, shots, fouls, cards and corners per minute, driven by
-  team strength, pressing, home advantage, a momentum swing per 15-minute block, game state and
-  red cards.
-- **Enrichment** (v1): pass end points (completed passes average ~22 m, failed ones ~30 m,
-  forward-leaning angles), ball speed (passes from length; shots from distance), `pressure`
-  events before pressured passes (likelier against high-pressing teams, in the opponent's half
-  and on failed passes), and a `tackle` or `interception` after every failed pass, so possession
-  changes are explicit.
+- **xG from location**: `sigmoid(-0.4 - 0.13 x distance_m + 1.0 x goal_angle)`, nudged by
+  attack against defence. About 0.23 from the penalty spot, 0.09 from the edge of the box.
+- **What drives each action** (logit units, so effects add): attack against defence with home
+  advantage; a hidden **form on the day** per team (sd 0.22), which is why first-half play now
+  predicts the second half; **momentum**, an AR(1) walk per minute (0.93, so spells last ~15
+  minutes) that scenario swings feed into; **game state** (a trailing side plays more forward
+  and shoots more); red cards (attack x0.72, defence x0.85 for the rest of the match).
+- **Restarts**: kick-offs after goals, goal kicks, corners (from saved or blocked shots and
+  cleared crosses), free kicks after fouls, and penalties for fouls in the box.
+- Ball speeds, `pressure` events and player choice (by pitch zone) are drawn inline.
+
+Totals over simulated matches: ~3.2 goals, ~820 passes, ~25 shots (0.13 xG per shot), ~19
+fouls and ~10 corners per match.
+
+The v1 minute-by-minute simulator (counts per minute, shot location derived from xG) is kept in
+`sim/simulator.py` for comparison: pass `engine="minute"` or set `SIM_ENGINE=minute`.
 
 **Scenarios** (`sim/scenarios.py`) script a storyline (forced goals, red cards, momentum swings,
-shot rate) so a demo reliably contains one. Everything else is still simulated, and the engine is
+shot rate, and optionally who scores a scripted goal) so a demo reliably contains one.
+Everything else is still simulated, and the engine is
 never told what happened: it has to detect it.
 
 | Key | Match | Story |
@@ -72,14 +85,14 @@ the pitch is 105 x 68 m.
 | **Pass difficulty** | 1 - expected completion probability. `p = sigmoid(3.4 - 0.055 x length_m - 0.025 x max(end_x - 60, 0) - 0.7 x under_pressure)`. |
 | **PPDA** | Opponent build-up passes (x < 60 in their frame) / our defensive actions (tackles, interceptions, fouls) at x >= 40 in our frame. Lower = more intense pressing. |
 | **Momentum** | Recency-weighted share of threat, -1 (away on top) to +1 (home on top). Threat = positive xT added + xG. Decays by 0.85 per minute (half-life about 4 minutes). |
-| **Control** (our composite) | Over the last 10 minutes: 0.4 x possession share + 0.4 x field-tilt share + 0.2 x pass-retention share. Home in control above 0.57, away below 0.43. |
-| **Chaos** (our composite) | Over the last 10 minutes: 0.4 x turnovers/min + 0.3 x momentum volatility + 0.3 x combined threat/min, each divided by its 90th percentile across simulated matches and capped at 1. Chaotic phase above 0.80. |
+| **Control** (our composite) | Over the last 10 minutes: 0.4 x possession share + 0.4 x field-tilt share + 0.2 x pass-retention share. Home in control above 0.60, away below 0.40. |
+| **Chaos** (our composite) | Over the last 10 minutes: 0.4 x turnovers/min + 0.3 x momentum volatility + 0.3 x combined threat/min, each divided by its 90th percentile across simulated matches and capped at 1. Chaotic phase above 0.76. |
 | **Tempo** | Passes per minute by both teams over the last 10 minutes. |
 | **Win projection** | Current score + Poisson goals in the time left. Each side's scoring rate blends a pre-match rate (strength, home edge) with live xG per minute; the weight on live data is `minute / (minute + 30)`. A red card multiplies the side's rate by 0.72 and the opponent's by 1 / 0.85. Shown as a projection with its drivers, never as odds. |
 
 "Control" and "chaos" are **our own transparent composites**, not industry-standard metrics.
 `scripts/calibrate_live.py` prints the distributions behind the normalisers and thresholds; with
-the current settings about 21-24% of minutes are each side in control, 17% chaos and 38% balanced.
+the current settings about 21-27% of minutes are each side in control, 16% chaos and 36% balanced.
 
 ## Insights (Explain)
 
@@ -99,7 +112,7 @@ the current settings about 21-24% of minutes are each side in control, 17% chaos
 | `player_milestone` | First player to 40 completed passes, and first to 8 ball wins. | 3 |
 | `player_focus` | Every 15 minutes for the viewer's focus player. | 2 |
 
-About 22 insights fire per match (range 16-34 over 40 simulated matches).
+About 22 insights fire per match (average over 60 simulated matches, analyst persona).
 
 ## Personalisation
 

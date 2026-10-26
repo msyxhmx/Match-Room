@@ -27,6 +27,7 @@ class Scenario:
     swing: dict[int, float] = field(default_factory=dict)
     forced_goals: tuple[tuple[int, str], ...] = ()  # (minute, side)
     forced_reds: tuple[tuple[int, str], ...] = ()  # (minute, side)
+    scorers: dict[int, str] = field(default_factory=dict)  # forced-goal minute -> player
     shot_rate_mult: float = 1.0
 
 
@@ -38,9 +39,10 @@ SCENARIOS: dict[str, Scenario] = {
             title="The comeback",
             description="Away side go 2-0 up before the break; the home side take over "
                         "after half-time and turn it round.",
-            home_id="NGC", away_id="KST", seed=131,
+            home_id="NGC", away_id="KST", seed=1685,
             swing={0: -0.06, 1: -0.10, 2: -0.12, 3: 0.14, 4: 0.18, 5: 0.20},
             forced_goals=((14, "away"), (37, "away"), (61, "home"), (74, "home"), (87, "home")),
+            scorers={14: "K. Quinn", 74: "L. Quinn"},
         ),
         Scenario(
             key="red-card",
