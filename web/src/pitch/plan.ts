@@ -201,6 +201,9 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
   const VX = new Float64Array(slots.length);
   const VY = new Float64Array(slots.length);
   const standing = new Uint8Array(slots.length).fill(1);
+  /** Since when a player has had a picture he hasn't taken in yet (NaN: none). His delay runs
+   *  from there, across phases: a run of short phases can't keep resetting it. */
+  const waiting = new Float64Array(slots.length).fill(NaN);
   const react = slots.map((s) => REACT[s.role] + 0.4 * hash01(`${s.id}:react`));
   const tempo = slots.map((s) => 0.9 + 0.2 * hash01(`${s.id}:tempo`));
   const seed = slots.map((s) => hash01(`${s.id}:bend`));
@@ -398,7 +401,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     for (let t = t0; t < t1 - 1e-6; ) {
       const h = Math.min(SUB, t1 - t);
       for (let k = 0; k < n; k++) {
-        if (!now[k] && t - t0 >= react[I[k]] - 1e-9) now[k] = true;
+        if (!now[k] && t - (Number.isNaN(waiting[I[k]]) ? t0 : waiting[I[k]]) >= react[I[k]] - 1e-9) now[k] = true;
         const g = now[k] ? goalNew[k] : goalOld[k];
         if (!Number.isNaN(due[k]) && dueStep(k, g.x, g.y, h, t)) continue;
         freeStep(k, g.x, g.y, h);
@@ -415,7 +418,10 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     }
     for (let k = 0; k < n; k++) {
       pos[ids[k]] = { x: px[k], y: py[k] };
-      if (now[k]) aim[ids[k]] = goalNew[k];
+      if (now[k]) {
+        aim[ids[k]] = goalNew[k];
+        waiting[I[k]] = NaN;
+      } else if (Number.isNaN(waiting[I[k]])) waiting[I[k]] = t0;
     }
   };
 

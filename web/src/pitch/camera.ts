@@ -34,7 +34,13 @@ function focus(f: Frame): number | null {
   if (f.beat && f.beat.moment.to) {
     const a = project(f.beat.moment.from.x, f.beat.moment.from.y).u;
     const b = project(f.beat.moment.to.x, f.beat.moment.to.y).u;
-    return (a + b) / 2;
+    if (!f.ball) return (a + b) / 2;
+    // Eases from the ball onto the whole pass as the moment starts, and back as it ends, so
+    // the switch doesn't jolt the camera.
+    const bt = f.beat;
+    const w = Math.max(0, Math.min(1, (f.t - (bt.touch - 0.45)) / 0.6, (bt.end - f.t) / 0.6));
+    const ball = project(f.ball.x, f.ball.y).u;
+    return ball + ((a + b) / 2 - ball) * w * w * (3 - 2 * w);
   }
   if (f.ball) return project(f.ball.x, f.ball.y).u;
   if (f.beat) return project(f.beat.moment.from.x, f.beat.moment.from.y).u;
