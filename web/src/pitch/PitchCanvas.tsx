@@ -89,8 +89,9 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
       else lines += Math.sign(target - lines) * Math.min(Math.abs(target - lines), Math.max(0, t - lastT) / LINES_FADE);
       lastT = t;
       const sh = s(t);
-      // A moment earlier, for the players' speed and facing (figures.ts).
+      // A moment earlier, for the players' speed and facing, and one more for the lean (figures.ts).
       const prev = s(t - PREV_DT).frame;
+      const earlier = s(t - 2 * PREV_DT).frame;
       if (fol) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, el.width, el.height);
@@ -108,11 +109,12 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
           clear: false,
           bounds: { x0: cam.x0, x1: cam.x0 + cam.width },
           prev,
+          earlier,
           still: r,
         });
         ctx.setTransform(1, 0, 0, 1, 0, 0);
       } else {
-        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k, prev, still: r });
+        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k, prev, earlier, still: r });
       }
       el.style.opacity = r ? "1" : String(sh.opacity);
       const rm = sh.replayOf ? sh.replayOf.minute : null;

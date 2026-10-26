@@ -1,5 +1,5 @@
 // Draws one frame on the plate's canvas (1920 × 1080, the plate's own pixels). Imperative and
-// cheap: 22 standing figures (figures.ts), the ball, a few labels. One look for everyone (Ilham's pick, 25 Oct:
+// cheap: 22 figures (figures.ts), the ball, a few labels. One look for everyone (Ilham's pick, 25 Oct:
 // "broadcast"), plus the analyst layer: each team's units joined up, drawn in when the viewer
 // switches to Analyst.
 
@@ -49,6 +49,8 @@ export interface DrawOptions {
   clear?: boolean;
   /** The frame figures.PREV_DT earlier: the players' speed and facing. Without it they stand. */
   prev?: Frame | null;
+  /** The frame 2 × figures.PREV_DT earlier: speeding up and braking (the lean). */
+  earlier?: Frame | null;
   /** Reduced motion: the players hold their poses (no stride, no hop). */
   still?: boolean;
 }
@@ -143,7 +145,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
   };
 
   // ---- the players, far to near ----
-  drawFigures(ctx, f, { palette: P, boost: k, focus: o.focus, prev: o.prev, still: o.still });
+  drawFigures(ctx, f, { palette: P, boost: k, focus: o.focus, prev: o.prev, earlier: o.earlier, still: o.still });
   // The ball last: always visible, even at a player's feet.
   drawBall();
 

@@ -459,7 +459,9 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     if (!prev) return;
     const m = prev.moment;
     const holdEnd = Math.min(until, prev.land + holdOf(m));
-    step({ ...prevHold }, holdEnd - prev.land, {}, new Set(prev.receiver ? [prev.receiver] : []), { pace: prevPace });
+    // The receiver holds the ball; a scorer is off at once.
+    const quick = prev.receiver ? [prev.receiver] : isGoal(m) ? [prev.actor] : [];
+    step({ ...prevHold }, holdEnd - prev.land, {}, new Set(quick), { pace: prevPace });
     prev.end = Math.max(prev.land, holdEnd);
     write(prev.end);
     cursor = prev.end;
@@ -732,7 +734,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       // The scorer wheels away towards the nearest corner; the nearest teammates chase him, the
       // rest of his side drift toward him, and the side that conceded stops where it is.
       const flag = { x: attackSign(m.side) * (HALF_L - 4), y: Math.sign(m.from.y || 1) * 26 };
-      hold[actor] = toward(pos[actor], flag, 9);
+      hold[actor] = toward(pos[actor], flag, 14);
       holdPace[actor] = "urgent";
       const chase = new Set(nearest(m.side, pos[actor], 3, new Set([actor])).map((s2) => s2.id));
       for (const s2 of live()) {
@@ -775,6 +777,12 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
   return { tracks, ball: ballKeys(beats), beats, dropped, start: opts.start, end, initialBall };
 }
 
+/** Peak height (m) of a moment's ball in flight: long passes are lofted. */
+export const loft = (m: Moment) => {
+  const d = m.to ? dist(m.from, m.to) : 0;
+  return m.kind === "pass" && d > 28 ? Math.min(7, d * 0.12) : 0;
+};
+
 /** The ball: it shows only during moments, at the real spot, along the real pass. */
 function ballKeys(beats: Beat[]): BallKey[] {
   const out: BallKey[] = [];
@@ -802,8 +810,7 @@ function ballKeys(beats: Beat[]): BallKey[] {
     out.push({ t: b.touch, x: f.x, y: f.y, a: 1, ease: carriedIn ? "linear" : "hold", arc: 0, follow: carriedIn ? b.actor : undefined });
     const to = m.to ?? f;
     if (b.land > b.touch) {
-      const d = dist(f, to);
-      const arc = m.kind === "pass" && d > 28 ? Math.min(7, d * 0.12) : 0;
+      const arc = loft(m);
       out.push({ t: b.land, x: to.x, y: to.y, a: 1, ease: m.kind === "shot" ? "linear" : "out", arc });
     }
     if (carries(b, beats[i + 1])) return; // the next beat's touch key carries it there

@@ -16,6 +16,11 @@ export interface Dot {
   role: Role;
   x: number;
   y: number;
+  /** Metres travelled along the track so far, and strides taken (a stride is two steps, its
+   *  length from strideM). The figure's legs follow the ground actually covered, so they don't
+   *  skate. Both come from the track's keys alone. */
+  run: number;
+  strides: number;
 }
 
 export interface Frame {
@@ -70,6 +75,41 @@ function tangent(keys: Key[], i: number, axis: "x" | "y"): number {
   return Math.sign(m) * Math.min(Math.abs(m), lim);
 }
 
+/** A stride (two steps) in metres at v m/s: about 1.7 walking, 2.6 jogging, 3.3 running, 4.2
+ *  sprinting, so the cadence (v / stride) rises with speed as well. */
+export const strideM = (v: number) => Math.min(4.2, 1 + 0.45 * v);
+
+/** Per track: metres and strides covered up to each key (straight between keys). Cached. */
+const odometers = new WeakMap<Key[], { run: Float64Array; strides: Float64Array }>();
+function odometer(keys: Key[]) {
+  let o = odometers.get(keys);
+  if (o) return o;
+  o = { run: new Float64Array(keys.length), strides: new Float64Array(keys.length) };
+  for (let i = 1; i < keys.length; i++) {
+    const dx = keys[i].x - keys[i - 1].x;
+    const dy = keys[i].y - keys[i - 1].y;
+    const d = Math.sqrt(dx * dx + dy * dy);
+    o.run[i] = o.run[i - 1] + d;
+    o.strides[i] = o.strides[i - 1] + d / strideM(d / Math.max(1e-6, keys[i].t - keys[i - 1].t));
+  }
+  odometers.set(keys, o);
+  return o;
+}
+
+/** Metres and strides covered by time t, at position p (trackAt's, for the same t). */
+function covered(keys: Key[], t: number, p: { x: number; y: number }, steps = false): { run: number; strides: number } {
+  if (!keys.length) return { run: 0, strides: 0 };
+  const o = odometer(keys);
+  const i = find(keys, t);
+  if (i < 0) return { run: 0, strides: 0 };
+  if (i >= keys.length - 1 || steps) return { run: o.run[i], strides: o.strides[i] };
+  const seg = o.run[i + 1] - o.run[i];
+  const dx = p.x - keys[i].x;
+  const dy = p.y - keys[i].y;
+  const k = seg > 1e-9 ? Math.min(1, Math.sqrt(dx * dx + dy * dy) / seg) : 0;
+  return { run: o.run[i] + seg * k, strides: o.strides[i] + (o.strides[i + 1] - o.strides[i]) * k };
+}
+
 export function trackAt(keys: Key[], t: number, steps = false): { x: number; y: number } {
   if (!keys.length) return { x: 0, y: 0 };
   const i = find(keys, t);
@@ -113,8 +153,9 @@ export function frameAt(tl: Timeline, t: number, opts: FrameOptions = {}): Frame
     const tr = tl.tracks[id];
     if (tr.offAt !== null && t >= tr.offAt) continue;
     const { x, y } = trackAt(tr.keys, t, opts.steps);
+    const { run, strides } = covered(tr.keys, t, { x, y }, opts.steps);
     const s = tr.slot;
-    dots.push({ id, side: s.side, name: s.name, number: s.number, role: s.role, x, y });
+    dots.push({ id, side: s.side, name: s.name, number: s.number, role: s.role, x, y, run, strides });
   }
   const beat = tl.beats.find((b) => t >= Math.max(b.s, b.touch - 0.45) && t <= b.end) ?? null;
   let ball = ballAt(tl.ball, t, opts.steps);

@@ -25,6 +25,12 @@
 //               scorer's own keeper doesn't; the scorer celebrates once it's in; a runner faces
 //               his run on screen; a replay cut reads as standing, not a sprint; reduced motion
 //               holds every leg still
+//   body        gaits by speed (stand, walk, jog, sprint) with cadence rising; a sprint leans
+//               about 15°, speeding up leans forward and braking back; the back view running away
+//               from the camera, the front toward it; on the ×1 match the real tackler slides and
+//               a lofted pass's receiver jumps at the right beat (not a second early); the keeper
+//               is set while the ball is in his third, not when it's at the other end, and
+//               gathers a save; reduced motion: no stride or lean, the slide held
 //   motion      on the 74' loop as drawn (outfield, frames 1/15 s apart): 25–35% of the time
 //               standing (under 0.5 m/s), 8% or less sprinting (6 m/s and up), and a median of
 //               50% or less of a team's movers heading the same way (within 25 degrees)
@@ -394,6 +400,83 @@ for (const speed of [1, 60]) {
   const heldDive = poseAt(goal.land - 0.3, beaten.id, true).dive;
   if (!heldDive || heldDive.p !== 1) fail("figures: reduced motion doesn't show the dive already made");
   console.log(`\nfigures: ${kicks} kicks checked, ${beaten.name} dives, facing checked on ${runners} runners`);
+}
+
+// The body (figures.ts): gaits, views, action poses, reduced motion.
+{
+  const { figurePose, gaitOf, PREV_DT } = await load("/src/pitch/figures.ts");
+  const { strideM } = await load("/src/pitch/frame.ts");
+  const { loft } = await load("/src/pitch/plan.ts");
+  const r = replayMinute(players, moments, 74);
+  const tl = r.timeline;
+  const poseAt = (timeline, t, id, still = false) => {
+    const f = frameAt(timeline, t);
+    const d = f.dots.find((x) => x.id === id);
+    const b = frameAt(timeline, t - PREV_DT).dots.find((x) => x.id === id);
+    const e = frameAt(timeline, t - 2 * PREV_DT).dots.find((x) => x.id === id);
+    return d && figurePose(d, b, f, still, e);
+  };
+  // A player in mid-pitch, moved by hand: a run at v m/s along (dx, dy).
+  const f0 = frameAt(tl, 1);
+  const d0 = { ...f0.dots.find((d) => d.role === "MF"), x: 0, y: 0 };
+  const moved = (v, dx, dy) => figurePose(d0, { ...d0, x: -dx * v * PREV_DT, y: -dy * v * PREV_DT }, { ...f0, ball: null, beat: null });
+
+  // Gait by speed, and cadence and stride rising with it.
+  const want = [[0, "stand"], [1.5, "walk"], [3.5, "jog"], [7, "sprint"]];
+  for (const [v, g] of want) if (moved(v, 1, 0).gait !== g) fail(`figures: ${v} m/s is drawn as a ${moved(v, 1, 0).gait}, not a ${g}`);
+  const cadence = want.slice(1).map(([v]) => v / strideM(v));
+  if (!(cadence[0] < cadence[1] && cadence[1] < cadence[2])) fail(`figures: cadence doesn't rise with speed (${cadence.map((c) => c.toFixed(2))})`);
+  const lean = moved(7, 1, 0).lean;
+  if (lean < 0.2 || lean > 0.33) fail(`figures: a sprint leans ${((lean * 180) / Math.PI).toFixed(0)}° (about 15° wanted)`);
+  if (moved(0, 1, 0).lean !== 0) fail("figures: a standing player leans");
+
+  // Views: away from the camera is the back (the number), toward it the front.
+  if (moved(5, 0, 1).view !== "back") fail(`figures: running away from the camera is drawn ${moved(5, 0, 1).view}, not back`);
+  if (moved(5, 0, -1).view !== "front") fail(`figures: running toward the camera is drawn ${moved(5, 0, -1).view}, not front`);
+  if (moved(5, 1, 0).view !== "side") fail(`figures: running across is drawn ${moved(5, 1, 0).view}, not side`);
+
+  // Speeding up leans forward, braking leans back.
+  const vAt = (a) => figurePose(d0, { ...d0, x: -4 * PREV_DT }, { ...f0, ball: null, beat: null }, false, { ...d0, x: -(8 - a * PREV_DT) * PREV_DT });
+  if (!(vAt(6).lean > moved(4, 1, 0).lean && vAt(-6).lean < moved(4, 1, 0).lean)) fail("figures: no lean into speeding up or back when braking");
+
+  // Actions at their beats, on the ×1 match.
+  const a1 = arrivalsAt(1);
+  const full = liveTimeline(players, moments, { speed: 1, arrivals: a1, start: 0, initial: { kind: "kickoff", kicking: "home" } });
+  const tackle = full.beats.find((b) => b.winnerShown && loft(b.moment) === 0);
+  if (!tackle) fail("figures: no shown tackle to check");
+  else {
+    if (poseAt(full, tackle.land, tackle.receiver)?.tackle == null) fail(`figures: ${tackle.moment.winner.player} doesn't slide in at ${tackle.moment.id}`);
+    if (poseAt(full, tackle.land - 1.2, tackle.receiver)?.tackle != null) fail("figures: the tackle starts a second early");
+    if (poseAt(full, tackle.land, tackle.actor)?.tackle != null) fail("figures: the passer slides too");
+  }
+  const lofted = full.beats.find((b) => loft(b.moment) > 0 && b.receiver);
+  if (!lofted) fail("figures: no lofted pass to check");
+  else {
+    if (poseAt(full, lofted.land - 0.15, lofted.receiver)?.header == null) fail(`figures: nobody jumps for the lofted ball at ${lofted.moment.id}`);
+    if (poseAt(full, lofted.land - 1.5, lofted.receiver)?.header != null) fail("figures: the jump comes early");
+  }
+  // The keeper: set while the ball is in his third, not when it's at the other end.
+  const goal = tl.beats.find((b) => isGoal(b.moment));
+  const keeper = (side) => frameAt(tl, goal.touch).dots.find((d) => d.role === "GK" && d.side === side);
+  const beaten = keeper(goal.moment.side === "home" ? "away" : "home");
+  const far = keeper(goal.moment.side);
+  if (!poseAt(tl, goal.touch - 0.4, beaten.id)?.crouch) fail(`figures: ${beaten.name} isn't set as L. Quinn shoots`);
+  if (poseAt(tl, goal.touch - 0.4, far.id)?.crouch) fail(`figures: ${far.name} crouches with the ball at the other end`);
+  const saved = full.beats.find((b) => b.moment.kind === "shot" && b.moment.outcome === "saved" && b.receiver);
+  if (saved && poseAt(full, saved.land, saved.receiver)?.catch == null) fail(`figures: the keeper doesn't catch the save at ${saved.moment.id}`);
+
+  // Reduced motion: no stride, no lean, every action held.
+  let held = 0;
+  for (let t = tl.start + 0.5; t < tl.end; t += 0.5)
+    for (const d of frameAt(tl, t).dots) {
+      const p = poseAt(tl, t, d.id, true);
+      if (p.stride !== 0 || p.phase !== 0 || p.lean !== 0) fail(`figures: ${d.id} moves under reduced motion at t=${t.toFixed(1)}`);
+      held++;
+    }
+  if (tackle && poseAt(full, tackle.land, tackle.receiver, true)?.tackle !== 0.5) fail("figures: reduced motion doesn't hold the slide");
+  let backs = 0;
+  for (let t = tl.start + 0.5; t < tl.end; t += 0.25) for (const d of frameAt(tl, t).dots) if (poseAt(tl, t, d.id)?.view === "back") backs++;
+  console.log(`\nbody: gaits ${want.map(([v, g]) => `${v}→${g}`).join(", ")}; cadence ${cadence.map((c) => c.toFixed(2)).join(" < ")} strides/s; sprint lean ${((lean * 180) / Math.PI).toFixed(0)}°; ${backs} back views on the loop; tackle ${tackle?.moment.id}, header ${lofted?.moment.id}, save ${saved?.moment.id ?? "none"}; ${held} still poses held`);
 }
 
 // Motion: does it move like football? On the 74' loop, outfield players, frames 1/15 s apart,

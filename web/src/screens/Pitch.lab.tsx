@@ -120,7 +120,7 @@ function Calibration() {
 }
 
 const NOTES: Record<Persona, string> = {
-  casual: "Casual: standing players, the real pass drawn, the event's player named",
+  casual: "Casual: players who stand, walk, jog and sprint by need, the real pass drawn, the event's player named",
   analyst: "Analyst: the same, plus each team's units joined up (the side without the ball stronger)",
 };
 

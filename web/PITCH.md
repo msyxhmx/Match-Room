@@ -1,6 +1,6 @@
 # The live pitch
 
-The broadcast page on the plate (`/overlay?plate=1`) shows 22 player dots and the ball, moving
+The broadcast page on the plate (`/overlay?plate=1`) shows 22 players and the ball, moving
 with the match as it streams. This note records what we borrowed, the choreography, and the
 decisions behind it. Code: `src/pitch/`. Proof: `npm run test:pitch`. Clips: `npm run film:pitch`.
 
@@ -40,9 +40,9 @@ decisions behind it. Code: `src/pitch/`. Proof: `npm run test:pitch`. Clips: `np
 |---|---|---|
 | Formation anchors that shift with the ball's position | RoboCup 2D teams store a formation as ball-position-dependent anchors ([UT Austin Villa TDP](https://staff.fnwi.uva.nl/a.visser/activities/robocup/RoboCup2013/Symposium/TeamDescriptionPapers/SoccerSimulation/Soccer2D/TDP_UTAustinVilla.pdf), [Cyrus TDP](https://staff.fnwi.uva.nl/a.visser/activities/robocup/RoboCup2013/Symposium/TeamDescriptionPapers/SoccerSimulation/Soccer2D/TDP_Cyrus.pdf), [helios-base](https://github.com/helios-base/helios-base)) | `formation.ts`: 4-3-3 anchors from lineup roles. The block follows the ball (½ along, 0.4 across), stretches with the ball and compacts without it. |
 | Separate length and width compactness | Shape analysis in tracking data ([Opta Analyst](https://theanalyst.com/articles/shape-analysis-automatically-detecting-formations/)) | Separate `stretch` and `width` multipliers for in and out of possession. |
-| Real running speeds | Speed zones: high-speed running above 5.5 m/s, sprinting above 7 m/s ([PMC EPL study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11474994/), [SciSports](https://support.scisports.com/en/articles/3376037-speed-zones-and-thresholds)) | Average leg speed is 5 m/s for the shape and 6 m/s to reach the ball. Peaks stay at 9.0 m/s or less (tested). |
+| Real running speeds | Speed zones: high-speed running above 5.5 m/s, sprinting above 7 m/s ([PMC EPL study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11474994/), [SciSports](https://support.scisports.com/en/articles/3376037-speed-zones-and-thresholds)) | Gaits of 1.5 (walk), 3.5 (jog) and 5 m/s (run), 6 m/s to reach the ball. Peaks stay under 9.5 m/s (tested). |
 | Dots, ball and smoothing in tracking visualisations | Metrica sample data on a 105 × 68 m pitch, Friends of Tracking tutorials ([Metrica](https://github.com/metrica-sports/sample-data), [LaurieOnTracking](https://github.com/Friends-of-Tracking-Data-FoTD/LaurieOnTracking)) | Discs in team colours, the ball as a white disc with a ground shadow, monotone smoothing between keys (no overshoot). |
-| "Arrive" steering, no teleporting | Reynolds-style seek and arrive ([lecture notes](https://imada.sdu.dk/u/rolf/Edu/DM842/E17/lec2.pdf)) | Every position is a capped move toward a target. Nothing is ever set directly. |
+| "Arrive" steering, no teleporting | Reynolds-style seek and arrive ([lecture notes](https://imada.sdu.dk/u/rolf/Edu/DM842/E17/lec2.pdf)) | Every position is a stepped move toward a target, with speeding-up and braking limits and a slow-down to arrive. Nothing is ever set directly. |
 | Only the nearest players press | Common engine practice (to avoid "kids' football") | One or two nearest opponents close down, goal side. Everyone else shifts. |
 
 The numbers for block shift, line spacing and press distance are tuned by eye on the plate, not
@@ -59,18 +59,60 @@ timeline of keyframes for the 22 players and the ball, read at any instant by `f
    skipped. So is one whose player can't reach the spot at a sprint, and one that would block a
    known forced moment.
 2. **Approach.** The player runs to just behind the ball's real spot, and the touch waits until
-   they arrive. The rest take the shape around the ball, and the nearest opponents press. A
-   player with a forced moment coming makes a run toward it up to 8 s early, but only once that
-   moment is known.
+   they arrive. The rest take the shape around the ball with their off-ball jobs (below), the
+   nearest opponents press and the next one covers. A player with a forced moment coming makes a
+   run toward it up to 8 s early, but only once that moment is known.
 3. **The ball moves.** It travels the real pass at its real `speed_kmh`, with long passes
    lofted. The receiver, or the real interceptor if they can get there, meets it. A shot flies
    to its illustrative end: in the net, at the keeper, against a blocker, or past the post.
-4. **Hold, then fade.** The ball rests for about 1 s and fades. A goal: the scorer wheels away,
-   then both teams reset to kick-off. A foul or card: everyone stops, and a card draws players
-   in. A corner: the taker goes to the flag and both teams crowd the box.
+4. **Hold, then fade.** The ball rests for about 1 s and fades. A goal: the scorer is off at once
+   toward the corner flag, his nearest teammates chase him, the rest of his side drift toward him,
+   and the side that conceded stops where it is; then the scorer is mobbed and everyone walks back
+   for the kick-off. A foul or card: everyone stops, and a card draws players in. A corner: the
+   taker goes to the flag and both teams crowd the box.
 
 Planning is **causal**: running it again after a new tick never changes what was already shown
-(tested: 0 m at ×1, at most 0.2 m at ×60).
+(tested: at most 0.1 m at ×1 and ×60). A live plan keeps everyone settling after its last
+moment until the next tick could arrive, exactly as the next plan's wait does.
+
+### How players move (`plan.ts`, `formation.ts`; Ilham's brief, 26 Oct)
+
+The first version slid every off-ball player toward his spot at a run the moment the ball moved,
+so the whole block moved as one, fast. Now every player is stepped every 0.2 s:
+
+- **Need, not habit.** Within a deadband of his spot a player stands: 3 m near the ball, up to 7 m
+  far from it. Otherwise he walks (1.5 m/s), jogs (3.5) or runs (5), by the gap and the urgency
+  (a switch of play, a turnover, a run into the box, recovering goal side). He speeds up at
+  3 m/s² and brakes at 4.5 m/s², and slows down to arrive.
+- **Staggered.** Each player reacts to a new picture after his own delay, 0.2 to 0.8 s (from his
+  role and `hash01` of his id). Delays use only what is already known, so planning stays causal.
+- **Bent runs.** Each picture, each free run bends 15 to 55° one way or the other and straightens
+  near the spot.
+- **Due on a spot.** A player who must be somewhere at an instant (on the ball, meeting a pass)
+  waits for the moment a natural pace needs, then runs a smooth curve from his current speed that
+  lands exactly on time (arriving at up to 3 m/s, onto the ball). The V_ACTOR and V_RUN caps hold.
+- **The shape.** The block is elastic (a player far from the ball follows it less, down to 55%),
+  and each line follows differently: the back line steps up and drops as one line, the midfield
+  slides across with the ball, the forwards hold higher. Each player's spot is up to 1.5 m off
+  the textbook anchor, and his gait speeds 0.9 to 1.1×, from `hash01`.
+- **Off-ball jobs** (`teamJobs`). With the ball: one forward runs in behind (into the box at a
+  run) or checks short, the ball-side full-back overlaps when the ball is wide, the nearest
+  midfielder offers a short option, the far side walks. Without it: the press and the cover, the
+  forwards stay up about halfway for the counter, the far winger tucks in at a walk.
+
+Measured on the 74' loop (outfield, frames 1/15 s apart, as drawn), checked by `test:pitch`:
+
+| | Before | After | Target |
+|---|---|---|---|
+| Standing (under 0.5 m/s) | 4% | 28% | 25–35% |
+| Walk / jog / run | 26 / 30 / 26% | 27 / 24 / 20% | |
+| Sprint (6 m/s and up) | 13% | 1% | 8% or less |
+| Median speed, p90 | 3.2, 6.3 m/s | 1.7, 4.7 m/s | |
+| Same-way co-movement, median | 80% | 50% | 50% or less |
+
+The co-movement sits on its limit: the runs bend left or right in equal shares, so a moving team
+splits about half and half. A team retreating toward its goal as a shot comes in still runs
+mostly one way, as real ones do.
 
 ## Speeds
 
@@ -93,11 +135,25 @@ projected penalty spot and arcs land on the render's own (the spot at about (293
 45 px on the near one. Home attacks to the right in both
 halves. The data has no ends, and a fixed direction reads better in a short clip.
 
-## The look (Ilham's pick, 25 Oct)
+## The look (Ilham's pick, 25 Oct; figures 26 Oct; bodies 27 Oct)
 
-One look for everyone, **broadcast**: discs in club colours (keepers white with a team ring), a
-dashed line along the real pass, and a 24 px name pill on whoever touches the ball (the real
-event's player). L. Quinn, the focus player, gets a soft halo.
+One look for everyone, **broadcast**: standing figures in club colours (keepers in white with
+team trim), a dashed line along the real pass, and a 24 px name pill on whoever touches the ball
+(the real event's player). L. Quinn, the focus player, gets a soft ring.
+
+The bodies (`figures.ts`) follow the movement, purely from this frame and two earlier ones:
+- **Gaits by speed.** Standing (shifting weight, breathing), a walk (short stride, low arms), a
+  jog, a sprint (long stride, knees up, leaning in about 15°, arms pumping). Stride length and
+  cadence both rise with speed (0.9, 1.4 and 1.7 strides a second at a walk, jog and sprint).
+  The legs follow the ground actually covered (`frame.ts` gives each dot its metres and strides),
+  and the swing is sized to the stride on screen, so feet don't skate.
+- **Lean** into speeding up and back when braking (from the third frame), 20° at most.
+- **Views.** Side on, or from the front or back when the run is mostly toward or away from the
+  camera on screen. From the back, the shirt number shows in the trim colour.
+- **Actions from the beats.** The kick; small dribble touches while carrying; a control pose for a
+  pass's receiver; a slide for the real tackler or interceptor; a jump for a lofted pass; the
+  keeper set in a crouch while the ball is in his third, then the dive, or for a save, down to
+  gather it; the scorer running off with his arms out.
 
 **Analyst** adds the team shape. With the persona switch (`P`, the same switch S7 already
 shows), each team's back line, midfield and front line are joined up, fading in over 300 ms. The
@@ -117,7 +173,7 @@ cross in midfield).
   marks and labels are drawn larger (dots 14 px and up, pills 23 px or more). On a phone the
   honesty note becomes a caption under the pitch.
 - **The goal card and the score wait for the pitch,** as on the overlay. At ×1 the 74' equaliser
-  lands about 11 s after Space (the goal is at 74:10), not the moment the minute's data arrives.
+  lands about 12 s after Space (the goal is at 74:10), not the moment the minute's data arrives.
   S1 is now a longer, truer shot.
 
 ## On a phone (mobile pass, 25 Oct)
@@ -177,15 +233,16 @@ synthetic match", with every language and persona saved, so `L` and `P` work wit
   the pitch reports the ball crossing the line, and the score bug doesn't count that goal until
   then. At ×60 the replay's goal lands about 1.6 s after its cut. If the pitch never reports it,
   the alert goes up anyway after 6 s (75 s at ×1).
-- Reduced motion: the dots and the ball step between key positions, with no travel, sway, fades
-  or line fade.
+- Reduced motion: the players and the ball step between key positions, with no travel, fades
+  or line fade. Bodies hold their poses: no stride, bob, lean or jump, the dive shown already made.
 - Offline: the saved match carries every event and both lineups, so the pitch plays without
   the API.
 
 ## Proof
 
 - `npm run test:pitch`: speed, bounds, eleven a side, real spots, forced moments, credited
-  assists, causal replanning, and the replays.
+  assists, causal replanning, the replays, the motion numbers above, and the bodies (gait by
+  speed, cadence, lean, back view, tackle, jump, crouch and save at their beats, reduced motion).
 - `npm run flows`:
   - `overlay-plate`: the canvas draws, the note shows, and `P` brings in the analyst chip.
   - `overlay-clear`: no pitch.
