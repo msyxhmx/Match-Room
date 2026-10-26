@@ -98,22 +98,23 @@ RPS (ranked probability score, the standard for home / draw / away) and calibrat
 
 | Final result | Log loss | RPS | Accuracy | Calibration error |
 |---|---|---|---|---|
-| Heuristic fallback | 0.700 | 0.126 | 69.2% | 0.051 |
-| Baseline: pre-match strength only | 0.879 | 0.177 | 61.6% | 0.018 |
-| Baseline: half-time score only | 0.730 | 0.135 | 65.8% | 0.027 |
-| Baseline: Dixon-Coles (score + strengths) | **0.664** | **0.120** | **70.0%** | 0.019 |
-| XGBoost on first-half features | 0.666 | 0.120 | 69.0% | 0.025 |
+| Heuristic fallback | 0.767 | 0.137 | 64.2% | 0.044 |
+| Baseline: pre-match strength only | 0.990 | 0.203 | 53.2% | 0.012 |
+| Baseline: half-time score only | 0.818 | 0.152 | 60.8% | 0.009 |
+| Baseline: Dixon-Coles (score + strengths) | 0.797 | 0.147 | 63.0% | 0.023 |
+| XGBoost on first-half features | **0.748** | **0.134** | **65.3%** | 0.023 |
 
-XGBoost beats the score-only baseline but only ties Dixon-Coles, which knows nothing about how
-the first half was played. In the current simulator, first-half play adds almost nothing once
-you know the score and the team strengths, which is what the next simulator upgrade targets.
+XGBoost beats every baseline, including Dixon-Coles, a classic football model that knows the
+half-time score and team strengths but not how the first half was played. On the v1 simulator
+they tied (0.666 vs 0.664): first-half play carried no information. The v2 possession-chain
+simulator fixed that, so the model's "why" factors now point at something real.
 
-Next-goal model (home / away / none): log loss 1.016, accuracy 51.6%.
-Simulated outcomes: 44.9% home wins, 20.7% draws, 34.4% away wins, ~3.1 goals per match.
+Next-goal model (home / away / none): log loss 0.982, accuracy 52.8%.
+Simulated outcomes: 40.8% home wins, 24.7% draws, 34.5% away wins, ~3.2 goals per match.
 
 **Live win projection** (`make live-calibration`, 2,000 fresh matches,
-`artifacts/live_calibration.json`): calibration error stays at or below 0.034 from minute 10
-to 85, and the average draw probability (20.7-21.8%) matches the real draw rate (20.9%).
+`artifacts/live_calibration.json`): calibration error 0.012-0.042 from minute 10 to 85. It still
+under-predicts draws a little (about 21% said, 25% real).
 
 ## Docs
 

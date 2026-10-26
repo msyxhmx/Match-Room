@@ -17,6 +17,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from live import xt as xt_fit
 from sim.simulator import PITCH_LENGTH_M, PITCH_WIDTH_M, SimulatedMatch
 
 SIDES = ("home", "away")
@@ -25,18 +26,21 @@ WINDOW = 10  # minutes, for rolling control / chaos / tempo / pressing
 
 # ---------- expected threat (xT) grid ----------
 # A 12 x 8 zone grid of "probability this possession ends in a goal from here".
-# Shape follows Karun Singh's published xT surface (low everywhere, rising
-# steeply in the central zones near goal); values are a smooth approximation,
-# not fitted to real data, because the brief forbids real match data.
-XT_COLS, XT_ROWS = 12, 8
+# Learned from simulated matches with Karun Singh's value iteration (live/xt.py,
+# artifacts/xt_grid.json). If that file is missing or broken, fall back to a smooth
+# hand-drawn surface with the same shape as Singh's published one.
+XT_COLS, XT_ROWS = xt_fit.XT_COLS, xt_fit.XT_ROWS
 
 
 def _xt_surface(x: float, y: float) -> float:
     return 0.004 + 0.32 * math.exp(-(100 - x) / 13.0) * math.exp(-(((y - 50) / 24.0) ** 2))
 
 
-XT_GRID = np.array([[_xt_surface((i + 0.5) * 100 / XT_COLS, (j + 0.5) * 100 / XT_ROWS)
-                     for j in range(XT_ROWS)] for i in range(XT_COLS)])
+XT_HAND_DRAWN = np.array([[_xt_surface((i + 0.5) * 100 / XT_COLS, (j + 0.5) * 100 / XT_ROWS)
+                           for j in range(XT_ROWS)] for i in range(XT_COLS)])
+_fitted = xt_fit.load()
+XT_GRID = XT_HAND_DRAWN if _fitted is None else _fitted
+XT_SOURCE = "hand-drawn" if _fitted is None else "fitted"
 
 
 def xt_at(x: np.ndarray, y: np.ndarray) -> np.ndarray:
@@ -218,7 +222,8 @@ def classify_phase(control_home: float, chaos: float) -> str:
 
 
 # ---------- win projection (simplified Poisson, explained) ----------
-BASE_GOALS_PER_90 = 1.45
+BASE_GOALS_PER_90 = 1.65  # fitted on simulated matches (make live-calibration checks it)
+LIVE_HALF_WEIGHT_MIN = 90  # live xG gets half the weight at this minute; also fitted
 HOME_EDGE = 1.08
 RED_ATTACK, RED_DEFENCE = 0.72, 0.85
 MAX_GOALS = 10
@@ -238,7 +243,7 @@ def project(tl: Timeline, minute: int) -> dict:
         "home": BASE_GOALS_PER_90 * home.attack * HOME_EDGE / away.defence / 90,
         "away": BASE_GOALS_PER_90 * away.attack / home.defence / 90,
     }
-    live_weight = minute / (minute + 30)
+    live_weight = minute / (minute + LIVE_HALF_WEIGHT_MIN)
     rate, live_rate = {}, {}
     reds = {s: tl.cum(s, "reds", minute) for s in SIDES}
     for s in SIDES:
@@ -280,7 +285,8 @@ METRIC_DEFS: list[tuple[str, str, str | None, str]] = [
     ("shots", "Shots", None, "All attempts on goal."),
     ("sot", "Shots on target", None, "Shots that were scored or saved."),
     ("xt", "Expected threat added (xT)", None,
-     "How much completed passes increased the chance of scoring, from a 12x8 zone grid."),
+     "How much completed passes increased the chance of scoring, from a 12x8 zone grid "
+     "learned from simulated matches."),
     ("possession", "Possession", "%", "Share of all passes played."),
     ("field_tilt", "Field tilt", "%", "Share of passes played in the final third."),
     ("pass_accuracy", "Pass accuracy", "%", "Completed passes / passes attempted."),

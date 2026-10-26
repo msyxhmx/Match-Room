@@ -88,7 +88,7 @@ the pitch is 105 x 68 m.
 | **Control** (our composite) | Over the last 10 minutes: 0.4 x possession share + 0.4 x field-tilt share + 0.2 x pass-retention share. Home in control above 0.60, away below 0.40. |
 | **Chaos** (our composite) | Over the last 10 minutes: 0.4 x turnovers/min + 0.3 x momentum volatility + 0.3 x combined threat/min, each divided by its 90th percentile across simulated matches and capped at 1. Chaotic phase above 0.76. |
 | **Tempo** | Passes per minute by both teams over the last 10 minutes. |
-| **Win projection** | Current score + Poisson goals in the time left. Each side's scoring rate blends a pre-match rate (strength, home edge) with live xG per minute; the weight on live data is `minute / (minute + 30)`. A red card multiplies the side's rate by 0.72 and the opponent's by 1 / 0.85. Shown as a projection with its drivers, never as odds. |
+| **Win projection** | Current score + Poisson goals in the time left. Each side's scoring rate blends a pre-match rate (strength, home edge) with live xG per minute; the weight on live data is `minute / (minute + 90)`, and the base rate is 1.65 goals per 90; both were fitted on simulated matches and are checked by `make live-calibration`. A red card multiplies the side's rate by 0.72 and the opponent's by 1 / 0.85. Shown as a projection with its drivers, never as odds. |
 
 "Control" and "chaos" are **our own transparent composites**, not industry-standard metrics.
 `scripts/calibrate_live.py` prints the distributions behind the normalisers and thresholds; with
