@@ -134,7 +134,7 @@ function Calibration() {
 }
 
 const NOTES: Record<Persona, string> = {
-  casual: "Casual: players who stand, walk, jog and sprint by need, the real pass drawn, the event's player named",
+  casual: "Casual: movement from real tracking data (DFL): the real shape, players who wander, press and play the ghost ball between real moments; the real pass drawn, the event's player named",
   analyst: "Analyst: the same, plus each team's units joined up (the side without the ball stronger)",
 };
 
