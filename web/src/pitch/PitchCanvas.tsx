@@ -12,7 +12,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLabels } from "../ui/labels";
-import { cameraAt, FOLLOW_SCALE } from "./camera";
+import { cameraAt, FOLLOW_SCALE, type ShotOptions } from "./camera";
 import type { Shot } from "./director";
 import { PitchScale } from "./PitchView";
 import { PREV_DT } from "./figures";
@@ -21,7 +21,7 @@ import styles from "./pitch.module.css";
 
 export interface PitchCanvasProps {
   /** The picture at display time t (seconds since `epoch`, unless `at`/seek). */
-  shot: (t: number) => Shot;
+  shot: (t: number, o?: ShotOptions) => Shot;
   /** The analyst layer (each team's units joined up). Fades in and out over LINES_FADE. */
   analyst: boolean;
   focus?: string | null;

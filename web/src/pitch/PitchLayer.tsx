@@ -11,6 +11,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { MatchView } from "../live/feed";
+import type { ShotOptions } from "./camera";
 import { loopShot, program, type Shot } from "./director";
 import { frameAt } from "./frame";
 import type { SquadPlayer } from "./formation";
@@ -140,10 +141,11 @@ export function PitchLayer({ view, running, speed, analyst, focus, reduced, cont
   if (!players) return null;
   const steps = !!reduced;
   const fo = { steps, continuous };
-  const shot = (t: number): Shot => {
-    if (live) return live.shotAt(t - hold.current.total, fo);
-    if (loop && "replay" in loop && loop.replay) return loopShot(loop.replay, t - loop.from, fo);
-    if (loop && "still" in loop && loop.still) return { frame: frameAt(loop.still, t, { ...fo, sway: !steps }), replayOf: null, opacity: 1 };
+  const shot = (t: number, o?: ShotOptions): Shot => {
+    const fo2 = o ? { ...fo, ...o } : fo;
+    if (live) return live.shotAt(t - hold.current.total, fo2);
+    if (loop && "replay" in loop && loop.replay) return loopShot(loop.replay, t - loop.from, fo2);
+    if (loop && "still" in loop && loop.still) return { frame: frameAt(loop.still, t, fo2), replayOf: null, opacity: 1 };
     return { frame: { t, dots: [], ball: null, beat: null, possession: null }, replayOf: null, opacity: 1 };
   };
   return <PitchCanvas shot={shot} analyst={analyst} focus={focus} at={frozenAt} epoch={epoch} reduced={reduced} ghost="ghost" />;

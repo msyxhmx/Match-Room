@@ -6,6 +6,7 @@
 // ending) instead of sweeping across.
 
 import type { Shot } from "./director";
+import type { FrameOptions } from "./frame";
 import type { Frame } from "./frame";
 import { PLATE, project } from "./geometry";
 
@@ -22,6 +23,9 @@ export const FOLLOW_SCALE = 0.42;
 /** The pitch rows the camera keeps in view (far touchline to near touchline, with the goals). */
 const PITCH_MID_Y = 605;
 const WINDOW_S = 2;
+/** What a shot function may be asked for: the camera's samples ask for the ball only. */
+export type ShotOptions = Pick<FrameOptions, "ballOnly">;
+const LITE: ShotOptions = { ballOnly: true };
 const SAMPLES = 64;
 
 function focus(f: Frame): number | null {
@@ -41,19 +45,39 @@ function focus(f: Frame): number | null {
 }
 
 /** The camera for a box of boxW × boxH CSS px at display time t. */
-export function cameraAt(shot: (t: number) => Shot, t: number, boxW: number, boxH: number, current?: Shot): Camera {
+export function cameraAt(shot: (t: number, o?: ShotOptions) => Shot, t: number, boxW: number, boxH: number, current?: Shot): Camera {
   const width = Math.min(PLATE.width, Math.max(760, boxW / FOLLOW_SCALE));
   const height = (width * boxH) / boxW;
   const now = current ?? shot(t);
   let sum = 0;
   let n = 0;
+  let first: number | null = null;
+  let cut = false;
   for (let i = 0; i <= SAMPLES; i++) {
     const age = (i / SAMPLES) * WINDOW_S;
     const w = Math.min(age, WINDOW_S - age) + 1e-3; // a triangle: 0 at both ends
-    const s = i === 0 ? now : shot(t - age);
-    if (s.replayOf !== now.replayOf) break; // a cut: don't drag the old picture's ball along
-    const u = focus(s.frame);
+    // A cut: don't drag the old picture's ball along. The camera acts as if it had held on the
+    // new picture's first frame, so it eases from there instead of lurching after its first
+    // few frames.
+    // The samples need only the ball (cheap); the players only when there's no ball to follow.
+    let s = cut ? null : i === 0 ? now : shot(t - age, LITE);
+    if (s && !s.frame.ball && !s.frame.beat && !s.frame.dots.length) s = shot(t - age);
+    if (s && s.replayOf !== now.replayOf) {
+      cut = true;
+      // The new picture's first frame: find the cut between this sample and the one after it.
+      let lo = t - age;
+      let hi = t - ((i - 1) / SAMPLES) * WINDOW_S;
+      for (let k = 0; k < 8; k++) {
+        const mid = (lo + hi) / 2;
+        if (shot(mid).replayOf === now.replayOf) hi = mid;
+        else lo = mid;
+      }
+      const at = shot(hi, LITE);
+      first = focus(at.frame.ball || at.frame.beat ? at.frame : shot(hi).frame) ?? first;
+    }
+    const u: number | null = s && !cut ? focus(s.frame) : first;
     if (u === null) continue;
+    if (!cut) first = u;
     sum += u * w;
     n += w;
   }

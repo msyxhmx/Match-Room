@@ -40,6 +40,20 @@ export interface Replay {
  * With no build-up (a cut into the ×60 flow) its player starts a few strides from the ball.
  */
 export function replayMoment(players: SquadPlayer[], moments: Moment[], target: Moment, buildUp: number): Replay | null {
+  // A cut (no build-up) shows its moment alone, so it's the same on every replan: plan it once.
+  if (buildUp === 0) {
+    const hit = cutCache.get(target);
+    if (hit && hit.players === players) return hit.replay;
+    const replay = planReplay(players, moments, target, buildUp);
+    cutCache.set(target, { players, replay });
+    return replay;
+  }
+  return planReplay(players, moments, target, buildUp);
+}
+
+const cutCache = new WeakMap<Moment, { players: SquadPlayer[]; replay: Replay | null }>();
+
+function planReplay(players: SquadPlayer[], moments: Moment[], target: Moment, buildUp: number): Replay | null {
   const from = Math.max(target.minute * 60, target.t - buildUp);
   const window = moments.filter((m) => m === target || (m.t >= from && m.t < target.t));
   const first = window[0] ?? target;

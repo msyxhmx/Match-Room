@@ -1,12 +1,11 @@
 // A timeline at one instant: where every dot and the ball are. Pure, so a lab state or a test
 // can freeze any time. Players glide through their keys on a smooth curve (cubic Hermite, the
-// tangents averaged and limited so a dot never overshoots a key); a tiny idle sway keeps a
-// standing player from looking frozen.
+// tangents averaged and limited so a dot never overshoots a key). A standing player stands
+// still: his life comes from the figure's idle pose (figures.ts), not from drifting.
 
 import type { Role } from "./formation";
 import type { Side } from "./geometry";
 import { ghostAt } from "./ghost";
-import { hash01 } from "./moments";
 import type { BallKey, Beat, Key, Timeline } from "./plan";
 
 export interface Dot {
@@ -32,12 +31,12 @@ export interface Frame {
 }
 
 export interface FrameOptions {
-  /** Idle sway (off for tests that check exact positions). */
-  sway?: boolean;
   /** Reduced motion: hold each key's picture, no travel between them. */
   steps?: boolean;
   /** Continuous play: between real moments the ghost ball keeps moving (ghost.ts). */
   continuous?: boolean;
+  /** Only the ball, the beat and possession, no players (the follow camera's samples). */
+  ballOnly?: boolean;
 }
 
 function find<T extends { t: number }>(keys: T[], t: number): number {
@@ -108,22 +107,12 @@ export function ballAt(keys: BallKey[], t: number, steps = false): Frame["ball"]
   return { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, z, a: alpha };
 }
 
-const SWAY_M = 0.3;
-
 export function frameAt(tl: Timeline, t: number, opts: FrameOptions = {}): Frame {
-  const sway = opts.sway ?? true;
   const dots: Dot[] = [];
-  for (const id in tl.tracks) {
+  for (const id in opts.ballOnly ? {} : tl.tracks) {
     const tr = tl.tracks[id];
     if (tr.offAt !== null && t >= tr.offAt) continue;
-    const p = trackAt(tr.keys, t, opts.steps);
-    let { x, y } = p;
-    if (sway && !opts.steps) {
-      const h = hash01(id);
-      const f = 0.22 + 0.2 * h;
-      x += SWAY_M * Math.sin(2 * Math.PI * f * t + h * 40);
-      y += SWAY_M * Math.cos(2 * Math.PI * (f * 0.8) * t + h * 17);
-    }
+    const { x, y } = trackAt(tr.keys, t, opts.steps);
     const s = tr.slot;
     dots.push({ id, side: s.side, name: s.name, number: s.number, role: s.role, x, y });
   }
