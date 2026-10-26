@@ -16,7 +16,7 @@ import { PitchView } from "./pitch/PitchView";
 import { moreImportant, overlayAt, OverlayScreen } from "./screens/OverlayScreen";
 import { MatchScreen } from "./screens/MatchScreen";
 import type { LiveCard, OverlayMessage, Score } from "./types/live";
-import { MatchControls } from "./ui";
+import { KickOffButton, MatchControls } from "./ui";
 import { LabelsProvider } from "./ui/labels";
 import styles from "./App.module.css";
 
@@ -217,6 +217,12 @@ function LivePage() {
     />
   );
   const videoControls = !d.director && !d.rec;
+  // A plain visit opens still at kick-off, waiting on its Kick off button until the first play.
+  const [kicked, setKicked] = useState(false);
+  useEffect(() => {
+    if (d.playing) setKicked(true);
+  }, [d.playing]);
+  const start = videoControls && !kicked && view && view.minute === 0 && <KickOffButton onKickOff={d.togglePlay} />;
 
   const facts = d.factsOpen ? (factsFor ?? stage) : null;
   const openFacts = (card: LiveCard) => {
@@ -252,6 +258,7 @@ function LivePage() {
                     focus={d.profile.player}
                     reduced={reducedMotion()}
                     continuous
+                    holdOnPause={!d.director}
                     onGoalLanded={hold.onLanded}
                   />
                 </PitchView>
@@ -272,6 +279,8 @@ function LivePage() {
             onLanguage={d.nextLanguage}
             onPersona={d.togglePersona}
             controls={videoControls ? controls : undefined}
+            start={start || undefined}
+            agentsOpen={d.director || d.rec}
           />
         ) : (
           <Loading />

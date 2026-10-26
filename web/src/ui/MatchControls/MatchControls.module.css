@@ -72,3 +72,25 @@
     display: inline-flex;
   }
 }
+
+/* The Kick off button: the main button's colours, larger, with a shadow to lift it off the pitch. */
+.kickOff {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--space-6);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--you-tag-fill);
+  color: var(--you-tag-on-fill);
+  box-shadow: var(--shadow-sheet);
+  font: var(--type-title3);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.kickOff:focus-visible {
+  outline: var(--stroke) solid var(--you-primary);
+  outline-offset: var(--stroke);
+}

@@ -20,7 +20,14 @@ const snap = (s: LiveSnapshot): MatchView => ({ ...fromSnapshot(s), overlays: s.
 
 function screen(
   view: MatchView,
-  opts: { speed?: number; connection?: Connection; facts?: boolean; revealed?: number; loading?: boolean } = {},
+  opts: {
+    speed?: number;
+    connection?: Connection;
+    facts?: boolean;
+    revealed?: number;
+    loading?: boolean;
+    agentsOpen?: boolean;
+  } = {},
 ) {
   const stage = pickStage(view.cards, nowSeconds(view));
   return (
@@ -32,6 +39,7 @@ function screen(
       facts={opts.facts ? stage : null}
       revealed={opts.revealed}
       loading={opts.loading}
+      agentsOpen={opts.agentsOpen}
       onOpenFacts={() => undefined}
       onCloseFacts={() => undefined}
       onSelect={() => undefined}
@@ -76,6 +84,12 @@ export default {
       note: "S5 plan A: the brief and the agents. LAB-ONLY trace until #9 is fixed.",
       ...video,
       render: () => screen({ ...at(45), agentTrace }),
+    },
+    {
+      name: "halftime-agents-closed",
+      note: "A plain visit's half-time: the brief alone, the agents behind their button.",
+      ...video,
+      render: () => screen({ ...at(45), agentTrace }, { agentsOpen: false }),
     },
     {
       name: "s5-halftime-revealing",
