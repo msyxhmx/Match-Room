@@ -104,15 +104,34 @@ the current settings about 21-27% of minutes are each side in control, 16% chaos
 | `momentum_flip` | Momentum passes ±0.35 for a new side and holds for 2 minutes (cooldown 8'). | 2 |
 | `control_shift` | A side holds the control phase for 3 minutes (cooldown 10'). | 2 |
 | `chaos_phase` | The chaos phase starts (cooldown 12'). | 2 |
-| `pressure_spike` | 10-minute PPDA <= 4.8, at most 65% of the previous 10 minutes, with 4+ high ball wins (cooldown 12' per side). | 2 |
-| `win_prob_swing` | A side's win projection moves 15+ points in 5 minutes without a goal or red card. | 3 |
-| `tempo_shift` | Tempo changes 25%+ against the previous 10 minutes (cooldown 15'). | 3 |
+| `pressure_spike` | 10-minute PPDA <= 4.0, at most 65% of the previous 10 minutes, with 4+ high ball wins (cooldown 12' per side). | 2 |
+| `win_prob_swing` | A side's win projection moves 10+ points in 5 minutes without a goal or red card. Cites the most threatening actions of the side that drove it. | 3 |
+| `tempo_shift` | Tempo changes 25%+ against the previous 10 minutes (cooldown 15'). Cites the first and last pass of the window. | 3 |
 | `pass_of_the_moment` | A completed pass with difficulty >= 50% and xT added >= 0.04 (one per 15 minutes). | 3 |
 | `shot_speed` | A shot at 115 km/h or more (cooldown 20'). | 3 |
 | `player_milestone` | First player to 40 completed passes, and first to 8 ball wins. | 3 |
 | `player_focus` | Every 15 minutes for the viewer's focus player. | 2 |
 
 About 22 insights fire per match (average over 60 simulated matches, analyst persona).
+
+**Do the cards mean anything?** `scripts/card_value.py` checks, on 400 simulated matches, whether
+the side a card names scores the next goal (within 15 minutes) more often than pre-match
+strength alone predicts. Random minutes score +0.8%, so the baseline is fair.
+
+| Card | Per match | Lift | z |
+|---|---|---|---|
+| `big_chance` | 1.15 | +7.1% | 3.3 |
+| `pass_of_the_moment` | 0.94 | +5.5% | 2.4 |
+| `pressure_spike` | 3.81 | +3.8% | 3.2 |
+| `shot_speed` | 1.75 | +3.8% | 2.2 |
+| `control_shift` | 1.65 | +2.9% | 1.7 |
+| `momentum_flip` | 1.80 | -0.2% | -0.1 |
+| `red_card` (side shown) | 0.21 | -11.3% | -2.6 |
+
+`momentum_flip` describes who is on top but does not predict the next goal. Change-point
+detection (PELT) and higher thresholds were tried and did not hold up on held-out matches, so
+the original rule stays. The momentum *level* does predict (top fifth: +5.9 points over
+expected), which is what the momentum bar shows.
 
 ## Personalisation
 
