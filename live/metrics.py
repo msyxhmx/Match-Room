@@ -68,7 +68,7 @@ CONTROL_WEIGHTS = {"possession": 0.4, "field_tilt": 0.4, "retention": 0.2}
 CHAOS_WEIGHTS = {"turnovers": 0.4, "volatility": 0.3, "threat": 0.3}
 # Normalisers: roughly the 90th percentile of each input over simulated matches
 # (see scripts/calibrate_live.py), so chaos ~1 means "top-10% wild".
-CHAOS_NORM = {"turnovers": 2.8, "volatility": 0.38, "threat": 0.15}
+CHAOS_NORM = {"turnovers": 2.8, "volatility": 0.38, "threat": 0.14}
 CONTROL_THRESHOLD = 0.60  # rolling control share above this = one side in control
 CHAOS_THRESHOLD = 0.76
 MOMENTUM_DECAY = 0.85  # per minute; half-life ~4 minutes

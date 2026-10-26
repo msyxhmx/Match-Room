@@ -74,6 +74,36 @@ def solve(c: dict[str, np.ndarray], iters: int = 200, tol: float = 1e-9) -> np.n
     return xt
 
 
+def possession_outcomes(ev: pd.DataFrame) -> pd.DataFrame:
+    """Every pass and shot, with whether the possession it belongs to ended in a goal.
+
+    A possession runs until the other side plays the ball or a shot is taken. This is the
+    thing xT claims to predict, so it is how we check a grid on matches it never saw."""
+    acts = ev[ev["type"].isin(["pass", "shot"])].reset_index(drop=True)
+    pid, cur = np.zeros(len(acts), dtype=int), 0
+    sides, types = acts["side"].to_numpy(), acts["type"].to_numpy()
+    for i in range(1, len(acts)):
+        if sides[i] != sides[i - 1] or types[i - 1] == "shot":
+            cur += 1
+        pid[i] = cur
+    acts["possession"] = pid
+    goal = acts["type"].eq("shot") & acts["outcome"].eq("goal")
+    acts["scored"] = goal.groupby(acts["possession"]).transform("max").astype(float)
+    return acts[["x", "y", "scored"]]
+
+
+def evaluate(grid: np.ndarray, events: Iterable[pd.DataFrame]) -> dict[str, float]:
+    """Log loss and Brier score of xT(zone) as a forecast of "this possession scores"."""
+    df = pd.concat([possession_outcomes(ev) for ev in events], ignore_index=True)
+    ix, iy = zone(df["x"], df["y"])
+    p = np.clip(grid[ix, iy], 1e-6, 1 - 1e-6)
+    y = df["scored"].to_numpy()
+    return {"actions": int(len(df)), "scored_rate": round(float(y.mean()), 4),
+            "mean_xt": round(float(p.mean()), 4),
+            "log_loss": round(float(-np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))), 5),
+            "brier": round(float(np.mean((p - y) ** 2)), 5)}
+
+
 def fit(n: int = 3000, seed: int = 404) -> np.ndarray:
     from sim import simulate_season
 
@@ -81,10 +111,12 @@ def fit(n: int = 3000, seed: int = 404) -> np.ndarray:
     return (grid + grid[:, ::-1]) / 2  # the pitch is left-right symmetric: halve the noise
 
 
-def save(grid: np.ndarray, n: int, seed: int, path: Path = GRID_PATH) -> None:
+def save(grid: np.ndarray, n: int, seed: int, check: dict | None = None,
+         path: Path = GRID_PATH) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps({"n_matches": n, "seed": seed, "cols": XT_COLS, "rows": XT_ROWS,
-                                "grid": np.round(grid, 5).tolist()}, indent=1) + "\n")
+                                "check": check or {}, "grid": np.round(grid, 5).tolist()},
+                               indent=1) + "\n")
 
 
 def load(path: Path = GRID_PATH) -> np.ndarray | None:
@@ -100,11 +132,21 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--n", type=int, default=3000)
     p.add_argument("--seed", type=int, default=404)
+    p.add_argument("--check", type=int, default=600, help="fresh matches to score it on")
     p.add_argument("--out", type=Path, default=GRID_PATH)
     args = p.parse_args()
+    from live.metrics import XT_HAND_DRAWN
+    from sim import simulate_season
+
     grid = fit(args.n, args.seed)
-    save(grid, args.n, args.seed, args.out)
+    fresh = [m.events for m in simulate_season(args.check, seed=args.seed + 101)]
+    check = {"n_matches": args.check, "fitted": evaluate(grid, fresh),
+             "hand_drawn": evaluate(XT_HAND_DRAWN, fresh)}
+    save(grid, args.n, args.seed, check, args.out)
     print(f"wrote {args.out}; xT ranges {grid.min():.4f}-{grid.max():.4f}")
+    for k in ("fitted", "hand_drawn"):
+        print(f"{k:<11} log loss {check[k]['log_loss']:.5f}  brier {check[k]['brier']:.5f}  "
+              f"mean xT {check[k]['mean_xt']:.4f} vs scored {check[k]['scored_rate']:.4f}")
     for j in reversed(range(XT_ROWS)):
         print(" ".join(f"{grid[i, j]:.3f}" for i in range(XT_COLS)))
 

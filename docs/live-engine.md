@@ -79,7 +79,7 @@ the pitch is 105 x 68 m.
 | Metric | Definition |
 |---|---|
 | **xG** | Sum of each shot's probability of being scored (from the simulator). |
-| **xT added** | For each completed pass, xT(end zone) - xT(start zone) on a 12 x 8 grid. The grid follows the shape of Karun Singh's published xT surface (low everywhere, rising steeply near goal) but is a smooth approximation, not fitted to real data, because the brief forbids real match data. |
+| **xT added** | For each completed pass, xT(end zone) - xT(start zone) on a 12 x 8 grid. The grid is **learned from 3,000 simulated matches** with Karun Singh's value iteration (`live/xt.py`, `make xt`, saved to `artifacts/xt_grid.json`): xT(zone) = P(shoot) x P(score) + P(move) x the xT of where moves from that zone end up. On 600 fresh matches it predicts whether a possession scores better than the old hand-drawn grid (log loss 0.0881 vs 0.0908). If the file is missing, the hand-drawn grid is used. |
 | **Possession** | Share of all passes. |
 | **Field tilt** | Share of passes played in the final third (x > 66). |
 | **Pass difficulty** | 1 - expected completion probability. `p = sigmoid(3.4 - 0.055 x length_m - 0.025 x max(end_x - 60, 0) - 0.7 x under_pressure)`. |
@@ -147,6 +147,9 @@ a graphics template (`${headline}`, `${player}`, `${stat_value}`...) or the HTML
 
 - Synthetic data only: xT grid, xPass coefficients and thresholds are calibrated on the
   simulator, not real football.
+- VAEP (`scripts/vaep_prototype.py`) is an offline prototype, not a live metric. In the
+  simulator, tackles and interceptions follow failed passes automatically, so defensive
+  actions earn little VAEP credit (about 3% of the positive value).
 - No tracking data, so no player speed or distance covered; speed metrics are ball speeds.
 - The win projection is a simple Poisson model, deliberately explainable rather than optimal.
   The trained XGBoost half-time model (`/api/matches/{id}/halftime`) is still available.
