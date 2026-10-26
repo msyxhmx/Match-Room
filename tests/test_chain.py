@@ -85,3 +85,14 @@ def test_nobody_receives_their_own_pass():
                 last = (row.side, row.player) if row.outcome == "complete" else None
             elif row.type in ("shot", "interception", "tackle"):
                 last = None
+
+
+def test_passes_stay_realistic_and_on_the_pitch():
+    """No pass longer than a long goal kick, and none parked on a touchline or goal line
+    (both broke the pitch view: a 96 m keeper pass and a third of passes ending on a line)."""
+    for m in simulate_season(20, seed=5, engine="chain"):
+        p = m.events[m.events["type"] == "pass"]
+        length = ((p["end_x"] - p["x"]) * 1.05) ** 2 + ((p["end_y"] - p["y"]) * 0.68) ** 2
+        assert length.max() ** 0.5 <= 66
+        on_line = (p["end_x"] >= 99) | (p["end_x"] <= 1) | (p["end_y"] >= 99) | (p["end_y"] <= 1)
+        assert on_line.mean() < 0.01

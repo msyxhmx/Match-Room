@@ -18,9 +18,9 @@
  },
  "meta": {
   "venue": "Northgate Stadium",
-  "referee": "M. Castell",
-  "attendance": 47575,
-  "weather": "Windy",
+  "referee": "P. Okonjo",
+  "attendance": 43947,
+  "weather": "Light rain",
   "scenario": "comeback",
   "scenario_title": "The comeback",
   "synthetic": true
@@ -32,95 +32,28 @@
   "player": "L. Quinn"
  },
  "headline": "Northgate City remontan y ganan 3-2",
- "summary": "Northgate City tuvieron más el control: 41 minutos frente a 1. El momento clave llegó en el minuto 87: Northgate City se adelantan en el tramo final.",
+ "summary": "Northgate City tuvieron más el control: 29 minutos frente a 7. El momento clave llegó en el minuto 87: Northgate City se adelantan en el tramo final.",
  "summary_source": "template",
  "what_happened": [
   {
-   "insight_id": "SCN-comeback-0659-control_shift-0",
-   "type": "control_shift",
-   "variant": "control",
-   "minute": 6,
-   "second": 59,
-   "clock": "6:59",
-   "priority": 2,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [],
-   "headline": "Northgate City toman el control",
-   "body": "Control del 69% en los últimos 10 minutos: 73% de posesión, 67% de inclinación del campo.",
-   "why": [
-    "El control combina posesión, inclinación del campo y retención del pase en los últimos 10 minutos."
-   ],
-   "facts_used": [
-    {
-     "key": "team",
-     "label": "Equipo",
-     "value": "Northgate City"
-    },
-    {
-     "key": "control",
-     "label": "Control",
-     "value": "69%"
-    },
-    {
-     "key": "possession",
-     "label": "Posesión",
-     "value": "73%"
-    },
-    {
-     "key": "tilt",
-     "label": "Inclinación del campo",
-     "value": "67%"
-    },
-    {
-     "key": "window",
-     "label": "Ventana (minutos)",
-     "value": "10"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0011",
-     "minute": 1,
-     "description": "1' L. Quinn (NGC) pase 31 m"
-    },
-    {
-     "event_id": "SCN-comeback-0028",
-     "minute": 3,
-     "description": "3' L. Quinn (NGC) pase 42 m"
-    },
-    {
-     "event_id": "SCN-comeback-0078",
-     "minute": 6,
-     "description": "6' J. Okafor (NGC) pase 20 m"
-    }
-   ],
-   "tags": [
-    "your_team"
-   ],
-   "language": "es",
-   "persona": "analyst",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1413-goal-2",
+   "insight_id": "SCN-comeback-1420-goal-0",
    "type": "goal",
    "variant": "against_run",
    "minute": 14,
-   "second": 13,
-   "clock": "14:13",
+   "second": 20,
+   "clock": "14:20",
    "priority": 1,
    "side": "away",
    "team_id": "KST",
    "players": [
     "K. Quinn",
-    "L. Novak"
+    "H. Carter"
    ],
    "headline": "Contra la corriente: gol de Kingston Vale",
-   "body": "K. Quinn marca con una ocasión de 0,46 xG, golpeada a 92 km/h. Marcador: 0-1. Asistencia de L. Novak.",
+   "body": "K. Quinn marca con una ocasión de 0,26 xG, golpeada a 94 km/h. Marcador: 0-1. Asistencia de H. Carter.",
    "why": [
     "Northgate City dominaba, así que este gol cambia la historia del partido.",
-    "Probabilidad de victoria de Kingston Vale: 24% → 55%."
+    "Probabilidad de victoria de Kingston Vale: 24% → 53%."
    ],
    "facts_used": [
     {
@@ -141,12 +74,12 @@
     {
      "key": "xg",
      "label": "xG del disparo",
-     "value": "0,46"
+     "value": "0,26"
     },
     {
      "key": "speed",
      "label": "Velocidad del balón",
-     "value": "92 km/h"
+     "value": "94 km/h"
     },
     {
      "key": "win_before",
@@ -156,7 +89,7 @@
     {
      "key": "win_after",
      "label": "Prob. de victoria después",
-     "value": "55%"
+     "value": "53%"
     },
     {
      "key": "opponent",
@@ -166,19 +99,19 @@
     {
      "key": "assist",
      "label": "Asistencia",
-     "value": "L. Novak"
+     "value": "H. Carter"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0215",
+     "event_id": "SCN-comeback-0200",
      "minute": 14,
-     "description": "14' L. Novak (KST) pase 24 m"
+     "description": "14' H. Carter (KST) pase 31 m"
     },
     {
-     "event_id": "SCN-comeback-0216",
+     "event_id": "SCN-comeback-0201",
      "minute": 14,
-     "description": "14' K. Quinn (KST) marca (0,46 xG)"
+     "description": "14' K. Quinn (KST) marca (0,26 xG)"
     }
    ],
    "tags": [
@@ -189,30 +122,108 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-3719-goal-7",
+   "insight_id": "SCN-comeback-1500-player_focus-L. Quinn",
+   "type": "player_focus",
+   "variant": "focus",
+   "minute": 15,
+   "second": 0,
+   "clock": "15:00",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "L. Quinn"
+   ],
+   "headline": "L. Quinn hasta ahora",
+   "body": "L. Quinn: 14 toques, 10 pases completados (91%), 0,04 xT añadido, 0 disparos, 0 recuperaciones.",
+   "why": [],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Jugador",
+     "value": "L. Quinn"
+    },
+    {
+     "key": "touches",
+     "label": "Toques",
+     "value": "14"
+    },
+    {
+     "key": "passes_completed",
+     "label": "Pases completados",
+     "value": "10"
+    },
+    {
+     "key": "pass_accuracy",
+     "label": "Precisión de pase",
+     "value": "91%"
+    },
+    {
+     "key": "xt",
+     "label": "xT añadido",
+     "value": "0,04"
+    },
+    {
+     "key": "shots",
+     "label": "Disparos",
+     "value": "0"
+    },
+    {
+     "key": "ball_wins",
+     "label": "Recuperaciones",
+     "value": "0"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0147",
+     "minute": 11,
+     "description": "11' L. Quinn (NGC) pase 15 m"
+    },
+    {
+     "event_id": "SCN-comeback-0160",
+     "minute": 12,
+     "description": "12' L. Quinn (NGC) pase 18 m"
+    },
+    {
+     "event_id": "SCN-comeback-0206",
+     "minute": 15,
+     "description": "15' L. Quinn (NGC) pase 8 m"
+    }
+   ],
+   "tags": [
+    "your_team",
+    "focus_player"
+   ],
+   "language": "es",
+   "persona": "analyst",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-3714-goal-9",
    "type": "goal",
-   "variant": "deserved",
+   "variant": "neutral",
    "minute": 37,
-   "second": 19,
-   "clock": "37:19",
+   "second": 14,
+   "clock": "37:14",
    "priority": 1,
    "side": "away",
    "team_id": "KST",
    "players": [
-    "L. Novak",
-    "B. Barros"
+    "K. Yilmaz",
+    "J. Ibrahim"
    ],
-   "headline": "Gol merecido de Kingston Vale",
-   "body": "L. Novak marca con una ocasión de 0,42 xG, golpeada a 76 km/h. Marcador: 0-2. Asistencia de B. Barros.",
+   "headline": "Gol de Kingston Vale",
+   "body": "K. Yilmaz marca con una ocasión de 0,49 xG, golpeada a 76 km/h. Marcador: 0-2. Asistencia de J. Ibrahim.",
    "why": [
-    "Kingston Vale habían generado más: 0,89 xG frente a 0,15.",
-    "Probabilidad de victoria de Kingston Vale: 60% → 87%."
+    "Una ocasión así acaba en gol cerca del 49% de las veces.",
+    "Probabilidad de victoria de Kingston Vale: 56% → 83%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Jugador",
-     "value": "L. Novak"
+     "value": "K. Yilmaz"
     },
     {
      "key": "team",
@@ -227,7 +238,12 @@
     {
      "key": "xg",
      "label": "xG del disparo",
-     "value": "0,42"
+     "value": "0,49"
+    },
+    {
+     "key": "chance_pct",
+     "label": "Probabilidad de gol",
+     "value": "49%"
     },
     {
      "key": "speed",
@@ -237,39 +253,29 @@
     {
      "key": "win_before",
      "label": "Prob. de victoria antes",
-     "value": "60%"
+     "value": "56%"
     },
     {
      "key": "win_after",
      "label": "Prob. de victoria después",
-     "value": "87%"
-    },
-    {
-     "key": "team_xg",
-     "label": "xG del equipo",
-     "value": "0,89"
-    },
-    {
-     "key": "opp_xg",
-     "label": "xG del rival",
-     "value": "0,15"
+     "value": "83%"
     },
     {
      "key": "assist",
      "label": "Asistencia",
-     "value": "B. Barros"
+     "value": "J. Ibrahim"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0559",
+     "event_id": "SCN-comeback-0577",
      "minute": 37,
-     "description": "37' B. Barros (KST) pase 41 m"
+     "description": "37' J. Ibrahim (KST) pase 26 m"
     },
     {
-     "event_id": "SCN-comeback-0560",
+     "event_id": "SCN-comeback-0578",
      "minute": 37,
-     "description": "37' L. Novak (KST) marca (0,42 xG)"
+     "description": "37' K. Yilmaz (KST) marca (0,49 xG)"
     }
    ],
    "tags": [
@@ -280,30 +286,30 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-6114-goal-11",
+   "insight_id": "SCN-comeback-6111-goal-17",
    "type": "goal",
    "variant": "deserved",
    "minute": 61,
-   "second": 14,
-   "clock": "61:14",
+   "second": 11,
+   "clock": "61:11",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
-    "R. Mensah",
+    "N. Vidal",
     "L. Gallo"
    ],
    "headline": "Gol merecido de Northgate City",
-   "body": "R. Mensah marca con una ocasión de 0,32 xG, golpeada a 88 km/h. Marcador: 1-2. Asistencia de L. Gallo.",
+   "body": "N. Vidal marca con una ocasión de 0,34 xG, golpeada a 98 km/h. Marcador: 1-2. Asistencia de L. Gallo.",
    "why": [
-    "Northgate City habían generado más: 1,21 xG frente a 0,90.",
-    "Probabilidad de victoria de Northgate City: 2% → 10%."
+    "Northgate City habían generado más: 1,85 xG frente a 1,58.",
+    "Probabilidad de victoria de Northgate City: 2% → 12%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Jugador",
-     "value": "R. Mensah"
+     "value": "N. Vidal"
     },
     {
      "key": "team",
@@ -318,12 +324,12 @@
     {
      "key": "xg",
      "label": "xG del disparo",
-     "value": "0,32"
+     "value": "0,34"
     },
     {
      "key": "speed",
      "label": "Velocidad del balón",
-     "value": "88 km/h"
+     "value": "98 km/h"
     },
     {
      "key": "win_before",
@@ -333,17 +339,17 @@
     {
      "key": "win_after",
      "label": "Prob. de victoria después",
-     "value": "10%"
+     "value": "12%"
     },
     {
      "key": "team_xg",
      "label": "xG del equipo",
-     "value": "1,21"
+     "value": "1,85"
     },
     {
      "key": "opp_xg",
      "label": "xG del rival",
-     "value": "0,90"
+     "value": "1,58"
     },
     {
      "key": "assist",
@@ -353,14 +359,14 @@
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0953",
+     "event_id": "SCN-comeback-0909",
      "minute": 61,
-     "description": "61' L. Gallo (NGC) pase 12 m"
+     "description": "61' L. Gallo (NGC) pase 11 m"
     },
     {
-     "event_id": "SCN-comeback-0954",
+     "event_id": "SCN-comeback-0910",
      "minute": 61,
-     "description": "61' R. Mensah (NGC) marca (0,32 xG)"
+     "description": "61' N. Vidal (NGC) marca (0,34 xG)"
     }
    ],
    "tags": [
@@ -371,24 +377,24 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-7413-goal-14",
+   "insight_id": "SCN-comeback-7409-goal-22",
    "type": "goal",
    "variant": "equaliser",
    "minute": 74,
-   "second": 13,
-   "clock": "74:13",
+   "second": 9,
+   "clock": "74:09",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
     "L. Quinn",
-    "R. Mensah"
+    "N. Ekwueme"
    ],
    "headline": "Northgate City empatan",
-   "body": "L. Quinn marca con una ocasión de 0,35 xG, golpeada a 105 km/h. Marcador: 2-2. Asistencia de R. Mensah.",
+   "body": "L. Quinn marca con una ocasión de 0,43 xG, golpeada a 119 km/h. Marcador: 2-2. Asistencia de N. Ekwueme.",
    "why": [
     "El partido vuelve a estar igualado: 2-2.",
-    "Probabilidad de victoria de Northgate City: 6% → 31%."
+    "Probabilidad de victoria de Northgate City: 7% → 33%."
    ],
    "facts_used": [
     {
@@ -409,39 +415,39 @@
     {
      "key": "xg",
      "label": "xG del disparo",
-     "value": "0,35"
+     "value": "0,43"
     },
     {
      "key": "speed",
      "label": "Velocidad del balón",
-     "value": "105 km/h"
+     "value": "119 km/h"
     },
     {
      "key": "win_before",
      "label": "Prob. de victoria antes",
-     "value": "6%"
+     "value": "7%"
     },
     {
      "key": "win_after",
      "label": "Prob. de victoria después",
-     "value": "31%"
+     "value": "33%"
     },
     {
      "key": "assist",
      "label": "Asistencia",
-     "value": "R. Mensah"
+     "value": "N. Ekwueme"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-1148",
+     "event_id": "SCN-comeback-1073",
      "minute": 74,
-     "description": "74' R. Mensah (NGC) pase 7 m"
+     "description": "74' N. Ekwueme (NGC) pase 7 m"
     },
     {
-     "event_id": "SCN-comeback-1149",
+     "event_id": "SCN-comeback-1074",
      "minute": 74,
-     "description": "74' L. Quinn (NGC) marca (0,35 xG)"
+     "description": "74' L. Quinn (NGC) marca (0,43 xG)"
     }
    ],
    "tags": [
@@ -453,30 +459,30 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-8713-goal-19",
+   "insight_id": "SCN-comeback-8714-goal-24",
    "type": "goal",
    "variant": "late_go_ahead",
    "minute": 87,
-   "second": 13,
-   "clock": "87:13",
+   "second": 14,
+   "clock": "87:14",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
-    "N. Ekwueme",
-    "N. Vidal"
+    "J. Okafor",
+    "L. Gallo"
    ],
    "headline": "Northgate City se adelantan en el tramo final",
-   "body": "N. Ekwueme marca con una ocasión de 0,24 xG, golpeada a 86 km/h. Marcador: 3-2. Asistencia de N. Vidal.",
+   "body": "J. Okafor marca con una ocasión de 0,34 xG, golpeada a 70 km/h. Marcador: 3-2. Asistencia de L. Gallo.",
    "why": [
     "Northgate City pasan a ganar cuando se acaba el tiempo: 3-2.",
-    "Probabilidad de victoria de Northgate City: 12% → 96%."
+    "Probabilidad de victoria de Northgate City: 12% → 95%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Jugador",
-     "value": "N. Ekwueme"
+     "value": "J. Okafor"
     },
     {
      "key": "team",
@@ -491,12 +497,12 @@
     {
      "key": "xg",
      "label": "xG del disparo",
-     "value": "0,24"
+     "value": "0,34"
     },
     {
      "key": "speed",
      "label": "Velocidad del balón",
-     "value": "86 km/h"
+     "value": "70 km/h"
     },
     {
      "key": "win_before",
@@ -506,24 +512,24 @@
     {
      "key": "win_after",
      "label": "Prob. de victoria después",
-     "value": "96%"
+     "value": "95%"
     },
     {
      "key": "assist",
      "label": "Asistencia",
-     "value": "N. Vidal"
+     "value": "L. Gallo"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-1360",
+     "event_id": "SCN-comeback-1260",
      "minute": 87,
-     "description": "87' N. Vidal (NGC) pase 8 m"
+     "description": "87' L. Gallo (NGC) pase 33 m"
     },
     {
-     "event_id": "SCN-comeback-1361",
+     "event_id": "SCN-comeback-1261",
      "minute": 87,
-     "description": "87' N. Ekwueme (NGC) marca (0,24 xG)"
+     "description": "87' J. Okafor (NGC) marca (0,34 xG)"
     }
    ],
    "tags": [
@@ -537,7 +543,7 @@
  "why": [
   {
    "title": "Quién mandó",
-   "body": "Northgate City con el control durante 41 minutos, Kingston Vale durante 1; 12 minutos de caos.",
+   "body": "Northgate City con el control durante 29 minutos, Kingston Vale durante 7; 20 minutos de caos.",
    "facts_used": [
     {
      "key": "home",
@@ -552,24 +558,24 @@
     {
      "key": "home_minutes",
      "label": "Minutos de control local",
-     "value": "41"
+     "value": "29"
     },
     {
      "key": "away_minutes",
      "label": "Minutos de control visitante",
-     "value": "1"
+     "value": "7"
     },
     {
      "key": "chaos_minutes",
      "label": "Minutos de caos",
-     "value": "12"
+     "value": "20"
     }
    ],
    "evidence": []
   },
   {
    "title": "Calidad de las ocasiones",
-   "body": "Northgate City generaron más, 3,82 xG frente a 1,01, y el marcador lo refleja.",
+   "body": "Northgate City generaron más, 4,18 xG frente a 1,69, y el marcador lo refleja.",
    "facts_used": [
     {
      "key": "team",
@@ -579,35 +585,35 @@
     {
      "key": "team_xg",
      "label": "xG del equipo",
-     "value": "3,82"
+     "value": "4,18"
     },
     {
      "key": "opp_xg",
      "label": "xG del rival",
-     "value": "1,01"
+     "value": "1,69"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-1168",
-     "minute": 76,
-     "description": "76' L. Gallo (NGC) disparo parado (0,69 xG)"
+     "event_id": "SCN-comeback-0292",
+     "minute": 20,
+     "description": "20' H. Novak (NGC) disparo parado (0,65 xG)"
     },
     {
-     "event_id": "SCN-comeback-1134",
-     "minute": 73,
-     "description": "73' N. Ekwueme (NGC) disparo parado (0,50 xG)"
+     "event_id": "SCN-comeback-0934",
+     "minute": 63,
+     "description": "63' N. Ekwueme (NGC) disparo bloqueado (0,60 xG)"
     },
     {
-     "event_id": "SCN-comeback-0216",
-     "minute": 14,
-     "description": "14' K. Quinn (KST) marca (0,46 xG)"
+     "event_id": "SCN-comeback-0578",
+     "minute": 37,
+     "description": "37' K. Yilmaz (KST) marca (0,49 xG)"
     }
    ]
   },
   {
    "title": "Presión",
-   "body": "Northgate City presionaron más: PPDA de 3,5 frente a 6,9.",
+   "body": "Northgate City presionaron más: PPDA de 5,4 frente a 10,1.",
    "facts_used": [
     {
      "key": "team",
@@ -617,12 +623,12 @@
     {
      "key": "ppda",
      "label": "PPDA",
-     "value": "3,5"
+     "value": "5,4"
     },
     {
      "key": "opp_ppda",
      "label": "PPDA rival",
-     "value": "6,9"
+     "value": "10,1"
     }
    ],
    "evidence": []
@@ -631,47 +637,47 @@
  "what_to_watch": [],
  "turning_points": [
   {
-   "insight_id": "SCN-comeback-1413-goal-2",
+   "insight_id": "SCN-comeback-1420-goal-0",
    "minute": 14,
-   "clock": "14:13",
+   "clock": "14:20",
    "title": "Contra la corriente: gol de Kingston Vale",
    "side": "away",
-   "win_before": 0.235,
-   "win_after": 0.553
+   "win_before": 0.239,
+   "win_after": 0.528
   },
   {
-   "insight_id": "SCN-comeback-3719-goal-7",
+   "insight_id": "SCN-comeback-3714-goal-9",
    "minute": 37,
-   "clock": "37:19",
-   "title": "Gol merecido de Kingston Vale",
+   "clock": "37:14",
+   "title": "Gol de Kingston Vale",
    "side": "away",
-   "win_before": 0.603,
-   "win_after": 0.866
+   "win_before": 0.556,
+   "win_after": 0.829
   },
   {
-   "insight_id": "SCN-comeback-7413-goal-14",
-   "minute": 74,
-   "clock": "74:13",
-   "title": "Northgate City empatan",
-   "side": "home",
-   "win_before": 0.061,
-   "win_after": 0.306
+   "insight_id": "SCN-comeback-3859-momentum_flip-10",
+   "minute": 38,
+   "clock": "38:59",
+   "title": "El impulso pasa a Kingston Vale",
+   "side": "away",
+   "win_before": 0.545,
+   "win_after": 0.816
   },
   {
-   "insight_id": "SCN-comeback-8713-goal-19",
+   "insight_id": "SCN-comeback-8714-goal-24",
    "minute": 87,
-   "clock": "87:13",
+   "clock": "87:14",
    "title": "Northgate City se adelantan en el tramo final",
    "side": "home",
-   "win_before": 0.118,
-   "win_after": 0.964
+   "win_before": 0.121,
+   "win_after": 0.954
   }
  ],
  "control_profile": {
-  "home_control": 41,
-  "away_control": 1,
-  "chaos": 12,
-  "balanced": 36
+  "home_control": 29,
+  "away_control": 7,
+  "chaos": 20,
+  "balanced": 34
  },
  "metrics": [
   {
@@ -685,111 +691,111 @@
   {
    "key": "xg",
    "label": "Goles esperados (xG)",
-   "home": 3.82,
-   "away": 1.01,
+   "home": 4.18,
+   "away": 1.69,
    "unit": null,
    "definition": "Suma de la calidad de cada disparo: la probabilidad de que acabe en gol."
   },
   {
    "key": "shots",
    "label": "Disparos",
-   "home": 28.0,
-   "away": 6.0,
+   "home": 23.0,
+   "away": 9.0,
    "unit": null,
    "definition": "Todos los intentos a portería."
   },
   {
    "key": "sot",
    "label": "Disparos a puerta",
-   "home": 18.0,
-   "away": 3.0,
+   "home": 9.0,
+   "away": 4.0,
    "unit": null,
    "definition": "Disparos que acabaron en gol o parada."
   },
   {
    "key": "xt",
    "label": "Amenaza esperada (xT)",
-   "home": 1.87,
-   "away": 0.34,
+   "home": 1.06,
+   "away": 0.68,
    "unit": null,
    "definition": "Cuánto aumentaron los pases completados la probabilidad de marcar, según una cuadrícula de zonas."
   },
   {
    "key": "possession",
    "label": "Posesión",
-   "home": 57.0,
-   "away": 43.0,
+   "home": 51.0,
+   "away": 49.0,
    "unit": "%",
    "definition": "Proporción de todos los pases."
   },
   {
    "key": "field_tilt",
    "label": "Inclinación del campo",
-   "home": 74.0,
-   "away": 26.0,
+   "home": 68.0,
+   "away": 32.0,
    "unit": "%",
    "definition": "Proporción de pases en el último tercio."
   },
   {
    "key": "pass_accuracy",
    "label": "Precisión de pase",
-   "home": 79.0,
-   "away": 67.0,
+   "home": 81.0,
+   "away": 78.0,
    "unit": "%",
    "definition": "Pases completados / pases intentados."
   },
   {
    "key": "avg_pass_length",
    "label": "Longitud media del pase",
-   "home": 18.7,
-   "away": 21.4,
+   "home": 17.8,
+   "away": 20.2,
    "unit": "m",
    "definition": "Distancia media de los pases."
   },
   {
    "key": "pass_difficulty",
    "label": "Dificultad media del pase",
-   "home": 16.0,
-   "away": 16.0,
+   "home": 15.0,
+   "away": 15.0,
    "unit": "%",
    "definition": "Uno menos la probabilidad esperada de completar el pase."
   },
   {
    "key": "ppda",
    "label": "PPDA (presión)",
-   "home": 3.5,
-   "away": 6.9,
+   "home": 5.4,
+   "away": 10.1,
    "unit": null,
    "definition": "Pases rivales permitidos por acción defensiva en campo contrario. Más bajo = presión más intensa."
   },
   {
    "key": "pressures",
    "label": "Presiones",
-   "home": 122.0,
-   "away": 181.0,
+   "home": 133.0,
+   "away": 149.0,
    "unit": null,
    "definition": "Veces que un jugador presionó al poseedor."
   },
   {
    "key": "ball_wins",
    "label": "Recuperaciones",
-   "home": 116.0,
-   "away": 99.0,
+   "home": 86.0,
+   "away": 78.0,
    "unit": null,
    "definition": "Entradas e intercepciones."
   },
   {
    "key": "top_shot_speed",
    "label": "Disparo más rápido",
-   "home": 114.5,
-   "away": 108.5,
+   "home": 124.0,
+   "away": 132.0,
    "unit": "km/h",
    "definition": "Mayor velocidad de balón en un disparo."
   },
   {
    "key": "corners",
    "label": "Córners",
-   "home": 6.0,
+   "home": 5.0,
    "away": 2.0,
    "unit": null,
    "definition": "Saques de esquina a favor."
@@ -797,41 +803,39 @@
   {
    "key": "fouls",
    "label": "Faltas",
-   "home": 5.0,
-   "away": 12.0,
+   "home": 13.0,
+   "away": 10.0,
    "unit": null,
    "definition": "Faltas cometidas."
   }
  ],
  "projection": null,
  "player_of_the_match": {
-  "name": "L. Quinn",
-  "number": 8,
+  "name": "J. Okafor",
+  "number": 6,
   "position": "MF",
   "team_id": "NGC",
   "side": "home",
   "touches": 88,
-  "passes": 55,
-  "passes_completed": 42,
-  "pass_accuracy": 76,
-  "xt_added": 0.603,
-  "shots": 5,
+  "passes": 63,
+  "passes_completed": 55,
+  "pass_accuracy": 87,
+  "xt_added": 0.252,
+  "shots": 2,
   "goals": 1,
-  "xg": 1.05,
-  "ball_wins": 12,
-  "pressures": 13,
-  "top_shot_speed_kmh": 114.5,
+  "xg": 0.48,
+  "ball_wins": 8,
+  "pressures": 12,
+  "top_shot_speed_kmh": 81.9,
   "involvement": [
-   11,
-   11,
-   11,
-   25,
+   13,
+   13,
+   14,
+   18,
    16,
    14
   ],
-  "cards": [
-   "yellow"
-  ]
+  "cards": []
  },
  "focus_player": {
   "name": "L. Quinn",
@@ -839,27 +843,25 @@
   "position": "MF",
   "team_id": "NGC",
   "side": "home",
-  "touches": 88,
-  "passes": 55,
-  "passes_completed": 42,
-  "pass_accuracy": 76,
-  "xt_added": 0.603,
-  "shots": 5,
+  "touches": 79,
+  "passes": 57,
+  "passes_completed": 40,
+  "pass_accuracy": 70,
+  "xt_added": 0.118,
+  "shots": 2,
   "goals": 1,
-  "xg": 1.05,
+  "xg": 0.53,
   "ball_wins": 12,
-  "pressures": 13,
-  "top_shot_speed_kmh": 114.5,
+  "pressures": 7,
+  "top_shot_speed_kmh": 118.9,
   "involvement": [
-   11,
-   11,
-   11,
-   25,
+   14,
    16,
-   14
+   9,
+   12,
+   15,
+   13
   ],
-  "cards": [
-   "yellow"
-  ]
+  "cards": []
  }
 }

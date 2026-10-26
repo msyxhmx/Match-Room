@@ -39,7 +39,7 @@ SCENARIOS: dict[str, Scenario] = {
             title="The comeback",
             description="Away side go 2-0 up before the break; the home side take over "
                         "after half-time and turn it round.",
-            home_id="NGC", away_id="KST", seed=132,
+            home_id="NGC", away_id="KST", seed=203,
             swing={0: -0.06, 1: -0.10, 2: -0.12, 3: 0.14, 4: 0.18, 5: 0.20},
             forced_goals=((14, "away"), (37, "away"), (61, "home"), (74, "home"), (87, "home")),
             scorers={14: "K. Quinn", 74: "L. Quinn"},

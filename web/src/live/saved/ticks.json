@@ -9,10 +9,10 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.964,
-   "chaos": 0.182,
-   "tempo": 11.0,
-   "momentum": 0.478,
+   "home_share": 0.734,
+   "chaos": 0.34,
+   "tempo": 7.0,
+   "momentum": 0.289,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
@@ -62,12 +62,12 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.51,
-   "chaos": 0.685,
-   "tempo": 9.0,
-   "momentum": -0.485,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.743,
+   "chaos": 0.262,
+   "tempo": 6.5,
+   "momentum": 0.287,
+   "phase": "home_control",
+   "label": "Northgate City in control"
   },
   "projection": {
    "home_win": 0.555,
@@ -115,10 +115,10 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.596,
-   "chaos": 0.665,
-   "tempo": 10.3,
-   "momentum": -0.233,
+   "home_share": 0.55,
+   "chaos": 0.276,
+   "tempo": 6.7,
+   "momentum": 0.044,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
@@ -168,12 +168,12 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.642,
-   "chaos": 0.665,
-   "tempo": 10.0,
-   "momentum": -0.144,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.566,
+   "chaos": 0.329,
+   "tempo": 7.8,
+   "momentum": -0.01,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
    "home_win": 0.549,
@@ -221,12 +221,12 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.663,
-   "chaos": 0.62,
-   "tempo": 9.8,
-   "momentum": -0.11,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.558,
+   "chaos": 0.333,
+   "tempo": 7.2,
+   "momentum": -0.086,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
    "home_win": 0.545,
@@ -280,11 +280,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-0",
-     "momentum": "-0.11",
-     "control_home": "0.66",
-     "chaos": "0.62",
-     "phase": "home_control",
-     "phase_label": "Northgate City in control"
+     "momentum": "-0.09",
+     "control_home": "0.56",
+     "chaos": "0.33",
+     "phase": "balanced",
+     "phase_label": "Evenly balanced"
     }
    }
   ]
@@ -299,12 +299,12 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.688,
-   "chaos": 0.648,
-   "tempo": 9.3,
-   "momentum": 0.104,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.555,
+   "chaos": 0.352,
+   "tempo": 8.0,
+   "momentum": -0.06,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
    "home_win": 0.542,
@@ -339,81 +339,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-0659-control_shift-0",
-    "type": "control_shift",
-    "variant": "control",
-    "minute": 6,
-    "second": 59,
-    "clock": "6:59",
-    "priority": 2,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [],
-    "headline": "Northgate City take control",
-    "body": "Northgate City have the ball and the territory.",
-    "why": [
-     "They are dictating where the game is played."
-    ],
-    "facts_used": [
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-0011",
-      "minute": 1,
-      "description": "1' L. Quinn (NGC) pass 31 m"
-     },
-     {
-      "event_id": "SCN-comeback-0028",
-      "minute": 3,
-      "description": "3' L. Quinn (NGC) pass 42 m"
-     },
-     {
-      "event_id": "SCN-comeback-0078",
-      "minute": 6,
-      "description": "6' J. Okafor (NGC) pass 20 m"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 2,
-    "match_id": "SCN-comeback",
-    "minute": 6,
-    "second": 59,
-    "clock": "6:59",
-    "graphic": "lower_third",
-    "priority": 2,
-    "ttl_s": 14,
-    "insight_id": "SCN-comeback-0659-control_shift-0",
-    "language": "en",
-    "fields": {
-     "headline": "Northgate City take control",
-     "body": "Northgate City have the ball and the territory.",
-     "clock": "6:59",
-     "minute": "6",
-     "type": "control_shift",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "0-0"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -425,12 +352,12 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.693,
-   "chaos": 0.685,
-   "tempo": 9.9,
-   "momentum": 0.228,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.53,
+   "chaos": 0.402,
+   "tempo": 8.7,
+   "momentum": -0.115,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
    "home_win": 0.539,
@@ -478,17 +405,17 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.685,
-   "chaos": 0.715,
-   "tempo": 9.9,
-   "momentum": 0.475,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.476,
+   "chaos": 0.414,
+   "tempo": 8.6,
+   "momentum": -0.181,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.539,
-   "draw": 0.223,
-   "away_win": 0.237,
+   "home_win": 0.535,
+   "draw": 0.225,
+   "away_win": 0.24,
    "drivers": [
     {
      "key": "score",
@@ -503,7 +430,7 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.09"
+     "value": "2.07"
     },
     {
      "key": "away_rate",
@@ -531,17 +458,17 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.643,
-   "chaos": 0.674,
-   "tempo": 10.0,
-   "momentum": 0.35,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.466,
+   "chaos": 0.399,
+   "tempo": 8.4,
+   "momentum": -0.02,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.536,
+   "home_win": 0.534,
    "draw": 0.227,
-   "away_win": 0.238,
+   "away_win": 0.239,
    "drivers": [
     {
      "key": "score",
@@ -556,7 +483,7 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.07"
+     "value": "2.06"
     },
     {
      "key": "away_rate",
@@ -584,16 +511,16 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.593,
-   "chaos": 0.654,
-   "tempo": 9.9,
-   "momentum": 0.238,
+   "home_share": 0.495,
+   "chaos": 0.413,
+   "tempo": 8.4,
+   "momentum": 0.288,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.531,
-   "draw": 0.23,
+   "home_win": 0.53,
+   "draw": 0.231,
    "away_win": 0.239,
    "drivers": [
     {
@@ -609,12 +536,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.05"
+     "value": "2.03"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.29"
+     "value": "1.28"
     },
     {
      "key": "live_weight",
@@ -627,7 +554,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 3,
+    "seq": 2,
     "match_id": "SCN-comeback",
     "minute": 10,
     "second": 59,
@@ -643,9 +570,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-0",
-     "momentum": "0.24",
-     "control_home": "0.59",
-     "chaos": "0.65",
+     "momentum": "0.29",
+     "control_home": "0.49",
+     "chaos": "0.41",
      "phase": "balanced",
      "phase_label": "Evenly balanced"
     }
@@ -662,16 +589,16 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.592,
-   "chaos": 0.622,
-   "tempo": 10.0,
-   "momentum": 0.288,
+   "home_share": 0.451,
+   "chaos": 0.402,
+   "tempo": 8.9,
+   "momentum": 0.166,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
    "home_win": 0.527,
-   "draw": 0.233,
+   "draw": 0.234,
    "away_win": 0.239,
    "drivers": [
     {
@@ -687,12 +614,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.03"
+     "value": "2.01"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.28"
+     "value": "1.27"
     },
     {
      "key": "live_weight",
@@ -715,17 +642,17 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.66,
-   "chaos": 0.538,
-   "tempo": 10.0,
-   "momentum": 0.462,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.461,
+   "chaos": 0.428,
+   "tempo": 9.7,
+   "momentum": 0.244,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.53,
-   "draw": 0.234,
-   "away_win": 0.235,
+   "home_win": 0.523,
+   "draw": 0.238,
+   "away_win": 0.239,
    "drivers": [
     {
      "key": "score",
@@ -740,12 +667,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.04"
+     "value": "1.99"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.27"
+     "value": "1.26"
     },
     {
      "key": "live_weight",
@@ -768,17 +695,17 @@
    "away": 0
   },
   "control": {
-   "home_share": 0.586,
-   "chaos": 0.511,
-   "tempo": 9.9,
-   "momentum": 0.382,
+   "home_share": 0.506,
+   "chaos": 0.47,
+   "tempo": 10.3,
+   "momentum": 0.255,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.527,
-   "draw": 0.238,
-   "away_win": 0.235,
+   "home_win": 0.52,
+   "draw": 0.241,
+   "away_win": 0.239,
    "drivers": [
     {
      "key": "score",
@@ -793,7 +720,7 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.02"
+     "value": "1.98"
     },
     {
      "key": "away_rate",
@@ -808,90 +735,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-1359-momentum_flip-1",
-    "type": "momentum_flip",
-    "variant": "first",
-    "minute": 13,
-    "second": 59,
-    "clock": "13:59",
-    "priority": 2,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [
-     "N. Vidal"
-    ],
-    "headline": "Northgate City take the initiative",
-    "body": "Northgate City are on top now. N. Vidal is driving it.",
-    "why": [
-     "Most of the dangerous play is now coming from Northgate City."
-    ],
-    "facts_used": [
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     },
-     {
-      "key": "player",
-      "label": "Player",
-      "value": "N. Vidal"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-0177",
-      "minute": 11,
-      "description": "11' L. Gallo (NGC) pass 17 m"
-     },
-     {
-      "event_id": "SCN-comeback-0183",
-      "minute": 12,
-      "description": "12' R. Mensah (NGC) pass 18 m"
-     },
-     {
-      "event_id": "SCN-comeback-0184",
-      "minute": 12,
-      "description": "12' N. Vidal (NGC) shot wide (0.04 xG)"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 4,
-    "match_id": "SCN-comeback",
-    "minute": 13,
-    "second": 59,
-    "clock": "13:59",
-    "graphic": "lower_third",
-    "priority": 2,
-    "ttl_s": 14,
-    "insight_id": "SCN-comeback-1359-momentum_flip-1",
-    "language": "en",
-    "fields": {
-     "headline": "Northgate City take the initiative",
-     "body": "Northgate City are on top now. N. Vidal is driving it.",
-     "clock": "13:59",
-     "minute": "13",
-     "type": "momentum_flip",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "0-0",
-     "player": "N. Vidal",
-     "number": "10"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -903,17 +748,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.541,
-   "chaos": 0.69,
-   "tempo": 9.3,
-   "momentum": -0.717,
+   "home_share": 0.513,
+   "chaos": 0.618,
+   "tempo": 9.6,
+   "momentum": -0.632,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.234,
-   "draw": 0.213,
-   "away_win": 0.553,
+   "home_win": 0.248,
+   "draw": 0.224,
+   "away_win": 0.528,
    "drivers": [
     {
      "key": "score",
@@ -928,12 +773,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.00"
+     "value": "1.96"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.64"
+     "value": "1.46"
     },
     {
      "key": "live_weight",
@@ -945,23 +790,23 @@
   },
   "new_cards": [
    {
-    "insight_id": "SCN-comeback-1413-goal-2",
+    "insight_id": "SCN-comeback-1420-goal-0",
     "type": "goal",
     "variant": "against_run",
     "minute": 14,
-    "second": 13,
-    "clock": "14:13",
+    "second": 20,
+    "clock": "14:20",
     "priority": 1,
     "side": "away",
     "team_id": "KST",
     "players": [
      "K. Quinn",
-     "L. Novak"
+     "H. Carter"
     ],
     "headline": "Against the run of play: Kingston Vale score",
-    "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by L. Novak.",
+    "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by H. Carter.",
     "why": [
-     "Their chance of winning moves from 24% to 55%."
+     "Their chance of winning moves from 24% to 53%."
     ],
     "facts_used": [
      {
@@ -987,24 +832,24 @@
      {
       "key": "win_after",
       "label": "Win chance after",
-      "value": "55%"
+      "value": "53%"
      },
      {
       "key": "assist",
       "label": "Assist",
-      "value": "L. Novak"
+      "value": "H. Carter"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0215",
+      "event_id": "SCN-comeback-0200",
       "minute": 14,
-      "description": "14' L. Novak (KST) pass 24 m"
+      "description": "14' H. Carter (KST) pass 31 m"
      },
      {
-      "event_id": "SCN-comeback-0216",
+      "event_id": "SCN-comeback-0201",
       "minute": 14,
-      "description": "14' K. Quinn (KST) scores (0.46 xG)"
+      "description": "14' K. Quinn (KST) scores (0.26 xG)"
      }
     ],
     "tags": [
@@ -1017,20 +862,20 @@
   ],
   "new_overlays": [
    {
-    "seq": 5,
+    "seq": 3,
     "match_id": "SCN-comeback",
     "minute": 14,
-    "second": 13,
-    "clock": "14:13",
+    "second": 20,
+    "clock": "14:20",
     "graphic": "alert",
     "priority": 1,
     "ttl_s": 20,
-    "insight_id": "SCN-comeback-1413-goal-2",
+    "insight_id": "SCN-comeback-1420-goal-0",
     "language": "en",
     "fields": {
      "headline": "Against the run of play: Kingston Vale score",
-     "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by L. Novak.",
-     "clock": "14:13",
+     "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by H. Carter.",
+     "clock": "14:20",
      "minute": "14",
      "type": "goal",
      "team": "Kingston Vale",
@@ -1054,17 +899,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.525,
-   "chaos": 0.697,
-   "tempo": 9.0,
-   "momentum": -0.649,
+   "home_share": 0.56,
+   "chaos": 0.645,
+   "tempo": 9.7,
+   "momentum": -0.154,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.232,
-   "draw": 0.214,
-   "away_win": 0.554,
+   "home_win": 0.243,
+   "draw": 0.226,
+   "away_win": 0.531,
    "drivers": [
     {
      "key": "score",
@@ -1079,12 +924,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.99"
+     "value": "1.94"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.63"
+     "value": "1.45"
     },
     {
      "key": "live_weight",
@@ -1109,7 +954,7 @@
      "L. Quinn"
     ],
     "headline": "L. Quinn so far",
-    "body": "L. Quinn has had 11 touches and won the ball back 1 times.",
+    "body": "L. Quinn has had 14 touches and won the ball back 0 times.",
     "why": [],
     "facts_used": [
      {
@@ -1120,29 +965,29 @@
      {
       "key": "touches",
       "label": "Touches",
-      "value": "11"
+      "value": "14"
      },
      {
       "key": "ball_wins",
       "label": "Ball wins",
-      "value": "1"
+      "value": "0"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0180",
-      "minute": 12,
-      "description": "12' L. Quinn (NGC) pass 27 m"
+      "event_id": "SCN-comeback-0147",
+      "minute": 11,
+      "description": "11' L. Quinn (NGC) pass 15 m"
      },
      {
-      "event_id": "SCN-comeback-0190",
+      "event_id": "SCN-comeback-0160",
       "minute": 12,
-      "description": "12' L. Quinn (NGC) presses"
+      "description": "12' L. Quinn (NGC) pass 18 m"
      },
      {
-      "event_id": "SCN-comeback-0196",
-      "minute": 13,
-      "description": "13' L. Quinn (NGC) presses"
+      "event_id": "SCN-comeback-0206",
+      "minute": 15,
+      "description": "15' L. Quinn (NGC) pass 8 m"
      }
     ],
     "tags": [
@@ -1156,7 +1001,7 @@
   ],
   "new_overlays": [
    {
-    "seq": 6,
+    "seq": 4,
     "match_id": "SCN-comeback",
     "minute": 15,
     "second": 0,
@@ -1168,7 +1013,7 @@
     "language": "en",
     "fields": {
      "headline": "L. Quinn so far",
-     "body": "L. Quinn has had 11 touches and won the ball back 1 times.",
+     "body": "L. Quinn has had 14 touches and won the ball back 0 times.",
      "clock": "15:00",
      "minute": "15",
      "type": "player_focus",
@@ -1180,11 +1025,11 @@
      "player": "L. Quinn",
      "number": "8",
      "stat_label": "Touches",
-     "stat_value": "11"
+     "stat_value": "14"
     }
    },
    {
-    "seq": 7,
+    "seq": 5,
     "match_id": "SCN-comeback",
     "minute": 15,
     "second": 59,
@@ -1200,9 +1045,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-1",
-     "momentum": "-0.65",
-     "control_home": "0.53",
-     "chaos": "0.70",
+     "momentum": "-0.15",
+     "control_home": "0.56",
+     "chaos": "0.65",
      "phase": "balanced",
      "phase_label": "Evenly balanced"
     }
@@ -1219,17 +1064,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.522,
-   "chaos": 0.656,
-   "tempo": 9.2,
-   "momentum": -0.584,
+   "home_share": 0.581,
+   "chaos": 0.664,
+   "tempo": 9.7,
+   "momentum": -0.168,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.23,
-   "draw": 0.216,
-   "away_win": 0.554,
+   "home_win": 0.239,
+   "draw": 0.227,
+   "away_win": 0.534,
    "drivers": [
     {
      "key": "score",
@@ -1244,12 +1089,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.98"
+     "value": "1.92"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.61"
+     "value": "1.43"
     },
     {
      "key": "live_weight",
@@ -1272,17 +1117,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.456,
-   "chaos": 0.611,
-   "tempo": 8.9,
-   "momentum": -0.585,
+   "home_share": 0.593,
+   "chaos": 0.656,
+   "tempo": 9.5,
+   "momentum": -0.142,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.226,
-   "draw": 0.218,
-   "away_win": 0.557,
+   "home_win": 0.235,
+   "draw": 0.229,
+   "away_win": 0.537,
    "drivers": [
     {
      "key": "score",
@@ -1297,12 +1142,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.96"
+     "value": "1.90"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.60"
+     "value": "1.42"
     },
     {
      "key": "live_weight",
@@ -1325,17 +1170,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.368,
-   "chaos": 0.592,
-   "tempo": 9.0,
-   "momentum": -0.6,
-   "phase": "away_control",
-   "label": "Kingston Vale in control"
+   "home_share": 0.641,
+   "chaos": 0.697,
+   "tempo": 9.8,
+   "momentum": -0.028,
+   "phase": "home_control",
+   "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.222,
-   "draw": 0.219,
-   "away_win": 0.559,
+   "home_win": 0.23,
+   "draw": 0.23,
+   "away_win": 0.54,
    "drivers": [
     {
      "key": "score",
@@ -1350,12 +1195,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.94"
+     "value": "1.88"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.58"
+     "value": "1.41"
     },
     {
      "key": "live_weight",
@@ -1378,17 +1223,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.417,
-   "chaos": 0.619,
-   "tempo": 8.6,
-   "momentum": -0.563,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.646,
+   "chaos": 0.696,
+   "tempo": 10.4,
+   "momentum": -0.035,
+   "phase": "home_control",
+   "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.218,
-   "draw": 0.221,
-   "away_win": 0.562,
+   "home_win": 0.226,
+   "draw": 0.232,
+   "away_win": 0.543,
    "drivers": [
     {
      "key": "score",
@@ -1403,12 +1248,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.93"
+     "value": "1.87"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.57"
+     "value": "1.39"
     },
     {
      "key": "live_weight",
@@ -1431,17 +1276,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.495,
-   "chaos": 0.65,
-   "tempo": 8.6,
-   "momentum": -0.451,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.657,
+   "chaos": 0.88,
+   "tempo": 10.2,
+   "momentum": 0.688,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.216,
-   "draw": 0.222,
-   "away_win": 0.562,
+   "home_win": 0.321,
+   "draw": 0.237,
+   "away_win": 0.442,
    "drivers": [
     {
      "key": "score",
@@ -1456,12 +1301,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.92"
+     "value": "2.39"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.55"
+     "value": "1.38"
     },
     {
      "key": "live_weight",
@@ -1471,10 +1316,226 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-2026-big_chance-1",
+    "type": "big_chance",
+    "variant": "saved",
+    "minute": 20,
+    "second": 26,
+    "clock": "20:26",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "H. Novak"
+    ],
+    "headline": "Big chance for Northgate City",
+    "body": "H. Novak is denied by the keeper.",
+    "why": [
+     "That was a real chance to score."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "H. Novak"
+     },
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0292",
+      "minute": 20,
+      "description": "20' H. Novak (NGC) shot saved (0.65 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   },
+   {
+    "insight_id": "SCN-comeback-2059-chaos_phase-2",
+    "type": "chaos_phase",
+    "variant": "chaos",
+    "minute": 20,
+    "second": 59,
+    "clock": "20:59",
+    "priority": 2,
+    "side": null,
+    "team_id": null,
+    "players": [],
+    "headline": "Chaos phase",
+    "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+    "why": [
+     "Neither Northgate City nor Kingston Vale can keep the ball."
+    ],
+    "facts_used": [
+     {
+      "key": "home",
+      "label": "Home",
+      "value": "Northgate City"
+     },
+     {
+      "key": "away",
+      "label": "Away",
+      "value": "Kingston Vale"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0201",
+      "minute": 14,
+      "description": "14' K. Quinn (KST) scores (0.26 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0292",
+      "minute": 20,
+      "description": "20' H. Novak (NGC) shot saved (0.65 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0296",
+      "minute": 20,
+      "description": "20' N. Ekwueme (NGC) shot saved (0.02 xG)"
+     }
+    ],
+    "tags": [],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   },
+   {
+    "insight_id": "SCN-comeback-2059-pressure_spike-3",
+    "type": "pressure_spike",
+    "variant": "press",
+    "minute": 20,
+    "second": 59,
+    "clock": "20:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Northgate City turn up the press",
+    "body": "Northgate City are hunting the ball high up the pitch.",
+    "why": [
+     "They are winning the ball back quickly."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0263",
+      "minute": 18,
+      "description": "18' F. Moreau (NGC) interception"
+     },
+     {
+      "event_id": "SCN-comeback-0286",
+      "minute": 20,
+      "description": "20' L. Gallo (NGC) interception"
+     },
+     {
+      "event_id": "SCN-comeback-0294",
+      "minute": 20,
+      "description": "20' L. Quinn (NGC) interception"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
   "new_overlays": [
    {
+    "seq": 6,
+    "match_id": "SCN-comeback",
+    "minute": 20,
+    "second": 26,
+    "clock": "20:26",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-2026-big_chance-1",
+    "language": "en",
+    "fields": {
+     "headline": "Big chance for Northgate City",
+     "body": "H. Novak is denied by the keeper.",
+     "clock": "20:26",
+     "minute": "20",
+     "type": "big_chance",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "player": "H. Novak",
+     "number": "5"
+    }
+   },
+   {
+    "seq": 7,
+    "match_id": "SCN-comeback",
+    "minute": 20,
+    "second": 59,
+    "clock": "20:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-2059-chaos_phase-2",
+    "language": "en",
+    "fields": {
+     "headline": "Chaos phase",
+     "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+     "clock": "20:59",
+     "minute": "20",
+     "type": "chaos_phase",
+     "team": "",
+     "team_id": "",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1"
+    }
+   },
+   {
     "seq": 8,
+    "match_id": "SCN-comeback",
+    "minute": 20,
+    "second": 59,
+    "clock": "20:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-2059-pressure_spike-3",
+    "language": "en",
+    "fields": {
+     "headline": "Northgate City turn up the press",
+     "body": "Northgate City are hunting the ball high up the pitch.",
+     "clock": "20:59",
+     "minute": "20",
+     "type": "pressure_spike",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1"
+    }
+   },
+   {
+    "seq": 9,
     "match_id": "SCN-comeback",
     "minute": 20,
     "second": 59,
@@ -1490,11 +1551,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-1",
-     "momentum": "-0.45",
-     "control_home": "0.49",
-     "chaos": "0.65",
-     "phase": "balanced",
-     "phase_label": "Evenly balanced"
+     "momentum": "0.69",
+     "control_home": "0.66",
+     "chaos": "0.88",
+     "phase": "chaos",
+     "phase_label": "Chaotic phase"
     }
    }
   ]
@@ -1509,17 +1570,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.459,
-   "chaos": 0.663,
-   "tempo": 8.1,
-   "momentum": -0.453,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.69,
+   "chaos": 0.896,
+   "tempo": 9.7,
+   "momentum": 0.68,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.212,
-   "draw": 0.224,
-   "away_win": 0.564,
+   "home_win": 0.315,
+   "draw": 0.239,
+   "away_win": 0.446,
    "drivers": [
     {
      "key": "score",
@@ -1534,12 +1595,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.91"
+     "value": "2.37"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.54"
+     "value": "1.37"
     },
     {
      "key": "live_weight",
@@ -1549,8 +1610,90 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-2159-momentum_flip-4",
+    "type": "momentum_flip",
+    "variant": "first",
+    "minute": 21,
+    "second": 59,
+    "clock": "21:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "H. Novak"
+    ],
+    "headline": "Northgate City take the initiative",
+    "body": "Northgate City are on top now. H. Novak is driving it.",
+    "why": [
+     "Most of the dangerous play is now coming from Northgate City."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     },
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "H. Novak"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0257",
+      "minute": 18,
+      "description": "18' N. Vidal (NGC) pass 22 m"
+     },
+     {
+      "event_id": "SCN-comeback-0291",
+      "minute": 20,
+      "description": "20' J. Okafor (NGC) pass 13 m"
+     },
+     {
+      "event_id": "SCN-comeback-0292",
+      "minute": 20,
+      "description": "20' H. Novak (NGC) shot saved (0.65 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 10,
+    "match_id": "SCN-comeback",
+    "minute": 21,
+    "second": 59,
+    "clock": "21:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-2159-momentum_flip-4",
+    "language": "en",
+    "fields": {
+     "headline": "Northgate City take the initiative",
+     "body": "Northgate City are on top now. H. Novak is driving it.",
+     "clock": "21:59",
+     "minute": "21",
+     "type": "momentum_flip",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "player": "H. Novak",
+     "number": "5"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -1562,17 +1705,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.435,
-   "chaos": 0.588,
-   "tempo": 7.9,
-   "momentum": -0.479,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.715,
+   "chaos": 0.926,
+   "tempo": 9.5,
+   "momentum": 0.698,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.208,
-   "draw": 0.225,
-   "away_win": 0.567,
+   "home_win": 0.309,
+   "draw": 0.241,
+   "away_win": 0.45,
    "drivers": [
     {
      "key": "score",
@@ -1587,12 +1730,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.89"
+     "value": "2.35"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.53"
+     "value": "1.36"
     },
     {
      "key": "live_weight",
@@ -1615,17 +1758,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.482,
-   "chaos": 0.451,
-   "tempo": 7.7,
-   "momentum": -0.298,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.699,
+   "chaos": 0.926,
+   "tempo": 8.6,
+   "momentum": 0.7,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.207,
-   "draw": 0.227,
-   "away_win": 0.566,
+   "home_win": 0.305,
+   "draw": 0.243,
+   "away_win": 0.452,
    "drivers": [
     {
      "key": "score",
@@ -1640,12 +1783,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.89"
+     "value": "2.34"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.51"
+     "value": "1.34"
     },
     {
      "key": "live_weight",
@@ -1655,8 +1798,85 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-2338-shot_speed-5",
+    "type": "shot_speed",
+    "variant": "off_target",
+    "minute": 23,
+    "second": 38,
+    "clock": "23:38",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "R. Mensah"
+    ],
+    "headline": "124 km/h strike from R. Mensah",
+    "body": "R. Mensah hits one at 124 km/h from 35 m out.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "R. Mensah"
+     },
+     {
+      "key": "speed",
+      "label": "Ball speed",
+      "value": "124 km/h"
+     },
+     {
+      "key": "distance",
+      "label": "Distance",
+      "value": "35 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0341",
+      "minute": 23,
+      "description": "23' R. Mensah (NGC) shot wide (0.01 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 11,
+    "match_id": "SCN-comeback",
+    "minute": 23,
+    "second": 38,
+    "clock": "23:38",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-2338-shot_speed-5",
+    "language": "en",
+    "fields": {
+     "headline": "124 km/h strike from R. Mensah",
+     "body": "R. Mensah hits one at 124 km/h from 35 m out.",
+     "clock": "23:38",
+     "minute": "23",
+     "type": "shot_speed",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "player": "R. Mensah",
+     "number": "11",
+     "stat_label": "Ball speed",
+     "stat_value": "124 km/h"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -1668,17 +1888,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.553,
-   "chaos": 0.437,
-   "tempo": 8.6,
-   "momentum": -0.158,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.642,
+   "chaos": 0.937,
+   "tempo": 9.1,
+   "momentum": 0.661,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.203,
-   "draw": 0.228,
-   "away_win": 0.569,
+   "home_win": 0.299,
+   "draw": 0.245,
+   "away_win": 0.456,
    "drivers": [
     {
      "key": "score",
@@ -1693,12 +1913,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.87"
+     "value": "2.32"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.50"
+     "value": "1.33"
     },
     {
      "key": "live_weight",
@@ -1721,17 +1941,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.519,
-   "chaos": 0.485,
-   "tempo": 9.1,
-   "momentum": -0.218,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.556,
+   "chaos": 0.936,
+   "tempo": 9.7,
+   "momentum": 0.415,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.199,
-   "draw": 0.23,
-   "away_win": 0.572,
+   "home_win": 0.286,
+   "draw": 0.244,
+   "away_win": 0.47,
    "drivers": [
     {
      "key": "score",
@@ -1746,12 +1966,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.86"
+     "value": "2.30"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.49"
+     "value": "1.38"
     },
     {
      "key": "live_weight",
@@ -1764,7 +1984,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 9,
+    "seq": 12,
     "match_id": "SCN-comeback",
     "minute": 25,
     "second": 59,
@@ -1780,11 +2000,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-1",
-     "momentum": "-0.22",
-     "control_home": "0.52",
-     "chaos": "0.48",
-     "phase": "balanced",
-     "phase_label": "Evenly balanced"
+     "momentum": "0.41",
+     "control_home": "0.56",
+     "chaos": "0.94",
+     "phase": "chaos",
+     "phase_label": "Chaotic phase"
     }
    }
   ]
@@ -1799,17 +2019,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.506,
-   "chaos": 0.512,
-   "tempo": 9.1,
-   "momentum": -0.228,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.548,
+   "chaos": 0.873,
+   "tempo": 9.7,
+   "momentum": 0.384,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.194,
-   "draw": 0.231,
-   "away_win": 0.575,
+   "home_win": 0.28,
+   "draw": 0.246,
+   "away_win": 0.474,
    "drivers": [
     {
      "key": "score",
@@ -1824,12 +2044,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.84"
+     "value": "2.28"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.47"
+     "value": "1.36"
     },
     {
      "key": "live_weight",
@@ -1852,17 +2072,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.501,
-   "chaos": 0.523,
-   "tempo": 9.2,
-   "momentum": -0.126,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.56,
+   "chaos": 0.836,
+   "tempo": 9.7,
+   "momentum": 0.42,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.192,
-   "draw": 0.232,
-   "away_win": 0.576,
+   "home_win": 0.274,
+   "draw": 0.247,
+   "away_win": 0.478,
    "drivers": [
     {
      "key": "score",
@@ -1877,12 +2097,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.83"
+     "value": "2.26"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.46"
+     "value": "1.35"
     },
     {
      "key": "live_weight",
@@ -1892,81 +2112,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-2759-pressure_spike-3",
-    "type": "pressure_spike",
-    "variant": "press",
-    "minute": 27,
-    "second": 59,
-    "clock": "27:59",
-    "priority": 2,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [],
-    "headline": "Northgate City turn up the press",
-    "body": "Northgate City are hunting the ball high up the pitch.",
-    "why": [
-     "They are winning the ball back quickly."
-    ],
-    "facts_used": [
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-0384",
-      "minute": 26,
-      "description": "26' L. Gallo (NGC) foul"
-     },
-     {
-      "event_id": "SCN-comeback-0399",
-      "minute": 27,
-      "description": "27' H. Moreau (NGC) interception"
-     },
-     {
-      "event_id": "SCN-comeback-0406",
-      "minute": 27,
-      "description": "27' H. Novak (NGC) tackle"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 10,
-    "match_id": "SCN-comeback",
-    "minute": 27,
-    "second": 59,
-    "clock": "27:59",
-    "graphic": "lower_third",
-    "priority": 2,
-    "ttl_s": 14,
-    "insight_id": "SCN-comeback-2759-pressure_spike-3",
-    "language": "en",
-    "fields": {
-     "headline": "Northgate City turn up the press",
-     "body": "Northgate City are hunting the ball high up the pitch.",
-     "clock": "27:59",
-     "minute": "27",
-     "type": "pressure_spike",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "0-1"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -1978,17 +2125,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.545,
-   "chaos": 0.509,
-   "tempo": 9.3,
-   "momentum": -0.151,
+   "home_share": 0.502,
+   "chaos": 0.754,
+   "tempo": 9.6,
+   "momentum": 0.373,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.187,
-   "draw": 0.233,
-   "away_win": 0.579,
+   "home_win": 0.269,
+   "draw": 0.249,
+   "away_win": 0.482,
    "drivers": [
     {
      "key": "score",
@@ -2003,12 +2150,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.82"
+     "value": "2.24"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.45"
+     "value": "1.34"
     },
     {
      "key": "live_weight",
@@ -2031,17 +2178,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.573,
-   "chaos": 0.525,
-   "tempo": 9.3,
-   "momentum": -0.115,
+   "home_share": 0.508,
+   "chaos": 0.753,
+   "tempo": 9.7,
+   "momentum": 0.385,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.183,
-   "draw": 0.235,
-   "away_win": 0.582,
+   "home_win": 0.263,
+   "draw": 0.251,
+   "away_win": 0.486,
    "drivers": [
     {
      "key": "score",
@@ -2056,12 +2203,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.80"
+     "value": "2.22"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.44"
+     "value": "1.33"
     },
     {
      "key": "live_weight",
@@ -2084,17 +2231,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.564,
-   "chaos": 0.516,
-   "tempo": 9.2,
-   "momentum": -0.09,
+   "home_share": 0.473,
+   "chaos": 0.593,
+   "tempo": 10.5,
+   "momentum": 0.315,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.179,
-   "draw": 0.236,
-   "away_win": 0.585,
+   "home_win": 0.257,
+   "draw": 0.253,
+   "away_win": 0.49,
    "drivers": [
     {
      "key": "score",
@@ -2109,12 +2256,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.79"
+     "value": "2.20"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.42"
+     "value": "1.32"
     },
     {
      "key": "live_weight",
@@ -2139,7 +2286,7 @@
      "L. Quinn"
     ],
     "headline": "L. Quinn so far",
-    "body": "L. Quinn has had 22 touches and won the ball back 4 times.",
+    "body": "L. Quinn has had 30 touches and won the ball back 4 times.",
     "why": [],
     "facts_used": [
      {
@@ -2150,7 +2297,7 @@
      {
       "key": "touches",
       "label": "Touches",
-      "value": "22"
+      "value": "30"
      },
      {
       "key": "ball_wins",
@@ -2160,19 +2307,19 @@
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0413",
-      "minute": 28,
-      "description": "28' L. Quinn (NGC) presses"
-     },
-     {
-      "event_id": "SCN-comeback-0451",
+      "event_id": "SCN-comeback-0454",
       "minute": 30,
-      "description": "30' L. Quinn (NGC) pass 14 m"
+      "description": "30' L. Quinn (NGC) pass 30 m"
      },
      {
       "event_id": "SCN-comeback-0456",
       "minute": 30,
-      "description": "30' L. Quinn (NGC) pass 31 m"
+      "description": "30' L. Quinn (NGC) pass 21 m"
+     },
+     {
+      "event_id": "SCN-comeback-0465",
+      "minute": 30,
+      "description": "30' L. Quinn (NGC) presses"
      }
     ],
     "tags": [
@@ -2186,7 +2333,7 @@
   ],
   "new_overlays": [
    {
-    "seq": 11,
+    "seq": 13,
     "match_id": "SCN-comeback",
     "minute": 30,
     "second": 0,
@@ -2198,7 +2345,7 @@
     "language": "en",
     "fields": {
      "headline": "L. Quinn so far",
-     "body": "L. Quinn has had 22 touches and won the ball back 4 times.",
+     "body": "L. Quinn has had 30 touches and won the ball back 4 times.",
      "clock": "30:00",
      "minute": "30",
      "type": "player_focus",
@@ -2210,11 +2357,11 @@
      "player": "L. Quinn",
      "number": "8",
      "stat_label": "Touches",
-     "stat_value": "22"
+     "stat_value": "30"
     }
    },
    {
-    "seq": 12,
+    "seq": 14,
     "match_id": "SCN-comeback",
     "minute": 30,
     "second": 59,
@@ -2230,9 +2377,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-1",
-     "momentum": "-0.09",
-     "control_home": "0.56",
-     "chaos": "0.52",
+     "momentum": "0.32",
+     "control_home": "0.47",
+     "chaos": "0.59",
      "phase": "balanced",
      "phase_label": "Evenly balanced"
     }
@@ -2249,17 +2396,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.563,
-   "chaos": 0.533,
-   "tempo": 9.4,
-   "momentum": -0.072,
+   "home_share": 0.52,
+   "chaos": 0.609,
+   "tempo": 10.9,
+   "momentum": 0.384,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.175,
-   "draw": 0.237,
-   "away_win": 0.588,
+   "home_win": 0.251,
+   "draw": 0.254,
+   "away_win": 0.495,
    "drivers": [
     {
      "key": "score",
@@ -2274,12 +2421,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.77"
+     "value": "2.18"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.41"
+     "value": "1.31"
     },
     {
      "key": "live_weight",
@@ -2302,17 +2449,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.581,
-   "chaos": 0.501,
-   "tempo": 10.2,
-   "momentum": -0.029,
+   "home_share": 0.463,
+   "chaos": 0.522,
+   "tempo": 10.8,
+   "momentum": 0.345,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.171,
-   "draw": 0.238,
-   "away_win": 0.592,
+   "home_win": 0.245,
+   "draw": 0.256,
+   "away_win": 0.499,
    "drivers": [
     {
      "key": "score",
@@ -2327,12 +2474,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.76"
+     "value": "2.17"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.40"
+     "value": "1.30"
     },
     {
      "key": "live_weight",
@@ -2355,17 +2502,17 @@
    "away": 1
   },
   "control": {
-   "home_share": 0.605,
-   "chaos": 0.495,
-   "tempo": 10.2,
-   "momentum": 0.04,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.431,
+   "chaos": 0.748,
+   "tempo": 11.4,
+   "momentum": -0.452,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.166,
-   "draw": 0.239,
-   "away_win": 0.595,
+   "home_win": 0.215,
+   "draw": 0.24,
+   "away_win": 0.545,
    "drivers": [
     {
      "key": "score",
@@ -2380,65 +2527,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.74"
+     "value": "2.15"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.39"
-    },
-    {
-     "key": "live_weight",
-     "label": "Weight on live data",
-     "value": "27%"
-    }
-   ],
-   "note": "A projection from the score, time left and chance creation, not betting odds."
-  },
-  "new_cards": [],
-  "new_overlays": []
- },
- {
-  "type": "tick",
-  "minute": 34,
-  "clock": "34:00",
-  "period": "1H",
-  "score": {
-   "home": 0,
-   "away": 1
-  },
-  "control": {
-   "home_share": 0.554,
-   "chaos": 0.517,
-   "tempo": 9.2,
-   "momentum": 0.168,
-   "phase": "balanced",
-   "label": "Evenly balanced"
-  },
-  "projection": {
-   "home_win": 0.164,
-   "draw": 0.24,
-   "away_win": 0.596,
-   "drivers": [
-    {
-     "key": "score",
-     "label": "Score",
-     "value": "0-1"
-    },
-    {
-     "key": "minutes_left",
-     "label": "Minutes left",
-     "value": "56"
-    },
-    {
-     "key": "home_rate",
-     "label": "Northgate City expected goals per 90",
-     "value": "1.74"
-    },
-    {
-     "key": "away_rate",
-     "label": "Kingston Vale expected goals per 90",
-     "value": "1.38"
+     "value": "1.55"
     },
     {
      "key": "live_weight",
@@ -2450,294 +2544,22 @@
   },
   "new_cards": [
    {
-    "insight_id": "SCN-comeback-3459-player_milestone-6",
-    "type": "player_milestone",
-    "variant": "ball_wins",
-    "minute": 34,
-    "second": 59,
-    "clock": "34:59",
-    "priority": 3,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [
-     "G. Ferreira"
-    ],
-    "headline": "G. Ferreira: 8 ball wins",
-    "body": "G. Ferreira keeps winning the ball back for Northgate City.",
-    "why": [],
-    "facts_used": [
-     {
-      "key": "player",
-      "label": "Player",
-      "value": "G. Ferreira"
-     },
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     },
-     {
-      "key": "count",
-      "label": "Count",
-      "value": "8"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-0450",
-      "minute": 30,
-      "description": "30' G. Ferreira (NGC) tackle"
-     },
-     {
-      "event_id": "SCN-comeback-0481",
-      "minute": 32,
-      "description": "32' G. Ferreira (NGC) tackle"
-     },
-     {
-      "event_id": "SCN-comeback-0519",
-      "minute": 34,
-      "description": "34' G. Ferreira (NGC) tackle"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 13,
-    "match_id": "SCN-comeback",
-    "minute": 34,
-    "second": 59,
-    "clock": "34:59",
-    "graphic": "player_tag",
-    "priority": 3,
-    "ttl_s": 10,
-    "insight_id": "SCN-comeback-3459-player_milestone-6",
-    "language": "en",
-    "fields": {
-     "headline": "G. Ferreira: 8 ball wins",
-     "body": "G. Ferreira keeps winning the ball back for Northgate City.",
-     "clock": "34:59",
-     "minute": "34",
-     "type": "player_milestone",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "0-1",
-     "player": "G. Ferreira",
-     "number": "3",
-     "stat_label": "Count",
-     "stat_value": "8"
-    }
-   }
-  ]
- },
- {
-  "type": "tick",
-  "minute": 35,
-  "clock": "35:00",
-  "period": "1H",
-  "score": {
-   "home": 0,
-   "away": 1
-  },
-  "control": {
-   "home_share": 0.567,
-   "chaos": 0.515,
-   "tempo": 9.7,
-   "momentum": -0.103,
-   "phase": "balanced",
-   "label": "Evenly balanced"
-  },
-  "projection": {
-   "home_win": 0.16,
-   "draw": 0.241,
-   "away_win": 0.599,
-   "drivers": [
-    {
-     "key": "score",
-     "label": "Score",
-     "value": "0-1"
-    },
-    {
-     "key": "minutes_left",
-     "label": "Minutes left",
-     "value": "55"
-    },
-    {
-     "key": "home_rate",
-     "label": "Northgate City expected goals per 90",
-     "value": "1.73"
-    },
-    {
-     "key": "away_rate",
-     "label": "Kingston Vale expected goals per 90",
-     "value": "1.37"
-    },
-    {
-     "key": "live_weight",
-     "label": "Weight on live data",
-     "value": "28%"
-    }
-   ],
-   "note": "A projection from the score, time left and chance creation, not betting odds."
-  },
-  "new_cards": [],
-  "new_overlays": [
-   {
-    "seq": 14,
-    "match_id": "SCN-comeback",
-    "minute": 35,
-    "second": 59,
-    "clock": "35:59",
-    "graphic": "momentum_bar",
-    "priority": 3,
-    "ttl_s": 10,
-    "insight_id": null,
-    "language": "en",
-    "fields": {
-     "clock": "35:59",
-     "minute": "35",
-     "home": "NGC",
-     "away": "KST",
-     "score": "0-1",
-     "momentum": "-0.10",
-     "control_home": "0.57",
-     "chaos": "0.52",
-     "phase": "balanced",
-     "phase_label": "Evenly balanced"
-    }
-   }
-  ]
- },
- {
-  "type": "tick",
-  "minute": 36,
-  "clock": "36:00",
-  "period": "1H",
-  "score": {
-   "home": 0,
-   "away": 1
-  },
-  "control": {
-   "home_share": 0.533,
-   "chaos": 0.546,
-   "tempo": 9.6,
-   "momentum": -0.357,
-   "phase": "balanced",
-   "label": "Evenly balanced"
-  },
-  "projection": {
-   "home_win": 0.156,
-   "draw": 0.241,
-   "away_win": 0.603,
-   "drivers": [
-    {
-     "key": "score",
-     "label": "Score",
-     "value": "0-1"
-    },
-    {
-     "key": "minutes_left",
-     "label": "Minutes left",
-     "value": "54"
-    },
-    {
-     "key": "home_rate",
-     "label": "Northgate City expected goals per 90",
-     "value": "1.71"
-    },
-    {
-     "key": "away_rate",
-     "label": "Kingston Vale expected goals per 90",
-     "value": "1.36"
-    },
-    {
-     "key": "live_weight",
-     "label": "Weight on live data",
-     "value": "29%"
-    }
-   ],
-   "note": "A projection from the score, time left and chance creation, not betting odds."
-  },
-  "new_cards": [],
-  "new_overlays": []
- },
- {
-  "type": "tick",
-  "minute": 37,
-  "clock": "37:00",
-  "period": "1H",
-  "score": {
-   "home": 0,
-   "away": 2
-  },
-  "control": {
-   "home_share": 0.551,
-   "chaos": 0.736,
-   "tempo": 8.8,
-   "momentum": -0.818,
-   "phase": "balanced",
-   "label": "Evenly balanced"
-  },
-  "projection": {
-   "home_win": 0.038,
-   "draw": 0.096,
-   "away_win": 0.866,
-   "drivers": [
-    {
-     "key": "score",
-     "label": "Score",
-     "value": "0-2"
-    },
-    {
-     "key": "minutes_left",
-     "label": "Minutes left",
-     "value": "53"
-    },
-    {
-     "key": "home_rate",
-     "label": "Northgate City expected goals per 90",
-     "value": "1.70"
-    },
-    {
-     "key": "away_rate",
-     "label": "Kingston Vale expected goals per 90",
-     "value": "1.64"
-    },
-    {
-     "key": "live_weight",
-     "label": "Weight on live data",
-     "value": "29%"
-    }
-   ],
-   "note": "A projection from the score, time left and chance creation, not betting odds."
-  },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-3719-goal-7",
-    "type": "goal",
-    "variant": "deserved",
-    "minute": 37,
-    "second": 19,
-    "clock": "37:19",
-    "priority": 1,
+    "insight_id": "SCN-comeback-3350-big_chance-6",
+    "type": "big_chance",
+    "variant": "saved",
+    "minute": 33,
+    "second": 50,
+    "clock": "33:50",
+    "priority": 2,
     "side": "away",
     "team_id": "KST",
     "players": [
-     "L. Novak",
-     "B. Barros"
+     "L. Novak"
     ],
-    "headline": "Kingston Vale make it count",
-    "body": "L. Novak scores for Kingston Vale. It's 0-2. Set up by B. Barros.",
+    "headline": "Big chance for Kingston Vale",
+    "body": "L. Novak is denied by the keeper.",
     "why": [
-     "Their chance of winning moves from 60% to 87%."
+     "That was a real chance to score."
     ],
     "facts_used": [
      {
@@ -2749,38 +2571,13 @@
       "key": "team",
       "label": "Team",
       "value": "Kingston Vale"
-     },
-     {
-      "key": "score",
-      "label": "Score",
-      "value": "0-2"
-     },
-     {
-      "key": "win_before",
-      "label": "Win chance before",
-      "value": "60%"
-     },
-     {
-      "key": "win_after",
-      "label": "Win chance after",
-      "value": "87%"
-     },
-     {
-      "key": "assist",
-      "label": "Assist",
-      "value": "B. Barros"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0559",
-      "minute": 37,
-      "description": "37' B. Barros (KST) pass 41 m"
-     },
-     {
-      "event_id": "SCN-comeback-0560",
-      "minute": 37,
-      "description": "37' L. Novak (KST) scores (0.42 xG)"
+      "event_id": "SCN-comeback-0521",
+      "minute": 33,
+      "description": "33' L. Novak (KST) shot saved (0.36 xG)"
      }
     ],
     "tags": [
@@ -2795,25 +2592,25 @@
    {
     "seq": 15,
     "match_id": "SCN-comeback",
-    "minute": 37,
-    "second": 19,
-    "clock": "37:19",
-    "graphic": "alert",
-    "priority": 1,
-    "ttl_s": 20,
-    "insight_id": "SCN-comeback-3719-goal-7",
+    "minute": 33,
+    "second": 50,
+    "clock": "33:50",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-3350-big_chance-6",
     "language": "en",
     "fields": {
-     "headline": "Kingston Vale make it count",
-     "body": "L. Novak scores for Kingston Vale. It's 0-2. Set up by B. Barros.",
-     "clock": "37:19",
-     "minute": "37",
-     "type": "goal",
+     "headline": "Big chance for Kingston Vale",
+     "body": "L. Novak is denied by the keeper.",
+     "clock": "33:50",
+     "minute": "33",
+     "type": "big_chance",
      "team": "Kingston Vale",
      "team_id": "KST",
      "home": "NGC",
      "away": "KST",
-     "score": "0-2",
+     "score": "0-1",
      "player": "L. Novak",
      "number": "11"
     }
@@ -2822,62 +2619,62 @@
  },
  {
   "type": "tick",
-  "minute": 38,
-  "clock": "38:00",
+  "minute": 34,
+  "clock": "34:00",
   "period": "1H",
   "score": {
    "home": 0,
-   "away": 2
+   "away": 1
   },
   "control": {
-   "home_share": 0.605,
-   "chaos": 0.785,
-   "tempo": 8.1,
-   "momentum": -0.781,
+   "home_share": 0.519,
+   "chaos": 0.804,
+   "tempo": 11.8,
+   "momentum": -0.338,
    "phase": "chaos",
    "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.037,
-   "draw": 0.094,
-   "away_win": 0.869,
+   "home_win": 0.21,
+   "draw": 0.241,
+   "away_win": 0.548,
    "drivers": [
     {
      "key": "score",
      "label": "Score",
-     "value": "0-2"
+     "value": "0-1"
     },
     {
      "key": "minutes_left",
      "label": "Minutes left",
-     "value": "52"
+     "value": "56"
     },
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.69"
+     "value": "2.13"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.63"
+     "value": "1.54"
     },
     {
      "key": "live_weight",
      "label": "Weight on live data",
-     "value": "30%"
+     "value": "27%"
     }
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
   "new_cards": [
    {
-    "insight_id": "SCN-comeback-3859-chaos_phase-8",
+    "insight_id": "SCN-comeback-3459-chaos_phase-8",
     "type": "chaos_phase",
     "variant": "chaos",
-    "minute": 38,
+    "minute": 34,
     "second": 59,
-    "clock": "38:59",
+    "clock": "34:59",
     "priority": 2,
     "side": null,
     "team_id": null,
@@ -2901,19 +2698,19 @@
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0516",
-      "minute": 34,
-      "description": "34' N. Vidal (NGC) shot wide (0.02 xG)"
+      "event_id": "SCN-comeback-0362",
+      "minute": 25,
+      "description": "25' D. Ekwueme (KST) shot blocked (0.03 xG)"
      },
      {
-      "event_id": "SCN-comeback-0560",
-      "minute": 37,
-      "description": "37' L. Novak (KST) scores (0.42 xG)"
+      "event_id": "SCN-comeback-0366",
+      "minute": 25,
+      "description": "25' L. Novak (KST) shot blocked (0.04 xG)"
      },
      {
-      "event_id": "SCN-comeback-0571",
-      "minute": 38,
-      "description": "38' K. Kovac (KST) interception"
+      "event_id": "SCN-comeback-0521",
+      "minute": 33,
+      "description": "33' L. Novak (KST) shot saved (0.36 xG)"
      }
     ],
     "tags": [],
@@ -2926,25 +2723,442 @@
    {
     "seq": 16,
     "match_id": "SCN-comeback",
+    "minute": 34,
+    "second": 59,
+    "clock": "34:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-3459-chaos_phase-8",
+    "language": "en",
+    "fields": {
+     "headline": "Chaos phase",
+     "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+     "clock": "34:59",
+     "minute": "34",
+     "type": "chaos_phase",
+     "team": "",
+     "team_id": "",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 35,
+  "clock": "35:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.561,
+   "chaos": 0.809,
+   "tempo": 11.7,
+   "momentum": -0.337,
+   "phase": "chaos",
+   "label": "Chaotic phase"
+  },
+  "projection": {
+   "home_win": 0.205,
+   "draw": 0.243,
+   "away_win": 0.552,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Score",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minutes left",
+     "value": "55"
+    },
+    {
+     "key": "home_rate",
+     "label": "Northgate City expected goals per 90",
+     "value": "2.11"
+    },
+    {
+     "key": "away_rate",
+     "label": "Kingston Vale expected goals per 90",
+     "value": "1.52"
+    },
+    {
+     "key": "live_weight",
+     "label": "Weight on live data",
+     "value": "28%"
+    }
+   ],
+   "note": "A projection from the score, time left and chance creation, not betting odds."
+  },
+  "new_cards": [],
+  "new_overlays": [
+   {
+    "seq": 17,
+    "match_id": "SCN-comeback",
+    "minute": 35,
+    "second": 59,
+    "clock": "35:59",
+    "graphic": "momentum_bar",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": null,
+    "language": "en",
+    "fields": {
+     "clock": "35:59",
+     "minute": "35",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-1",
+     "momentum": "-0.34",
+     "control_home": "0.56",
+     "chaos": "0.81",
+     "phase": "chaos",
+     "phase_label": "Chaotic phase"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 36,
+  "clock": "36:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 1
+  },
+  "control": {
+   "home_share": 0.565,
+   "chaos": 0.849,
+   "tempo": 11.2,
+   "momentum": -0.338,
+   "phase": "chaos",
+   "label": "Chaotic phase"
+  },
+  "projection": {
+   "home_win": 0.2,
+   "draw": 0.244,
+   "away_win": 0.556,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Score",
+     "value": "0-1"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minutes left",
+     "value": "54"
+    },
+    {
+     "key": "home_rate",
+     "label": "Northgate City expected goals per 90",
+     "value": "2.10"
+    },
+    {
+     "key": "away_rate",
+     "label": "Kingston Vale expected goals per 90",
+     "value": "1.51"
+    },
+    {
+     "key": "live_weight",
+     "label": "Weight on live data",
+     "value": "29%"
+    }
+   ],
+   "note": "A projection from the score, time left and chance creation, not betting odds."
+  },
+  "new_cards": [],
+  "new_overlays": []
+ },
+ {
+  "type": "tick",
+  "minute": 37,
+  "clock": "37:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.531,
+   "chaos": 0.956,
+   "tempo": 10.5,
+   "momentum": -0.732,
+   "phase": "chaos",
+   "label": "Chaotic phase"
+  },
+  "projection": {
+   "home_win": 0.058,
+   "draw": 0.113,
+   "away_win": 0.829,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Score",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minutes left",
+     "value": "53"
+    },
+    {
+     "key": "home_rate",
+     "label": "Northgate City expected goals per 90",
+     "value": "2.08"
+    },
+    {
+     "key": "away_rate",
+     "label": "Kingston Vale expected goals per 90",
+     "value": "1.85"
+    },
+    {
+     "key": "live_weight",
+     "label": "Weight on live data",
+     "value": "29%"
+    }
+   ],
+   "note": "A projection from the score, time left and chance creation, not betting odds."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-3714-goal-9",
+    "type": "goal",
+    "variant": "neutral",
+    "minute": 37,
+    "second": 14,
+    "clock": "37:14",
+    "priority": 1,
+    "side": "away",
+    "team_id": "KST",
+    "players": [
+     "K. Yilmaz",
+     "J. Ibrahim"
+    ],
+    "headline": "Goal for Kingston Vale",
+    "body": "K. Yilmaz scores for Kingston Vale. It's 0-2. Set up by J. Ibrahim.",
+    "why": [
+     "Their chance of winning moves from 56% to 83%."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "K. Yilmaz"
+     },
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Kingston Vale"
+     },
+     {
+      "key": "score",
+      "label": "Score",
+      "value": "0-2"
+     },
+     {
+      "key": "win_before",
+      "label": "Win chance before",
+      "value": "56%"
+     },
+     {
+      "key": "win_after",
+      "label": "Win chance after",
+      "value": "83%"
+     },
+     {
+      "key": "assist",
+      "label": "Assist",
+      "value": "J. Ibrahim"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0577",
+      "minute": 37,
+      "description": "37' J. Ibrahim (KST) pass 26 m"
+     },
+     {
+      "event_id": "SCN-comeback-0578",
+      "minute": 37,
+      "description": "37' K. Yilmaz (KST) scores (0.49 xG)"
+     }
+    ],
+    "tags": [
+     "against_your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 18,
+    "match_id": "SCN-comeback",
+    "minute": 37,
+    "second": 14,
+    "clock": "37:14",
+    "graphic": "alert",
+    "priority": 1,
+    "ttl_s": 20,
+    "insight_id": "SCN-comeback-3714-goal-9",
+    "language": "en",
+    "fields": {
+     "headline": "Goal for Kingston Vale",
+     "body": "K. Yilmaz scores for Kingston Vale. It's 0-2. Set up by J. Ibrahim.",
+     "clock": "37:14",
+     "minute": "37",
+     "type": "goal",
+     "team": "Kingston Vale",
+     "team_id": "KST",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "K. Yilmaz",
+     "number": "9"
+    }
+   }
+  ]
+ },
+ {
+  "type": "tick",
+  "minute": 38,
+  "clock": "38:00",
+  "period": "1H",
+  "score": {
+   "home": 0,
+   "away": 2
+  },
+  "control": {
+   "home_share": 0.59,
+   "chaos": 0.926,
+   "tempo": 9.9,
+   "momentum": -0.396,
+   "phase": "chaos",
+   "label": "Chaotic phase"
+  },
+  "projection": {
+   "home_win": 0.064,
+   "draw": 0.12,
+   "away_win": 0.816,
+   "drivers": [
+    {
+     "key": "score",
+     "label": "Score",
+     "value": "0-2"
+    },
+    {
+     "key": "minutes_left",
+     "label": "Minutes left",
+     "value": "52"
+    },
+    {
+     "key": "home_rate",
+     "label": "Northgate City expected goals per 90",
+     "value": "2.19"
+    },
+    {
+     "key": "away_rate",
+     "label": "Kingston Vale expected goals per 90",
+     "value": "1.83"
+    },
+    {
+     "key": "live_weight",
+     "label": "Weight on live data",
+     "value": "30%"
+    }
+   ],
+   "note": "A projection from the score, time left and chance creation, not betting odds."
+  },
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-3859-momentum_flip-10",
+    "type": "momentum_flip",
+    "variant": "flip",
+    "minute": 38,
+    "second": 59,
+    "clock": "38:59",
+    "priority": 2,
+    "side": "away",
+    "team_id": "KST",
+    "players": [
+     "K. Yilmaz"
+    ],
+    "headline": "Momentum swings to Kingston Vale",
+    "body": "Kingston Vale are on top now. K. Yilmaz is driving it.",
+    "why": [
+     "Most of the dangerous play is now coming from Kingston Vale."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Kingston Vale"
+     },
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "K. Yilmaz"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0576",
+      "minute": 37,
+      "description": "37' L. Novak (KST) pass 24 m"
+     },
+     {
+      "event_id": "SCN-comeback-0577",
+      "minute": 37,
+      "description": "37' J. Ibrahim (KST) pass 26 m"
+     },
+     {
+      "event_id": "SCN-comeback-0578",
+      "minute": 37,
+      "description": "37' K. Yilmaz (KST) scores (0.49 xG)"
+     }
+    ],
+    "tags": [
+     "against_your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 19,
+    "match_id": "SCN-comeback",
     "minute": 38,
     "second": 59,
     "clock": "38:59",
     "graphic": "lower_third",
     "priority": 2,
     "ttl_s": 14,
-    "insight_id": "SCN-comeback-3859-chaos_phase-8",
+    "insight_id": "SCN-comeback-3859-momentum_flip-10",
     "language": "en",
     "fields": {
-     "headline": "Chaos phase",
-     "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+     "headline": "Momentum swings to Kingston Vale",
+     "body": "Kingston Vale are on top now. K. Yilmaz is driving it.",
      "clock": "38:59",
      "minute": "38",
-     "type": "chaos_phase",
-     "team": "",
-     "team_id": "",
+     "type": "momentum_flip",
+     "team": "Kingston Vale",
+     "team_id": "KST",
      "home": "NGC",
      "away": "KST",
-     "score": "0-2"
+     "score": "0-2",
+     "player": "K. Yilmaz",
+     "number": "9"
     }
    }
   ]
@@ -2959,17 +3173,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.587,
-   "chaos": 0.768,
-   "tempo": 8.5,
-   "momentum": -0.666,
+   "home_share": 0.58,
+   "chaos": 0.867,
+   "tempo": 9.3,
+   "momentum": -0.393,
    "phase": "chaos",
    "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.035,
-   "draw": 0.092,
-   "away_win": 0.873,
+   "home_win": 0.061,
+   "draw": 0.118,
+   "away_win": 0.821,
    "drivers": [
     {
      "key": "score",
@@ -2984,12 +3198,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.68"
+     "value": "2.18"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.62"
+     "value": "1.82"
     },
     {
      "key": "live_weight",
@@ -3012,17 +3226,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.577,
-   "chaos": 0.785,
-   "tempo": 8.8,
-   "momentum": -0.12,
+   "home_share": 0.562,
+   "chaos": 0.793,
+   "tempo": 9.1,
+   "momentum": -0.406,
    "phase": "chaos",
    "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.033,
-   "draw": 0.091,
-   "away_win": 0.876,
+   "home_win": 0.058,
+   "draw": 0.117,
+   "away_win": 0.825,
    "drivers": [
     {
      "key": "score",
@@ -3037,12 +3251,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.66"
+     "value": "2.16"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.60"
+     "value": "1.80"
     },
     {
      "key": "live_weight",
@@ -3055,7 +3269,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 17,
+    "seq": 20,
     "match_id": "SCN-comeback",
     "minute": 40,
     "second": 59,
@@ -3071,8 +3285,8 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-2",
-     "momentum": "-0.12",
-     "control_home": "0.58",
+     "momentum": "-0.41",
+     "control_home": "0.56",
      "chaos": "0.79",
      "phase": "chaos",
      "phase_label": "Chaotic phase"
@@ -3090,17 +3304,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.535,
-   "chaos": 0.817,
-   "tempo": 8.9,
-   "momentum": -0.054,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.492,
+   "chaos": 0.759,
+   "tempo": 9.2,
+   "momentum": -0.406,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.033,
-   "draw": 0.092,
-   "away_win": 0.875,
+   "home_win": 0.055,
+   "draw": 0.115,
+   "away_win": 0.83,
    "drivers": [
     {
      "key": "score",
@@ -3115,12 +3329,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.69"
+     "value": "2.14"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.59"
+     "value": "1.79"
     },
     {
      "key": "live_weight",
@@ -3130,8 +3344,95 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-4159-player_milestone-11",
+    "type": "player_milestone",
+    "variant": "ball_wins",
+    "minute": 41,
+    "second": 59,
+    "clock": "41:59",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "F. Moreau"
+    ],
+    "headline": "F. Moreau: 8 ball wins",
+    "body": "F. Moreau keeps winning the ball back for Northgate City.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "F. Moreau"
+     },
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     },
+     {
+      "key": "count",
+      "label": "Count",
+      "value": "8"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0553",
+      "minute": 35,
+      "description": "35' F. Moreau (NGC) tackle"
+     },
+     {
+      "event_id": "SCN-comeback-0593",
+      "minute": 39,
+      "description": "39' F. Moreau (NGC) tackle"
+     },
+     {
+      "event_id": "SCN-comeback-0618",
+      "minute": 41,
+      "description": "41' F. Moreau (NGC) tackle"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 21,
+    "match_id": "SCN-comeback",
+    "minute": 41,
+    "second": 59,
+    "clock": "41:59",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-4159-player_milestone-11",
+    "language": "en",
+    "fields": {
+     "headline": "F. Moreau: 8 ball wins",
+     "body": "F. Moreau keeps winning the ball back for Northgate City.",
+     "clock": "41:59",
+     "minute": "41",
+     "type": "player_milestone",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "F. Moreau",
+     "number": "2",
+     "stat_label": "Count",
+     "stat_value": "8"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -3143,17 +3444,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.509,
-   "chaos": 0.756,
-   "tempo": 8.8,
-   "momentum": -0.06,
+   "home_share": 0.444,
+   "chaos": 0.659,
+   "tempo": 9.0,
+   "momentum": -0.666,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.032,
-   "draw": 0.09,
-   "away_win": 0.878,
+   "home_win": 0.047,
+   "draw": 0.103,
+   "away_win": 0.85,
    "drivers": [
     {
      "key": "score",
@@ -3168,12 +3469,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.68"
+     "value": "2.13"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.58"
+     "value": "2.05"
     },
     {
      "key": "live_weight",
@@ -3196,17 +3497,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.487,
-   "chaos": 0.738,
-   "tempo": 8.4,
-   "momentum": -0.034,
+   "home_share": 0.423,
+   "chaos": 0.686,
+   "tempo": 8.9,
+   "momentum": -0.667,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.03,
-   "draw": 0.088,
-   "away_win": 0.881,
+   "home_win": 0.045,
+   "draw": 0.101,
+   "away_win": 0.853,
    "drivers": [
     {
      "key": "score",
@@ -3221,12 +3522,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.67"
+     "value": "2.11"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.57"
+     "value": "2.03"
     },
     {
      "key": "live_weight",
@@ -3249,17 +3550,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.501,
-   "chaos": 0.719,
-   "tempo": 9.0,
-   "momentum": -0.019,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.31,
+   "chaos": 0.659,
+   "tempo": 8.0,
+   "momentum": -0.657,
+   "phase": "away_control",
+   "label": "Kingston Vale in control"
   },
   "projection": {
-   "home_win": 0.029,
-   "draw": 0.086,
-   "away_win": 0.885,
+   "home_win": 0.043,
+   "draw": 0.1,
+   "away_win": 0.857,
    "drivers": [
     {
      "key": "score",
@@ -3274,12 +3575,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.66"
+     "value": "2.09"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.56"
+     "value": "2.02"
     },
     {
      "key": "live_weight",
@@ -3302,17 +3603,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.538,
-   "chaos": 0.73,
+   "home_share": 0.38,
+   "chaos": 0.667,
    "tempo": 8.2,
-   "momentum": -0.023,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "momentum": -0.588,
+   "phase": "away_control",
+   "label": "Kingston Vale in control"
   },
   "projection": {
-   "home_win": 0.027,
-   "draw": 0.084,
-   "away_win": 0.888,
+   "home_win": 0.041,
+   "draw": 0.098,
+   "away_win": 0.861,
    "drivers": [
     {
      "key": "score",
@@ -3327,12 +3628,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.65"
+     "value": "2.08"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.54"
+     "value": "2.00"
     },
     {
      "key": "live_weight",
@@ -3357,7 +3658,7 @@
      "L. Quinn"
     ],
     "headline": "L. Quinn so far",
-    "body": "L. Quinn has had 33 touches and won the ball back 5 times.",
+    "body": "L. Quinn has had 39 touches and won the ball back 6 times.",
     "why": [],
     "facts_used": [
      {
@@ -3368,29 +3669,29 @@
      {
       "key": "touches",
       "label": "Touches",
-      "value": "33"
+      "value": "39"
      },
      {
       "key": "ball_wins",
       "label": "Ball wins",
-      "value": "5"
+      "value": "6"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0650",
-      "minute": 43,
-      "description": "43' L. Quinn (NGC) pass 9 m"
+      "event_id": "SCN-comeback-0561",
+      "minute": 36,
+      "description": "36' L. Quinn (NGC) pass 38 m"
      },
      {
-      "event_id": "SCN-comeback-0664",
-      "minute": 44,
-      "description": "44' L. Quinn (NGC) pass 22 m"
+      "event_id": "SCN-comeback-0597",
+      "minute": 40,
+      "description": "40' L. Quinn (NGC) pass 6 m"
      },
      {
-      "event_id": "SCN-comeback-0676",
+      "event_id": "SCN-comeback-0690",
       "minute": 45,
-      "description": "45' L. Quinn (NGC) pass 16 m"
+      "description": "45' L. Quinn (NGC) pass 10 m"
      }
     ],
     "tags": [
@@ -3404,7 +3705,7 @@
   ],
   "new_overlays": [
    {
-    "seq": 18,
+    "seq": 22,
     "match_id": "SCN-comeback",
     "minute": 45,
     "second": 0,
@@ -3416,7 +3717,7 @@
     "language": "en",
     "fields": {
      "headline": "L. Quinn so far",
-     "body": "L. Quinn has had 33 touches and won the ball back 5 times.",
+     "body": "L. Quinn has had 39 touches and won the ball back 6 times.",
      "clock": "45:00",
      "minute": "45",
      "type": "player_focus",
@@ -3428,11 +3729,11 @@
      "player": "L. Quinn",
      "number": "8",
      "stat_label": "Touches",
-     "stat_value": "33"
+     "stat_value": "39"
     }
    },
    {
-    "seq": 19,
+    "seq": 23,
     "match_id": "SCN-comeback",
     "minute": 45,
     "second": 59,
@@ -3448,11 +3749,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-2",
-     "momentum": "-0.02",
-     "control_home": "0.54",
-     "chaos": "0.73",
-     "phase": "balanced",
-     "phase_label": "Evenly balanced"
+     "momentum": "-0.59",
+     "control_home": "0.38",
+     "chaos": "0.67",
+     "phase": "away_control",
+     "phase_label": "Kingston Vale in control"
     }
    }
   ]
@@ -3467,17 +3768,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.596,
-   "chaos": 0.738,
-   "tempo": 8.6,
-   "momentum": -0.049,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.375,
+   "chaos": 0.626,
+   "tempo": 8.5,
+   "momentum": -0.57,
+   "phase": "away_control",
+   "label": "Kingston Vale in control"
   },
   "projection": {
-   "home_win": 0.026,
-   "draw": 0.082,
-   "away_win": 0.892,
+   "home_win": 0.039,
+   "draw": 0.096,
+   "away_win": 0.865,
    "drivers": [
     {
      "key": "score",
@@ -3492,12 +3793,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.63"
+     "value": "2.06"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.53"
+     "value": "1.99"
     },
     {
      "key": "live_weight",
@@ -3507,8 +3808,81 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-4659-control_shift-12",
+    "type": "control_shift",
+    "variant": "control",
+    "minute": 46,
+    "second": 59,
+    "clock": "46:59",
+    "priority": 2,
+    "side": "away",
+    "team_id": "KST",
+    "players": [],
+    "headline": "Kingston Vale take control",
+    "body": "Kingston Vale have the ball and the territory.",
+    "why": [
+     "They are dictating where the game is played."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Kingston Vale"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0577",
+      "minute": 37,
+      "description": "37' J. Ibrahim (KST) pass 26 m"
+     },
+     {
+      "event_id": "SCN-comeback-0578",
+      "minute": 37,
+      "description": "37' K. Yilmaz (KST) scores (0.49 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0650",
+      "minute": 42,
+      "description": "42' L. Novak (KST) shot saved (0.30 xG)"
+     }
+    ],
+    "tags": [
+     "against_your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 24,
+    "match_id": "SCN-comeback",
+    "minute": 46,
+    "second": 59,
+    "clock": "46:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-4659-control_shift-12",
+    "language": "en",
+    "fields": {
+     "headline": "Kingston Vale take control",
+     "body": "Kingston Vale have the ball and the territory.",
+     "clock": "46:59",
+     "minute": "46",
+     "type": "control_shift",
+     "team": "Kingston Vale",
+     "team_id": "KST",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -3520,17 +3894,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.542,
-   "chaos": 0.642,
+   "home_share": 0.413,
+   "chaos": 0.562,
    "tempo": 9.0,
-   "momentum": -0.085,
+   "momentum": -0.437,
    "phase": "balanced",
    "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.024,
-   "draw": 0.08,
-   "away_win": 0.895,
+   "home_win": 0.038,
+   "draw": 0.096,
+   "away_win": 0.866,
    "drivers": [
     {
      "key": "score",
@@ -3545,12 +3919,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.62"
+     "value": "2.07"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.52"
+     "value": "1.97"
     },
     {
      "key": "live_weight",
@@ -3560,8 +3934,85 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-4740-shot_speed-13",
+    "type": "shot_speed",
+    "variant": "off_target",
+    "minute": 47,
+    "second": 40,
+    "clock": "47:40",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "R. Mensah"
+    ],
+    "headline": "120 km/h strike from R. Mensah",
+    "body": "R. Mensah hits one at 120 km/h from 25 m out.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "R. Mensah"
+     },
+     {
+      "key": "speed",
+      "label": "Ball speed",
+      "value": "120 km/h"
+     },
+     {
+      "key": "distance",
+      "label": "Distance",
+      "value": "25 m"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0721",
+      "minute": 47,
+      "description": "47' R. Mensah (NGC) shot wide (0.03 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 25,
+    "match_id": "SCN-comeback",
+    "minute": 47,
+    "second": 40,
+    "clock": "47:40",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-4740-shot_speed-13",
+    "language": "en",
+    "fields": {
+     "headline": "120 km/h strike from R. Mensah",
+     "body": "R. Mensah hits one at 120 km/h from 25 m out.",
+     "clock": "47:40",
+     "minute": "47",
+     "type": "shot_speed",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "R. Mensah",
+     "number": "11",
+     "stat_label": "Ball speed",
+     "stat_value": "120 km/h"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -3573,17 +4024,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.537,
-   "chaos": 0.749,
-   "tempo": 9.5,
-   "momentum": 0.489,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.395,
+   "chaos": 0.533,
+   "tempo": 9.1,
+   "momentum": -0.437,
+   "phase": "away_control",
+   "label": "Kingston Vale in control"
   },
   "projection": {
-   "home_win": 0.023,
-   "draw": 0.078,
-   "away_win": 0.899,
+   "home_win": 0.036,
+   "draw": 0.094,
+   "away_win": 0.87,
    "drivers": [
     {
      "key": "score",
@@ -3598,12 +4049,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.61"
+     "value": "2.06"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.51"
+     "value": "1.96"
     },
     {
      "key": "live_weight",
@@ -3626,17 +4077,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.506,
-   "chaos": 0.783,
-   "tempo": 9.1,
-   "momentum": 0.635,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.378,
+   "chaos": 0.515,
+   "tempo": 9.0,
+   "momentum": -0.447,
+   "phase": "away_control",
+   "label": "Kingston Vale in control"
   },
   "projection": {
-   "home_win": 0.026,
-   "draw": 0.085,
-   "away_win": 0.888,
+   "home_win": 0.034,
+   "draw": 0.092,
+   "away_win": 0.874,
    "drivers": [
     {
      "key": "score",
@@ -3651,12 +4102,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.73"
+     "value": "2.04"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.50"
+     "value": "1.95"
     },
     {
      "key": "live_weight",
@@ -3666,91 +4117,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-4959-momentum_flip-9",
-    "type": "momentum_flip",
-    "variant": "flip",
-    "minute": 49,
-    "second": 59,
-    "clock": "49:59",
-    "priority": 2,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [
-     "L. Quinn"
-    ],
-    "headline": "Momentum swings to Northgate City",
-    "body": "Northgate City are on top now. L. Quinn is driving it.",
-    "why": [
-     "Most of the dangerous play is now coming from Northgate City."
-    ],
-    "facts_used": [
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     },
-     {
-      "key": "player",
-      "label": "Player",
-      "value": "L. Quinn"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-0733",
-      "minute": 48,
-      "description": "48' L. Quinn (NGC) pass 25 m"
-     },
-     {
-      "event_id": "SCN-comeback-0737",
-      "minute": 48,
-      "description": "48' N. Vidal (NGC) pass 15 m"
-     },
-     {
-      "event_id": "SCN-comeback-0738",
-      "minute": 49,
-      "description": "49' L. Quinn (NGC) shot wide (0.21 xG)"
-     }
-    ],
-    "tags": [
-     "your_team",
-     "focus_player"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 20,
-    "match_id": "SCN-comeback",
-    "minute": 49,
-    "second": 59,
-    "clock": "49:59",
-    "graphic": "lower_third",
-    "priority": 2,
-    "ttl_s": 14,
-    "insight_id": "SCN-comeback-4959-momentum_flip-9",
-    "language": "en",
-    "fields": {
-     "headline": "Momentum swings to Northgate City",
-     "body": "Northgate City are on top now. L. Quinn is driving it.",
-     "clock": "49:59",
-     "minute": "49",
-     "type": "momentum_flip",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "0-2",
-     "player": "L. Quinn",
-     "number": "8"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -3762,17 +4130,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.503,
-   "chaos": 0.805,
-   "tempo": 8.7,
-   "momentum": 0.732,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.377,
+   "chaos": 0.586,
+   "tempo": 8.9,
+   "momentum": -0.484,
+   "phase": "away_control",
+   "label": "Kingston Vale in control"
   },
   "projection": {
-   "home_win": 0.029,
-   "draw": 0.089,
-   "away_win": 0.882,
+   "home_win": 0.032,
+   "draw": 0.09,
+   "away_win": 0.878,
    "drivers": [
     {
      "key": "score",
@@ -3787,12 +4155,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.82"
+     "value": "2.03"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.49"
+     "value": "1.93"
     },
     {
      "key": "live_weight",
@@ -3805,7 +4173,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 21,
+    "seq": 26,
     "match_id": "SCN-comeback",
     "minute": 50,
     "second": 59,
@@ -3821,11 +4189,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-2",
-     "momentum": "0.73",
-     "control_home": "0.50",
-     "chaos": "0.81",
-     "phase": "chaos",
-     "phase_label": "Chaotic phase"
+     "momentum": "-0.48",
+     "control_home": "0.38",
+     "chaos": "0.59",
+     "phase": "away_control",
+     "phase_label": "Kingston Vale in control"
     }
    }
   ]
@@ -3840,17 +4208,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.575,
-   "chaos": 0.806,
-   "tempo": 8.9,
-   "momentum": 0.736,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.409,
+   "chaos": 0.566,
+   "tempo": 8.6,
+   "momentum": -0.45,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.027,
-   "draw": 0.087,
-   "away_win": 0.886,
+   "home_win": 0.03,
+   "draw": 0.088,
+   "away_win": 0.882,
    "drivers": [
     {
      "key": "score",
@@ -3865,12 +4233,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.81"
+     "value": "2.01"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.48"
+     "value": "1.92"
     },
     {
      "key": "live_weight",
@@ -3893,17 +4261,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.64,
-   "chaos": 0.864,
-   "tempo": 9.1,
-   "momentum": 0.74,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.467,
+   "chaos": 0.458,
+   "tempo": 8.1,
+   "momentum": -0.373,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.025,
-   "draw": 0.084,
-   "away_win": 0.891,
+   "home_win": 0.029,
+   "draw": 0.086,
+   "away_win": 0.886,
    "drivers": [
     {
      "key": "score",
@@ -3918,12 +4286,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.79"
+     "value": "2.01"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.47"
+     "value": "1.90"
     },
     {
      "key": "live_weight",
@@ -3935,7 +4303,7 @@
   },
   "new_cards": [
    {
-    "insight_id": "SCN-comeback-5259-pressure_spike-10",
+    "insight_id": "SCN-comeback-5259-pressure_spike-14",
     "type": "pressure_spike",
     "variant": "press",
     "minute": 52,
@@ -3959,19 +4327,19 @@
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0782",
-      "minute": 52,
-      "description": "52' L. Quinn (NGC) tackle"
+      "event_id": "SCN-comeback-0738",
+      "minute": 49,
+      "description": "49' J. Okafor (NGC) foul"
      },
      {
-      "event_id": "SCN-comeback-0789",
-      "minute": 52,
-      "description": "52' J. Okafor (NGC) interception"
+      "event_id": "SCN-comeback-0785",
+      "minute": 51,
+      "description": "51' H. Novak (NGC) tackle"
      },
      {
-      "event_id": "SCN-comeback-0798",
+      "event_id": "SCN-comeback-0791",
       "minute": 52,
-      "description": "52' G. Ferreira (NGC) tackle"
+      "description": "52' F. Moreau (NGC) interception"
      }
     ],
     "tags": [
@@ -3984,7 +4352,7 @@
   ],
   "new_overlays": [
    {
-    "seq": 22,
+    "seq": 27,
     "match_id": "SCN-comeback",
     "minute": 52,
     "second": 59,
@@ -3992,7 +4360,7 @@
     "graphic": "lower_third",
     "priority": 2,
     "ttl_s": 14,
-    "insight_id": "SCN-comeback-5259-pressure_spike-10",
+    "insight_id": "SCN-comeback-5259-pressure_spike-14",
     "language": "en",
     "fields": {
      "headline": "Northgate City turn up the press",
@@ -4019,17 +4387,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.665,
-   "chaos": 0.88,
-   "tempo": 9.8,
-   "momentum": 0.768,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.495,
+   "chaos": 0.424,
+   "tempo": 8.5,
+   "momentum": -0.403,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.023,
-   "draw": 0.082,
-   "away_win": 0.895,
+   "home_win": 0.027,
+   "draw": 0.084,
+   "away_win": 0.89,
    "drivers": [
     {
      "key": "score",
@@ -4044,12 +4412,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.78"
+     "value": "1.99"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.46"
+     "value": "1.89"
     },
     {
      "key": "live_weight",
@@ -4072,17 +4440,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.642,
-   "chaos": 0.869,
-   "tempo": 10.1,
-   "momentum": 0.696,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.52,
+   "chaos": 0.463,
+   "tempo": 8.8,
+   "momentum": -0.145,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.022,
-   "draw": 0.079,
-   "away_win": 0.899,
+   "home_win": 0.026,
+   "draw": 0.082,
+   "away_win": 0.892,
    "drivers": [
     {
      "key": "score",
@@ -4097,12 +4465,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.77"
+     "value": "2.00"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.45"
+     "value": "1.88"
     },
     {
      "key": "live_weight",
@@ -4125,17 +4493,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.642,
-   "chaos": 0.844,
-   "tempo": 9.9,
-   "momentum": 0.699,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.569,
+   "chaos": 0.479,
+   "tempo": 8.6,
+   "momentum": -0.089,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.02,
-   "draw": 0.077,
-   "away_win": 0.903,
+   "home_win": 0.024,
+   "draw": 0.08,
+   "away_win": 0.896,
    "drivers": [
     {
      "key": "score",
@@ -4150,12 +4518,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.76"
+     "value": "1.98"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.44"
+     "value": "1.86"
     },
     {
      "key": "live_weight",
@@ -4168,7 +4536,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 23,
+    "seq": 28,
     "match_id": "SCN-comeback",
     "minute": 55,
     "second": 59,
@@ -4184,11 +4552,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-2",
-     "momentum": "0.70",
-     "control_home": "0.64",
-     "chaos": "0.84",
-     "phase": "chaos",
-     "phase_label": "Chaotic phase"
+     "momentum": "-0.09",
+     "control_home": "0.57",
+     "chaos": "0.48",
+     "phase": "balanced",
+     "phase_label": "Evenly balanced"
     }
    }
   ]
@@ -4203,17 +4571,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.655,
-   "chaos": 0.806,
-   "tempo": 9.4,
-   "momentum": 0.74,
-   "phase": "chaos",
-   "label": "Chaotic phase"
+   "home_share": 0.638,
+   "chaos": 0.502,
+   "tempo": 8.8,
+   "momentum": -0.004,
+   "phase": "home_control",
+   "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.02,
-   "draw": 0.076,
-   "away_win": 0.905,
+   "home_win": 0.023,
+   "draw": 0.078,
+   "away_win": 0.899,
    "drivers": [
     {
      "key": "score",
@@ -4228,12 +4596,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.78"
+     "value": "1.98"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.43"
+     "value": "1.85"
     },
     {
      "key": "live_weight",
@@ -4256,17 +4624,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.66,
-   "chaos": 0.681,
-   "tempo": 9.9,
-   "momentum": 0.631,
+   "home_share": 0.627,
+   "chaos": 0.599,
+   "tempo": 8.8,
+   "momentum": 0.386,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.018,
-   "draw": 0.073,
-   "away_win": 0.909,
+   "home_win": 0.023,
+   "draw": 0.08,
+   "away_win": 0.896,
    "drivers": [
     {
      "key": "score",
@@ -4281,12 +4649,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.76"
+     "value": "2.05"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.42"
+     "value": "1.84"
     },
     {
      "key": "live_weight",
@@ -4309,17 +4677,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.678,
-   "chaos": 0.604,
-   "tempo": 10.1,
-   "momentum": 0.621,
+   "home_share": 0.631,
+   "chaos": 0.639,
+   "tempo": 8.9,
+   "momentum": 0.383,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.017,
-   "draw": 0.07,
-   "away_win": 0.914,
+   "home_win": 0.022,
+   "draw": 0.078,
+   "away_win": 0.901,
    "drivers": [
     {
      "key": "score",
@@ -4334,12 +4702,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.75"
+     "value": "2.04"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.42"
+     "value": "1.83"
     },
     {
      "key": "live_weight",
@@ -4349,8 +4717,161 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-5859-momentum_flip-15",
+    "type": "momentum_flip",
+    "variant": "flip",
+    "minute": 58,
+    "second": 59,
+    "clock": "58:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "J. Okafor"
+    ],
+    "headline": "Momentum swings to Northgate City",
+    "body": "Northgate City are on top now. J. Okafor is driving it.",
+    "why": [
+     "Most of the dangerous play is now coming from Northgate City."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     },
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "J. Okafor"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0814",
+      "minute": 54,
+      "description": "54' R. Mensah (NGC) shot wide (0.03 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0866",
+      "minute": 57,
+      "description": "57' N. Ekwueme (NGC) pass 11 m"
+     },
+     {
+      "event_id": "SCN-comeback-0867",
+      "minute": 57,
+      "description": "57' J. Okafor (NGC) shot wide (0.14 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   },
+   {
+    "insight_id": "SCN-comeback-5859-control_shift-16",
+    "type": "control_shift",
+    "variant": "control",
+    "minute": 58,
+    "second": 59,
+    "clock": "58:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Northgate City take control",
+    "body": "Northgate City have the ball and the territory.",
+    "why": [
+     "They are dictating where the game is played."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0814",
+      "minute": 54,
+      "description": "54' R. Mensah (NGC) shot wide (0.03 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0866",
+      "minute": 57,
+      "description": "57' N. Ekwueme (NGC) pass 11 m"
+     },
+     {
+      "event_id": "SCN-comeback-0867",
+      "minute": 57,
+      "description": "57' J. Okafor (NGC) shot wide (0.14 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 29,
+    "match_id": "SCN-comeback",
+    "minute": 58,
+    "second": 59,
+    "clock": "58:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-5859-momentum_flip-15",
+    "language": "en",
+    "fields": {
+     "headline": "Momentum swings to Northgate City",
+     "body": "Northgate City are on top now. J. Okafor is driving it.",
+     "clock": "58:59",
+     "minute": "58",
+     "type": "momentum_flip",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2",
+     "player": "J. Okafor",
+     "number": "6"
+    }
+   },
+   {
+    "seq": 30,
+    "match_id": "SCN-comeback",
+    "minute": 58,
+    "second": 59,
+    "clock": "58:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-5859-control_shift-16",
+    "language": "en",
+    "fields": {
+     "headline": "Northgate City take control",
+     "body": "Northgate City have the ball and the territory.",
+     "clock": "58:59",
+     "minute": "58",
+     "type": "control_shift",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "0-2"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -4362,17 +4883,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.667,
-   "chaos": 0.568,
-   "tempo": 10.5,
-   "momentum": 0.568,
+   "home_share": 0.67,
+   "chaos": 0.677,
+   "tempo": 9.4,
+   "momentum": 0.383,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.015,
-   "draw": 0.067,
-   "away_win": 0.918,
+   "home_win": 0.02,
+   "draw": 0.075,
+   "away_win": 0.905,
    "drivers": [
     {
      "key": "score",
@@ -4387,12 +4908,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.74"
+     "value": "2.03"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.41"
+     "value": "1.81"
     },
     {
      "key": "live_weight",
@@ -4415,17 +4936,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.707,
-   "chaos": 0.621,
-   "tempo": 10.7,
-   "momentum": 0.818,
+   "home_share": 0.726,
+   "chaos": 0.738,
+   "tempo": 8.8,
+   "momentum": 0.757,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.018,
-   "draw": 0.073,
-   "away_win": 0.91,
+   "home_win": 0.025,
+   "draw": 0.085,
+   "away_win": 0.89,
    "drivers": [
     {
      "key": "score",
@@ -4440,12 +4961,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "1.89"
+     "value": "2.26"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.40"
+     "value": "1.80"
     },
     {
      "key": "live_weight",
@@ -4470,7 +4991,7 @@
      "L. Quinn"
     ],
     "headline": "L. Quinn so far",
-    "body": "L. Quinn has had 58 touches and won the ball back 10 times.",
+    "body": "L. Quinn has had 51 touches and won the ball back 7 times.",
     "why": [],
     "facts_used": [
      {
@@ -4481,29 +5002,29 @@
      {
       "key": "touches",
       "label": "Touches",
-      "value": "58"
+      "value": "51"
      },
      {
       "key": "ball_wins",
       "label": "Ball wins",
-      "value": "10"
+      "value": "7"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0912",
-      "minute": 58,
-      "description": "58' L. Quinn (NGC) pass 48 m"
+      "event_id": "SCN-comeback-0851",
+      "minute": 56,
+      "description": "56' L. Quinn (NGC) pass 22 m"
      },
      {
-      "event_id": "SCN-comeback-0935",
+      "event_id": "SCN-comeback-0896",
       "minute": 60,
-      "description": "60' L. Quinn (NGC) pass 9 m"
+      "description": "60' L. Quinn (NGC) shot blocked (0.10 xG)"
      },
      {
-      "event_id": "SCN-comeback-0945",
+      "event_id": "SCN-comeback-0897",
       "minute": 60,
-      "description": "60' L. Quinn (NGC) pass 13 m"
+      "description": "60' L. Quinn (NGC) pass 27 m"
      }
     ],
     "tags": [
@@ -4517,7 +5038,7 @@
   ],
   "new_overlays": [
    {
-    "seq": 24,
+    "seq": 31,
     "match_id": "SCN-comeback",
     "minute": 60,
     "second": 0,
@@ -4529,7 +5050,7 @@
     "language": "en",
     "fields": {
      "headline": "L. Quinn so far",
-     "body": "L. Quinn has had 58 touches and won the ball back 10 times.",
+     "body": "L. Quinn has had 51 touches and won the ball back 7 times.",
      "clock": "60:00",
      "minute": "60",
      "type": "player_focus",
@@ -4541,11 +5062,11 @@
      "player": "L. Quinn",
      "number": "8",
      "stat_label": "Touches",
-     "stat_value": "58"
+     "stat_value": "51"
     }
    },
    {
-    "seq": 25,
+    "seq": 32,
     "match_id": "SCN-comeback",
     "minute": 60,
     "second": 59,
@@ -4561,9 +5082,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "0-2",
-     "momentum": "0.82",
-     "control_home": "0.71",
-     "chaos": "0.62",
+     "momentum": "0.76",
+     "control_home": "0.73",
+     "chaos": "0.74",
      "phase": "home_control",
      "phase_label": "Northgate City in control"
     }
@@ -4580,17 +5101,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.708,
-   "chaos": 0.712,
-   "tempo": 9.9,
-   "momentum": 0.883,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.725,
+   "chaos": 0.793,
+   "tempo": 8.2,
+   "momentum": 0.843,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.101,
-   "draw": 0.253,
-   "away_win": 0.646,
+   "home_win": 0.12,
+   "draw": 0.25,
+   "away_win": 0.629,
    "drivers": [
     {
      "key": "score",
@@ -4605,12 +5126,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.06"
+     "value": "2.44"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.39"
+     "value": "1.79"
     },
     {
      "key": "live_weight",
@@ -4622,29 +5143,29 @@
   },
   "new_cards": [
    {
-    "insight_id": "SCN-comeback-6114-goal-11",
+    "insight_id": "SCN-comeback-6111-goal-17",
     "type": "goal",
     "variant": "deserved",
     "minute": 61,
-    "second": 14,
-    "clock": "61:14",
+    "second": 11,
+    "clock": "61:11",
     "priority": 1,
     "side": "home",
     "team_id": "NGC",
     "players": [
-     "R. Mensah",
+     "N. Vidal",
      "L. Gallo"
     ],
     "headline": "Northgate City make it count",
-    "body": "R. Mensah scores for Northgate City. It's 1-2. Set up by L. Gallo.",
+    "body": "N. Vidal scores for Northgate City. It's 1-2. Set up by L. Gallo.",
     "why": [
-     "Their chance of winning moves from 2% to 10%."
+     "Their chance of winning moves from 2% to 12%."
     ],
     "facts_used": [
      {
       "key": "player",
       "label": "Player",
-      "value": "R. Mensah"
+      "value": "N. Vidal"
      },
      {
       "key": "team",
@@ -4664,7 +5185,7 @@
      {
       "key": "win_after",
       "label": "Win chance after",
-      "value": "10%"
+      "value": "12%"
      },
      {
       "key": "assist",
@@ -4674,14 +5195,14 @@
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-0953",
+      "event_id": "SCN-comeback-0909",
       "minute": 61,
-      "description": "61' L. Gallo (NGC) pass 12 m"
+      "description": "61' L. Gallo (NGC) pass 11 m"
      },
      {
-      "event_id": "SCN-comeback-0954",
+      "event_id": "SCN-comeback-0910",
       "minute": 61,
-      "description": "61' R. Mensah (NGC) scores (0.32 xG)"
+      "description": "61' N. Vidal (NGC) scores (0.34 xG)"
      }
     ],
     "tags": [
@@ -4690,24 +5211,74 @@
     "language": "en",
     "persona": "casual",
     "source": "template"
+   },
+   {
+    "insight_id": "SCN-comeback-6159-chaos_phase-18",
+    "type": "chaos_phase",
+    "variant": "chaos",
+    "minute": 61,
+    "second": 59,
+    "clock": "61:59",
+    "priority": 2,
+    "side": null,
+    "team_id": null,
+    "players": [],
+    "headline": "Chaos phase",
+    "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+    "why": [
+     "Neither Northgate City nor Kingston Vale can keep the ball."
+    ],
+    "facts_used": [
+     {
+      "key": "home",
+      "label": "Home",
+      "value": "Northgate City"
+     },
+     {
+      "key": "away",
+      "label": "Away",
+      "value": "Kingston Vale"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0898",
+      "minute": 60,
+      "description": "60' N. Vidal (NGC) shot saved (0.16 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0903",
+      "minute": 60,
+      "description": "60' N. Ekwueme (NGC) shot wide (0.15 xG)"
+     },
+     {
+      "event_id": "SCN-comeback-0910",
+      "minute": 61,
+      "description": "61' N. Vidal (NGC) scores (0.34 xG)"
+     }
+    ],
+    "tags": [],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
    }
   ],
   "new_overlays": [
    {
-    "seq": 26,
+    "seq": 33,
     "match_id": "SCN-comeback",
     "minute": 61,
-    "second": 14,
-    "clock": "61:14",
+    "second": 11,
+    "clock": "61:11",
     "graphic": "alert",
     "priority": 1,
     "ttl_s": 20,
-    "insight_id": "SCN-comeback-6114-goal-11",
+    "insight_id": "SCN-comeback-6111-goal-17",
     "language": "en",
     "fields": {
      "headline": "Northgate City make it count",
-     "body": "R. Mensah scores for Northgate City. It's 1-2. Set up by L. Gallo.",
-     "clock": "61:14",
+     "body": "N. Vidal scores for Northgate City. It's 1-2. Set up by L. Gallo.",
+     "clock": "61:11",
      "minute": "61",
      "type": "goal",
      "team": "Northgate City",
@@ -4715,8 +5286,32 @@
      "home": "NGC",
      "away": "KST",
      "score": "1-2",
-     "player": "R. Mensah",
-     "number": "11"
+     "player": "N. Vidal",
+     "number": "10"
+    }
+   },
+   {
+    "seq": 34,
+    "match_id": "SCN-comeback",
+    "minute": 61,
+    "second": 59,
+    "clock": "61:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-6159-chaos_phase-18",
+    "language": "en",
+    "fields": {
+     "headline": "Chaos phase",
+     "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+     "clock": "61:59",
+     "minute": "61",
+     "type": "chaos_phase",
+     "team": "",
+     "team_id": "",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2"
     }
    }
   ]
@@ -4731,17 +5326,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.668,
-   "chaos": 0.705,
-   "tempo": 9.2,
-   "momentum": 0.858,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.701,
+   "chaos": 0.778,
+   "tempo": 8.6,
+   "momentum": 0.826,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.095,
-   "draw": 0.251,
-   "away_win": 0.654,
+   "home_win": 0.114,
+   "draw": 0.25,
+   "away_win": 0.636,
    "drivers": [
     {
      "key": "score",
@@ -4756,12 +5351,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.05"
+     "value": "2.43"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.38"
+     "value": "1.78"
     },
     {
      "key": "live_weight",
@@ -4784,17 +5379,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.616,
-   "chaos": 0.652,
-   "tempo": 8.6,
-   "momentum": 0.83,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.753,
+   "chaos": 0.822,
+   "tempo": 8.0,
+   "momentum": 0.906,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.09,
-   "draw": 0.249,
-   "away_win": 0.661,
+   "home_win": 0.136,
+   "draw": 0.263,
+   "away_win": 0.601,
    "drivers": [
     {
      "key": "score",
@@ -4809,12 +5404,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.04"
+     "value": "2.76"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.37"
+     "value": "1.77"
     },
     {
      "key": "live_weight",
@@ -4824,8 +5419,80 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6325-big_chance-19",
+    "type": "big_chance",
+    "variant": "blocked",
+    "minute": 63,
+    "second": 25,
+    "clock": "63:25",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "N. Ekwueme"
+    ],
+    "headline": "Big chance for Northgate City",
+    "body": "N. Ekwueme has the shot blocked.",
+    "why": [
+     "That was a real chance to score."
+    ],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "N. Ekwueme"
+     },
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0934",
+      "minute": 63,
+      "description": "63' N. Ekwueme (NGC) shot blocked (0.60 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 35,
+    "match_id": "SCN-comeback",
+    "minute": 63,
+    "second": 25,
+    "clock": "63:25",
+    "graphic": "player_tag",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-6325-big_chance-19",
+    "language": "en",
+    "fields": {
+     "headline": "Big chance for Northgate City",
+     "body": "N. Ekwueme has the shot blocked.",
+     "clock": "63:25",
+     "minute": "63",
+     "type": "big_chance",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2",
+     "player": "N. Ekwueme",
+     "number": "9"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -4837,17 +5504,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.615,
-   "chaos": 0.644,
-   "tempo": 8.2,
-   "momentum": 0.749,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.759,
+   "chaos": 0.794,
+   "tempo": 8.1,
+   "momentum": 0.905,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.085,
-   "draw": 0.247,
-   "away_win": 0.668,
+   "home_win": 0.129,
+   "draw": 0.263,
+   "away_win": 0.609,
    "drivers": [
     {
      "key": "score",
@@ -4862,12 +5529,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.03"
+     "value": "2.75"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.36"
+     "value": "1.76"
     },
     {
      "key": "live_weight",
@@ -4890,17 +5557,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.592,
-   "chaos": 0.662,
-   "tempo": 8.7,
-   "momentum": 0.701,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.739,
+   "chaos": 0.781,
+   "tempo": 8.2,
+   "momentum": 0.9,
+   "phase": "chaos",
+   "label": "Chaotic phase"
   },
   "projection": {
-   "home_win": 0.08,
-   "draw": 0.244,
-   "away_win": 0.676,
+   "home_win": 0.122,
+   "draw": 0.262,
+   "away_win": 0.617,
    "drivers": [
     {
      "key": "score",
@@ -4915,12 +5582,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.02"
+     "value": "2.73"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.35"
+     "value": "1.74"
     },
     {
      "key": "live_weight",
@@ -4933,7 +5600,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 27,
+    "seq": 36,
     "match_id": "SCN-comeback",
     "minute": 65,
     "second": 59,
@@ -4949,11 +5616,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "1-2",
-     "momentum": "0.70",
-     "control_home": "0.59",
-     "chaos": "0.66",
-     "phase": "balanced",
-     "phase_label": "Evenly balanced"
+     "momentum": "0.90",
+     "control_home": "0.74",
+     "chaos": "0.78",
+     "phase": "chaos",
+     "phase_label": "Chaotic phase"
     }
    }
   ]
@@ -4968,17 +5635,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.592,
-   "chaos": 0.713,
-   "tempo": 8.8,
-   "momentum": 0.713,
-   "phase": "balanced",
-   "label": "Evenly balanced"
+   "home_share": 0.721,
+   "chaos": 0.734,
+   "tempo": 7.7,
+   "momentum": 0.913,
+   "phase": "home_control",
+   "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.076,
-   "draw": 0.241,
-   "away_win": 0.683,
+   "home_win": 0.121,
+   "draw": 0.264,
+   "away_win": 0.616,
    "drivers": [
     {
      "key": "score",
@@ -4993,12 +5660,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.02"
+     "value": "2.80"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.34"
+     "value": "1.73"
     },
     {
      "key": "live_weight",
@@ -5008,8 +5675,95 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6659-player_milestone-20",
+    "type": "player_milestone",
+    "variant": "passes",
+    "minute": 66,
+    "second": 59,
+    "clock": "66:59",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [
+     "J. Okafor"
+    ],
+    "headline": "J. Okafor: 40 completed passes",
+    "body": "J. Okafor is running the show for Northgate City.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "player",
+      "label": "Player",
+      "value": "J. Okafor"
+     },
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     },
+     {
+      "key": "count",
+      "label": "Count",
+      "value": "40"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0951",
+      "minute": 64,
+      "description": "64' J. Okafor (NGC) pass 15 m"
+     },
+     {
+      "event_id": "SCN-comeback-0973",
+      "minute": 65,
+      "description": "65' J. Okafor (NGC) pass 23 m"
+     },
+     {
+      "event_id": "SCN-comeback-0986",
+      "minute": 66,
+      "description": "66' J. Okafor (NGC) pass 6 m"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 37,
+    "match_id": "SCN-comeback",
+    "minute": 66,
+    "second": 59,
+    "clock": "66:59",
+    "graphic": "player_tag",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-6659-player_milestone-20",
+    "language": "en",
+    "fields": {
+     "headline": "J. Okafor: 40 completed passes",
+     "body": "J. Okafor is running the show for Northgate City.",
+     "clock": "66:59",
+     "minute": "66",
+     "type": "player_milestone",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2",
+     "player": "J. Okafor",
+     "number": "6",
+     "stat_label": "Count",
+     "stat_value": "40"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -5021,17 +5775,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.647,
-   "chaos": 0.685,
-   "tempo": 8.4,
-   "momentum": 0.743,
+   "home_share": 0.741,
+   "chaos": 0.7,
+   "tempo": 7.3,
+   "momentum": 0.92,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.073,
-   "draw": 0.24,
-   "away_win": 0.687,
+   "home_win": 0.117,
+   "draw": 0.264,
+   "away_win": 0.619,
    "drivers": [
     {
      "key": "score",
@@ -5046,12 +5800,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.04"
+     "value": "2.83"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.33"
+     "value": "1.72"
     },
     {
      "key": "live_weight",
@@ -5074,17 +5828,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.61,
-   "chaos": 0.646,
-   "tempo": 7.8,
-   "momentum": 0.723,
+   "home_share": 0.738,
+   "chaos": 0.648,
+   "tempo": 7.4,
+   "momentum": 0.906,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.068,
-   "draw": 0.236,
-   "away_win": 0.696,
+   "home_win": 0.109,
+   "draw": 0.262,
+   "away_win": 0.629,
    "drivers": [
     {
      "key": "score",
@@ -5099,12 +5853,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.03"
+     "value": "2.82"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.33"
+     "value": "1.71"
     },
     {
      "key": "live_weight",
@@ -5114,8 +5868,81 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-6859-pressure_spike-21",
+    "type": "pressure_spike",
+    "variant": "press",
+    "minute": 68,
+    "second": 59,
+    "clock": "68:59",
+    "priority": 2,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Northgate City turn up the press",
+    "body": "Northgate City are hunting the ball high up the pitch.",
+    "why": [
+     "They are winning the ball back quickly."
+    ],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-0971",
+      "minute": 65,
+      "description": "65' F. Moreau (NGC) interception"
+     },
+     {
+      "event_id": "SCN-comeback-0984",
+      "minute": 66,
+      "description": "66' L. Gallo (NGC) interception"
+     },
+     {
+      "event_id": "SCN-comeback-1000",
+      "minute": 68,
+      "description": "68' L. Gallo (NGC) tackle"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 38,
+    "match_id": "SCN-comeback",
+    "minute": 68,
+    "second": 59,
+    "clock": "68:59",
+    "graphic": "lower_third",
+    "priority": 2,
+    "ttl_s": 14,
+    "insight_id": "SCN-comeback-6859-pressure_spike-21",
+    "language": "en",
+    "fields": {
+     "headline": "Northgate City turn up the press",
+     "body": "Northgate City are hunting the ball high up the pitch.",
+     "clock": "68:59",
+     "minute": "68",
+     "type": "pressure_spike",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "1-2"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -5127,17 +5954,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.687,
-   "chaos": 0.587,
-   "tempo": 7.6,
-   "momentum": 0.741,
+   "home_share": 0.764,
+   "chaos": 0.592,
+   "tempo": 7.2,
+   "momentum": 0.904,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.063,
-   "draw": 0.232,
-   "away_win": 0.705,
+   "home_win": 0.102,
+   "draw": 0.259,
+   "away_win": 0.639,
    "drivers": [
     {
      "key": "score",
@@ -5152,12 +5979,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.02"
+     "value": "2.80"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.32"
+     "value": "1.70"
     },
     {
      "key": "live_weight",
@@ -5180,17 +6007,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.683,
-   "chaos": 0.539,
-   "tempo": 8.0,
-   "momentum": 0.755,
+   "home_share": 0.756,
+   "chaos": 0.576,
+   "tempo": 7.8,
+   "momentum": 0.894,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.058,
-   "draw": 0.228,
-   "away_win": 0.714,
+   "home_win": 0.094,
+   "draw": 0.256,
+   "away_win": 0.649,
    "drivers": [
     {
      "key": "score",
@@ -5205,12 +6032,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.01"
+     "value": "2.78"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.31"
+     "value": "1.69"
     },
     {
      "key": "live_weight",
@@ -5223,7 +6050,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 28,
+    "seq": 39,
     "match_id": "SCN-comeback",
     "minute": 70,
     "second": 59,
@@ -5239,9 +6066,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "1-2",
-     "momentum": "0.76",
-     "control_home": "0.68",
-     "chaos": "0.54",
+     "momentum": "0.89",
+     "control_home": "0.76",
+     "chaos": "0.58",
      "phase": "home_control",
      "phase_label": "Northgate City in control"
     }
@@ -5258,17 +6085,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.721,
-   "chaos": 0.475,
-   "tempo": 8.8,
-   "momentum": 0.786,
+   "home_share": 0.736,
+   "chaos": 0.568,
+   "tempo": 8.1,
+   "momentum": 0.882,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.053,
-   "draw": 0.222,
-   "away_win": 0.725,
+   "home_win": 0.087,
+   "draw": 0.253,
+   "away_win": 0.66,
    "drivers": [
     {
      "key": "score",
@@ -5283,12 +6110,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.00"
+     "value": "2.76"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.30"
+     "value": "1.68"
     },
     {
      "key": "live_weight",
@@ -5311,17 +6138,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.721,
-   "chaos": 0.566,
-   "tempo": 8.5,
-   "momentum": 0.901,
+   "home_share": 0.727,
+   "chaos": 0.58,
+   "tempo": 8.1,
+   "momentum": 0.846,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.055,
-   "draw": 0.227,
-   "away_win": 0.719,
+   "home_win": 0.08,
+   "draw": 0.249,
+   "away_win": 0.671,
    "drivers": [
     {
      "key": "score",
@@ -5336,12 +6163,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.12"
+     "value": "2.75"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.29"
+     "value": "1.67"
     },
     {
      "key": "live_weight",
@@ -5364,17 +6191,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.756,
-   "chaos": 0.705,
-   "tempo": 8.6,
-   "momentum": 0.949,
+   "home_share": 0.722,
+   "chaos": 0.371,
+   "tempo": 8.1,
+   "momentum": 0.83,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.061,
-   "draw": 0.238,
-   "away_win": 0.701,
+   "home_win": 0.073,
+   "draw": 0.244,
+   "away_win": 0.683,
    "drivers": [
     {
      "key": "score",
@@ -5389,12 +6216,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.39"
+     "value": "2.73"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.28"
+     "value": "1.66"
     },
     {
      "key": "live_weight",
@@ -5404,80 +6231,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-7327-big_chance-13",
-    "type": "big_chance",
-    "variant": "saved",
-    "minute": 73,
-    "second": 27,
-    "clock": "73:27",
-    "priority": 2,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [
-     "N. Ekwueme"
-    ],
-    "headline": "Big chance for Northgate City",
-    "body": "N. Ekwueme is denied by the keeper.",
-    "why": [
-     "That was a real chance to score."
-    ],
-    "facts_used": [
-     {
-      "key": "player",
-      "label": "Player",
-      "value": "N. Ekwueme"
-     },
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-1134",
-      "minute": 73,
-      "description": "73' N. Ekwueme (NGC) shot saved (0.50 xG)"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 29,
-    "match_id": "SCN-comeback",
-    "minute": 73,
-    "second": 27,
-    "clock": "73:27",
-    "graphic": "player_tag",
-    "priority": 2,
-    "ttl_s": 14,
-    "insight_id": "SCN-comeback-7327-big_chance-13",
-    "language": "en",
-    "fields": {
-     "headline": "Big chance for Northgate City",
-     "body": "N. Ekwueme is denied by the keeper.",
-     "clock": "73:27",
-     "minute": "73",
-     "type": "big_chance",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "1-2",
-     "player": "N. Ekwueme",
-     "number": "9"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -5489,17 +6244,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.79,
-   "chaos": 0.689,
-   "tempo": 8.3,
-   "momentum": 0.96,
+   "home_share": 0.71,
+   "chaos": 0.49,
+   "tempo": 7.6,
+   "momentum": 0.92,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.306,
-   "draw": 0.559,
-   "away_win": 0.135,
+   "home_win": 0.326,
+   "draw": 0.512,
+   "away_win": 0.162,
    "drivers": [
     {
      "key": "score",
@@ -5514,12 +6269,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.56"
+     "value": "2.95"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.28"
+     "value": "1.65"
     },
     {
      "key": "live_weight",
@@ -5531,23 +6286,23 @@
   },
   "new_cards": [
    {
-    "insight_id": "SCN-comeback-7413-goal-14",
+    "insight_id": "SCN-comeback-7409-goal-22",
     "type": "goal",
     "variant": "equaliser",
     "minute": 74,
-    "second": 13,
-    "clock": "74:13",
+    "second": 9,
+    "clock": "74:09",
     "priority": 1,
     "side": "home",
     "team_id": "NGC",
     "players": [
      "L. Quinn",
-     "R. Mensah"
+     "N. Ekwueme"
     ],
     "headline": "Northgate City level it",
-    "body": "L. Quinn scores for Northgate City. It's 2-2. Set up by R. Mensah.",
+    "body": "L. Quinn scores for Northgate City. It's 2-2. Set up by N. Ekwueme.",
     "why": [
-     "Their chance of winning moves from 6% to 31%."
+     "Their chance of winning moves from 7% to 33%."
     ],
     "facts_used": [
      {
@@ -5568,29 +6323,29 @@
      {
       "key": "win_before",
       "label": "Win chance before",
-      "value": "6%"
+      "value": "7%"
      },
      {
       "key": "win_after",
       "label": "Win chance after",
-      "value": "31%"
+      "value": "33%"
      },
      {
       "key": "assist",
       "label": "Assist",
-      "value": "R. Mensah"
+      "value": "N. Ekwueme"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-1148",
+      "event_id": "SCN-comeback-1073",
       "minute": 74,
-      "description": "74' R. Mensah (NGC) pass 7 m"
+      "description": "74' N. Ekwueme (NGC) pass 7 m"
      },
      {
-      "event_id": "SCN-comeback-1149",
+      "event_id": "SCN-comeback-1074",
       "minute": 74,
-      "description": "74' L. Quinn (NGC) scores (0.35 xG)"
+      "description": "74' L. Quinn (NGC) scores (0.43 xG)"
      }
     ],
     "tags": [
@@ -5604,20 +6359,20 @@
   ],
   "new_overlays": [
    {
-    "seq": 30,
+    "seq": 40,
     "match_id": "SCN-comeback",
     "minute": 74,
-    "second": 13,
-    "clock": "74:13",
+    "second": 9,
+    "clock": "74:09",
     "graphic": "alert",
     "priority": 1,
     "ttl_s": 20,
-    "insight_id": "SCN-comeback-7413-goal-14",
+    "insight_id": "SCN-comeback-7409-goal-22",
     "language": "en",
     "fields": {
      "headline": "Northgate City level it",
-     "body": "L. Quinn scores for Northgate City. It's 2-2. Set up by R. Mensah.",
-     "clock": "74:13",
+     "body": "L. Quinn scores for Northgate City. It's 2-2. Set up by N. Ekwueme.",
+     "clock": "74:09",
      "minute": "74",
      "type": "goal",
      "team": "Northgate City",
@@ -5641,17 +6396,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.801,
-   "chaos": 0.664,
-   "tempo": 8.3,
-   "momentum": 0.947,
+   "home_share": 0.699,
+   "chaos": 0.439,
+   "tempo": 7.1,
+   "momentum": 0.909,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.292,
-   "draw": 0.578,
-   "away_win": 0.13,
+   "home_win": 0.313,
+   "draw": 0.531,
+   "away_win": 0.156,
    "drivers": [
     {
      "key": "score",
@@ -5666,12 +6421,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.55"
+     "value": "2.93"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.27"
+     "value": "1.64"
     },
     {
      "key": "live_weight",
@@ -5696,7 +6451,7 @@
      "L. Quinn"
     ],
     "headline": "L. Quinn so far",
-    "body": "L. Quinn has had 74 touches and won the ball back 11 times.",
+    "body": "L. Quinn has had 66 touches and won the ball back 8 times.",
     "why": [],
     "facts_used": [
      {
@@ -5707,29 +6462,29 @@
      {
       "key": "touches",
       "label": "Touches",
-      "value": "74"
+      "value": "66"
      },
      {
       "key": "ball_wins",
       "label": "Ball wins",
-      "value": "11"
+      "value": "8"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-1107",
-      "minute": 71,
-      "description": "71' L. Quinn (NGC) pass 11 m"
+      "event_id": "SCN-comeback-1055",
+      "minute": 72,
+      "description": "72' L. Quinn (NGC) pass 28 m"
      },
      {
-      "event_id": "SCN-comeback-1133",
-      "minute": 73,
-      "description": "73' L. Quinn (NGC) pass 16 m"
-     },
-     {
-      "event_id": "SCN-comeback-1149",
+      "event_id": "SCN-comeback-1072",
       "minute": 74,
-      "description": "74' L. Quinn (NGC) scores (0.35 xG)"
+      "description": "74' L. Quinn (NGC) pass 3 m"
+     },
+     {
+      "event_id": "SCN-comeback-1074",
+      "minute": 74,
+      "description": "74' L. Quinn (NGC) scores (0.43 xG)"
      }
     ],
     "tags": [
@@ -5743,7 +6498,7 @@
   ],
   "new_overlays": [
    {
-    "seq": 31,
+    "seq": 41,
     "match_id": "SCN-comeback",
     "minute": 75,
     "second": 0,
@@ -5755,7 +6510,7 @@
     "language": "en",
     "fields": {
      "headline": "L. Quinn so far",
-     "body": "L. Quinn has had 74 touches and won the ball back 11 times.",
+     "body": "L. Quinn has had 66 touches and won the ball back 8 times.",
      "clock": "75:00",
      "minute": "75",
      "type": "player_focus",
@@ -5767,11 +6522,11 @@
      "player": "L. Quinn",
      "number": "8",
      "stat_label": "Touches",
-     "stat_value": "74"
+     "stat_value": "66"
     }
    },
    {
-    "seq": 32,
+    "seq": 42,
     "match_id": "SCN-comeback",
     "minute": 75,
     "second": 59,
@@ -5787,9 +6542,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "2-2",
-     "momentum": "0.95",
-     "control_home": "0.80",
-     "chaos": "0.66",
+     "momentum": "0.91",
+     "control_home": "0.70",
+     "chaos": "0.44",
      "phase": "home_control",
      "phase_label": "Northgate City in control"
     }
@@ -5806,17 +6561,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.817,
-   "chaos": 0.651,
-   "tempo": 8.7,
-   "momentum": 0.969,
+   "home_share": 0.697,
+   "chaos": 0.427,
+   "tempo": 7.5,
+   "momentum": 0.903,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.311,
-   "draw": 0.57,
-   "away_win": 0.118,
+   "home_win": 0.298,
+   "draw": 0.552,
+   "away_win": 0.15,
    "drivers": [
     {
      "key": "score",
@@ -5836,7 +6591,7 @@
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.26"
+     "value": "1.63"
     },
     {
      "key": "live_weight",
@@ -5846,165 +6601,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-7611-big_chance-15",
-    "type": "big_chance",
-    "variant": "saved",
-    "minute": 76,
-    "second": 11,
-    "clock": "76:11",
-    "priority": 2,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [
-     "L. Gallo"
-    ],
-    "headline": "Big chance for Northgate City",
-    "body": "L. Gallo is denied by the keeper.",
-    "why": [
-     "That was a real chance to score."
-    ],
-    "facts_used": [
-     {
-      "key": "player",
-      "label": "Player",
-      "value": "L. Gallo"
-     },
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-1168",
-      "minute": 76,
-      "description": "76' L. Gallo (NGC) shot saved (0.69 xG)"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   },
-   {
-    "insight_id": "SCN-comeback-7659-player_milestone-16",
-    "type": "player_milestone",
-    "variant": "passes",
-    "minute": 76,
-    "second": 59,
-    "clock": "76:59",
-    "priority": 3,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [
-     "L. Gallo"
-    ],
-    "headline": "L. Gallo: 40 completed passes",
-    "body": "L. Gallo is running the show for Northgate City.",
-    "why": [],
-    "facts_used": [
-     {
-      "key": "player",
-      "label": "Player",
-      "value": "L. Gallo"
-     },
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     },
-     {
-      "key": "count",
-      "label": "Count",
-      "value": "40"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-1155",
-      "minute": 75,
-      "description": "75' L. Gallo (NGC) pass 8 m"
-     },
-     {
-      "event_id": "SCN-comeback-1158",
-      "minute": 75,
-      "description": "75' L. Gallo (NGC) pass 12 m"
-     },
-     {
-      "event_id": "SCN-comeback-1181",
-      "minute": 76,
-      "description": "76' L. Gallo (NGC) pass 17 m"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 33,
-    "match_id": "SCN-comeback",
-    "minute": 76,
-    "second": 11,
-    "clock": "76:11",
-    "graphic": "player_tag",
-    "priority": 2,
-    "ttl_s": 14,
-    "insight_id": "SCN-comeback-7611-big_chance-15",
-    "language": "en",
-    "fields": {
-     "headline": "Big chance for Northgate City",
-     "body": "L. Gallo is denied by the keeper.",
-     "clock": "76:11",
-     "minute": "76",
-     "type": "big_chance",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "2-2",
-     "player": "L. Gallo",
-     "number": "7"
-    }
-   },
-   {
-    "seq": 34,
-    "match_id": "SCN-comeback",
-    "minute": 76,
-    "second": 59,
-    "clock": "76:59",
-    "graphic": "player_tag",
-    "priority": 3,
-    "ttl_s": 10,
-    "insight_id": "SCN-comeback-7659-player_milestone-16",
-    "language": "en",
-    "fields": {
-     "headline": "L. Gallo: 40 completed passes",
-     "body": "L. Gallo is running the show for Northgate City.",
-     "clock": "76:59",
-     "minute": "76",
-     "type": "player_milestone",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "2-2",
-     "player": "L. Gallo",
-     "number": "7",
-     "stat_label": "Count",
-     "stat_value": "40"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -6016,17 +6614,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.804,
-   "chaos": 0.607,
-   "tempo": 8.8,
-   "momentum": 0.963,
+   "home_share": 0.678,
+   "chaos": 0.429,
+   "tempo": 7.6,
+   "momentum": 0.888,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.295,
-   "draw": 0.592,
-   "away_win": 0.113,
+   "home_win": 0.283,
+   "draw": 0.573,
+   "away_win": 0.144,
    "drivers": [
     {
      "key": "score",
@@ -6041,12 +6639,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.89"
+     "value": "2.90"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.25"
+     "value": "1.62"
     },
     {
      "key": "live_weight",
@@ -6069,17 +6667,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.804,
-   "chaos": 0.671,
-   "tempo": 9.3,
-   "momentum": 0.965,
+   "home_share": 0.691,
+   "chaos": 0.445,
+   "tempo": 7.8,
+   "momentum": 0.872,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.297,
-   "draw": 0.599,
-   "away_win": 0.105,
+   "home_win": 0.267,
+   "draw": 0.596,
+   "away_win": 0.137,
    "drivers": [
     {
      "key": "score",
@@ -6094,12 +6692,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.11"
+     "value": "2.88"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.25"
+     "value": "1.61"
     },
     {
      "key": "live_weight",
@@ -6109,81 +6707,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-7806-big_chance-17",
-    "type": "big_chance",
-    "variant": "saved",
-    "minute": 78,
-    "second": 6,
-    "clock": "78:06",
-    "priority": 2,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [
-     "L. Quinn"
-    ],
-    "headline": "Big chance for Northgate City",
-    "body": "L. Quinn is denied by the keeper.",
-    "why": [
-     "That was a real chance to score."
-    ],
-    "facts_used": [
-     {
-      "key": "player",
-      "label": "Player",
-      "value": "L. Quinn"
-     },
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-1200",
-      "minute": 78,
-      "description": "78' L. Quinn (NGC) shot saved (0.44 xG)"
-     }
-    ],
-    "tags": [
-     "your_team",
-     "focus_player"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 35,
-    "match_id": "SCN-comeback",
-    "minute": 78,
-    "second": 6,
-    "clock": "78:06",
-    "graphic": "player_tag",
-    "priority": 2,
-    "ttl_s": 14,
-    "insight_id": "SCN-comeback-7806-big_chance-17",
-    "language": "en",
-    "fields": {
-     "headline": "Big chance for Northgate City",
-     "body": "L. Quinn is denied by the keeper.",
-     "clock": "78:06",
-     "minute": "78",
-     "type": "big_chance",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "2-2",
-     "player": "L. Quinn",
-     "number": "8"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -6195,17 +6720,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.769,
-   "chaos": 0.702,
-   "tempo": 9.5,
-   "momentum": 0.952,
+   "home_share": 0.701,
+   "chaos": 0.487,
+   "tempo": 7.9,
+   "momentum": 0.912,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.278,
-   "draw": 0.623,
-   "away_win": 0.099,
+   "home_win": 0.257,
+   "draw": 0.615,
+   "away_win": 0.128,
    "drivers": [
     {
      "key": "score",
@@ -6220,12 +6745,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.09"
+     "value": "2.94"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.24"
+     "value": "1.60"
     },
     {
      "key": "live_weight",
@@ -6248,17 +6773,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.765,
-   "chaos": 0.684,
-   "tempo": 9.6,
-   "momentum": 0.951,
+   "home_share": 0.712,
+   "chaos": 0.519,
+   "tempo": 8.0,
+   "momentum": 0.897,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.258,
-   "draw": 0.649,
-   "away_win": 0.093,
+   "home_win": 0.239,
+   "draw": 0.641,
+   "away_win": 0.12,
    "drivers": [
     {
      "key": "score",
@@ -6273,12 +6798,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.07"
+     "value": "2.92"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.23"
+     "value": "1.59"
     },
     {
      "key": "live_weight",
@@ -6291,7 +6816,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 36,
+    "seq": 43,
     "match_id": "SCN-comeback",
     "minute": 80,
     "second": 59,
@@ -6307,9 +6832,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "2-2",
-     "momentum": "0.95",
-     "control_home": "0.77",
-     "chaos": "0.68",
+     "momentum": "0.90",
+     "control_home": "0.71",
+     "chaos": "0.52",
      "phase": "home_control",
      "phase_label": "Northgate City in control"
     }
@@ -6326,17 +6851,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.735,
-   "chaos": 0.659,
-   "tempo": 9.0,
-   "momentum": 0.836,
+   "home_share": 0.713,
+   "chaos": 0.578,
+   "tempo": 8.2,
+   "momentum": 0.919,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.236,
-   "draw": 0.674,
-   "away_win": 0.09,
+   "home_win": 0.228,
+   "draw": 0.662,
+   "away_win": 0.111,
    "drivers": [
     {
      "key": "score",
@@ -6351,12 +6876,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.05"
+     "value": "3.02"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.27"
+     "value": "1.58"
     },
     {
      "key": "live_weight",
@@ -6379,17 +6904,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.751,
-   "chaos": 0.682,
-   "tempo": 9.2,
-   "momentum": 0.835,
+   "home_share": 0.744,
+   "chaos": 0.618,
+   "tempo": 8.5,
+   "momentum": 0.928,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
    "home_win": 0.214,
-   "draw": 0.703,
-   "away_win": 0.082,
+   "draw": 0.685,
+   "away_win": 0.101,
    "drivers": [
     {
      "key": "score",
@@ -6404,12 +6929,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.04"
+     "value": "3.11"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.26"
+     "value": "1.57"
     },
     {
      "key": "live_weight",
@@ -6432,17 +6957,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.75,
-   "chaos": 0.715,
-   "tempo": 9.4,
-   "momentum": 0.842,
+   "home_share": 0.74,
+   "chaos": 0.61,
+   "tempo": 8.3,
+   "momentum": 0.923,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
    "home_win": 0.192,
-   "draw": 0.734,
-   "away_win": 0.074,
+   "draw": 0.717,
+   "away_win": 0.091,
    "drivers": [
     {
      "key": "score",
@@ -6457,12 +6982,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.02"
+     "value": "3.09"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.26"
+     "value": "1.56"
     },
     {
      "key": "live_weight",
@@ -6472,92 +6997,8 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [
-   {
-    "insight_id": "SCN-comeback-8359-win_prob_swing-18",
-    "type": "win_prob_swing",
-    "variant": "down",
-    "minute": 83,
-    "second": 59,
-    "clock": "83:59",
-    "priority": 3,
-    "side": "home",
-    "team_id": "NGC",
-    "players": [],
-    "headline": "Chances fading for Northgate City",
-    "body": "Without a goal, the chance of Northgate City winning has moved from 30% to 19%.",
-    "why": [],
-    "facts_used": [
-     {
-      "key": "team",
-      "label": "Team",
-      "value": "Northgate City"
-     },
-     {
-      "key": "win_before",
-      "label": "Win chance before",
-      "value": "30%"
-     },
-     {
-      "key": "win_after",
-      "label": "Win chance after",
-      "value": "19%"
-     }
-    ],
-    "evidence": [
-     {
-      "event_id": "SCN-comeback-1218",
-      "minute": 79,
-      "description": "79' A. Ueda (KST) pass 47 m"
-     },
-     {
-      "event_id": "SCN-comeback-1221",
-      "minute": 79,
-      "description": "79' K. Kovac (KST) pass 19 m"
-     },
-     {
-      "event_id": "SCN-comeback-1263",
-      "minute": 81,
-      "description": "81' K. Yilmaz (KST) shot wide (0.09 xG)"
-     }
-    ],
-    "tags": [
-     "your_team"
-    ],
-    "language": "en",
-    "persona": "casual",
-    "source": "template"
-   }
-  ],
-  "new_overlays": [
-   {
-    "seq": 37,
-    "match_id": "SCN-comeback",
-    "minute": 83,
-    "second": 59,
-    "clock": "83:59",
-    "graphic": "stat_bug",
-    "priority": 3,
-    "ttl_s": 10,
-    "insight_id": "SCN-comeback-8359-win_prob_swing-18",
-    "language": "en",
-    "fields": {
-     "headline": "Chances fading for Northgate City",
-     "body": "Without a goal, the chance of Northgate City winning has moved from 30% to 19%.",
-     "clock": "83:59",
-     "minute": "83",
-     "type": "win_prob_swing",
-     "team": "Northgate City",
-     "team_id": "NGC",
-     "home": "NGC",
-     "away": "KST",
-     "score": "2-2",
-     "stat_label": "Win chance after",
-     "value_before": "30%",
-     "value_after": "19%"
-    }
-   }
-  ]
+  "new_cards": [],
+  "new_overlays": []
  },
  {
   "type": "tick",
@@ -6569,17 +7010,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.748,
-   "chaos": 0.718,
-   "tempo": 10.1,
-   "momentum": 0.837,
+   "home_share": 0.646,
+   "chaos": 0.692,
+   "tempo": 8.8,
+   "momentum": 0.633,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.169,
-   "draw": 0.765,
-   "away_win": 0.066,
+   "home_win": 0.172,
+   "draw": 0.745,
+   "away_win": 0.083,
    "drivers": [
     {
      "key": "score",
@@ -6594,12 +7035,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.02"
+     "value": "3.15"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.25"
+     "value": "1.60"
     },
     {
      "key": "live_weight",
@@ -6622,17 +7063,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.764,
-   "chaos": 0.749,
-   "tempo": 9.8,
-   "momentum": 0.834,
+   "home_share": 0.639,
+   "chaos": 0.727,
+   "tempo": 8.7,
+   "momentum": 0.633,
    "phase": "home_control",
    "label": "Northgate City in control"
   },
   "projection": {
-   "home_win": 0.144,
-   "draw": 0.799,
-   "away_win": 0.057,
+   "home_win": 0.147,
+   "draw": 0.781,
+   "away_win": 0.072,
    "drivers": [
     {
      "key": "score",
@@ -6647,12 +7088,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.00"
+     "value": "3.13"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.24"
+     "value": "1.60"
     },
     {
      "key": "live_weight",
@@ -6665,7 +7106,7 @@
   "new_cards": [],
   "new_overlays": [
    {
-    "seq": 38,
+    "seq": 44,
     "match_id": "SCN-comeback",
     "minute": 85,
     "second": 59,
@@ -6681,9 +7122,9 @@
      "home": "NGC",
      "away": "KST",
      "score": "2-2",
-     "momentum": "0.83",
-     "control_home": "0.76",
-     "chaos": "0.75",
+     "momentum": "0.63",
+     "control_home": "0.64",
+     "chaos": "0.73",
      "phase": "home_control",
      "phase_label": "Northgate City in control"
     }
@@ -6700,17 +7141,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.768,
-   "chaos": 0.685,
-   "tempo": 9.8,
-   "momentum": 0.859,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.562,
+   "chaos": 0.701,
+   "tempo": 8.5,
+   "momentum": 0.585,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.118,
-   "draw": 0.835,
-   "away_win": 0.047,
+   "home_win": 0.121,
+   "draw": 0.819,
+   "away_win": 0.06,
    "drivers": [
     {
      "key": "score",
@@ -6725,12 +7166,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "2.98"
+     "value": "3.12"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.23"
+     "value": "1.59"
     },
     {
      "key": "live_weight",
@@ -6740,8 +7181,92 @@
    ],
    "note": "A projection from the score, time left and chance creation, not betting odds."
   },
-  "new_cards": [],
-  "new_overlays": []
+  "new_cards": [
+   {
+    "insight_id": "SCN-comeback-8659-win_prob_swing-23",
+    "type": "win_prob_swing",
+    "variant": "down",
+    "minute": 86,
+    "second": 59,
+    "clock": "86:59",
+    "priority": 3,
+    "side": "home",
+    "team_id": "NGC",
+    "players": [],
+    "headline": "Chances fading for Northgate City",
+    "body": "Without a goal, the chance of Northgate City winning has moved from 23% to 12%.",
+    "why": [],
+    "facts_used": [
+     {
+      "key": "team",
+      "label": "Team",
+      "value": "Northgate City"
+     },
+     {
+      "key": "win_before",
+      "label": "Win chance before",
+      "value": "23%"
+     },
+     {
+      "key": "win_after",
+      "label": "Win chance after",
+      "value": "12%"
+     }
+    ],
+    "evidence": [
+     {
+      "event_id": "SCN-comeback-1218",
+      "minute": 84,
+      "description": "84' K. Yilmaz (KST) pass 14 m"
+     },
+     {
+      "event_id": "SCN-comeback-1226",
+      "minute": 84,
+      "description": "84' K. Quinn (KST) pass 28 m"
+     },
+     {
+      "event_id": "SCN-comeback-1229",
+      "minute": 84,
+      "description": "84' K. Yilmaz (KST) shot blocked (0.10 xG)"
+     }
+    ],
+    "tags": [
+     "your_team"
+    ],
+    "language": "en",
+    "persona": "casual",
+    "source": "template"
+   }
+  ],
+  "new_overlays": [
+   {
+    "seq": 45,
+    "match_id": "SCN-comeback",
+    "minute": 86,
+    "second": 59,
+    "clock": "86:59",
+    "graphic": "stat_bug",
+    "priority": 3,
+    "ttl_s": 10,
+    "insight_id": "SCN-comeback-8659-win_prob_swing-23",
+    "language": "en",
+    "fields": {
+     "headline": "Chances fading for Northgate City",
+     "body": "Without a goal, the chance of Northgate City winning has moved from 23% to 12%.",
+     "clock": "86:59",
+     "minute": "86",
+     "type": "win_prob_swing",
+     "team": "Northgate City",
+     "team_id": "NGC",
+     "home": "NGC",
+     "away": "KST",
+     "score": "2-2",
+     "stat_label": "Win chance after",
+     "value_before": "23%",
+     "value_after": "12%"
+    }
+   }
+  ]
  },
  {
   "type": "tick",
@@ -6753,16 +7278,16 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.775,
-   "chaos": 0.742,
-   "tempo": 9.3,
-   "momentum": 0.898,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.563,
+   "chaos": 0.675,
+   "tempo": 8.2,
+   "momentum": 0.743,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.964,
-   "draw": 0.036,
+   "home_win": 0.954,
+   "draw": 0.045,
    "away_win": 0.001,
    "drivers": [
     {
@@ -6778,12 +7303,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.09"
+     "value": "3.27"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.23"
+     "value": "1.58"
     },
     {
      "key": "live_weight",
@@ -6795,29 +7320,29 @@
   },
   "new_cards": [
    {
-    "insight_id": "SCN-comeback-8713-goal-19",
+    "insight_id": "SCN-comeback-8714-goal-24",
     "type": "goal",
     "variant": "late_go_ahead",
     "minute": 87,
-    "second": 13,
-    "clock": "87:13",
+    "second": 14,
+    "clock": "87:14",
     "priority": 1,
     "side": "home",
     "team_id": "NGC",
     "players": [
-     "N. Ekwueme",
-     "N. Vidal"
+     "J. Okafor",
+     "L. Gallo"
     ],
     "headline": "Late lead for Northgate City",
-    "body": "N. Ekwueme scores for Northgate City. It's 3-2. Set up by N. Vidal.",
+    "body": "J. Okafor scores for Northgate City. It's 3-2. Set up by L. Gallo.",
     "why": [
-     "Their chance of winning moves from 12% to 96%."
+     "Their chance of winning moves from 12% to 95%."
     ],
     "facts_used": [
      {
       "key": "player",
       "label": "Player",
-      "value": "N. Ekwueme"
+      "value": "J. Okafor"
      },
      {
       "key": "team",
@@ -6837,24 +7362,24 @@
      {
       "key": "win_after",
       "label": "Win chance after",
-      "value": "96%"
+      "value": "95%"
      },
      {
       "key": "assist",
       "label": "Assist",
-      "value": "N. Vidal"
+      "value": "L. Gallo"
      }
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-1360",
+      "event_id": "SCN-comeback-1260",
       "minute": 87,
-      "description": "87' N. Vidal (NGC) pass 8 m"
+      "description": "87' L. Gallo (NGC) pass 33 m"
      },
      {
-      "event_id": "SCN-comeback-1361",
+      "event_id": "SCN-comeback-1261",
       "minute": 87,
-      "description": "87' N. Ekwueme (NGC) scores (0.24 xG)"
+      "description": "87' J. Okafor (NGC) scores (0.34 xG)"
      }
     ],
     "tags": [
@@ -6867,20 +7392,20 @@
   ],
   "new_overlays": [
    {
-    "seq": 39,
+    "seq": 46,
     "match_id": "SCN-comeback",
     "minute": 87,
-    "second": 13,
-    "clock": "87:13",
+    "second": 14,
+    "clock": "87:14",
     "graphic": "alert",
     "priority": 1,
     "ttl_s": 20,
-    "insight_id": "SCN-comeback-8713-goal-19",
+    "insight_id": "SCN-comeback-8714-goal-24",
     "language": "en",
     "fields": {
      "headline": "Late lead for Northgate City",
-     "body": "N. Ekwueme scores for Northgate City. It's 3-2. Set up by N. Vidal.",
-     "clock": "87:13",
+     "body": "J. Okafor scores for Northgate City. It's 3-2. Set up by L. Gallo.",
+     "clock": "87:14",
      "minute": "87",
      "type": "goal",
      "team": "Northgate City",
@@ -6888,8 +7413,8 @@
      "home": "NGC",
      "away": "KST",
      "score": "3-2",
-     "player": "N. Ekwueme",
-     "number": "9"
+     "player": "J. Okafor",
+     "number": "6"
     }
    }
   ]
@@ -6904,17 +7429,17 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.754,
-   "chaos": 0.537,
-   "tempo": 8.5,
-   "momentum": 0.808,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.508,
+   "chaos": 0.646,
+   "tempo": 7.9,
+   "momentum": 0.707,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.975,
-   "draw": 0.025,
-   "away_win": 0.0,
+   "home_win": 0.968,
+   "draw": 0.031,
+   "away_win": 0.001,
    "drivers": [
     {
      "key": "score",
@@ -6929,12 +7454,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.07"
+     "value": "3.25"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.23"
+     "value": "1.57"
     },
     {
      "key": "live_weight",
@@ -6957,16 +7482,16 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.772,
-   "chaos": 0.517,
-   "tempo": 8.5,
-   "momentum": 0.81,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.485,
+   "chaos": 0.642,
+   "tempo": 7.7,
+   "momentum": 0.709,
+   "phase": "balanced",
+   "label": "Evenly balanced"
   },
   "projection": {
-   "home_win": 0.987,
-   "draw": 0.013,
+   "home_win": 0.983,
+   "draw": 0.016,
    "away_win": 0.0,
    "drivers": [
     {
@@ -6982,12 +7507,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.05"
+     "value": "3.24"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.22"
+     "value": "1.57"
     },
     {
      "key": "live_weight",
@@ -7010,12 +7535,12 @@
    "away": 2
   },
   "control": {
-   "home_share": 0.772,
-   "chaos": 0.481,
-   "tempo": 8.2,
-   "momentum": 0.805,
-   "phase": "home_control",
-   "label": "Northgate City in control"
+   "home_share": 0.395,
+   "chaos": 0.608,
+   "tempo": 7.3,
+   "momentum": 0.677,
+   "phase": "away_control",
+   "label": "Kingston Vale in control"
   },
   "projection": {
    "home_win": 1.0,
@@ -7035,12 +7560,12 @@
     {
      "key": "home_rate",
      "label": "Northgate City expected goals per 90",
-     "value": "3.04"
+     "value": "3.22"
     },
     {
      "key": "away_rate",
      "label": "Kingston Vale expected goals per 90",
-     "value": "1.22"
+     "value": "1.56"
     },
     {
      "key": "live_weight",
@@ -7065,7 +7590,7 @@
      "L. Quinn"
     ],
     "headline": "L. Quinn so far",
-    "body": "L. Quinn has had 88 touches and won the ball back 12 times.",
+    "body": "L. Quinn has had 79 touches and won the ball back 12 times.",
     "why": [],
     "facts_used": [
      {
@@ -7076,7 +7601,7 @@
      {
       "key": "touches",
       "label": "Touches",
-      "value": "88"
+      "value": "79"
      },
      {
       "key": "ball_wins",
@@ -7086,19 +7611,19 @@
     ],
     "evidence": [
      {
-      "event_id": "SCN-comeback-1373",
-      "minute": 89,
-      "description": "89' L. Quinn (NGC) pass 14 m"
+      "event_id": "SCN-comeback-1232",
+      "minute": 85,
+      "description": "85' L. Quinn (NGC) interception"
      },
      {
-      "event_id": "SCN-comeback-1381",
+      "event_id": "SCN-comeback-1275",
       "minute": 89,
-      "description": "89' L. Quinn (NGC) pass 29 m"
+      "description": "89' L. Quinn (NGC) pass 34 m"
      },
      {
-      "event_id": "SCN-comeback-1383",
+      "event_id": "SCN-comeback-1290",
       "minute": 90,
-      "description": "90' L. Quinn (NGC) pass 10 m"
+      "description": "90' L. Quinn (NGC) pass 29 m"
      }
     ],
     "tags": [
@@ -7112,7 +7637,7 @@
   ],
   "new_overlays": [
    {
-    "seq": 40,
+    "seq": 47,
     "match_id": "SCN-comeback",
     "minute": 90,
     "second": 0,
@@ -7124,7 +7649,7 @@
     "language": "en",
     "fields": {
      "headline": "L. Quinn so far",
-     "body": "L. Quinn has had 88 touches and won the ball back 12 times.",
+     "body": "L. Quinn has had 79 touches and won the ball back 12 times.",
      "clock": "90:00",
      "minute": "90",
      "type": "player_focus",
@@ -7136,11 +7661,11 @@
      "player": "L. Quinn",
      "number": "8",
      "stat_label": "Touches",
-     "stat_value": "88"
+     "stat_value": "79"
     }
    },
    {
-    "seq": 41,
+    "seq": 48,
     "match_id": "SCN-comeback",
     "minute": 90,
     "second": 59,
@@ -7156,11 +7681,11 @@
      "home": "NGC",
      "away": "KST",
      "score": "3-2",
-     "momentum": "0.81",
-     "control_home": "0.77",
-     "chaos": "0.48",
-     "phase": "home_control",
-     "phase_label": "Northgate City in control"
+     "momentum": "0.68",
+     "control_home": "0.40",
+     "chaos": "0.61",
+     "phase": "away_control",
+     "phase_label": "Kingston Vale in control"
     }
    }
   ]

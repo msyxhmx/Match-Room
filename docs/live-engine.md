@@ -53,8 +53,12 @@ from where the ball is.
   cleared crosses), free kicks after fouls, and penalties for fouls in the box.
 - Ball speeds, `pressure` events and player choice (by pitch zone) are drawn inline.
 
-Totals over simulated matches: ~3.2 goals, ~820 passes, ~25 shots (0.13 xG per shot), ~19
-fouls and ~10 corners per match.
+- **Passes stay realistic**: at most 65 m, and a pass that would cross a line is played back in
+  at the same length (a cut-back near the goal line) instead of stopping on the line.
+- **Nobody receives their own pass**: the next action goes to a teammate.
+
+Totals over simulated matches: ~3.1 goals, ~820 passes, ~27 shots (0.11 xG per shot), ~19
+fouls and ~9 corners per match.
 
 **Real feeds.** `sim/kloppy_io.py` converts our events to and from kloppy's standard event
 model (`pip install -e ".[adapters]"`). `match_from_kloppy(dataset)` gives the live engine a match
@@ -84,7 +88,7 @@ the pitch is 105 x 68 m.
 | Metric | Definition |
 |---|---|
 | **xG** | Sum of each shot's probability of being scored (from the simulator). |
-| **xT added** | For each completed pass, xT(end zone) - xT(start zone) on a 12 x 8 grid. The grid is **learned from 3,000 simulated matches** with Karun Singh's value iteration (`live/xt.py`, `make xt`, saved to `artifacts/xt_grid.json`): xT(zone) = P(shoot) x P(score) + P(move) x the xT of where moves from that zone end up. On 600 fresh matches it predicts whether a possession scores better than the old hand-drawn grid (log loss 0.0881 vs 0.0908). If the file is missing, the hand-drawn grid is used. |
+| **xT added** | For each completed pass, xT(end zone) - xT(start zone) on a 12 x 8 grid. The grid is **learned from 3,000 simulated matches** with Karun Singh's value iteration (`live/xt.py`, `make xt`, saved to `artifacts/xt_grid.json`): xT(zone) = P(shoot) x P(score) + P(move) x the xT of where moves from that zone end up. On 600 fresh matches it predicts whether a possession scores better than the old hand-drawn grid (log loss 0.0878 vs 0.0903). If the file is missing, the hand-drawn grid is used. |
 | **Possession** | Share of all passes. |
 | **Field tilt** | Share of passes played in the final third (x > 66). |
 | **Pass difficulty** | 1 - expected completion probability. `p = sigmoid(3.4 - 0.055 x length_m - 0.025 x max(end_x - 60, 0) - 0.7 x under_pressure)`. |
@@ -121,22 +125,26 @@ About 22 insights fire per match (average over 60 simulated matches, analyst per
 
 **Do the cards mean anything?** `scripts/card_value.py` checks, on 400 simulated matches, whether
 the side a card names scores the next goal (within 15 minutes) more often than pre-match
-strength alone predicts. Random minutes score +0.8%, so the baseline is fair.
+strength alone predicts. Random minutes score -1.7% (z -1.6), so treat lifts under about 2% as
+noise.
 
 | Card | Per match | Lift | z |
 |---|---|---|---|
-| `big_chance` | 1.15 | +7.1% | 3.3 |
-| `pass_of_the_moment` | 0.94 | +5.5% | 2.4 |
-| `pressure_spike` | 3.81 | +3.8% | 3.2 |
-| `shot_speed` | 1.75 | +3.8% | 2.2 |
-| `control_shift` | 1.65 | +2.9% | 1.7 |
-| `momentum_flip` | 1.80 | -0.2% | -0.1 |
-| `red_card` (side shown) | 0.21 | -11.3% | -2.6 |
+| `big_chance` | 1.39 | +7.9% | 4.0 |
+| `control_shift` | 1.62 | +5.2% | 3.0 |
+| `pass_of_the_moment` | 0.79 | +3.0% | 1.2 |
+| `shot_speed` | 1.54 | +2.2% | 1.2 |
+| `momentum_flip` | 1.75 | +1.4% | 0.8 |
+| `pressure_spike` | 3.79 | +0.9% | 0.8 |
+
+These numbers move with the simulator: after the 26 Oct pass-length fix, `pressure_spike` lost
+the signal it had before (+3.8%). Re-run the script after any change to `sim/`, and tune
+thresholds on one seed and judge them on another.
 
 `momentum_flip` describes who is on top but does not predict the next goal. Change-point
 detection (PELT) and higher thresholds were tried and did not hold up on held-out matches, so
-the original rule stays. The momentum *level* does predict (top fifth: +5.9 points over
-expected), which is what the momentum bar shows.
+the original rule stays. The momentum *level* does predict (home side in its top fifth: scores next 28.7% vs 25.3%
+expected; bottom fifth: 12.2% vs 20.6%), which is what the momentum bar shows.
 
 ## Personalisation
 
@@ -178,6 +186,6 @@ a graphics template (`${headline}`, `${player}`, `${stat_value}`...) or the HTML
   Pitch control was considered and not built: computed from invented positions it would only
   reflect the invented shape, and agent-based tracking (Google Research Football) needs a C++
   build with system libraries and is no longer maintained.
-- The live projection under-predicts draws a little (about 21% said, 25% in simulated matches).
+- The live projection under-predicts draws a little (about 21-23% said, 24% in fresh simulated matches).
 - The win projection is a simple Poisson model, deliberately explainable rather than optimal.
   The trained XGBoost half-time model (`/api/matches/{id}/halftime`) is still available.

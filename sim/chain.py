@@ -42,11 +42,24 @@ PASS_TIME = (1.7, 2.2, 1.6)  # seconds: fixed + gamma(shape, scale)
 COMPLETION = {"base": 3.0, "per_metre": -0.045, "final_third": -0.065, "pressure": -0.55,
               "press": -0.6, "edge": 1.0}
 SPREAD = {"deep": 1.2, "mid": 1.6, "final": 1.9}  # sd of pass direction (radians, 0 = forward)
-SHOT_PROPENSITY, SHOT_EXPONENT = 0.55, 0.42  # chance to shoot = K * xG(spot) ** exponent
+SHOT_PROPENSITY, SHOT_EXPONENT = 0.50, 0.42  # chance to shoot = K * xG(spot) ** exponent
 CORNER_FROM = {"saved": 0.25, "blocked": 0.35, "cleared": 0.12}
 FOUL_P = 0.022  # per attacking action, scaled by the defender's press
 YELLOW_GIVEN_FOUL, RED_GIVEN_FOUL = 0.15, 0.012
 PITCH_L, PITCH_W = 105.0, 68.0
+MAX_PASS_M = 65.0  # a long goal kick; nothing in open play goes further
+MARGIN = 2.0  # pass ends stay this far (0-100 units) inside the lines
+
+
+def _inside(v: float) -> float:
+    """Fold a coordinate that crosses a line back onto the pitch (a pass that would go out is
+    played back in at the same length: a cut-back near the goal line), then clip for safety."""
+    lo, hi = MARGIN, 100 - MARGIN
+    if v > hi:
+        v = 2 * hi - v
+    elif v < lo:
+        v = 2 * lo - v
+    return float(np.clip(v, lo, hi))
 
 _ZONE_WEIGHTS = {  # who plays the pass, by where the ball is
     "deep": {"GK": 0.6, "DF": 2.2, "MF": 1.0, "FW": 0.2},
@@ -237,9 +250,10 @@ class _Match:
             spread = max(spread - 0.12 * behind - 0.08 * edge, 0.6)
             angle = rng.normal(0.0, spread)
             length = 4 + rng.gamma(2.0, 7.5) + (rng.gamma(2.0, 10.0) if x < 20 else 0.0)
+            length = min(length, MAX_PASS_M)
             ex = x + length * math.cos(angle) / PITCH_L * 100
             ey = y + length * math.sin(angle) / PITCH_W * 100
-        ex, ey = float(np.clip(ex, 1, 99)), float(np.clip(ey, 1, 99))
+        ex, ey = _inside(ex), _inside(ey)
         length_m = math.hypot((ex - x) * PITCH_L / 100, (ey - y) * PITCH_W / 100)
 
         opp_press = self.teams[opp].press
@@ -266,7 +280,7 @@ class _Match:
         self.last_passer = (side, passer) if done else None
         if done:
             carry = max(rng.normal(1.2, 2.0), 0.0)
-            return side, min(ex + carry, 99.0), ey, True
+            return side, min(ex + carry, max(ex, 97.0)), ey, True  # carry stops short of the line
         kind = "interception" if rng.random() < 0.6 else "tackle"
         self.emit(opp, kind, 100 - ex, 100 - ey, "won", self.player(opp, "foul"))
         return opp, 100 - ex, 100 - ey, False

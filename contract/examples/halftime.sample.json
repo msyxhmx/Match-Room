@@ -1,6 +1,6 @@
 {
   "match_id": "SIM-2026-00001",
-  "generated_at": "2026-10-26T21:16:28.613884Z",
+  "generated_at": "2026-10-26T22:01:42.813917Z",
   "home": {
     "id": "HAR",
     "name": "Harbour Athletic",
@@ -12,63 +12,63 @@
     "short_name": "KST"
   },
   "score": {
-    "home": 2,
+    "home": 1,
     "away": 0
   },
   "stats": [
     {
       "key": "goals",
       "label": "Goals",
-      "home": 2.0,
+      "home": 1.0,
       "away": 0.0
     },
     {
       "key": "xg",
       "label": "Expected goals (xG)",
-      "home": 1.2,
-      "away": 0.46
+      "home": 0.55,
+      "away": 0.61
     },
     {
       "key": "shots",
       "label": "Shots",
-      "home": 5.0,
-      "away": 4.0
+      "home": 4.0,
+      "away": 6.0
     },
     {
       "key": "sot",
       "label": "Shots on target",
       "home": 2.0,
-      "away": 0.0
+      "away": 2.0
     },
     {
       "key": "possession",
       "label": "Possession %",
-      "home": 60.0,
-      "away": 40.0
+      "home": 51.0,
+      "away": 49.0
     },
     {
       "key": "pass_acc",
       "label": "Pass accuracy %",
       "home": 79.0,
-      "away": 68.0
+      "away": 78.0
     },
     {
       "key": "corners",
       "label": "Corners",
       "home": 0.0,
-      "away": 3.0
+      "away": 2.0
     },
     {
       "key": "fouls",
       "label": "Fouls",
       "home": 6.0,
-      "away": 3.0
+      "away": 4.0
     },
     {
       "key": "yellow",
       "label": "Yellow cards",
-      "home": 2.0,
-      "away": 1.0
+      "home": 0.0,
+      "away": 0.0
     },
     {
       "key": "red",
@@ -81,131 +81,98 @@
     {
       "start_minute": 1,
       "end_minute": 15,
-      "home_share": 0.462
+      "home_share": 0.517
     },
     {
       "start_minute": 16,
       "end_minute": 30,
-      "home_share": 0.795
+      "home_share": 0.438
     },
     {
       "start_minute": 31,
       "end_minute": 45,
-      "home_share": 0.568
+      "home_share": 0.486
     }
   ],
   "story": [
     {
       "id": "scoreline",
-      "title": "Harbour Athletic lead 2-0",
-      "body": "Goals: 7' R. Mensah (HAR) scores, 0.89 xG; 36' R. Adeyemi (HAR) scores, 0.27 xG. Shots 5-4, xG 1.20-0.46.",
+      "title": "Harbour Athletic lead 1-0",
+      "body": "Goals: 18' N. Zielinski (HAR) scores, 0.34 xG. Shots 4-6, xG 0.55-0.61.",
       "evidence": [
         {
-          "event_id": "SIM-2026-00001-0096",
-          "minute": 7,
-          "description": "7' R. Mensah (HAR) scores, 0.89 xG"
-        },
-        {
-          "event_id": "SIM-2026-00001-0548",
-          "minute": 36,
-          "description": "36' R. Adeyemi (HAR) scores, 0.27 xG"
+          "event_id": "SIM-2026-00001-0257",
+          "minute": 18,
+          "description": "18' N. Zielinski (HAR) scores, 0.34 xG"
         }
       ]
     },
     {
       "id": "chance-quality",
-      "title": "The lead is earned",
-      "body": "Harbour Athletic's lead is backed by chance quality: 0.75 xG more than their opponents.",
+      "title": "Little between them",
+      "body": "Chance quality is close (0.55 vs 0.61 xG).",
       "evidence": [
         {
-          "event_id": "SIM-2026-00001-0096",
-          "minute": 7,
-          "description": "7' R. Mensah (HAR) scores, 0.89 xG"
+          "event_id": "SIM-2026-00001-0257",
+          "minute": 18,
+          "description": "18' N. Zielinski (HAR) scores, 0.34 xG"
         },
         {
-          "event_id": "SIM-2026-00001-0548",
-          "minute": 36,
-          "description": "36' R. Adeyemi (HAR) scores, 0.27 xG"
+          "event_id": "SIM-2026-00001-0153",
+          "minute": 11,
+          "description": "11' L. Jensen (KST) has a shot blocked, 0.23 xG"
         }
       ]
     },
     {
       "id": "territory",
-      "title": "HAR own the territory",
-      "body": "Harbour Athletic had 63% of the play in the final third.",
+      "title": "KST own the territory",
+      "body": "Kingston Vale had 53% of the play in the final third.",
       "evidence": [
         {
-          "event_id": "SIM-2026-00001-0548",
-          "minute": 36,
-          "description": "36' R. Adeyemi (HAR) scores, 0.27 xG"
+          "event_id": "SIM-2026-00001-0644",
+          "minute": 42,
+          "description": "42' B. Ferreira (HAR) forces a save, 0.10 xG"
         },
         {
-          "event_id": "SIM-2026-00001-0577",
-          "minute": 39,
-          "description": "39' K. Quinn (KST) has a shot blocked, 0.04 xG"
-        }
-      ]
-    },
-    {
-      "id": "discipline",
-      "title": "Tempers rising",
-      "body": "3 yellow cards already; someone may be on thin ice.",
-      "evidence": [
-        {
-          "event_id": "SIM-2026-00001-0270",
-          "minute": 19,
-          "description": "19' Yellow card for F. Gallo (HAR)"
-        },
-        {
-          "event_id": "SIM-2026-00001-0573",
+          "event_id": "SIM-2026-00001-0581",
           "minute": 38,
-          "description": "38' Yellow card for K. Kovac (KST)"
-        },
-        {
-          "event_id": "SIM-2026-00001-0648",
-          "minute": 43,
-          "description": "43' Yellow card for N. Zielinski (HAR)"
+          "description": "38' L. Novak (KST) forces a save, 0.05 xG"
         }
       ]
-    },
-    {
-      "id": "set-pieces",
-      "title": "Set-piece pressure",
-      "body": "Kingston Vale have won 3 more corners.",
-      "evidence": []
     }
   ],
   "prediction": {
     "result": {
-      "home_win": 0.917,
-      "draw": 0.076,
-      "away_win": 0.008
+      "home_win": 0.589,
+      "draw": 0.317,
+      "away_win": 0.095
     },
     "next_goal": {
-      "home": 0.348,
-      "away": 0.467,
-      "none": 0.185
+      "home": 0.311,
+      "away": 0.475,
+      "none": 0.214
     },
     "factors": [
       {
         "feature": "goal_diff",
         "label": "Half-time goal difference",
-        "value": 2.0,
-        "impact": 3.3442,
+        "value": 1.0,
+        "impact": 1.8735,
         "favours": "home"
       },
       {
-        "feature": "pass_acc_diff",
-        "label": "Pass accuracy difference",
-        "value": 0.118,
-        "impact": 0.9052,
-        "favours": "home"
+        "feature": "shots_diff",
+        "label": "Shot difference",
+        "value": -2.0,
+        "impact": -0.1336,
+        "favours": "away"
       },
       {
-        "feature": "xg_diff",
-        "label": "xG difference",
-        "value": 0.746,
-        "impact": 0.274,
+        "feature": "momentum_last15",
+        "label": "Home share of final-third play, 31-45'",
+        "value": 0.486,
+        "impact": 0.1323,
         "favours": "home"
       }
     ]
@@ -214,16 +181,16 @@
     {
       "id": "hold-the-lead",
       "title": "Can Harbour Athletic hold on?",
-      "detail": "Kingston Vale had 37% of final-third play. If that rises, their next-goal chances climb from 47%."
+      "detail": "Kingston Vale had 53% of final-third play. If that rises, their next-goal chances climb from 48%."
     },
     {
       "id": "top-factor",
-      "title": "Watch: pass accuracy difference",
-      "detail": "This is the biggest driver of the prediction right now (favours Harbour Athletic). A swing here changes the odds most."
+      "title": "Watch: shot difference",
+      "detail": "This is the biggest driver of the prediction right now (favours Kingston Vale). A swing here changes the odds most."
     }
   ],
   "meta": {
-    "model_version": "xgb-20261026-1910",
+    "model_version": "xgb-20261026-2156",
     "story_source": "template",
     "synthetic": true,
     "agent_trace": []
