@@ -9,14 +9,19 @@ import { clubSlots } from "./clubColours";
 import { nowSeconds } from "./live/feed";
 import { pickStage } from "./live/stage";
 import { useDirector } from "./live/useDirector";
+import { PREVIEW } from "./live/useMatchFeed";
+import { useMatchList, useSeason } from "./live/useBrowse";
 import { useMatchFeed } from "./live/useMatchFeed";
 import type { MatchView } from "./live/feed";
 import { PitchLayer } from "./pitch/PitchLayer";
 import { PitchView } from "./pitch/PitchView";
 import { moreImportant, overlayAt, OverlayScreen } from "./screens/OverlayScreen";
+import { BrowseScreen } from "./screens/BrowseScreen";
+import { MatchPicker } from "./screens/MatchPicker";
 import { MatchScreen } from "./screens/MatchScreen";
-import type { LiveCard, OverlayMessage, Score } from "./types/live";
-import { KickOffButton, MatchControls } from "./ui";
+import { SeasonScreen } from "./screens/SeasonScreen";
+import type { LiveCard, MatchMeta, OverlayMessage, Score } from "./types/live";
+import { KickOffButton, MatchControls, PAGE_VIEWS, TopBar, ViewSwitchContext, type PageView } from "./ui";
 import { LabelsProvider } from "./ui/labels";
 import styles from "./App.module.css";
 
@@ -164,8 +169,11 @@ function useGoalHold(view: MatchView | null, running: boolean, speed: number, on
   return { held, onLanded: (t: number) => setLanded((s) => new Set(s).add(t)) };
 }
 
-function LivePage() {
-  const d = useDirector();
+type Director = ReturnType<typeof useDirector>;
+
+/** The match on the page: the feed, the pitch and the cards. Remounted per match, so nothing of
+ *  the last one (cards, score, squads) carries over. */
+function LiveView({ d }: { d: Director }) {
   const { view: fed, connection, running } = useMatchFeed(d);
   const [pinned, setPinned] = useState<string | null>(null);
   const [factsFor, setFactsFor] = useState<LiveCard | null>(null);
@@ -288,6 +296,90 @@ function LivePage() {
         {view && <div className={styles.phoneControls}>{controls}</div>}
       </Frame>
     </LabelsProvider>
+  );
+}
+
+/** What the top bar shows on the Matches and Table views, where no match is loaded. */
+const BROWSE_META: MatchMeta = {
+  venue: "", referee: "", attendance: 0, weather: "", scenario: null, scenario_title: null, synthetic: true,
+};
+
+/** A plain visit lands on the picker; a director URL, ?rec=1 or ?match= goes straight to the match. */
+function initialView(search: string): PageView {
+  const q = new URLSearchParams(search);
+  const asked = q.get("view") as PageView | null;
+  if (asked && PAGE_VIEWS.includes(asked)) return asked;
+  const direct = q.has("minute") || q.has("speed") || q.has("play") || q.get("rec") === "1" || q.has("match");
+  return direct ? "live" : "matches";
+}
+
+/**
+ * The live page: Matches / Live / Table on a plain visit. A director URL or ?rec=1 is a
+ * recording, so it gets the live view alone: no switch, no picker.
+ */
+function LivePage() {
+  const d = useDirector();
+  const tabs = !d.director && !d.rec;
+  const [view, setView] = useState<PageView>(() => (tabs ? initialView(location.search) : "live"));
+  const matches = useMatchList();
+  const season = useSeason(d.profile);
+
+  useEffect(() => {
+    if (!tabs) return;
+    const q = new URLSearchParams(location.search);
+    q.set("view", view);
+    history.replaceState(null, "", `${location.pathname}?${q}`);
+  }, [view, tabs]);
+
+  const show = (next: PageView) => {
+    if (next !== "live") d.pause();
+    setView(next);
+  };
+  const pick = (m: { id: string; home: { id: string } }) => {
+    d.pick(m.id, m.home.id);
+    setView("live");
+  };
+
+  // Once opened, the match stays mounted (hidden) behind the other views, so a look at the table
+  // comes back to the same minute instead of restarting the feed.
+  const [liveOpened, setLiveOpened] = useState(view === "live");
+  useEffect(() => {
+    if (view === "live") setLiveOpened(true);
+  }, [view]);
+  const live = (view === "live" || liveOpened) && (
+    <div className={styles.kept} hidden={view !== "live"}>
+      <ViewSwitchContext.Provider value={tabs ? { view, onView: show } : null}>
+        <LiveView key={d.matchId} d={d} />
+      </ViewSwitchContext.Provider>
+    </div>
+  );
+  if (view === "live") return live;
+  const top = (
+    <TopBar
+      meta={BROWSE_META}
+      profile={d.profile}
+      connection={PREVIEW ? "preview" : "live"}
+      onLanguage={d.nextLanguage}
+      onPersona={d.togglePersona}
+    />
+  );
+  return (
+    <>
+    {live}
+    <LabelsProvider language={d.profile.language}>
+      <ViewSwitchContext.Provider value={{ view, onView: show }}>
+        <Frame clubs={["NGC", "KST", d.profile.team ?? "NGC"]}>
+          <BrowseScreen top={top}>
+            {view === "matches" ? (
+              <MatchPicker matches={matches} currentId={d.matchId} onPick={pick} />
+            ) : (
+              <SeasonScreen report={season} team={d.profile.team} />
+            )}
+          </BrowseScreen>
+        </Frame>
+      </ViewSwitchContext.Provider>
+    </LabelsProvider>
+    </>
   );
 }
 

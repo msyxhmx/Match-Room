@@ -22,7 +22,7 @@ export function PlayerOfMatch({ player, team, focus = false, compact = false }: 
     <section className={styles.root} data-side={player.side}>
       <p className={styles.kicker}>{l.playerOfMatch}</p>
       <div className={styles.head}>
-        <Crest teamId={team.id} size="badge" name={team.name} />
+        <Crest teamId={team.id} size="full" name={team.name} />
         <div className={styles.who}>
           <h3 className={styles.name}>{player.name}</h3>
           <span className={styles.meta}>#{player.number} · {player.position}</span>

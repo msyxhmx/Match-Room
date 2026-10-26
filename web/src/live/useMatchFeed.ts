@@ -20,7 +20,7 @@ import { addEvents, applyBrief, applyTick, fromSnapshot, relabel, replay, samePr
 export type Connection = "live" | "reconnecting" | "offline" | "preview";
 
 /** Preview build (`npm run build:preview`): play the saved synthetic match, never call the API. */
-const PREVIEW = import.meta.env.VITE_PREVIEW === "1";
+export const PREVIEW = import.meta.env.VITE_PREVIEW === "1";
 
 export interface FeedState {
   view: MatchView | null;

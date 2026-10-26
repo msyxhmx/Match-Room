@@ -294,7 +294,7 @@ function flows(live, dead, preview) {
     },
     {
       name: "phone",
-      url: `${preview}/`,
+      url: `${preview}/?view=live`,
       device: { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
       async run(page) {
         await page.getByText("Preview · synthetic match").first().waitFor({ timeout: 6000 });
@@ -360,7 +360,7 @@ function flows(live, dead, preview) {
     },
     {
       name: "phone-landscape",
-      url: `${preview}/`,
+      url: `${preview}/?view=live`,
       device: { viewport: { width: 844, height: 390 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
       async run(page) {
         await page.locator("[data-role=match-controls]:visible").waitFor({ timeout: 4000 });
@@ -368,6 +368,44 @@ function flows(live, dead, preview) {
         const w = await page.locator("[data-pitch-view]").first().evaluate((e) => e.getBoundingClientRect().width);
         if (w < 700) throw new Error(`the pitch is only ${Math.round(w)} px wide`);
         await pitchDrawing(page);
+      },
+    },
+    {
+      name: "picker",
+      url: `${live}/`,
+      device: { viewport: { width: 375, height: 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
+      async run(page) {
+        // A bare visit lands on the picker: four storylines, then the organic matches.
+        await page.locator("[data-screen=matches]").waitFor({ timeout: 6000 });
+        await page.locator("button[data-match]:not([disabled])").nth(5).waitFor({ timeout: 6000 });
+        const wide = () => page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+        if ((await wide()) > 0) throw new Error(`the picker scrolls sideways by ${await wide()} px`);
+        if ((await page.locator("[data-screen=matches] li button").count()) < 5) throw new Error("the picker lists too few matches");
+        // Table view fits the phone.
+        await page.getByRole("button", { name: "Table", exact: true }).tap();
+        await page.locator("[data-screen=table] tbody tr").first().waitFor({ timeout: 4000 });
+        if ((await wide()) > 0) throw new Error(`the table scrolls sideways by ${await wide()} px`);
+        if (!/view=table/.test(page.url())) throw new Error(`the view isn't in the address: ${page.url()}`);
+        await page.getByRole("button", { name: "Matches", exact: true }).tap();
+        // Pick another storyline: kick-off, paused behind the Kick off button, its own teams.
+        await page.locator("button[data-match=SCN-red-card]").tap();
+        await page.locator("[data-role=kick-off]").waitFor({ timeout: 6000 });
+        if (!/match=SCN-red-card/.test(page.url()) || !/view=live/.test(page.url())) throw new Error(`bad address: ${page.url()}`);
+        if (await page.locator('section[data-period] [class*="minute"]').count()) throw new Error("a picked match didn't open at kick-off");
+        if ((await body(page)).includes("Northgate")) throw new Error("the old match's teams are still on screen");
+      },
+    },
+    {
+      name: "picker-preview",
+      url: `${preview}/`,
+      device: { viewport: { width: 375, height: 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
+      async run(page) {
+        // No server: the comeback alone, playable.
+        await page.locator("button[data-match=SCN-comeback]:not([disabled])").waitFor({ timeout: 6000 });
+        const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+        if (wide > 0) throw new Error(`the picker scrolls sideways by ${wide} px`);
+        await page.getByRole("button", { name: "Table", exact: true }).tap();
+        await page.locator("[data-screen=table] tbody tr").first().waitFor({ timeout: 4000 });
       },
     },
     {

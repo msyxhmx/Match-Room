@@ -18,3 +18,5 @@ export { FactsSheet } from "./FactsSheet/FactsSheet";
 export { AgentTrace } from "./AgentTrace/AgentTrace";
 export { PlayerOfMatch } from "./PlayerOfMatch/PlayerOfMatch";
 export { BriefPanel } from "./BriefPanel/BriefPanel";
+export { ViewSwitch, ViewSwitchContext, useViewSwitch, PAGE_VIEWS } from "./ViewSwitch/ViewSwitch";
+export type { PageView, ViewSwitchState } from "./ViewSwitch/ViewSwitch";

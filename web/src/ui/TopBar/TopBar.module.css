@@ -110,6 +110,13 @@
 .meta {
   flex-wrap: nowrap;
 }
+/* With the view switch there are three controls: let the row wrap rather than overflow. */
+.root[data-views] .meta {
+  flex-wrap: wrap;
+}
+:global(.video) .root[data-views] .meta {
+  flex-wrap: nowrap;
+}
 .following {
   display: none;
 }

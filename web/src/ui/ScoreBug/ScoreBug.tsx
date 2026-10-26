@@ -15,13 +15,13 @@ export function ScoreBug({ home, away, score, clock }: ScoreBugProps) {
   return (
     <div className={styles.bug} data-role="score-bug">
       <span className={styles.team} data-side="home">
-        <Crest teamId={home.id} size="badge" />
+        <Crest teamId={home.id} size="full" />
         <span className={styles.code}>{home.short_name}</span>
       </span>
       <span className={styles.score}>{score.replace("-", "–")}</span>
       <span className={styles.team} data-side="away">
         <span className={styles.code}>{away.short_name}</span>
-        <Crest teamId={away.id} size="badge" />
+        <Crest teamId={away.id} size="full" />
       </span>
       <span className={styles.clock}>{clock}</span>
     </div>
