@@ -32,9 +32,12 @@
 //               a lofted pass's receiver jumps at the right beat (not a second early); the keeper
 //               is set while the ball is in his third, not when it's at the other end, and
 //               gathers a save; reduced motion: no stride or lean, the slide held
-//   motion      on the 74' loop as drawn (outfield, frames 1/15 s apart): 25–35% of the time
-//               standing (under 0.5 m/s), 8% or less sprinting (6 m/s and up), and a median of
-//               50% or less of a team's movers heading the same way (within 25 degrees)
+//   motion      like real football: the 74' loop and ×1 from 70' to 80', measured as drawn against
+//               six real DFL passages played through the same frames (src/pitch/real): standing
+//               and same-way co-movement within the real passages' range, the spread of speeds
+//               no further from real than a real passage is, 8% or less sprinting
+//   around      the ball: the nearest opponent to a passer, the receiver's speed and approach,
+//               and each pass's height for its length, in the real middle half (7 DFL matches)
 
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -483,54 +486,154 @@ for (const speed of [1, 60]) {
   console.log(`\nbody: gaits ${want.map(([v, g]) => `${v}→${g}`).join(", ")}; cadence ${cadence.map((c) => c.toFixed(2)).join(" < ")} strides/s; sprint lean ${((lean * 180) / Math.PI).toFixed(0)}°; ${backs} back views on the loop; tackle ${tackle?.moment.id}, header ${lofted?.moment.id}, save ${saved?.moment.id ?? "none"}; ${held} still poses held`);
 }
 
-// Motion: does it move like football? On the 74' loop, outfield players, frames 1/15 s apart,
-// drawn as on screen. Speed bands (m/s): standing under 0.5, walk to 2, jog to 4, run to 6,
-// sprint 6 and up. Co-movement: in each frame where 3 or more of a team's outfield players move,
-// the largest share of the movers heading within 25 degrees of one of them (1 = all one way).
+// Motion: does it move like real football? Measured the same way on real tracking (the six DFL
+// passages in src/pitch/real/slice.json, played through the same frameAt) and on ours: the 74'
+// loop and ×1 live from 70' to 80'. Outfield players, frames 1/15 s apart, as drawn. Speed bands
+// (m/s): standing under 0.5, walk to 2, jog to 4, run to 6, sprint 6 and up. Co-movement: in each
+// frame where 3 or more of a team's outfield players move, the largest share of the movers
+// heading within 25 degrees of one of them (1 = all one way).
+// The bands are the real passages' own range, so they can't be tuned by hand.
 {
-  const r = replayMinute(players, moments, 74);
-  const tl = r.timeline;
+  const { realTimeline } = await load("/src/pitch/real.ts");
+  const slice = JSON.parse(readFileSync(resolve(root, "src/pitch/real/slice.json"), "utf8"));
+  const real = JSON.parse(readFileSync(resolve(root, "src/pitch/real/stats.json"), "utf8"));
   const STEP = 1 / 15;
-  const speeds = [];
-  const together = [];
-  let prevF = null;
-  for (let t = 0; t <= tl.end; t += STEP) {
-    const f = frameAt(tl, t);
-    if (prevF) {
-      const before = new Map(prevF.dots.map((d) => [d.id, d]));
-      for (const side of ["home", "away"]) {
-        const movers = [];
-        for (const d of f.dots) {
-          const b = before.get(d.id);
-          if (!b || d.side !== side || d.role === "GK") continue;
-          const v = Math.hypot(d.x - b.x, d.y - b.y) / STEP;
-          speeds.push(v);
-          if (v >= 0.5) movers.push(Math.atan2(d.y - b.y, d.x - b.x));
-        }
-        if (movers.length < 3) continue;
-        let best = 0;
-        for (const a of movers) {
-          const n = movers.filter((c) => Math.abs(Math.atan2(Math.sin(c - a), Math.cos(c - a))) <= (25 * Math.PI) / 180).length;
-          best = Math.max(best, n);
-        }
-        together.push(best / movers.length);
-      }
-    }
-    prevF = f;
-  }
   const q = (xs, p) => [...xs].sort((a, b) => a - b)[Math.floor(p * (xs.length - 1))];
-  const share = (lo, hi) => speeds.filter((v) => v >= lo && v < hi).length / speeds.length;
   const pc = (x) => `${(x * 100).toFixed(0)}%`;
-  const bands = { standing: share(0, 0.5), walk: share(0.5, 2), jog: share(2, 4), run: share(4, 6), sprint: share(6, Infinity) };
-  const co = q(together, 0.5);
+  const BANDS = [[0, 0.5], [0.5, 2], [2, 4], [4, 6], [6, Infinity]];
+  const motionOf = (tl) => {
+    const speeds = [];
+    const together = [];
+    let prevF = null;
+    for (let t = tl.start; t <= tl.end; t += STEP) {
+      const f = frameAt(tl, t);
+      if (prevF) {
+        const before = new Map(prevF.dots.map((d) => [d.id, d]));
+        for (const side of ["home", "away"]) {
+          const movers = [];
+          for (const d of f.dots) {
+            const b = before.get(d.id);
+            if (!b || d.side !== side || d.role === "GK") continue;
+            const v = Math.hypot(d.x - b.x, d.y - b.y) / STEP;
+            speeds.push(v);
+            if (v >= 0.5) movers.push(Math.atan2(d.y - b.y, d.x - b.x));
+          }
+          if (movers.length < 3) continue;
+          let best = 0;
+          for (const a of movers) {
+            const n = movers.filter((c) => Math.abs(Math.atan2(Math.sin(c - a), Math.cos(c - a))) <= (25 * Math.PI) / 180).length;
+            best = Math.max(best, n);
+          }
+          together.push(best / movers.length);
+        }
+      }
+      prevF = f;
+    }
+    const bands = BANDS.map(([lo, hi]) => speeds.filter((v) => v >= lo && v < hi).length / speeds.length);
+    return { speeds, together, bands, co: q(together, 0.5) };
+  };
+  // Total variation between two band shares: 0 the same spread of speeds, 1 nothing in common.
+  const tv = (a, b) => a.reduce((s, x, i) => s + Math.abs(x - b[i]), 0) / 2;
+  const said = (m) => `standing ${pc(m.bands[0])}, walk ${pc(m.bands[1])}, jog ${pc(m.bands[2])}, run ${pc(m.bands[3])}, sprint ${pc(m.bands[4])}; co-movement ${pc(m.co)}`;
+
+  const passages = slice.passages.map((p) => ({ kind: p.kind, tl: realTimeline(p) }));
+  const per = passages.map((p) => ({ kind: p.kind, ...motionOf(p.tl) }));
+  const pooled = BANDS.map((_, i) => per.reduce((s, m) => s + m.bands[i] * m.speeds.length, 0) / per.reduce((s, m) => s + m.speeds.length, 0));
+  const range = (f) => [Math.min(...per.map(f)), Math.max(...per.map(f))];
+  const want = {
+    standing: range((m) => m.bands[0]),
+    co: range((m) => m.co),
+    tv: Math.max(...per.map((m) => tv(m.bands, pooled))),
+  };
+  console.log(`\nmotion, real (${per.length} DFL passages): standing ${pc(want.standing[0])}–${pc(want.standing[1])}, co-movement ${pc(want.co[0])}–${pc(want.co[1])}, spread within ${want.tv.toFixed(2)} of all six`);
+  for (const m of per) console.log(`  ${m.kind}: ${said(m)}`);
+
+  const r74 = replayMinute(players, moments, 74).timeline;
+  const live70 = liveTimeline(players, moments.filter((m) => m.minute > 70 && m.minute <= 80), {
+    speed: 1,
+    arrivals: arrivalsAt(1, 71),
+    start: 0,
+    initial: { kind: "shape", ball: { x: 0, y: 0 }, side: "home" },
+  });
+  for (const [label, tl] of [["74' loop", r74], ["x1 71'–80'", live70]]) {
+    const m = motionOf(tl);
+    const d = tv(m.bands, pooled);
+    console.log(`motion, ours (${label}): ${said(m)}; spread ${d.toFixed(2)} from real`);
+    if (m.bands[0] < want.standing[0] || m.bands[0] > want.standing[1]) fail(`motion (${label}): ${pc(m.bands[0])} standing (real ${pc(want.standing[0])}–${pc(want.standing[1])})`);
+    if (m.bands[4] > 0.08) fail(`motion (${label}): ${pc(m.bands[4])} sprinting (want 8% or less)`);
+    if (m.co < want.co[0] || m.co > want.co[1]) fail(`motion (${label}): a median ${pc(m.co)} of movers go the same way (real ${pc(want.co[0])}–${pc(want.co[1])})`);
+    if (d > want.tv) fail(`motion (${label}): the spread of speeds is ${d.toFixed(2)} from real (real passages within ${want.tv.toFixed(2)})`);
+  }
+
+  // Around the ball, on every completed pass with a receiver: the nearest opponent to the passer
+  // at the touch, the receiver's speed over the last second before the ball reaches him, and how
+  // much of it is toward where the pass came from (+: comes to meet it). Ours must sit in the
+  // real middle half (stats.json, 2,900 passes in 7 matches); the real passages are measured
+  // the same way, as a check on the measure.
+  const around = (tl) => {
+    const presser = [];
+    const recv = [];
+    const meets = [];
+    for (const b of tl.beats) {
+      const m = b.moment;
+      if (m.kind !== "pass" || m.outcome !== "complete" || !b.receiver || b.land - b.touch < 0.4) continue;
+      const f = frameAt(tl, b.touch);
+      const a = f.dots.find((d) => d.id === b.actor);
+      if (!a) continue;
+      const opp = f.dots.filter((d) => d.side !== a.side);
+      if (opp.length) presser.push(Math.min(...opp.map((d) => dist(d, a))));
+      const back = Math.max(b.touch, b.land - 1);
+      const r0 = frameAt(tl, back).dots.find((d) => d.id === b.receiver);
+      const r1 = frameAt(tl, b.land).dots.find((d) => d.id === b.receiver);
+      if (!r0 || !r1) continue;
+      const span = b.land - back;
+      recv.push(dist(r0, r1) / span);
+      const tx = m.from.x - r1.x;
+      const ty = m.from.y - r1.y;
+      const tn = Math.hypot(tx, ty) || 1;
+      meets.push(((r1.x - r0.x) * tx + (r1.y - r0.y) * ty) / tn / span);
+    }
+    return { presser, recv, meets };
+  };
+  const realAround = passages.map((p) => around(p.tl)).reduce((s, x) => ({ presser: [...s.presser, ...x.presser], recv: [...s.recv, ...x.recv], meets: [...s.meets, ...x.meets] }));
+  const P = real.pass;
+  const med = (xs) => (xs.length ? q(xs, 0.5) : NaN);
   console.log(
-    `\nmotion (74' loop): speed median ${q(speeds, 0.5).toFixed(1)} m/s, p90 ${q(speeds, 0.9).toFixed(1)}; ` +
-      Object.entries(bands).map(([k, v]) => `${k} ${pc(v)}`).join(", ") +
-      `; same-way co-movement median ${pc(co)}`,
+    `around the ball, real: presser ${P.presser.p25}–${P.presser.p75} m (median ${P.presser.p50}), receiver ${P.receiverSpeed.p25}–${P.receiverSpeed.p75} m/s, ` +
+      `toward the pass ${P.receiverMeets.p25}–${P.receiverMeets.p75} m/s; the passages measured here: ${med(realAround.presser).toFixed(1)} m, ${med(realAround.recv).toFixed(1)} m/s, ${med(realAround.meets).toFixed(1)} m/s (${realAround.presser.length} passes)`,
   );
-  if (bands.standing < 0.25 || bands.standing > 0.35) fail(`motion: ${pc(bands.standing)} standing (want 25–35%)`);
-  if (bands.sprint > 0.08) fail(`motion: ${pc(bands.sprint)} sprinting (want 8% or less)`);
-  if (co > 0.5) fail(`motion: a median ${pc(co)} of movers go the same way (want 50% or less)`);
+  // The 74' loop has a pass or two: too few to judge, so the ×1 stretch carries this check.
+  {
+    const label = "x1 71'–80'";
+    const o = around(live70);
+    if (o.presser.length < 10) fail(`around the ball (${label}): only ${o.presser.length} completed passes to measure`);
+    const [pr, rv, mt] = [med(o.presser), med(o.recv), med(o.meets)];
+    console.log(`around the ball, ours (${label}, ${o.presser.length} passes): presser ${pr.toFixed(1)} m, receiver ${rv.toFixed(1)} m/s, toward the pass ${mt.toFixed(1)} m/s`);
+    if (pr < P.presser.p25 || pr > P.presser.p75) fail(`around the ball (${label}): the nearest opponent stands ${pr.toFixed(1)} m from the passer (real ${P.presser.p25}–${P.presser.p75})`);
+    if (rv < P.receiverSpeed.p25 || rv > P.receiverSpeed.p75) fail(`around the ball (${label}): the receiver comes in at ${rv.toFixed(1)} m/s (real ${P.receiverSpeed.p25}–${P.receiverSpeed.p75})`);
+    if (mt < P.receiverMeets.p25 || mt > P.receiverMeets.p75) fail(`around the ball (${label}): the receiver moves ${mt.toFixed(1)} m/s toward the pass (real ${P.receiverMeets.p25}–${P.receiverMeets.p75})`);
+  }
+
+  // The ball in the air: each pass's peak height above the ground (loft) against real passes of
+  // its length, by median.
+  {
+    const { loft } = await load("/src/pitch/plan.ts");
+    const byLen = new Map(P.byLength.map((b) => [b, []]));
+    for (const m of moments) {
+      if (m.kind !== "pass" || !m.to) continue;
+      const L = dist(m.from, m.to);
+      const bin = P.byLength.find((b) => L >= b.from && L < b.to);
+      if (bin) byLen.get(bin).push(loft(m));
+    }
+    for (const [bin, hs] of byLen) {
+      if (hs.length < 5) continue;
+      const h = med(hs);
+      console.log(`  loft ${bin.from}–${bin.to} m: ours median ${h.toFixed(1)} m over ${hs.length} passes, real ${bin.height.p25}–${bin.height.p75} (median ${bin.height.p50})`);
+      // Real passes this long mostly stay on the ground (under 0.3 m: a bobble, not a loft).
+      const low = bin.height.p75 < 0.3;
+      if (low ? h >= 0.3 : h < bin.height.p25 || h > bin.height.p75) fail(`loft: passes of ${bin.from}–${bin.to} m peak at a median ${h.toFixed(1)} m above the ground (real ${bin.height.p25}–${bin.height.p75})`);
+    }
+  }
 }
 
 await server.close();

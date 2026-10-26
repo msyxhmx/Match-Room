@@ -50,6 +50,16 @@ SOURCE = (
 # facing the attack). Shirt numbers follow the slot (1, 2-5, 6-8, 9-11): no real numbers.
 LINES = [("GK", 1), ("DF", 4), ("MF", 3), ("FW", 3)]
 SLOT_ROLE = [r for r, n in LINES for _ in range(n)]
+# DFL position codes to those slots. Most teams here play 4-2-3-1 (or 4-3-3 with two holding
+# midfielders): the holding pair and the attacking midfielder make our three, the wide attackers
+# and the striker our front three. A stretch where a team's codes don't fill every slot once (a
+# back three, a 4-4-2, a change of system) is left out.
+CODE_SLOT = {
+    "TW": 0,
+    "RV": 1, "IVR": 2, "IVL": 3, "LV": 4,
+    "DMR": 5, "ZO": 6, "DML": 7,
+    "ORM": 8, "RA": 8, "STZ": 9, "OLM": 10, "LA": 10,
+}  # fmt: skip
 
 
 # ---------------------------------------------------------------- loading
@@ -75,6 +85,7 @@ class Match:
     pids: list[str]
     side: dict[str, str]  # pid -> home / away
     keeper: dict[str, bool]
+    code: dict[str, str]  # pid -> DFL position code
     halves: list[Half] = field(default_factory=list)
     events: list[dict] = field(default_factory=list)
 
@@ -96,17 +107,19 @@ def match_ids(data: Path) -> list[str]:
     )
 
 
-def load_meta(path: Path) -> tuple[dict[str, str], dict[str, bool], tuple[float, float]]:
+def load_meta(path: Path):
     root = ET.parse(path).getroot()
     env = root.find(".//Environment")
     size = (float(env.get("PitchX", LENGTH)), float(env.get("PitchY", WIDTH)))
     side: dict[str, str] = {}
     keeper: dict[str, bool] = {}
+    code: dict[str, str] = {}
     for team in root.iter("Team"):
         for p in team.iter("Player"):
             side[p.get("PersonId")] = "home" if team.get("Role") == "home" else "away"
             keeper[p.get("PersonId")] = p.get("PlayingPosition") == "TW"
-    return side, keeper, size
+            code[p.get("PersonId")] = p.get("PlayingPosition") or ""
+    return side, keeper, code, size
 
 
 def load_positions(path: Path, side: dict[str, str]) -> list[Half]:
@@ -227,8 +240,8 @@ def normalise(m: Match, size: tuple[float, float]) -> None:
 
 
 def load_match(match_id: str, data: Path, cache: Path) -> Match:
-    side, keeper, size = load_meta(find("matchinformation", match_id, data))
-    m = Match(id=match_id, pids=sorted(side), side=side, keeper=keeper)
+    side, keeper, code, size = load_meta(find("matchinformation", match_id, data))
+    m = Match(id=match_id, pids=sorted(side), side=side, keeper=keeper, code=code)
     npz = cache / f"{match_id}.npz"
     if npz.exists():
         z = np.load(npz)
@@ -251,38 +264,31 @@ def load_match(match_id: str, data: Path, cache: Path) -> Match:
 # ---------------------------------------------------------------- slots
 
 
-def slots_at(m: Match, h: Half, i0: int, i1: int) -> dict[str, list[int]] | None:
-    """Each side's eleven over frames i0..i1 as our 4-3-3 slots (column indices, slot order), or
-    None unless both sides have a keeper and ten outfield players on throughout. Lines by mean
-    depth (deepest four, the next three, the top three); within a line by mean y, right to left
-    facing the attack."""
-    out = {}
-    for side in ("home", "away"):
-        k = 1.0 if side == "home" else -1.0  # own frame: attacking +x
-        cols = [
-            j
-            for j, p in enumerate(m.pids)
-            if m.side[p] == side and not np.isnan(h.px[i0:i1, j]).any()
-        ]
-        keepers = [j for j in cols if m.keeper[m.pids[j]]]
-        field_ = [j for j in cols if not m.keeper[m.pids[j]]]
-        if len(keepers) != 1 or len(field_) != 10:
+def side_slots(m: Match, h: Half, i0: int, i1: int, side: str) -> list[int] | None:
+    """One side's eleven over frames i0..i1 as our 4-3-3 slots (column indices in slot order), or
+    None unless the eleven on the pitch throughout fill every slot once (CODE_SLOT)."""
+    order: list[int | None] = [None] * 11
+    for j, p in enumerate(m.pids):
+        if m.side[p] != side or np.isnan(h.px[i0:i1, j]).any():
+            continue
+        k = CODE_SLOT.get(m.code[p])
+        if k is None or order[k] is not None:
             return None
-        mx = {j: k * np.mean(h.px[i0:i1, j]) for j in field_}
-        my = {j: k * np.mean(h.py[i0:i1, j]) for j in field_}
-        by_depth = sorted(field_, key=lambda j: mx[j])
-        order, at = list(keepers), 0
-        for _, n in LINES[1:]:
-            order += sorted(by_depth[at : at + n], key=lambda j: my[j])
-            at += n
-        out[side] = order
-    return out
+        order[k] = j
+    return order if None not in order else None
+
+
+def slots_at(m: Match, h: Half, i0: int, i1: int) -> dict[str, list[int]] | None:
+    """Both sides' slots (side_slots), or None unless both fit."""
+    out = {side: side_slots(m, h, i0, i1, side) for side in ("home", "away")}
+    return out if all(out.values()) else None
 
 
 def windows(m: Match, h: Half, length: int):
-    """Stretches of `length` frames with one fixed eleven a side, and their slots."""
+    """Stretches of `length` frames, with the slots of each side whose eleven fits throughout."""
     for i0 in range(0, len(h.t) - length, length):
-        s = slots_at(m, h, i0, i0 + length)
+        s = {side: side_slots(m, h, i0, i0 + length, side) for side in ("home", "away")}
+        s = {k: v for k, v in s.items() if v}
         if s:
             yield i0, s
 
@@ -291,7 +297,7 @@ def windows(m: Match, h: Half, length: int):
 
 # Ball cells in the team's own frame: 7 along (15 m), 5 across (13.6 m).
 NX, NY = 7, 5
-SHAPE_WINDOW = int(300 / DT)  # slots are re-fitted every five minutes (substitutions)
+SHAPE_WINDOW = int(60 / DT)  # slots are re-fitted every minute (substitutions)
 
 
 def shape_table(matches: list[Match]) -> dict:
@@ -378,6 +384,99 @@ def stats(matches: list[Match]) -> dict:
         "brake": {"p50": q(np.concatenate(dec), 0.5), "p90": q(np.concatenate(dec), 0.9)},
         "together": {"median": q(together, 0.5), "p90": q(together, 0.9)},
     }
+
+
+def pass_numbers(matches: list[Match]) -> dict:
+    """Around a completed pass: who is near the passer at the touch, how the receiver comes to
+    the ball, how fast and high it travels, and how long the receiver keeps it. The touch is the
+    frame within a second of the event where the ball is nearest the passer; it lands when the
+    receiver is first within 1.5 m of it (within 4 s)."""
+    rows = []
+    for m in matches:
+        col = {p: j for j, p in enumerate(m.pids)}
+        passes = [e for e in m.events if e["kind"] == "pass"]
+        for h in m.halves:
+            # Height is the ball's centre: a ball rolling along the ground reads about 0.1 m.
+            ground = float(np.nanmedian(h.bz[h.alive]))
+            for k, e in enumerate(passes):
+                if not (e["ok"] and e["to"] in col and h.t[0] < e["t"] < h.t[-1] - 5):
+                    continue
+                a, r = col[e["by"]], col[e["to"]]
+                c = int(np.searchsorted(h.t, e["t"]))
+                win = range(max(0, c - int(1 / DT)), min(len(h.t) - 1, c + int(1 / DT)))
+                d = [math.hypot(h.px[i, a] - h.bx[i], h.py[i, a] - h.by[i]) for i in win]
+                if not d or np.isnan(d).all():
+                    continue
+                i0 = win[int(np.nanargmin(d))]
+                if not h.alive[i0] or np.nanmin(d) > 2:
+                    continue
+                i1 = next(
+                    (
+                        i
+                        for i in range(i0 + 2, min(len(h.t), i0 + int(4 / DT)))
+                        if math.hypot(h.px[i, r] - h.bx[i], h.py[i, r] - h.by[i]) < 1.5
+                    ),
+                    None,
+                )
+                if i1 is None:
+                    continue
+                mates = [j for j, p in enumerate(m.pids) if m.side[p] == m.side[e["by"]] and j != a]
+                opps = [j for j, p in enumerate(m.pids) if m.side[p] != m.side[e["by"]]]
+                at = np.array([h.px[i0, a], h.py[i0, a]])
+                near = lambda js, i=i0, at=at, h=h: np.nanmin(  # noqa: E731
+                    np.hypot(h.px[i, js] - at[0], h.py[i, js] - at[1])
+                )
+                length = math.hypot(h.bx[i1] - h.bx[i0], h.by[i1] - h.by[i0])
+                flight = (i1 - i0) * DT
+                back = max(i0, i1 - int(1 / DT))
+                rv = np.hypot(np.diff(h.px[back : i1 + 1, r]), np.diff(h.py[back : i1 + 1, r])) / DT
+                # Toward the ball's start: the receiver comes to meet it (+) or waits / drifts away.
+                to_ball = np.array([h.bx[i0] - h.px[i1, r], h.by[i0] - h.py[i1, r]])
+                step = np.array([h.px[i1, r] - h.px[back, r], h.py[i1, r] - h.py[back, r]])
+                meets = float(step @ to_ball / max(1e-6, np.linalg.norm(to_ball))) / (
+                    (i1 - back) * DT
+                )
+                nxt = next((x for x in passes[k + 1 :] if x["by"] == e["to"]), None)
+                held = nxt["t"] - h.t[i1] if nxt and 0 < nxt["t"] - h.t[i1] < 15 else np.nan
+                rows.append(
+                    [
+                        near(opps),
+                        near(mates),
+                        length,
+                        length / flight,
+                        max(0.0, float(np.nanmax(h.bz[i0 : i1 + 1])) - ground),
+                        float(np.nanmean(rv)),
+                        meets,
+                        held,
+                    ]
+                )
+    x = np.array(rows)
+    pct = lambda v: {f"p{p}": round(q(v[~np.isnan(v)], p / 100), 2) for p in (10, 25, 50, 75, 90)}  # noqa: E731
+    cols = [
+        "presser",
+        "support",
+        "length",
+        "speed",
+        "height",
+        "receiverSpeed",
+        "receiverMeets",
+        "held",
+    ]
+    out = {"passes": len(x), **{c: pct(x[:, i]) for i, c in enumerate(cols)}}
+    # Ball speed and peak height by pass length (m).
+    out["byLength"] = []
+    for lo, hi in ((0, 10), (10, 20), (20, 30), (30, 45), (45, 120)):
+        sel = (x[:, 2] >= lo) & (x[:, 2] < hi)
+        out["byLength"].append(
+            {
+                "from": lo,
+                "to": hi,
+                "n": int(sel.sum()),
+                "speed": pct(x[sel, 3]),
+                "height": pct(x[sel, 4]),
+            }
+        )
+    return out
 
 
 # ---------------------------------------------------------------- the slice
@@ -502,6 +601,8 @@ def main() -> None:
         matches.append(load_match(mid, args.data, ROOT / "data" / "dfl-cache"))
     s = stats(matches)
     print(json.dumps(s, indent=1))
+    s["pass"] = pass_numbers(matches)
+    print(json.dumps(s["pass"], indent=1))
     write("stats.json", {"matches": len(matches), **s})
     write("shape.json", shape_table(matches))
     write("slice.json", {"passages": [passage(*p) for p in pick_passages(matches)]})
