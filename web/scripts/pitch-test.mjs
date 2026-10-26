@@ -14,7 +14,8 @@
 //   assist      a goal's credited assist ("Set up by …"), when shown, is received by the scorer
 //   continuous  with the ghost ball on: the ball is on screen nearly all the time, never jumps
 //               (45 m/s or more between frames: faster than any real shot here), every real touch is still the real ball on the
-//               real spot, and a new tick doesn't move the ghost already shown
+//               real spot, a new tick doesn't move the ghost already shown, and the ghost never
+//               leaves the pitch (a real shot may end in the net or wide; the ghost never does)
 //   camera      the phone follow camera (343 × 257 box): the ball is in frame at least 95% of the
 //               time it's on screen; within a picture the pan is steady (99% of frames under
 //               500 plate px/s) and even a switch of play across the pitch stays under 1,600
@@ -148,12 +149,14 @@ function checkContinuous(label, tl, until = tl.end) {
   let total = 0;
   let jumps = 0;
   let worst = 0;
+  let out = 0;
   let prev = null;
   for (let t = tl.start; t <= until; t += DT) {
     const f = frameAt(tl, t, { continuous: true });
     total++;
     if (f.ball) {
       seen++;
+      if (f.ball.ghost && (Math.abs(f.ball.x) > HALF_L || Math.abs(f.ball.y) > HALF_W)) out++;
       if (prev) {
         const v = Math.hypot(f.ball.x - prev.x, f.ball.y - prev.y) / DT;
         if (v > worst) worst = v;
@@ -167,7 +170,8 @@ function checkContinuous(label, tl, until = tl.end) {
     if (!f.ball || f.ball.ghost || dist(f.ball, b.moment.from) > 0.05) fail(`${label} continuous: ${b.moment.id} touch isn't the real ball`);
   }
   const share = seen / total;
-  console.log(`\n${label} continuous: ball on screen ${(share * 100).toFixed(0)}% of the time, ${jumps} jumps, fastest ${worst.toFixed(0)} m/s`);
+  console.log(`\n${label} continuous: ball on screen ${(share * 100).toFixed(0)}% of the time, ${jumps} jumps, fastest ${worst.toFixed(0)} m/s, ghost off the pitch in ${out} frames`);
+  if (out > 0) fail(`${label} continuous: the ghost ball left the pitch in ${out} frames`);
   if (jumps > 0) fail(`${label} continuous: the ball jumped ${jumps} times`);
   if (share < 0.85) fail(`${label} continuous: the ball is on screen only ${(share * 100).toFixed(0)}%`);
 }

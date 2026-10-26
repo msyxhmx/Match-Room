@@ -9,7 +9,7 @@
 // play before the next moment's approach never depends on that moment, so planning again after
 // a new tick doesn't change what was already shown.
 
-import { attackSign, dist, own, type Side, type Vec } from "./geometry";
+import { attackSign, dist, HALF_L, HALF_W, own, type Side, type Vec } from "./geometry";
 import { trackAt } from "./frame";
 import { hash01, isGoal } from "./moments";
 import type { Timeline } from "./plan";
@@ -39,16 +39,27 @@ const PASS_EVERY = 2.6;
 const ease = (u: number) => u + 0.3 * u * (1 - u);
 /** After a goal: no ball while they celebrate and reset. */
 const GOAL_QUIET = 3.6;
+/** After a ball off the pitch: none while the goal kick is set up. */
+const DEAD = 1.2;
+const offPitch = (p: Vec) => Math.abs(p.x) > HALF_L || Math.abs(p.y) > HALF_W;
 /** How far ahead the open-ended play is planned (s). */
 const HORIZON = 600;
 
 const cache = new WeakMap<Timeline, Map<number, Gap | null>>();
 
+/** In from the lines: a carrier at the line keeps the ghost on the pitch, not a stride over it. */
+const IN = 0.3;
+
+/** The ghost at a player's feet, a stride ahead. Every ghost position is a feet spot or a straight
+ *  line between two of them, so keeping these on the pitch keeps the whole ghost on it. */
 function feet(tl: Timeline, id: string, t: number): Vec | null {
   const tr = tl.tracks[id];
   if (!tr || (tr.offAt !== null && t >= tr.offAt)) return null;
   const p = trackAt(tr.keys, t);
-  return { x: p.x + attackSign(tr.slot.side) * 0.6, y: p.y };
+  return {
+    x: Math.max(-HALF_L + IN, Math.min(HALF_L - IN, p.x + attackSign(tr.slot.side) * 0.6)),
+    y: Math.max(-HALF_W + IN, Math.min(HALF_W - IN, p.y)),
+  };
 }
 
 function nearestOf(tl: Timeline, side: Side | null, p: Vec, t: number, except?: string): string | null {
@@ -145,6 +156,12 @@ function planGap(tl: Timeline, i: number): Gap | null {
     start = a.end + GOAL_QUIET;
     from = { x: 0, y: 0 };
     holder = nearestOf(tl, a.moment.side === "home" ? "away" : "home", from, start);
+  } else if (offPitch(a.moment.to ?? a.moment.from)) {
+    // A shot wide or over: the ball is dead. The defending keeper restarts with a goal kick.
+    const side: Side = a.moment.side === "home" ? "away" : "home";
+    start = a.end + DEAD;
+    holder = Object.keys(tl.tracks).find((k) => tl.tracks[k].slot.side === side && tl.tracks[k].slot.role === "GK") ?? null;
+    from = (holder && feet(tl, holder, start)) || { x: 0, y: 0 };
   } else {
     start = a.end;
     from = a.moment.to ?? a.moment.from;
