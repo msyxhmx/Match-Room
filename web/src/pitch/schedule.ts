@@ -100,7 +100,14 @@ export interface LiveOptions {
 
 /** Per lineup, the last live plan and what it was planned from: the next tick's plan carries on
  *  from it (PlanOptions.resume) instead of replanning the whole session. */
-const lastLive = new WeakMap<SquadPlayer[], { o: LiveOptions; arrivals: Map<number, number>; tl: Timeline }>();
+const lastLive = new WeakMap<SquadPlayer[], { o: LiveOptions; arrivals: Map<number, number>; shown: string; tl: Timeline }>();
+
+/** The moments a plan can use (their minute has arrived), by id: the rest don't change it. */
+const usable = (moments: Moment[], arrivals: Arrivals) =>
+  moments
+    .filter((m) => arrivals.has(m.minute))
+    .map((m) => m.id)
+    .join();
 
 export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveOptions): Timeline {
   // Play goes on till well after the next tick is due (two ticks' time); at the end of a half it
@@ -112,11 +119,14 @@ export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveO
   // Carry on from the last plan when this one only adds ticks to it.
   let resume: { from: Timeline; after: number } | undefined;
   const L = o.fresh ? undefined : lastLive.get(players);
+  const shown = usable(moments, o.arrivals);
   if (L && L.o.speed === o.speed && L.o.start === o.start && JSON.stringify(L.o.initial) === JSON.stringify(o.initial)) {
     let same = true;
     let after = Infinity;
     for (const [m, t] of L.arrivals) if (o.arrivals.get(m) !== t) same = false;
     for (const [m, t] of o.arrivals) if (!L.arrivals.has(m)) after = Math.min(after, t);
+    // No new tick and the same usable moments (a re-render): the same plan.
+    if (same && after === Infinity && shown === L.shown) return L.tl;
     if (same && after < Infinity) resume = { from: L.tl, after };
   }
   const tl = plan(players, moments, {
@@ -132,6 +142,6 @@ export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveO
     initial: o.initial,
   });
   // A copy: the live page adds to its arrivals in place.
-  lastLive.set(players, { o, arrivals: new Map(o.arrivals), tl });
+  lastLive.set(players, { o, arrivals: new Map(o.arrivals), shown, tl });
   return tl;
 }
