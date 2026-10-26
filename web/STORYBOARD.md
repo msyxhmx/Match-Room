@@ -89,7 +89,7 @@ Rubric codes:
 - **C** category stages: Ingest, Interpret, Explain, Render, Personalise
 
 ### S1 · 0:00–0:09 · Hook: the equaliser
-- **On screen:** the live screen at 74:10. The score flips 1–2 → 2–2. The moment card slides up with "Northgate City make it count" and the why-line **"Chance to win: 5% → 28%"**. Synthetic data label visible.
+- **On screen:** the live screen at 74:10. The score flips 1–2 → 2–2. The moment card slides up with "Northgate City level it" and the why-line **"Chance to win: 5% → 28%"**. Synthetic data label visible.
 - **Data:** `GET /api/matches/SCN-comeback/live?minute=75&…` (the card at 74:10). Why-line from the engine: "Their chance of winning moves from 5% to 28%."
 - **VO:** "Seventy-four minutes. Northgate City were two down at half-time. Now it's level. But a score doesn't tell you why."
 - **Serves:** U (hook), C (Explain).
