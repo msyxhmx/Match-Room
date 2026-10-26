@@ -139,7 +139,7 @@ function flows(live, dead, preview) {
         await sleep(5000);
         if ((await score(page, "2–2").count()) > 0) throw new Error("2–2 showed before the pitch's goal");
         await score(page, "2–2").waitFor({ timeout: 12000 });
-        await h2(page, "make it count").waitFor({ timeout: 4000 });
+        await h2(page, "level it").waitFor({ timeout: 4000 });
         await noPill(page);
       },
     },
@@ -205,7 +205,7 @@ function flows(live, dead, preview) {
       async run(page) {
         const g = page.locator("[data-graphic=alert]").first();
         await g.waitFor({ timeout: 5000 });
-        if (!(await g.innerText()).includes("make it count")) throw new Error('alert lacks "make it count"');
+        if (!(await g.innerText()).includes("level it")) throw new Error('alert lacks "level it"');
         await pitchDrawing(page);
         await page.getByText("Positions illustrative").first().waitFor({ timeout: 2000 });
         await pressKey(page, "p");
