@@ -20,6 +20,11 @@
 //               500 plate px/s) and even a switch of play across the pitch stays under 1,600
 //               (about two screen widths a second, no jumps); it snaps (no sweep) at a replay cut
 //   replay      the frozen 74' loops the real equaliser (L. Quinn's goal) with its build-up
+//   figures     on the 74' loop: the striker of every shown pass and shot kicks at its touch and
+//               nobody else does; the beaten keeper dives toward the ball's side of his line, the
+//               scorer's own keeper doesn't; the scorer celebrates once it's in; a runner faces
+//               his run on screen; a replay cut reads as standing, not a sprint; reduced motion
+//               holds every leg still
 
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -311,6 +316,81 @@ for (const speed of [1, 60]) {
     );
     check("replay 74'", r.timeline, moments.filter((m) => r.timeline.beats.some((b) => b.moment === m)), 1);
   }
+}
+
+// The standing figures (figures.ts): poses from the frame and one PREV_DT earlier.
+{
+  const { figurePose, PREV_DT } = await load("/src/pitch/figures.ts");
+  const { project } = await load("/src/pitch/geometry.ts");
+  const r = replayMinute(players, moments, 74);
+  const tl = r.timeline;
+  const poseAt = (t, id, still = false) => {
+    const f = frameAt(tl, t, { sway: false });
+    const before = frameAt(tl, t - PREV_DT, { sway: false }).dots.find((d) => d.id === id);
+    const d = f.dots.find((x) => x.id === id);
+    return d && figurePose(d, before, f, still);
+  };
+  let kicks = 0;
+  for (const b of tl.beats) {
+    const m = b.moment;
+    if (m.kind !== "pass" && m.kind !== "shot") continue;
+    const f = frameAt(tl, b.touch, { sway: false });
+    const prev = frameAt(tl, b.touch - PREV_DT, { sway: false });
+    for (const d of f.dots) {
+      const p = figurePose(d, prev.dots.find((x) => x.id === d.id), f);
+      if (d.id === b.actor && p.kick === null) fail(`figures: ${m.player} doesn't kick at the ${m.minute}' ${m.kind}`);
+      if (d.id !== b.actor && p.kick !== null) fail(`figures: ${d.id} kicks at ${m.player}'s ${m.kind}`);
+    }
+    kicks++;
+  }
+  const goal = tl.beats.find((b) => isGoal(b.moment));
+  const f = frameAt(tl, goal.land, { sway: false });
+  const keeperOf = (side) => f.dots.find((d) => d.role === "GK" && d.side === side);
+  const beaten = keeperOf(goal.moment.side === "home" ? "away" : "home");
+  const ownKeeper = keeperOf(goal.moment.side);
+  const dive = poseAt(goal.land, beaten.id).dive;
+  if (!dive || dive.p < 0.5) fail(`figures: ${beaten.name} doesn't dive at the 74' shot`);
+  else if (Math.sign(dive.to.y - beaten.y) !== Math.sign(goal.moment.to.y - beaten.y))
+    fail(`figures: ${beaten.name} dives away from the ball`);
+  if (poseAt(goal.land, ownKeeper.id).dive) fail(`figures: ${ownKeeper.name} dives at his own side's shot`);
+  if (poseAt(goal.land + 0.5, goal.actor).celebrate === null) fail("figures: L. Quinn doesn't celebrate the equaliser");
+  if (poseAt(goal.touch - 1, goal.actor).celebrate !== null) fail("figures: L. Quinn celebrates before he scores");
+
+  // A runner faces his run on screen (when he's not looking back at a ball behind him).
+  let runners = 0;
+  let wrong = 0;
+  for (let t = tl.start + 0.5; t < tl.end; t += 0.25) {
+    const fr = frameAt(tl, t, { sway: false });
+    const pr = frameAt(tl, t - PREV_DT, { sway: false });
+    for (const d of fr.dots) {
+      const b = pr.dots.find((x) => x.id === d.id);
+      const p = figurePose(d, b, fr);
+      if (p.speed < 4 || p.kick !== null || !fr.ball) continue;
+      const du = project(d.x, d.y).u - project(b.x, b.y).u;
+      const ballU = project(fr.ball.x, fr.ball.y).u - project(d.x, d.y).u;
+      if (Math.abs(du) < 2 || Math.sign(du) !== Math.sign(ballU)) continue;
+      runners++;
+      if (p.facing !== Math.sign(du)) wrong++;
+    }
+  }
+  if (runners < 20) fail(`figures: only ${runners} runners to check facing on`);
+  if (wrong) fail(`figures: ${wrong} of ${runners} runners face away from their run`);
+
+  // A cut: the earlier frame far away reads as standing, not a 100 m/s sprint.
+  const d0 = f.dots[3];
+  const cut = figurePose(d0, { ...d0, x: d0.x - 20 }, f);
+  if (cut.speed !== 0 || cut.stride !== 0) fail(`figures: a replay cut reads as a run (${cut.speed.toFixed(1)} m/s)`);
+
+  // Reduced motion: no stride anywhere, the dive already made.
+  for (let t = tl.start + 0.5; t < tl.end; t += 0.5) {
+    const fr = frameAt(tl, t, { sway: false });
+    const pr = frameAt(tl, t - PREV_DT, { sway: false });
+    for (const d of fr.dots)
+      if (figurePose(d, pr.dots.find((x) => x.id === d.id), fr, true).stride !== 0) fail(`figures: ${d.id} strides under reduced motion`);
+  }
+  const heldDive = poseAt(goal.land - 0.3, beaten.id, true).dive;
+  if (!heldDive || heldDive.p !== 1) fail("figures: reduced motion doesn't show the dive already made");
+  console.log(`\nfigures: ${kicks} kicks checked, ${beaten.name} dives, facing checked on ${runners} runners`);
 }
 
 await server.close();
