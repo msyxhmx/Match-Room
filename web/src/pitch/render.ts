@@ -1,8 +1,9 @@
 // Draws one frame on the plate's canvas (1920 × 1080, the plate's own pixels). Imperative and
-// cheap: 22 discs, the ball, a few labels. One look for everyone (Ilham's pick, 25 Oct:
+// cheap: 22 standing figures (figures.ts), the ball, a few labels. One look for everyone (Ilham's pick, 25 Oct:
 // "broadcast"), plus the analyst layer: each team's units joined up, drawn in when the viewer
 // switches to Analyst.
 
+import { drawFigures, FIGURE_H_M } from "./figures";
 import type { Frame } from "./frame";
 import { dist, project, type Vec } from "./geometry";
 
@@ -46,11 +47,14 @@ export interface DrawOptions {
   bounds?: { x0: number; x1: number };
   /** Default true. False: the caller already cleared (a camera transform is set). */
   clear?: boolean;
+  /** The frame figures.PREV_DT earlier: the players' speed and facing. Without it they stand. */
+  prev?: Frame | null;
+  /** Reduced motion: the players hold their poses (no stride, no hop). */
+  still?: boolean;
 }
 
-/** Disc and ball sizes in metres; perspective scales them (14 px and up on the far side). */
-const DOT_R_M = 0.85;
-/** Drawn larger than life (as broadcast graphics do) so it survives 8 Mbps video. */
+/** The ball's radius in metres, drawn larger than life (as broadcast graphics do) so it
+ *  survives 8 Mbps video; perspective scales it. */
 const BALL_R_M = 0.6;
 const MIN_BALL_PX = 8;
 /** Name tags: 24 px text, the video's floor is 23 px. */
@@ -75,7 +79,6 @@ function lineUnit(ctx: CanvasRenderingContext2D, pts: Vec[], colour: string, alp
 export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOptions) {
   const { palette: P } = o;
   const k = o.boost ?? 1;
-  const DOT_R = DOT_R_M * k;
   const BALL_R = BALL_R_M * k;
   const TAG_PX = TAG_PX_BASE * k;
   if (o.clear !== false) ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -104,18 +107,6 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
     lineUnit(ctx, [m.from, tip], P.white, 0.85 * fade, 3 * k);
     ctx.setLineDash([]);
   }
-
-  // ---- shadows, then discs, far to near ----
-  const dots = [...f.dots].sort((a, b2) => b2.y - a.y);
-  for (const d of dots) {
-    const g = project(d.x + 0.25, d.y + 0.35);
-    ctx.globalAlpha = 0.28;
-    ctx.fillStyle = P.ink;
-    ctx.beginPath();
-    ctx.ellipse(g.u, g.v, DOT_R * 1.05 * g.scale, DOT_R * 0.42 * g.scale, 0, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  ctx.globalAlpha = 1;
 
   const drawBall = () => {
     if (!f.ball) return;
@@ -151,26 +142,8 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
     ctx.globalAlpha = 1;
   };
 
-  for (const d of dots) {
-    const c = project(d.x, d.y, DOT_R);
-    const r = DOT_R * c.scale;
-    const keeper = d.role === "GK";
-    if (o.focus && d.name === o.focus && d.side === "home") {
-      ctx.globalAlpha = 0.5;
-      ctx.fillStyle = P.white;
-      ctx.beginPath();
-      ctx.arc(c.u, c.v, r + 5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.globalAlpha = 1;
-    }
-    ctx.fillStyle = keeper ? P.white : colour(d.side);
-    ctx.strokeStyle = keeper ? colour(d.side) : P.white;
-    ctx.lineWidth = keeper ? 4 : 2.5;
-    ctx.beginPath();
-    ctx.arc(c.u, c.v, r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.stroke();
-  }
+  // ---- the players, far to near ----
+  drawFigures(ctx, f, { palette: P, boost: k, focus: o.focus, prev: o.prev, still: o.still });
   // The ball last: always visible, even at a player's feet.
   drawBall();
 
@@ -184,7 +157,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
       const d = f.dots.find((x) => x.id === n.id);
       if (!d) continue;
       shownTag = true;
-      const c = project(d.x, d.y, DOT_R * 2);
+      const c = project(d.x, d.y, FIGURE_H_M * k);
       const text = d.name;
       ctx.font = `600 ${TAG_PX}px ${P.family}`;
       const w = ctx.measureText(text).width + 24 * k;

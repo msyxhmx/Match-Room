@@ -15,6 +15,7 @@ import { useLabels } from "../ui/labels";
 import { cameraAt, FOLLOW_SCALE } from "./camera";
 import type { Shot } from "./director";
 import { PitchScale } from "./PitchView";
+import { PREV_DT } from "./figures";
 import { drawFrame, readPalette, type GhostStyle, type Palette } from "./render";
 import styles from "./pitch.module.css";
 
@@ -88,6 +89,8 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
       else lines += Math.sign(target - lines) * Math.min(Math.abs(target - lines), Math.max(0, t - lastT) / LINES_FADE);
       lastT = t;
       const sh = s(t);
+      // A moment earlier, for the players' speed and facing (figures.ts).
+      const prev = s(t - PREV_DT).frame;
       if (fol) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, el.width, el.height);
@@ -104,10 +107,12 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
           boost: k,
           clear: false,
           bounds: { x0: cam.x0, x1: cam.x0 + cam.width },
+          prev,
+          still: r,
         });
         ctx.setTransform(1, 0, 0, 1, 0, 0);
       } else {
-        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k });
+        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k, prev, still: r });
       }
       el.style.opacity = r ? "1" : String(sh.opacity);
       const rm = sh.replayOf ? sh.replayOf.minute : null;

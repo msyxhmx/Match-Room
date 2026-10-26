@@ -120,7 +120,7 @@ function Calibration() {
 }
 
 const NOTES: Record<Persona, string> = {
-  casual: "Casual: discs, the real pass drawn, the event's player named",
+  casual: "Casual: standing players, the real pass drawn, the event's player named",
   analyst: "Analyst: the same, plus each team's units joined up (the side without the ball stronger)",
 };
 
@@ -135,7 +135,7 @@ const state = (name: string, note: string, render: () => ReactNode): LabState =>
 
 export default {
   component: "Pitch",
-  summary: "The live pitch: 22 dots and the ball from the real events, casual and analyst.",
+  summary: "The live pitch: 22 players and the ball from the real events, casual and analyst.",
   states: [
     state("calibration", "The plate camera from pitch.py: projected lines over the render", () => <Calibration />),
     ...PERSONAS.flatMap((p) => [
