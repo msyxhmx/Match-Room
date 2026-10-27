@@ -126,6 +126,8 @@ interface Ill {
   carry: GhostSeg | null;
   /** Before `since` (a dead ball): the picture everyone settles into. */
   wait?: { at: Record<string, Vec>; pace: Record<string, Pace> };
+  /** Waiting for a kick-off not known yet: the current picture's end and its draw. */
+  chunk?: { end: number; leg: number };
 }
 
 /** The planner's state at the start of a moment's turn (see PlanOptions.resume). */
@@ -206,10 +208,8 @@ const SWITCH = 25;
 const KEEP = 1.35;
 export const passSpeed = (d: number) => 4.9 + 0.19 * d;
 const GHOST_MAX = 20;
-/** A dead ball (wide, a foul) is set up this long before play goes on; a kick-off this long
- *  after the goal's mob. */
+/** A dead ball (wide, a foul) is set up this long before play goes on. */
 const DEAD = 1.2;
-const KICKOFF = 4;
 /** The ghost sits a stride ahead of its holder, kept 0.3 m inside the lines. */
 export const feetOf = (p: Vec, side: Side): Vec => ({
   x: Math.max(-HALF_L + 0.3, Math.min(HALF_L - 0.3, p.x + attackSign(side) * 0.6)),
@@ -612,7 +612,16 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
         // A dead ball: everyone settles (the shape around it, or back for a kick-off).
         const { at, pace } = I.wait ? { at: { ...I.wait.at }, pace: { ...I.wait.pace } } : shape(pos[I.by], I.side);
         pullTo(at, pace);
-        run(at, Math.min(until, I.since), {}, new Set(), { pace });
+        let end = Math.min(until, I.since);
+        if (I.since === Infinity) {
+          // A kick-off not known yet: a picture every REPICTURE on its own clock, and one cut
+          // short at `until` goes on with the same draw, so stopping here and going on next tick
+          // moves everyone just as one plan would.
+          if (!I.chunk || cursor >= I.chunk.end - 1e-6) I.chunk = { end: cursor + REPICTURE, leg: legNo + 1 };
+          else legNo = I.chunk.leg - 1;
+          end = Math.min(end, I.chunk.end);
+        }
+        run(at, end, {}, new Set(), { pace });
         continue;
       }
       if (I.fly) {
@@ -795,11 +804,16 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       step(first, mob, {}, new Set(), { pace: slow });
       cursor = holdEnd + mob;
       write(cursor);
-      // Back for the kick-off, which the conceding side's centre-forward takes KICKOFF after
-      // the mob (not when the next moment comes: that may not be known yet).
+      // Back for the kick-off, the ball on the centre spot. When it's taken isn't known until
+      // the next moment is (a feed may restart a minute later, with the kick-off as its next
+      // event): everyone waits in the kick-off picture till then (kickOff).
       zone = { x: 0, y: 0 };
       const taker = nearest(kicking, { x: 0, y: 0 }, 1, new Set())[0];
-      if (taker) takes(taker.id, kicking, { x: 0, y: 0 }, cursor + KICKOFF, { at: t, pace: slow });
+      ill = null;
+      if (taker) {
+        ghost.push({ kind: "fly", t0: cursor, t1: Infinity, from: { x: 0, y: 0 }, to: { x: 0, y: 0 } });
+        ill = { by: taker.id, side: kicking, since: Infinity, until: Infinity, fly: null, carry: null, wait: { at: t, pace: slow } };
+      }
       if (ill) play(until);
       else run(t, until, {}, new Set(), { pace: slow });
     }
@@ -862,7 +876,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       keys,
       ghostN: ghost.length,
       ill: ill && {
-        state: { by: ill.by, side: ill.side, since: ill.since, until: ill.until, fly: ill.fly && { ...ill.fly }, wait: ill.wait },
+        state: { by: ill.by, side: ill.side, since: ill.since, until: ill.until, fly: ill.fly && { ...ill.fly }, wait: ill.wait, chunk: ill.chunk && { ...ill.chunk } },
         carryAt,
         carry: carryAt >= 0 ? { ...ghost[carryAt] } : null,
         flyAt,
@@ -922,7 +936,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       const c = cp.ill;
       if (c.carry) ghost[c.carryAt] = { ...c.carry };
       if (c.fly) ghost[c.flyAt] = { ...c.fly };
-      ill = { ...c.state, fly: c.state.fly && { ...c.state.fly }, carry: c.carry ? ghost[c.carryAt] : null };
+      ill = { ...c.state, fly: c.state.fly && { ...c.state.fly }, chunk: c.state.chunk && { ...c.state.chunk }, carry: c.carry ? ghost[c.carryAt] : null };
     }
     pending = cp.pending && { ...cp.pending };
     for (const b of was.beats.slice(0, cp.beatsN)) beats.push({ ...b, moment: moment(b.moment) });
@@ -1044,6 +1058,20 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       }
       s = cursor; // a pass in flight lands first
     }
+    // A kick-off awaited (after a goal), now that this moment is known: it is the kick-off, the
+    // ball waiting on the centre spot till its touch; or the kick-off is taken now.
+    let kickSeg = -1;
+    const awaited = ill as Ill | null; // set inside closePrev
+    if (awaited && awaited.since === Infinity) {
+      const i = ghost.length - 1;
+      if (m.kind === "pass" && m.side === awaited.side && dist(m.from, { x: 0, y: 0 }) < 3) {
+        kickSeg = i;
+        ill = null;
+      } else {
+        ghost[i] = { ...ghost[i], t1: s };
+        takes(awaited.by, awaited.side, { x: 0, y: 0 }, s, awaited.wait);
+      }
+    }
     // The hold may have moved the actor a little: keep the run within V_ACTOR.
     touch = Math.max(touch, s + dist(pos[actor], spot) / V_ACTOR);
     // Now the moment is known: play on until its player must set off and the ghost is played
@@ -1140,6 +1168,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     cursor = touch;
     write(touch);
     handOver(handing, m, handFrom, Math.max(s, touch - LEAD));
+    if (kickSeg >= 0) ghost[kickSeg] = { ...ghost[kickSeg], t1: Math.max(s, touch - LEAD) };
 
     // ---- the ball moves: touch → land ----
     let land = touch;
