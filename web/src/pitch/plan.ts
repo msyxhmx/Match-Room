@@ -724,7 +724,11 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     if (I.fly) {
       t0 = I.fly.till;
       by = I.fly.recv;
-      carry = { kind: "carry", t0, t1: t0, by, blendFrom: I.fly.to, blendTill: t0 + 0.25 };
+      // Eased onto his feet at about 12 m/s (as `takes`): he may be heading off for this moment.
+      const to = I.fly.to;
+      const ease = (t: number) => Math.max(0.3, dist(to, feetOf(posAt(by, t), I.side)) / 12);
+      const blendTill = t0 + ease(t0 + ease(t0));
+      carry = { kind: "carry", t0, t1: t0, by, blendFrom: to, blendTill };
       ghost.push(carry);
     }
     if (!carry || carry.kind !== "carry") return;
