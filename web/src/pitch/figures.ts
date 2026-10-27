@@ -21,7 +21,7 @@ import type { Dot, Frame } from "./frame";
 import { strideM } from "./frame";
 import { dist, HALF_L, own, project, type Vec } from "./geometry";
 import { hash01, isGoal } from "./moments";
-import { loft } from "./plan";
+import { HEAD, loft } from "./plan";
 import type { Palette } from "./render";
 
 /** How far back the caller's earlier frame is, in display seconds (the one before that is twice
@@ -174,7 +174,7 @@ export function figurePose(d: Dot, before: Dot | undefined, f: Frame, still = fa
     }
     if (b.receiver === d.id && m.to && b.land > b.touch) {
       const from = { x: m.from.x - d.x, y: m.from.y - d.y };
-      if (m.kind === "pass" && loft(m) > 0) {
+      if (m.kind === "pass" && loft(m) > HEAD) {
         // A lofted ball: up to meet it as it drops.
         const p = through(t, b.land - 0.45, b.land + 0.15);
         if (p !== null) {

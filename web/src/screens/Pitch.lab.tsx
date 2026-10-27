@@ -19,6 +19,9 @@ import { PitchCanvas } from "../pitch/PitchCanvas";
 import { readPalette, type GhostStyle } from "../pitch/render";
 import { replayMinute, replayMoment } from "../pitch/schedule";
 import type { SquadPlayer } from "../pitch/formation";
+import { frameAt } from "../pitch/frame";
+import { realTimeline, type Passage } from "../pitch/real";
+import realSlice from "../pitch/real/slice.json";
 
 const players = (savedLineups as unknown as { players: SquadPlayer[] }).players;
 const moments: Moment[] = toMoments(savedEvents as unknown as PitchEvent[]);
@@ -56,6 +59,16 @@ const live73 = (() => {
 })();
 const CONT_FROM = -1;
 
+/** Real football (DFL tracking, anonymised) through the same figures: the reference. */
+const realPassages = (realSlice as unknown as { passages: Passage[] }).passages;
+const REAL = Object.fromEntries(
+  realPassages.map((p) => {
+    const tl = realTimeline(p);
+    const shot = (t: number): Shot => ({ frame: frameAt(tl, ((t % tl.end) + tl.end) % tl.end), replayOf: null, opacity: 1 });
+    return [`real-${p.kind}`, { shot, still: 4, length: tl.end }];
+  }),
+);
+
 export const PITCH_SCENES = {
   equaliser: { shot: (t: number): Shot => loopShot(equaliser, t), still: equaliserGoal.touch + 0.25, length: equaliser.length },
   flow60: { shot: (t: number): Shot => flow.shotAt(t), still: flow.cuts[0] ? flow.cuts[0].at - 1.2 : 2, length: 11 },
@@ -65,6 +78,7 @@ export const PITCH_SCENES = {
     still: 4.5,
     length: 20,
   },
+  ...REAL,
 } as const;
 
 /** S7 as filmed: the overlay paused on 74' (score bug, the goal alert) over the moving pitch. */
@@ -74,8 +88,8 @@ const alert74 = overlayAt(view74.overlays, 74);
 type Persona = "casual" | "analyst";
 const PERSONAS: Persona[] = ["casual", "analyst"];
 
-function Scene({ scene, persona, ghost }: { scene: keyof typeof PITCH_SCENES; persona: Persona; ghost?: GhostStyle }) {
-  const s = PITCH_SCENES[scene];
+function Scene({ scene, persona, ghost }: { scene: keyof typeof PITCH_SCENES | `real-${string}`; persona: Persona; ghost?: GhostStyle }) {
+  const s = (PITCH_SCENES as Record<string, (typeof PITCH_SCENES)["equaliser"]>)[scene];
   const pitch = <PitchCanvas shot={s.shot} analyst={persona === "analyst"} focus="L. Quinn" at={s.still} ghost={ghost} />;
   if (scene !== "equaliser") return pitch;
   return (
@@ -120,7 +134,7 @@ function Calibration() {
 }
 
 const NOTES: Record<Persona, string> = {
-  casual: "Casual: players who stand, walk, jog and sprint by need, the real pass drawn, the event's player named",
+  casual: "Casual: movement from real tracking data (DFL): the real shape, players who wander, press and play the ghost ball between real moments; the real pass drawn, the event's player named",
   analyst: "Analyst: the same, plus each team's units joined up (the side without the ball stronger)",
 };
 
@@ -147,6 +161,13 @@ export default {
       )),
       state(`corner-${p}`, `${NOTES[p]}. A corner set-up`, () => <Scene scene="corner" persona={p} />),
     ]),
+    ...realPassages.flatMap((p) =>
+      PERSONAS.map((persona) =>
+        state(`real-${p.kind}-${persona}`, `Real football (DFL open data, CC BY 4.0, anonymised): a ${p.kind} passage at 5 Hz, through our figures`, () => (
+          <Scene scene={`real-${p.kind}`} persona={persona} />
+        )),
+      ),
+    ),
     ...(["solid", "ghost", "ghost-pulse"] as GhostStyle[]).map((g) =>
       state(`continuous-${g}`, `Continuous play at ×1 from 74:00, the ball between real moments drawn "${g}"`, () => (
         <Scene scene="continuous" persona="casual" ghost={g} />

@@ -33,6 +33,12 @@
   background: var(--you-tag-fill);
 }
 
+/* The data credit, a quieter second line in the note. */
+.credit {
+  display: block;
+  opacity: 0.72;
+}
+
 .chip {
   padding: var(--space-half) var(--space-2);
   border-radius: var(--radius-pill);

@@ -15,9 +15,13 @@
 //     walks, jogs or runs by the gap and the urgency, and speeds up and slows down at human rates.
 //     A player who must be somewhere at a given instant (on the ball, meeting a pass) gets there
 //     exactly, on a smooth run that starts from his current speed.
+//   - Between real moments the ball keeps moving, drawn as a "ghost" (illustrative): its holder
+//     carries it, passes on to a teammate who meets it, and the nearest opponent presses him;
+//     the shape follows it. Before a real moment it's played to the real spot, landing as the
+//     real ball shows. Nothing here depends on a moment before it is known.
 
 import { attackSign, clampToPitch, dist, HALF_L, HALF_W, own, type Side, type Vec } from "./geometry";
-import { allSlots, kickoffAt, slotId, teamJobs, type Pace, type Role, type Slot, type SquadPlayer } from "./formation";
+import { allSlots, kickoffAt, slotId, teamJobs, wander, type Pace, type Role, type Slot, type SquadPlayer } from "./formation";
 import { hash01, isGoal, type Moment } from "./moments";
 
 export interface Key {
@@ -43,6 +47,9 @@ export interface BallKey {
   ease: "hold" | "linear" | "out";
   /** Peak height (m) of the segment that ends here: lofted long passes. */
   arc: number;
+  /** Measured height (m) at this key (real tracking, real.ts): a segment whose ends both have
+   *  one goes linearly between them, instead of the arc. */
+  z?: number;
   /** The segment that ends here is a carry: the ball sits at this player's feet. */
   follow?: string;
 }
@@ -62,9 +69,18 @@ export interface Beat {
   winnerShown: boolean;
 }
 
+/** One stretch of the ghost ball: at a player's feet, or in flight. A flight with no `from`
+ *  starts where the stretch before it leaves the ball (his feet, or still easing onto them); one
+ *  cut short keeps its pace and vanishes at `gone`. */
+export type GhostSeg =
+  | { kind: "carry"; t0: number; t1: number; by: string; blendFrom?: Vec; blendTill?: number }
+  | { kind: "fly"; t0: number; t1: number; from: Vec | null; to: Vec; gone?: number };
+
 export interface Timeline {
   tracks: Record<string, Track>;
   ball: BallKey[];
+  /** The ghost ball between real moments, in time order (continuous play). */
+  ghost: GhostSeg[];
   beats: Beat[];
   dropped: { moment: Moment; reason: string }[];
   start: number;
@@ -89,7 +105,66 @@ export interface PlanOptions {
   /** Starting spots for named players (slot id → world), over the shape: a replay cut starts
    *  with its player a few strides from the ball. */
   place?: Record<string, Vec>;
+  /** Live: plan at least this far (display time), past when the next tick can arrive. Play goes
+   *  on between moments, so a plan that ended early would freeze the picture until then. */
+  until?: number;
+  /** Live: carry on from an earlier plan of the same session instead of from the start. Its
+   *  moments must all be in this one, and every moment new here known no earlier than `after`.
+   *  Planning is causal, so everything that earlier plan did before `after` stands; this picks
+   *  up from its last checkpoint that nothing new could have changed (same result, a fraction of
+   *  the work: the live page replans on every tick). */
+  resume?: { from: Timeline; after: number };
 }
+
+/** Who has the ghost (from `since`, passing on at `until`), or the pass on its way to `recv`. */
+interface Ill {
+  by: string;
+  side: Side;
+  since: number;
+  until: number;
+  fly: { to: Vec; till: number; recv: string } | null;
+  carry: GhostSeg | null;
+  /** Before `since` (a dead ball): the picture everyone settles into. */
+  wait?: { at: Record<string, Vec>; pace: Record<string, Pace> };
+  /** Waiting for a kick-off not known yet: the current picture's end and its draw. */
+  chunk?: { end: number; leg: number };
+}
+
+/** The planner's state at the start of a moment's turn (see PlanOptions.resume). */
+interface Checkpoint {
+  /** The furthest (display time) any earlier turn looked or moved to. */
+  reach: number;
+  cursor: number;
+  zone: Vec;
+  lastPoss: Side | null;
+  lastBall: Vec;
+  legNo: number;
+  pos: Record<string, Vec>;
+  aim: Record<string, Vec>;
+  active: string[];
+  offAt: Record<string, number | null>;
+  VX: Float64Array;
+  VY: Float64Array;
+  standing: Uint8Array;
+  waiting: Float64Array;
+  going: [string, { due: number; v1: number }][];
+  /** Each track's length then, and its last key as it was (merging may move it later). */
+  keys: Record<string, { n: number; last: Key | null }>;
+  ghostN: number;
+  /** The ghost's holder, with copies of the segments he may still change. */
+  ill: { state: Omit<Ill, "carry">; carryAt: number; carry: GhostSeg | null; flyAt: number; fly: GhostSeg | null } | null;
+  pending: { by: string; side: Side; from: Vec; delay: number } | null;
+  beatsN: number;
+  droppedN: number;
+  prev: Beat | null;
+  prevHold: Record<string, Vec>;
+  prevPace: Record<string, Pace>;
+  /** The queue still to go, by moment id, in its order then. */
+  queue: string[];
+}
+/** Per plan: its last few checkpoints and every moment id it queued. */
+const checkpoints = new WeakMap<Timeline, { cps: Checkpoint[]; queued: Set<string> }>();
+const KEEP_CPS = 24;
 
 /** Average m/s over a leg. The curve between keys peaks at up to 1.5× the average, so these
  *  keep the fastest dot under a sprint (9 m/s): a run for the shape, a sprint to the ball. */
@@ -106,16 +181,19 @@ const RESET = 3.2;
 /** After a goal: the scorer is mobbed this long before everyone heads back. */
 const GOAL_MOB = 1.6;
 
-/** The movement model. Gaits in m/s; a run is V_RUN. */
-export const GAIT = { walk: 1.5, jog: 3.5, run: V_RUN } as const;
+/** The movement model. Gaits in m/s: the typical speed inside each real speed band (DFL,
+ *  real/stats.json "gait": walk 1.35, jog 2.93, run 4.64). */
+export const GAIT = { walk: 1.35, jog: 2.9, run: 4.6 } as const;
 /** Simulation step (s): a key every step while a player moves. */
 const SUB = 0.2;
 /** Within this of his spot a standing player stays put (near the ball; up to FAR_BAND far
- *  from it); a moving one stops this close. */
-export const DEADBAND = 3;
-const FAR_BAND = 7;
+ *  from it); a moving one stops this close. Real players stand 2–10% of the time (DFL): they
+ *  keep adjusting, so the bands are tight. */
+export const DEADBAND = 1.5;
+const FAR_BAND = 4;
 const STOP = 0.6;
-/** m/s² speeding up and slowing down: 0 to a run takes about 1.7 s. */
+/** m/s² speeding up and slowing down: 0 to a run takes about 1.5 s. Real players (DFL, over
+ *  0.2 s): speeding up p90 2.1, p99 4.2; braking p90 2.2, p99 5.1. */
 const ACC = 3;
 const DEC = 4.5;
 /** Reaction to a new picture (s): this per role, plus up to 0.4 more per player. */
@@ -124,6 +202,22 @@ const REACT: Record<Role, number> = { GK: 0.2, DF: 0.3, MF: 0.35, FW: 0.4 };
 const SETTLE = 5;
 /** A ball switched across the pitch this far (m) makes the shape hurry. */
 const SWITCH = 25;
+
+/** The ghost: a holder keeps it about this long (real receivers 0.7–2.4 s, median 1.35, DFL);
+ *  passes go 8–32 m at a real pass's speed for their length; none faster than GHOST_MAX. */
+const KEEP = 1.35;
+export const passSpeed = (d: number) => 4.9 + 0.19 * d;
+const GHOST_MAX = 20;
+/** A dead ball (wide, a foul) is set up this long before play goes on. */
+const DEAD = 1.2;
+/** The ghost sits a stride ahead of its holder, kept 0.3 m inside the lines. */
+export const feetOf = (p: Vec, side: Side): Vec => ({
+  x: Math.max(-HALF_L + 0.3, Math.min(HALF_L - 0.3, p.x + attackSign(side) * 0.6)),
+  y: Math.max(-HALF_W + 0.3, Math.min(HALF_W - 0.3, p.y)),
+});
+
+/** A long approach is re-pictured this often (s). */
+const REPICTURE = 1.2;
 
 /** At ×60 the ball rests for less: more of the match fits. */
 const FAST_HOLD = 0.6;
@@ -312,7 +406,8 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     legNo++;
     const bend = I.map((i) => {
       const hb = (seed[i] + legNo * 0.618034) % 1; // a new, well-spread draw each picture
-      return (hb < 0.5 ? -1 : 1) * (0.26 + 0.7 * Math.abs(2 * hb - 1));
+      // 5–25°: real teams move more together than apart (co-movement 60–70%, DFL).
+      return (hb < 0.5 ? -1 : 1) * (0.09 + 0.35 * Math.abs(2 * hb - 1));
     });
 
     /** One step toward a due spot; false: not yet, or out of reach. */
@@ -436,7 +531,10 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     for (const side of ["home", "away"] as Side[]) {
       const jobs = teamJobs(live().filter((s) => s.side === side), ball, side === poss);
       for (const id in jobs) {
-        at[id] = jobs[id].at;
+        // Each player wanders off his spot as real players do (formation.ts, wander), aimed a
+        // second ahead.
+        const w = own(side, wander(tracks[id].slot, cursor + 1, side === poss)); // own() just flips
+        at[id] = clampToPitch({ x: jobs[id].at.x + w.x, y: jobs[id].at.y + w.y }, -1);
         pace[id] = jobs[id].pace;
       }
     }
@@ -453,6 +551,219 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     return { at, pace };
   };
 
+  // ---- the ghost ball between real moments ----
+  const ghost: GhostSeg[] = [];
+  let ill: Ill | null = null;
+  /** Who takes over once the real ball's moment ends, and after how long a dead ball. */
+  let pending: { by: string; side: Side; from: Vec; delay: number } | null = null;
+  const keepFor = (id: string, t: number) => KEEP * (0.6 + 0.8 * hash01(`${id}:${t.toFixed(1)}:keep`));
+  /** `by` has the ghost from t, easing onto his feet from `from`. */
+  const takes = (by: string, side: Side, from: Vec, t: number, wait?: Ill["wait"]) => {
+    const blendTill = t + Math.max(0.3, dist(from, feetOf(pos[by], side)) / 12);
+    // He keeps it a moment once it's at his feet.
+    const carry: GhostSeg = { kind: "carry", t0: t, t1: Math.max(t + keepFor(by, t), blendTill + 0.4), by, blendFrom: from, blendTill };
+    ghost.push(carry);
+    ill = { by, side, since: t, until: carry.t1, fly: null, carry, wait };
+  };
+  /** Steps everyone to `end` toward a picture, and writes the keys. */
+  const run = (targets: Record<string, Vec>, end: number, caps: Record<string, number>, pinned: Set<string>, leg: Leg) => {
+    if (end <= cursor + 1e-6) return;
+    step(targets, end - cursor, caps, pinned, leg);
+    cursor = end;
+    write(cursor);
+  };
+  /** The next real moment's player, heading for its spot (`stop`: when the final picture takes
+   *  over). Only once that moment is known. */
+  interface Pull {
+    actor: string;
+    spot: Vec;
+    stop: number;
+  }
+
+  /**
+   * Illustrative play up to `until`. The holder carries the ghost a few metres on at a jog, the
+   * nearest opponent closes him down goal side (3–7 m off: real passers' nearest opponent is a
+   * median 5 m away), the shape follows the ball. Then he passes to a teammate 8–32 m away
+   * (forward preferred) at a real pass's speed, landing where that teammate is heading, and the
+   * teammate is due on it. Play stops at `until`, mid-carry or mid-flight, and goes on from
+   * there next time.
+   */
+  const play = (until: number, pull?: Pull) => {
+    let guard = 0;
+    while (ill && cursor < until - 1e-6 && guard++ < 2000) {
+      const I: Ill = ill;
+      const def = other(I.side);
+      if (!active.has(I.by)) {
+        const n = nearest(I.side, pos[I.by], 1, new Set([I.by]), false)[0];
+        if (!n) {
+          ill = null;
+          break;
+        }
+        I.by = n.id;
+      }
+      const pullTo = (targets: Record<string, Vec>, pace: Record<string, Pace>) => {
+        // Not while he's due on a pass in flight: that run is timed to its spot.
+        if (!pull || !targets[pull.actor] || I.fly?.recv === pull.actor) return;
+        const k = clamp(1 - (pull.stop - cursor) / 6, 0, 0.85);
+        targets[pull.actor] = lerp(targets[pull.actor], pull.spot, k);
+        if (k > 0.3) pace[pull.actor] = "urgent";
+      };
+      if (cursor < I.since) {
+        // A dead ball: everyone settles (the shape around it, or back for a kick-off).
+        const { at, pace } = I.wait ? { at: { ...I.wait.at }, pace: { ...I.wait.pace } } : shape(pos[I.by], I.side);
+        pullTo(at, pace);
+        let end = Math.min(until, I.since);
+        if (I.since === Infinity) {
+          // A kick-off not known yet: a picture every REPICTURE on its own clock, and one cut
+          // short at `until` goes on with the same draw, so stopping here and going on next tick
+          // moves everyone just as one plan would.
+          if (!I.chunk || cursor >= I.chunk.end - 1e-6) I.chunk = { end: cursor + REPICTURE, leg: legNo + 1 };
+          else legNo = I.chunk.leg - 1;
+          end = Math.min(end, I.chunk.end);
+        }
+        run(at, end, {}, new Set(), { pace });
+        continue;
+      }
+      if (I.fly) {
+        const f = I.fly;
+        const { at, pace } = shape(f.to, I.side);
+        const caps: Record<string, number> = { [f.recv]: V_RECEIVE };
+        at[f.recv] = f.to;
+        const pr = nearest(def, f.to, 1, new Set(), true)[0];
+        if (pr) {
+          at[pr.id] = toward(pos[pr.id], f.to, Math.max(0, dist(pos[pr.id], f.to) - 4));
+          pace[pr.id] = "urgent";
+        }
+        pullTo(at, pace);
+        run(at, Math.min(until, f.till), caps, new Set([f.recv]), { due: { [f.recv]: f.till }, pace });
+        if (cursor < f.till - 1e-6) break; // still in the air at `until`
+        takes(f.recv, I.side, f.to, f.till);
+        zone = f.to;
+        continue;
+      }
+      // Carrying.
+      const end = Math.min(until, I.until);
+      const me = own(I.side, pos[I.by]);
+      const { at, pace } = shape(pos[I.by], I.side);
+      const caps: Record<string, number> = {};
+      const keeper = tracks[I.by].slot.role === "GK";
+      at[I.by] = keeper ? pos[I.by] : own(I.side, { x: Math.min(HALF_L - 8, me.x + 3.5), y: me.y * 0.92 });
+      pace[I.by] = "auto";
+      const pr = keeper ? undefined : nearest(def, pos[I.by], 1, new Set())[0];
+      if (pr) {
+        const g = 3 + 4 * hash01(`${pr.id}:${I.by}:${I.since.toFixed(1)}:press`);
+        at[pr.id] = own(I.side, { x: Math.min(HALF_L - 1, me.x + 3.5 + g), y: me.y * 0.95 });
+        pace[pr.id] = "urgent";
+        caps[pr.id] = V_ACTOR;
+      }
+      pullTo(at, pace);
+      run(at, end, caps, new Set(), { pace });
+      zone = pos[I.by];
+      if (end < I.until - 1e-6) break; // stopped at `until`, still carrying
+      // Pass on: to where a teammate is heading in the picture around the ball at his feet.
+      const from = feetOf(pos[I.by], I.side);
+      const { at: spots } = shape(from, I.side);
+      let best: { id: string; to: Vec; flight: number; score: number } | null = null;
+      for (const c of live()) {
+        if (c.side !== I.side || c.id === I.by || c.role === "GK") continue;
+        const to = spots[c.id];
+        if (!to) continue;
+        const d = dist(from, to);
+        if (d < 8 || d > 32) continue;
+        const flight = Math.max(0.5, d / passSpeed(d));
+        if (dist(pos[c.id], to) > V_RECEIVE * 0.6 * flight + 1.5) continue;
+        if (pull && c.id === pull.actor && dist(to, pull.spot) > 8) continue;
+        if (pull && cursor + flight > pull.stop) continue; // it must land before the final pass
+        const score = -0.35 * (own(I.side, to).x - own(I.side, from).x) + 8 * hash01(`${c.id}:${I.by}:${cursor.toFixed(1)}:pass`);
+        if (!best || score < best.score) best = { id: c.id, to, flight, score };
+      }
+      if (!best) {
+        // Nobody on: he keeps it a little longer.
+        I.until = cursor + keepFor(I.by, cursor);
+        if (I.carry) I.carry.t1 = I.until;
+        continue;
+      }
+      if (I.carry) I.carry.t1 = cursor;
+      ghost.push({ kind: "fly", t0: cursor, t1: cursor + best.flight, from: null, to: best.to });
+      I.fly = { to: best.to, till: cursor + best.flight, recv: best.id };
+      I.carry = null;
+    }
+  };
+
+  /** Where a player was at t, from his keys (straight between them: close enough to time a pass). */
+  const posAt = (id: string, t: number): Vec => {
+    const k = tracks[id].keys;
+    let i = k.length - 1;
+    while (i > 0 && k[i].t > t) i--;
+    const a = k[i];
+    const b = k[Math.min(i + 1, k.length - 1)];
+    const u = b.t > a.t ? clamp((t - a.t) / (b.t - a.t), 0, 1) : 0;
+    return { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u };
+  };
+
+  /** After the approach is planned (so the holder's track is known): the ghost from `I` to the
+   *  real moment's spot, landing at `arrive` as the real ball shows. A corner: it runs out to the
+   *  flag and waits there. No time to play it at a pass's pace: it bows out. */
+  const handOver = (I: Ill | null, m: Moment, from: number, arrive: number) => {
+    if (!I) return;
+    let carry = I.carry;
+    let t0 = Math.max(from, I.since);
+    let by = I.by;
+    if (I.fly && I.fly.till > arrive - 0.7) {
+      // A pass decided before this moment was known, landing too late to play on: cut short
+      // from now (the ghost bows out; the real ball fades in at its spot).
+      for (let i = ghost.length - 1; i >= 0; i--) {
+        const g = ghost[i];
+        if (g.kind === "fly" && Math.abs(g.t1 - I.fly.till) < 1e-6) {
+          g.gone = Math.max(g.t0, from);
+          break;
+        }
+      }
+      return;
+    }
+    if (I.fly) {
+      t0 = I.fly.till;
+      by = I.fly.recv;
+      // Eased onto his feet at about 12 m/s (as `takes`): he may be heading off for this moment.
+      const to = I.fly.to;
+      const ease = (t: number) => Math.max(0.3, dist(to, feetOf(posAt(by, t), I.side)) / 12);
+      const blendTill = t0 + ease(t0 + ease(t0));
+      carry = { kind: "carry", t0, t1: t0, by, blendFrom: to, blendTill };
+      ghost.push(carry);
+    }
+    if (!carry || carry.kind !== "carry") return;
+    const done = (t: number) => (carry!.t1 = Math.max(carry!.t0, t));
+    if (t0 >= arrive - 0.3 || !tracks[by]) {
+      done(Math.min(carry.t1, t0));
+      return;
+    }
+    // Where the ghost is at t: at his feet, or still easing onto them (as ghost.ts draws it).
+    const c = carry;
+    const ballAt = (t: number): Vec => {
+      const f = feetOf(posAt(by, t), I.side);
+      if (!c.blendFrom || !c.blendTill || t >= c.blendTill) return f;
+      const u = clamp((t - c.t0) / Math.max(1e-6, c.blendTill - c.t0), 0, 1);
+      const e = u * u * (3 - 2 * u);
+      return lerp(c.blendFrom, f, e);
+    };
+    // He passes it on so it lands on time: at a pass's pace for the distance, faster if it must.
+    const land0 = arrive;
+    let cut = Math.max(t0, land0 - 1);
+    let d = 0;
+    for (let k = 0; k < 3; k++) {
+      d = dist(ballAt(cut), m.from);
+      const flight = Math.max(clamp(d / passSpeed(d), 0.4, 2.2), d / GHOST_MAX);
+      cut = Math.max(t0, (m.kind === "corner" ? Math.min(land0, t0 + flight) : land0) - flight);
+    }
+    const land = m.kind === "corner" ? Math.min(land0, cut + Math.max(0.4, d / passSpeed(d))) : land0;
+    if (d / Math.max(1e-3, land - cut) > GHOST_MAX) {
+      done(Math.min(carry.t1, t0));
+      return;
+    }
+    done(cut);
+    ghost.push({ kind: "fly", t0: cut, t1: land, from: null, to: m.from });
+    if (land < arrive) ghost.push({ kind: "fly", t0: land, t1: arrive, from: m.from, to: m.from }); // at the flag
+  };
 
   const beats: Beat[] = [];
   const dropped: Timeline["dropped"] = [];
@@ -475,6 +786,9 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       tracks[prev.actor].offAt = prev.end;
       active.delete(prev.actor);
     }
+    // The ghost takes over from the real ball (after a dead ball's set-up).
+    if (pending && active.has(pending.by)) takes(pending.by, pending.side, pending.from, prev.end + pending.delay);
+    pending = null;
     if (isGoal(m) && until > holdEnd) {
       const kicking = other(m.side);
       const t: Record<string, Vec> = {};
@@ -494,10 +808,18 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       step(first, mob, {}, new Set(), { pace: slow });
       cursor = holdEnd + mob;
       write(cursor);
-      step(t, until - cursor, {}, new Set(), { pace: slow });
+      // Back for the kick-off, the ball on the centre spot. When it's taken isn't known until
+      // the next moment is (a feed may restart a minute later, with the kick-off as its next
+      // event): everyone waits in the kick-off picture till then (kickOff).
       zone = { x: 0, y: 0 };
-      cursor = until;
-      write(cursor);
+      const taker = nearest(kicking, { x: 0, y: 0 }, 1, new Set())[0];
+      ill = null;
+      if (taker) {
+        ghost.push({ kind: "fly", t0: cursor, t1: Infinity, from: { x: 0, y: 0 }, to: { x: 0, y: 0 } });
+        ill = { by: taker.id, side: kicking, since: Infinity, until: Infinity, fly: null, carry: null, wait: { at: t, pace: slow } };
+      }
+      if (ill) play(until);
+      else run(t, until, {}, new Set(), { pace: slow });
     }
     prev = null;
   };
@@ -506,7 +828,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     prev ? prev.land + holdOf(prev.moment) + (isGoal(prev.moment) ? RESET : 0) : cursor;
 
   const knownAt = opts.known ?? (() => -Infinity);
-  const queue = moments
+  let queue = moments
     .map((m) => ({ m, ideal: opts.ideal(m) }))
     .filter((q): q is { m: Moment; ideal: number } => q.ideal !== null && q.ideal >= opts.start - 0.01)
     .sort((a, b) => a.ideal - b.ideal || a.m.t - b.m.t);
@@ -524,8 +846,136 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     return m.priority + (pos[a] ? dist(pos[a], m.from) / 15 : 9);
   };
   let p = 0;
+  let looked = -Infinity;
+  const cps: Checkpoint[] = [];
+  const queued = new Set(queue.map((q) => q.m.id));
+
+  const save = (): Checkpoint => {
+    const keys: Checkpoint["keys"] = {};
+    const offAt: Checkpoint["offAt"] = {};
+    for (const id in tracks) {
+      const k = tracks[id].keys;
+      keys[id] = { n: k.length, last: k.length ? { ...k[k.length - 1] } : null };
+      offAt[id] = tracks[id].offAt;
+    }
+    let flyAt = -1;
+    if (ill?.fly) for (let i = ghost.length - 1; i >= 0 && flyAt < 0; i--) if (ghost[i].kind === "fly" && Math.abs(ghost[i].t1 - ill.fly.till) < 1e-9) flyAt = i;
+    const carryAt = ill?.carry ? ghost.lastIndexOf(ill.carry) : -1;
+    return {
+      reach: looked,
+      cursor,
+      zone,
+      lastPoss,
+      lastBall,
+      legNo,
+      pos: { ...pos },
+      aim: { ...aim },
+      active: [...active],
+      offAt,
+      VX: VX.slice(),
+      VY: VY.slice(),
+      standing: standing.slice(),
+      waiting: waiting.slice(),
+      going: [...going],
+      keys,
+      ghostN: ghost.length,
+      ill: ill && {
+        state: { by: ill.by, side: ill.side, since: ill.since, until: ill.until, fly: ill.fly && { ...ill.fly }, wait: ill.wait, chunk: ill.chunk && { ...ill.chunk } },
+        carryAt,
+        carry: carryAt >= 0 ? { ...ghost[carryAt] } : null,
+        flyAt,
+        fly: flyAt >= 0 ? { ...ghost[flyAt] } : null,
+      },
+      pending: pending && { ...pending },
+      beatsN: beats.length,
+      droppedN: dropped.length,
+      prev: prev && { ...prev },
+      prevHold,
+      prevPace,
+      queue: queue.slice(p).map((q) => q.m.id),
+    };
+  };
+
+  /** Pick up from an earlier plan's checkpoint: false if none fits. */
+  const resume = (): boolean => {
+    const r = opts.resume;
+    const old = r && checkpoints.get(r.from);
+    if (!r || !old) return false;
+    let cp: Checkpoint | undefined;
+    for (let i = old.cps.length - 1; i >= 0 && !cp; i--) if (old.cps[i].reach < r.after && old.cps[i].cursor < r.after) cp = old.cps[i];
+    if (!cp) return false;
+    // Every moment it had still to go is here, and every new one comes after `after`.
+    const byId = new Map(queue.map((q) => [q.m.id, q]));
+    for (const id of old.queued) if (!byId.has(id)) return false;
+    const fresh = queue.filter((q) => !old.queued.has(q.m.id));
+    if (fresh.some((q) => knownAt(q.m) < r.after)) return false;
+    const was = r.from;
+    const moment = (m: Moment) => byId.get(m.id)?.m ?? moments.find((x) => x.id === m.id) ?? m;
+    for (const id in tracks) {
+      const k = cp.keys[id];
+      if (!k || !was.tracks[id]) return false;
+      tracks[id].keys = was.tracks[id].keys.slice(0, k.n);
+      if (k.last) tracks[id].keys[k.n - 1] = { ...k.last };
+      tracks[id].offAt = cp.offAt[id];
+    }
+    active.clear();
+    for (const id of cp.active) active.add(id);
+    for (const id in cp.pos) pos[id] = cp.pos[id];
+    for (const id in cp.aim) aim[id] = cp.aim[id];
+    VX.set(cp.VX);
+    VY.set(cp.VY);
+    standing.set(cp.standing);
+    waiting.set(cp.waiting);
+    going.clear();
+    for (const [id, g] of cp.going) going.set(id, g);
+    cursor = cp.cursor;
+    zone = cp.zone;
+    lastPoss = cp.lastPoss;
+    lastBall = cp.lastBall;
+    legNo = cp.legNo;
+    looked = cp.reach;
+    ghost.push(...was.ghost.slice(0, cp.ghostN));
+    ill = null;
+    if (cp.ill) {
+      const c = cp.ill;
+      if (c.carry) ghost[c.carryAt] = { ...c.carry };
+      if (c.fly) ghost[c.flyAt] = { ...c.fly };
+      ill = { ...c.state, fly: c.state.fly && { ...c.state.fly }, chunk: c.state.chunk && { ...c.state.chunk }, carry: c.carry ? ghost[c.carryAt] : null };
+    }
+    pending = cp.pending && { ...cp.pending };
+    for (const b of was.beats.slice(0, cp.beatsN)) beats.push({ ...b, moment: moment(b.moment) });
+    if (cp.prev) beats[cp.beatsN - 1] = { ...cp.prev, moment: moment(cp.prev.moment) };
+    prev = cp.prev ? beats[cp.beatsN - 1] : null;
+    for (const d of was.dropped.slice(0, cp.droppedN)) dropped.push({ ...d, moment: moment(d.moment) });
+    prevHold = cp.prevHold;
+    prevPace = cp.prevPace;
+    // The queue as it stood, the new moments in their sorted places after it (all later than
+    // anything it had looked at).
+    const rest = cp.queue.map((id) => byId.get(id)!);
+    for (const q of fresh) {
+      let at = rest.length;
+      while (at > 0 && (rest[at - 1].ideal > q.ideal || (rest[at - 1].ideal === q.ideal && rest[at - 1].m.t > q.m.t))) at--;
+      rest.splice(at, 0, q);
+    }
+    queue = rest;
+    p = 0;
+    cps.push(...old.cps.filter((c) => c.cursor <= cp!.cursor && c.reach <= cp!.reach && c !== cp));
+    return true;
+  };
+
+  if (!resume()) {
+    // The ghost starts with whoever is nearest the starting ball, on the side that has it.
+    const side = init.kind === "kickoff" ? init.kicking : init.side;
+    const at = init.kind === "kickoff" ? { x: 0, y: 0 } : init.ball;
+    const n = nearest(side, at, 1, new Set())[0];
+    if (n) takes(n.id, side, at, opts.start);
+  }
 
   while (p < queue.length) {
+    // A checkpoint: what every turn so far has done and looked at (see PlanOptions.resume).
+    looked = Math.max(looked, cursor);
+    cps.push(save());
+    if (cps.length > KEEP_CPS) cps.shift();
     const free = naturalFree();
     // Fillers that can no longer start in time are skipped.
     while (p < queue.length && !isForced(queue[p].m, opts.speed) && queue[p].ideal < free - maxLag) {
@@ -534,6 +984,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     }
     if (p >= queue.length) break;
     const horizon = Math.max(free, queue[p].ideal) + window;
+    looked = Math.max(looked, horizon);
     // Decide only among moments already known when the decision is made.
     const decideAt = Math.max(free, knownAt(queue[p].m));
     let pick = -1;
@@ -581,6 +1032,7 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     if (!prev) s = Math.max(cursor, Math.min(free, ideal));
     // Nobody moves for a moment before it is known (its tick arrived).
     s = Math.max(s, Math.min(ideal, knownAt(m)));
+    looked = Math.max(looked, s);
     const reach = dist(pos[actor], spot) / V_ACTOR;
     let touch = Math.max(ideal, s + Math.max(reach, LEAD + 0.1));
     if (!forced && touch - ideal > maxLag) {
@@ -601,15 +1053,47 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     closePrev(s);
     s = Math.max(s, cursor);
     if (s > cursor + 1e-3) {
-      step({ ...aim }, s - cursor, {}, new Set()); // waiting for this moment: everyone settles
-      cursor = s;
-      write(s);
+      // Waiting for this moment (not known yet): play goes on, or everyone settles.
+      if (ill) play(s);
+      if (s > cursor + 1e-3) {
+        step({ ...aim }, s - cursor, {}, new Set());
+        cursor = s;
+        write(s);
+      }
+      s = cursor; // a pass in flight lands first
+    }
+    // A kick-off awaited (after a goal), now that this moment is known: it is the kick-off, the
+    // ball waiting on the centre spot till its touch; or the kick-off is taken now.
+    let kickSeg = -1;
+    const awaited = ill as Ill | null; // set inside closePrev
+    if (awaited && awaited.since === Infinity) {
+      const i = ghost.length - 1;
+      if (m.kind === "pass" && m.side === awaited.side && dist(m.from, { x: 0, y: 0 }) < 3) {
+        kickSeg = i;
+        ill = null;
+      } else {
+        ghost[i] = { ...ghost[i], t1: s };
+        takes(awaited.by, awaited.side, { x: 0, y: 0 }, s, awaited.wait);
+      }
     }
     // The hold may have moved the actor a little: keep the run within V_ACTOR.
     touch = Math.max(touch, s + dist(pos[actor], spot) / V_ACTOR);
+    // Now the moment is known: play on until its player must set off and the ghost is played
+    // to its spot, then the approach's picture.
+    if (ill && m.kind !== "corner") {
+      const arrive0 = Math.max(s, touch - LEAD);
+      const stop = Math.min(arrive0 - 2.2, touch - dist(pos[actor], spot) / GAIT.run - 1);
+      if (stop > cursor + 0.5) {
+        play(stop, { actor, spot, stop });
+        touch = Math.max(touch, cursor + dist(pos[actor], spot) / V_ACTOR);
+      }
+    }
+    const handing = ill;
+    const handFrom = cursor;
+    ill = null;
 
-    // ---- approach: s → touch ----
-    const dtA = touch - s;
+    // ---- approach: (after play) → touch ----
+    const dtA = touch - cursor;
     const zoneA = lerp(zone, m.from, 0.6);
     const pinned = new Set([actor]);
     const def = other(m.side);
@@ -636,18 +1120,24 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       } else {
         // The nearest one or two opponents close the ball down, goal side.
         const n = m.kind === "foul" ? 1 : m.pressed ? 2 : 1;
-        const gap = m.kind === "foul" ? 1.1 : m.pressed ? 1.6 : 4;
-        for (const pr of nearest(def, m.from, n, used)) {
-          // Goal side; for a shot, from the side, out of the ball's path.
+        // Real passers have the nearest opponent 2.7–9 m away (median 5, DFL); under pressure, close.
+        const gap = m.kind === "foul" ? 1.1 : m.pressed ? 2.6 : 6;
+        nearest(def, m.from, n, used).forEach((pr, i) => {
+          // Goal side (between the ball and his own goal); for a shot, from the side, out of the
+          // ball's path. A second presser cuts the lane inside, a few metres further off.
+          const sg = attackSign(m.side);
+          const inside = m.from.y > 0 ? -1 : 1;
           const goalSide =
             m.kind === "shot"
-              ? { x: m.from.x - attackSign(m.side) * 0.6, y: m.from.y + (m.from.y > 0 ? -1.8 : 1.8) }
-              : { x: m.from.x - attackSign(m.side) * gap, y: m.from.y };
+              ? { x: m.from.x - sg * 0.6, y: m.from.y + inside * 1.8 }
+              : i === 0
+                ? { x: m.from.x + sg * gap, y: m.from.y }
+                : { x: m.from.x + sg * (gap + 2.5), y: m.from.y + inside * 4 };
           targets[pr.id] = goalSide;
           caps[pr.id] = V_ACTOR;
           pace[pr.id] = "urgent";
           used.add(pr.id);
-        }
+        });
         // The second man covers: a few metres goal side of the press, toward the middle.
         if (m.kind !== "shot")
           for (const cv of nearest(def, m.from, 1, used)) {
@@ -668,11 +1158,21 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
       caps[actor] = V_ACTOR; // reach was checked: touch leaves enough time at V_ACTOR
       return { targets, caps, pace };
     };
-    const { targets, caps, pace } = approach(zoneA);
-    step(targets, dtA, caps, pinned, { due: { [actor]: touch }, pace });
+    // A fresh picture every REPICTURE (each player's wander moves on): nobody arrives and
+    // freezes while the ball is about to be played.
+    for (let first = true; first || cursor < touch - 1e-6; first = false) {
+      const end = Math.min(touch, cursor + REPICTURE);
+      const { targets, caps, pace } = approach(zoneA);
+      step(targets, end - cursor, caps, pinned, { due: { [actor]: touch }, pace });
+      cursor = end;
+      if (end < touch) write(cursor);
+      if (dtA <= 0) break;
+    }
     pos[actor] = spot;
     cursor = touch;
     write(touch);
+    handOver(handing, m, handFrom, Math.max(s, touch - LEAD));
+    if (kickSeg >= 0) ghost[kickSeg] = { ...ghost[kickSeg], t1: Math.max(s, touch - LEAD) };
 
     // ---- the ball moves: touch → land ----
     let land = touch;
@@ -763,6 +1263,24 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
     prevHold = hold;
     prevPace = holdPace;
 
+    // Who has the ghost once this moment ends.
+    {
+      const gkDef = live().find((x) => x.side === def && x.role === "GK");
+      // A restart: from the real ball's spot if play runs straight on, else from his feet.
+      const restart = (side: Side, at: Vec, delay: number) => {
+        const n = nearest(side, at, 1, new Set([actor]), true)[0];
+        if (n) pending = { by: n.id, side, from: delay > 0 ? feetOf(pos[n.id], side) : end, delay };
+      };
+      const end = m.to ?? m.from;
+      if (isGoal(m)) pending = null; // the kick-off (closePrev)
+      else if (receiver) pending = { by: receiver, side: possAfter === m.side ? m.side : def, from: end, delay: 0 };
+      else if (m.kind === "shot" && gkDef) pending = { by: gkDef.id, side: def, from: pos[gkDef.id], delay: DEAD }; // a goal kick
+      else if (m.kind === "foul" || m.kind === "card") restart(def, m.from, DEAD); // the free kick
+      else if (m.kind === "corner") restart(def, own(m.side, { x: HALF_L - 12, y: 0 }), 0); // cleared
+      else restart(possAfter, end, 0);
+      if (receiver && m.kind === "shot" && m.outcome === "saved") pending = { by: receiver, side: def, from: end, delay: 0 };
+    }
+
     const beat: Beat = { moment: m, s, touch, land, end: land + holdOf(m), ideal, actor, receiver, winnerShown };
     beats.push(beat);
     prev = beat;
@@ -774,19 +1292,44 @@ export function plan(players: SquadPlayer[], moments: Moment[], opts: PlanOption
   const end = cursor;
   if (opts.known) {
     const settle = SETTLE + 60 / opts.speed; // till the next tick can arrive (it stops once all stand)
-    step({ ...aim }, settle, {}, new Set());
-    write(cursor + settle);
+    const till = Math.max(cursor + settle, opts.until ?? -Infinity);
+    if (ill) play(till);
+    if (till > cursor) {
+      step({ ...aim }, till - cursor, {}, new Set());
+      write(till);
+    }
   }
 
   const initialBall =
     init.kind === "kickoff" ? { at: { x: 0, y: 0 }, side: init.kicking } : { at: init.ball, side: init.side };
-  return { tracks, ball: ballKeys(beats), beats, dropped, start: opts.start, end, initialBall };
+  const tl: Timeline = { tracks, ball: ballKeys(beats), ghost, beats, dropped, start: opts.start, end, initialBall };
+  checkpoints.set(tl, { cps, queued });
+  return tl;
 }
 
-/** Peak height (m) of a moment's ball in flight: long passes are lofted. */
+/** The share of real passes lofted (over 1 m) by length (DFL, real/stats.json "byLength"):
+ *  a chip or a throw now and then, a third of passes of 30–45 m, every pass past 45 m. */
+const LOFTED: [number, number][] = [[5, 0.2], [15, 0.1], [25, 0.13], [37.5, 0.4], [50, 1]];
+const loftedShare = (d: number) => {
+  if (d <= LOFTED[0][0]) return LOFTED[0][1];
+  for (let i = 1; i < LOFTED.length; i++)
+    if (d <= LOFTED[i][0]) {
+      const [d0, p0] = LOFTED[i - 1];
+      const [d1, p1] = LOFTED[i];
+      return p0 + ((p1 - p0) * (d - d0)) / (d1 - d0);
+    }
+  return 1;
+};
+
+/** A ball peaking above this (m) is met in the air (a header); lower, it's controlled. */
+export const HEAD = 1.8;
+
+/** Peak height (m) of a moment's ball in flight. The data has no height, so it's illustrative:
+ *  lofted as often as real passes of its length are, about 0.16 m per metre (8 m at 50 m). */
 export const loft = (m: Moment) => {
   const d = m.to ? dist(m.from, m.to) : 0;
-  return m.kind === "pass" && d > 28 ? Math.min(7, d * 0.12) : 0;
+  if (m.kind !== "pass" || hash01(`${m.id}:loft`) >= loftedShare(d)) return 0;
+  return clamp(d * 0.16, 1.5, 11);
 };
 
 /** The ball: it shows only during moments, at the real spot, along the real pass. */

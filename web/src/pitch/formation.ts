@@ -1,6 +1,11 @@
 // Formation slots from the lineup, and the shape model: where each player stands for a given
 // ball position and possession. Everything here is illustrative (the data has no positions).
 //
+// The shape is real: for a 4-3-3, each slot's average spot for the ball's position, with and
+// without the ball, from DFL tracking of 4-2-3-1 / 4-3-3 sides (real/shape.json, made by
+// scripts/dfl_extract.py; Bassek et al. 2025, CC BY 4.0). The rules below remain for any other
+// lineup:
+//
 // Borrowed from 2D match engines (web/PITCH.md): each player has an anchor in the team's block;
 // the block's centre follows the ball along the pitch (about half its movement) and across it
 // (less), stretches when the team has the ball and compacts without it; the keeper stays near
@@ -9,6 +14,7 @@
 
 import { dist, HALF_L, HALF_W, own, type Side, type Vec } from "./geometry";
 import { hash01 } from "./moments";
+import realShape from "./real/shape.json";
 
 export type Role = "GK" | "DF" | "MF" | "FW";
 
@@ -29,6 +35,9 @@ export interface Slot {
   /** Anchor relative to the block centre, in the team's own frame (attacking +x). */
   ax: number;
   ay: number;
+  /** This slot's column in the real shape table (0 the keeper, then each line right to left),
+   *  or −1 when the lineup isn't a 4-3-3. */
+  k: number;
 }
 
 export const slotId = (side: Side, name: string) => `${side}:${name}`;
@@ -66,10 +75,87 @@ export function teamSlots(players: SquadPlayer[], side: Side): Slot[] {
         role: r,
         ax: LINE_X[r] + deeper + wide,
         ay: ys[i] ?? 0,
+        k: -1,
       });
     });
   }
+  // A 4-3-3 takes the real table's columns: each line right to left (own frame: −y is right).
+  const sizes = (["GK", "DF", "MF", "FW"] as Role[]).map((r) => out.filter((s) => s.role === r).length);
+  if (sizes.join() === "1,4,3,3") {
+    let k = 0;
+    for (const r of ["GK", "DF", "MF", "FW"] as Role[])
+      for (const s of out.filter((x) => x.role === r).sort((a, b) => a.ay - b.ay)) s.k = k++;
+  }
   return out;
+}
+
+/** The real table: per possession, cells along × across × 11 slots × (x, y), own frame; and how
+ *  far each slot wanders off it (RMS metres, x and y) within a minute. */
+const TABLE = realShape as unknown as {
+  cells: [number, number];
+  with: number[][][][];
+  without: number[][][][];
+  withSpread: number[][];
+  withoutSpread: number[][];
+  wanderShared: number;
+};
+
+/** The share of the wander a team has in common (real: the outfield's mean offset). */
+export const SHARED = TABLE.wanderShared;
+
+/**
+ * A player's wander off his spot at time t (own frame, metres), as real players wander: the
+ * real spread for his slot (RMS, within a minute), the real share of it common to his team.
+ * Smooth and slow (real wanders last well over 30 s): two waves of 30–60 s and 10–20 s per axis.
+ * Pure in t, so planning stays causal.
+ */
+export function wander(slot: Slot, t: number, inPossession: boolean): Vec {
+  if (slot.k < 0) return { x: 0, y: 0 };
+  const [sx, sy] = (inPossession ? TABLE.withSpread : TABLE.withoutSpread)[slot.k];
+  // Part of it is the team's (a line steps up, the block slides together), part his own.
+  const team = waves(slot.side);
+  const own_ = waves(slot.id);
+  const a = Math.sqrt(SHARED);
+  const b = Math.sqrt(1 - SHARED);
+  return { x: sx * (a * wave(team[0], t) + b * wave(own_[0], t)), y: sy * (a * wave(team[1], t) + b * wave(own_[1], t)) };
+}
+
+/** Two waves per axis (periods 30–60 s and 10–20 s, phases from hash01), cached per id. */
+type Wave = [number, number, number, number];
+const waveCache = new Map<string, [Wave, Wave]>();
+function waves(who: string): [Wave, Wave] {
+  let w = waveCache.get(who);
+  if (!w) {
+    const one = (axis: string): Wave => {
+      const h = (n: number) => hash01(`${who}:wander:${axis}:${n}`);
+      return [(2 * Math.PI) / (30 + 30 * h(1)), (2 * Math.PI) / (10 + 10 * h(2)), 6.283 * h(3), 6.283 * h(4)];
+    };
+    waveCache.set(who, (w = [one("x"), one("y")]));
+  }
+  return w;
+}
+// RMS of 0.6 sin + 0.4 sin is 0.51: scaled to 1.
+const wave = ([w1, w2, p1, p2]: Wave, t: number) => (0.6 * Math.sin(w1 * t + p1) + 0.4 * Math.sin(w2 * t + p2)) / 0.51;
+const [NX, NY] = TABLE.cells;
+const CW = (2 * HALF_L) / NX;
+const CH = (2 * HALF_W) / NY;
+
+/** A slot's real average spot (own frame) for a ball at b (own frame), read smoothly between the
+ *  cells' centres so the shape glides as the ball moves. */
+function realSpot(k: number, b: Vec, inPossession: boolean): Vec {
+  const t = inPossession ? TABLE.with : TABLE.without;
+  const u = clamp((b.x + HALF_L) / CW - 0.5, 0, NX - 1);
+  const v = clamp((b.y + HALF_W) / CH - 0.5, 0, NY - 1);
+  const i0 = Math.floor(u);
+  const j0 = Math.floor(v);
+  const i1 = Math.min(i0 + 1, NX - 1);
+  const j1 = Math.min(j0 + 1, NY - 1);
+  const fu = u - i0;
+  const fv = v - j0;
+  const at = (i: number, j: number, c: number) => t[i][j][k][c];
+  const mix = (c: number) =>
+    (at(i0, j0, c) * (1 - fu) + at(i1, j0, c) * fu) * (1 - fv) + (at(i0, j1, c) * (1 - fu) + at(i1, j1, c) * fu) * fv;
+  return { x: mix(0), y: mix(1) };
 }
 
 export function allSlots(players: SquadPlayer[]): Slot[] {
@@ -105,7 +191,13 @@ export const SHAPE = {
 export function shapeAt(slot: Slot, ball: Vec, inPossession: boolean): Vec {
   const b = own(slot.side, ball);
   let p: Vec;
-  if (slot.role === "GK") {
+  if (slot.k >= 0) {
+    // Each player's own spot, up to 1.5 m off the real average; the back line keeps one depth.
+    const r = realSpot(slot.k, b, inPossession);
+    const jx = slot.role === "DF" || slot.role === "GK" ? 0 : (hash01(`${slot.id}:x`) - 0.5) * 3;
+    const jy = slot.role === "GK" ? 0 : (hash01(`${slot.id}:y`) - 0.5) * 3;
+    p = { x: clamp(r.x + jx, -HALF_L + 1, HALF_L - 4), y: clamp(r.y + jy, -HALF_W + 1.5, HALF_W - 1.5) };
+  } else if (slot.role === "GK") {
     p = { x: -HALF_L + 2 + clamp((b.x + HALF_L) * 0.08, 0, 11), y: clamp(b.y * 0.15, -5, 5) };
   } else {
     const off = inPossession ? SHAPE.withBall : SHAPE.without;
@@ -197,7 +289,8 @@ export function teamJobs(team: Slot[], ball: Vec, inPossession: boolean): Record
     // A short option: the nearest midfielder, a pass away, inside and a little behind the ball.
     const mf = nearestTo(of("MF"), b);
     if (mf) put(mf, { x: b.x - 5, y: b.y - wing * 8 }, "auto");
-  } else {
+  } else if (team[0].k < 0) {
+    // (The real shape has the forwards' defending spots; the rules' shape needs these.)
     // The forwards stay up, about the halfway line, for the counter.
     for (const s of of("FW")) put(s, { x: Math.max(home[s.id].x, -4), y: home[s.id].y }, "slow");
     for (const s of of("FW"))

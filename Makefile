@@ -1,7 +1,7 @@
 # Common commands. On Windows without make, run the command on the right directly.
 PY ?= .venv/bin/python
 
-.PHONY: setup sim train train-quick xt live-calibration schema api web test lint format check
+.PHONY: setup sim train train-quick xt live-calibration schema motion-data api web test lint format check
 
 setup:            ## create venv, install Python + web deps
 	python3 -m venv .venv
@@ -26,6 +26,9 @@ live-calibration: ## score the live win projection minute by minute (~4 min)
 
 schema:           ## regenerate contract JSON schema + sample/mock JSON
 	$(PY) scripts/export_contract.py
+
+motion-data:      ## real movement for the pitch from DFL tracking in data/dfl/ (see the script)
+	$(PY) scripts/dfl_extract.py
 
 api:              ## run the API on :8000
 	$(PY) -m uvicorn api.main:app --reload --port 8000

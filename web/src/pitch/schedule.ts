@@ -94,10 +94,44 @@ export interface LiveOptions {
   start: number;
   /** The picture to start from: kick-off at minute 0 (or after the break), else the shape. */
   initial: { kind: "kickoff"; kicking: Side } | { kind: "shape"; ball: Vec; side: Side };
+  /** Plan from the start, not on from the last plan (tests compare the two). */
+  fresh?: boolean;
 }
 
+/** Per lineup, the last live plan and what it was planned from: the next tick's plan carries on
+ *  from it (PlanOptions.resume) instead of replanning the whole session. */
+const lastLive = new WeakMap<SquadPlayer[], { o: LiveOptions; arrivals: Map<number, number>; shown: string; tl: Timeline }>();
+
+/** The moments a plan can use (their minute has arrived), by id: the rest don't change it. */
+const usable = (moments: Moment[], arrivals: Arrivals) =>
+  moments
+    .filter((m) => arrivals.has(m.minute))
+    .map((m) => m.id)
+    .join();
+
 export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveOptions): Timeline {
-  return plan(players, moments, {
+  // Play goes on till well after the next tick is due (two ticks' time); at the end of a half it
+  // stops a tick after the last one.
+  let last = -1;
+  for (const m of o.arrivals.keys()) last = Math.max(last, m);
+  const tick = 60 / o.speed;
+  const until = last < 0 ? undefined : o.arrivals.get(last)! + (last === 45 || last >= 90 ? tick : 2 * tick);
+  // Carry on from the last plan when this one only adds ticks to it.
+  let resume: { from: Timeline; after: number } | undefined;
+  const L = o.fresh ? undefined : lastLive.get(players);
+  const shown = usable(moments, o.arrivals);
+  if (L && L.o.speed === o.speed && L.o.start === o.start && JSON.stringify(L.o.initial) === JSON.stringify(o.initial)) {
+    let same = true;
+    let after = Infinity;
+    for (const [m, t] of L.arrivals) if (o.arrivals.get(m) !== t) same = false;
+    for (const [m, t] of o.arrivals) if (!L.arrivals.has(m)) after = Math.min(after, t);
+    // No new tick and the same usable moments (a re-render): the same plan.
+    if (same && after === Infinity && shown === L.shown) return L.tl;
+    if (same && after < Infinity) resume = { from: L.tl, after };
+  }
+  const tl = plan(players, moments, {
+    resume,
+    until,
     ideal: (m) => {
       const at = o.arrivals.get(m.minute);
       return at === undefined ? null : at + (m.t - m.minute * 60) / o.speed;
@@ -107,4 +141,7 @@ export function liveTimeline(players: SquadPlayer[], moments: Moment[], o: LiveO
     start: o.start,
     initial: o.initial,
   });
+  // A copy: the live page adds to its arrivals in place.
+  lastLive.set(players, { o, arrivals: new Map(o.arrivals), shown, tl });
+  return tl;
 }
