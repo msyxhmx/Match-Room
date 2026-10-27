@@ -600,6 +600,8 @@ export interface ReelProgram {
 }
 
 const DIP = 0.18;
+/** Real events where somebody plays the ball. */
+const TOUCHES = new Set<RealEvent["kind"]>(["pass", "shot", "corner", "goalkick", "freekick", "kickoff", "throwin", "tackle"]);
 /** ×1: a cut leads into its touch by this much, when it can. */
 const LEAD_X1 = 5;
 /** ×1: a continuing recording may play a moment this early or late. */
@@ -659,11 +661,34 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
 
   /** Keep play going to `upto`: when a recording runs out, cut to another from where the ball is,
    *  with the same side on it. Chosen from what's on screen only (causal). */
+  /** A cut at a quiet instant near `t`: at or before it back to `earliest`, else after it up to
+   *  `latest`. Quiet: nobody touches the ball from 1 s before to 1.5 s after (a run-up and swing), and
+   *  the ball is slow, so a kick is never cut mid-swing or mid-flight. `t` itself if there's none. From the
+   *  segment alone (causal). */
+  const quiet = (s: Segment, t: number, earliest: number, latest = t) => {
+    const r = s.reel;
+    const touches = r.events.filter((e) => TOUCHES.has(e.kind)).map((e) => timeOf(s, e.f, hz));
+    // A restart is struck when the ball comes back into play (set pieces' clocks run early).
+    for (let f = 1; f < r.n; f++) if (r.alive[f] === "1" && r.alive[f - 1] !== "1") touches.push(timeOf(s, f, hz));
+    const slow = (f: number) => f < 1 || f >= r.n || Math.hypot(r.bx[f] - r.bx[f - 1], r.by[f] - r.by[f - 1]) * hz < 6;
+    const calm = (u: number) => {
+      if (touches.some((x) => x > u - 1 && x < u + 1.5)) return false;
+      const f = Math.round(frameOf(s, u, hz));
+      if (f < 1 || f >= r.n) return false;
+      return slow(f) && slow(f + 3);
+    };
+    for (let u = t; u >= earliest; u -= 0.2) if (calm(u)) return u;
+    for (let u = t + 0.2; u <= latest; u += 0.2) if (calm(u)) return u;
+    return t;
+  };
+
   const fill = (upto: number) => {
     for (let guard = 0; guard < 200; guard++) {
       const s = segs[segs.length - 1];
-      const out = reelEnd(s, hz) - 0.4;
-      if (out >= upto) return;
+      const end = reelEnd(s, hz) - 0.4;
+      if (end >= upto) return;
+      // Out of recording: cut in its last 8 s at a quiet instant, after any moment of ours in it.
+      const out = quiet(s, end, Math.max(end - 15, s.at + 2, ...s.anchors.map((a) => a.t + 2.5)));
       const f = Math.max(0, Math.min(s.reel.n - 1, Math.round(frameOf(s, out, hz))));
       const best = playFrom(posAt(s.reel, BALL, f, s.fit), possAt(s.reel, f, s.fit), s.reel);
       if (!best) return;
@@ -727,10 +752,12 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
     halfDone = true;
     const end45 = o.arrivals.get(45);
     if (end45 === undefined) return;
-    const brk = Math.max(busy, end45 + tick);
+    const brk0 = Math.max(busy, end45 + tick);
     let second = Infinity;
     for (const [mm, a] of o.arrivals) if (mm > 45) second = Math.min(second, a);
-    fill(brk);
+    fill(brk0);
+    const prev = segs[segs.length - 1];
+    const brk = quiet(prev, brk0, brk0, Math.min(brk0 + 2, reelEnd(prev, hz) - 0.4));
     kickoff(brk, "away", second === Infinity ? brk + 3600 : Math.max(brk, second));
     busy = Math.max(busy, brk);
   };
@@ -758,6 +785,9 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
       if (!c) continue;
       use(c);
       fill(at);
+      // A little later if that lands mid-kick in the play on screen (a goal waits less).
+      const prev = segs[segs.length - 1];
+      at = quiet(prev, at, at, Math.min(at + (goal ? 0.8 : 1.5), reelEnd(prev, hz) - 0.4));
       const f0 = Math.max(0, c.ev.f - Math.round(lead * hz));
       const s = cutTo(at, { reel: c.reel, fit: c.fit, f0 }, withActor(defaultMap(slots, c.fit), slot.id, c.toucher));
       const t = timeOf(s, c.ev.f, hz);
@@ -805,11 +835,24 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
       break;
     }
     if (!done) {
-      const at = Math.max(k, busy, want - LEAD_X1);
-      const c = candidates(lib, m, slot.role, used, ballNow(at))[0];
+      const at0 = Math.max(k, busy, want - LEAD_X1);
+      const c = candidates(lib, m, slot.role, used, ballNow(at0))[0];
       if (!c) continue;
       use(c);
-      fill(at);
+      // The recording on screen runs out first: cut straight to this clip, leading in longer,
+      // rather than to a filler for a moment and then again.
+      const ending = reelEnd(cur, hz) - 0.4;
+      const straight = ending < at0 && ending >= Math.max(k, busy) && want - ending <= LEAD_MAX;
+      if (!straight) fill(at0);
+      // Up to 2 s early, so the cut lands at a quiet instant of the play it leaves.
+      const prev = segs[segs.length - 1];
+      const t0 = straight ? ending : at0;
+      const at = quiet(
+        prev,
+        t0,
+        Math.max(k, busy, t0 - 2, prev.at + 1, ...prev.anchors.map((a) => a.t + 2.5)),
+        Math.min(t0 + 1, want - 1.5, reelEnd(prev, hz) - 0.4),
+      );
       // Lead into the touch from the cut, landing it at its time when the clip allows.
       const lead = Math.max(1.2, Math.min(want - at, c.ev.f / hz, LEAD_MAX));
       const f0 = Math.max(0, c.ev.f - Math.round(lead * hz));
@@ -825,7 +868,7 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
       const land = tl.beats[tl.beats.length - 1]?.land ?? shown[shown.length - 1].t + 1;
       goalsLand.push({ t: land, moment: m });
       // The celebration, then the other side kicks off.
-      const back = Math.min(land + CELEBRATE, reelEnd(s, hz) - 0.4);
+      const back = quiet(s, Math.min(land + CELEBRATE, reelEnd(s, hz) - 0.4), land + 4);
       fill(back);
       kickoff(back, other(m.side), back + 2.5);
       busy = back + 2.5;
