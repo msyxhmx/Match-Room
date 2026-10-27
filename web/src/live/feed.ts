@@ -14,7 +14,10 @@ import type {
 } from "../types/live";
 import { matchSeconds } from "./stage";
 
-export type MatchView = Omit<LiveSnapshot, "cards" | "overlays" | "recent_events" | "metrics"> & {
+export type MatchView = Omit<LiveSnapshot, "cards" | "overlays" | "recent_events"> & {
+  /** The minute `metrics` were computed at. The saved ticks carry no metrics, so offline they
+   *  stay at the start minute and the web layout works its stats out from `events` instead. */
+  metricsMinute: number;
   /** Every card so far, chronological (the snapshot sends newest first). */
   cards: LiveCard[];
   /** Every overlay graphic so far, in `seq` order. */
@@ -32,9 +35,10 @@ export type MatchView = Omit<LiveSnapshot, "cards" | "overlays" | "recent_events
 const bySeconds = (a: LiveCard, b: LiveCard) => matchSeconds(a) - matchSeconds(b);
 
 export function fromSnapshot(s: LiveSnapshot): MatchView {
-  const { cards, overlays, recent_events: _e, metrics: _m, ...rest } = s;
+  const { cards, overlays, recent_events: _e, ...rest } = s;
   return {
     ...rest,
+    metricsMinute: s.minute,
     cards: [...cards].sort(bySeconds),
     overlays: [],
     halftime: null,
@@ -76,6 +80,7 @@ export function applyTick(v: MatchView, t: StreamTick): MatchView {
       draw: [...s.draw, p.draw],
       away_win: [...s.away_win, p.away_win],
     },
+    ...(t.metrics?.length ? { metrics: t.metrics, metricsMinute: t.minute } : {}),
     cards: [...v.cards, ...[...t.new_cards].sort(bySeconds)],
     overlays: [...v.overlays, ...t.new_overlays],
     events: addEvents(v.events, t.new_events ?? []), // the saved ticks carry none
@@ -99,6 +104,7 @@ export function relabel(v: MatchView, fresh: MatchView): MatchView {
     meta: fresh.meta,
     control: v.minute === fresh.minute ? fresh.control : v.control,
     projection: v.minute === fresh.minute ? fresh.projection : v.projection,
+    ...(v.minute === fresh.minute ? { metrics: fresh.metrics, metricsMinute: fresh.metricsMinute } : {}),
     cards: [...fresh.cards, ...later],
     overlays: fresh.overlays,
     halftime: fresh.halftime,

@@ -22,7 +22,12 @@ import { MatchScreen } from "./screens/MatchScreen";
 import { SeasonScreen } from "./screens/SeasonScreen";
 import type { LiveCard, MatchMeta, OverlayMessage, Score } from "./types/live";
 import { KickOffButton, MatchControls, PAGE_VIEWS, TopBar, ViewSwitchContext, type PageView } from "./ui";
-import { LabelsProvider } from "./ui/labels";
+import { LABELS, LabelsProvider } from "./ui/labels";
+import { WebMatch } from "./screens/web/WebMatch";
+import { WebMatches, type NowShowing } from "./screens/web/WebMatches";
+import { WebShell } from "./screens/web/WebShell";
+import { WebTable } from "./screens/web/WebTable";
+import { CatchUpSheet, ProofSheet, proofOfCard } from "./screens/web/sheet";
 import styles from "./App.module.css";
 
 const VIDEO = { width: 1920, height: 1080 };
@@ -54,19 +59,20 @@ function useWindowSize() {
 }
 
 /**
- * Video first: on anything wider than a phone, the screen is the 1920 × 1080 frame, zoomed to
- * fit the window like a TV picture. The recording window (1920 × 1080) gets it at 1:1.
+ * Recordings are video first: on anything wider than a phone, the screen is the 1920 × 1080
+ * frame, zoomed to fit the window like a TV picture (the recording window gets it at 1:1).
+ * Plain visits get the web layout instead (`web`): a page that scrolls, at any width.
  */
-function Frame({ clubs, transparent, children }: { clubs: [string, string, string]; transparent?: boolean; children: ReactNode }) {
+function Frame({ clubs, transparent, web, children }: { clubs: [string, string, string]; transparent?: boolean; web?: boolean; children: ReactNode }) {
   const { width, height } = useWindowSize();
   const phone = width < PHONE_MAX || height < PHONE_MAX_HEIGHT;
-  const zoom = phone ? 1 : Math.min(width / VIDEO.width, height / VIDEO.height);
+  const zoom = phone || web ? 1 : Math.min(width / VIDEO.width, height / VIDEO.height);
   return (
-    <div className={styles.window} data-transparent={transparent ? "true" : undefined}>
+    <div className={styles.window} data-transparent={transparent ? "true" : undefined} data-web={web || undefined}>
       <div
-        className={`mr-root ${phone ? styles.phone : `video ${styles.video}`}`}
+        className={`mr-root ${web ? styles.web : phone ? styles.phone : `video ${styles.video}`}`}
         data-transparent={transparent ? "true" : undefined}
-        style={{ ...clubSlots(...clubs), ...(phone ? {} : { zoom }) }}
+        style={{ ...clubSlots(...clubs), ...(phone || web ? {} : { zoom }) }}
       >
         {children}
       </div>
@@ -172,11 +178,12 @@ function useGoalHold(view: MatchView | null, running: boolean, speed: number, on
 type Director = ReturnType<typeof useDirector>;
 
 /** The match on the page: the feed, the pitch and the cards. Remounted per match, so nothing of
- *  the last one (cards, score, squads) carries over. */
-function LiveView({ d }: { d: Director }) {
+ *  the last one (cards, score, squads) carries over. `web`: the web layout (plain visits). */
+function LiveView({ d, web, onSummary }: { d: Director; web?: boolean; onSummary?: (now: NowShowing) => void }) {
   const { view: fed, connection, running } = useMatchFeed(d);
   const [pinned, setPinned] = useState<string | null>(null);
   const [factsFor, setFactsFor] = useState<LiveCard | null>(null);
+  const [catchUp, setCatchUp] = useState(false);
 
   // Layout A: the live pitch, once the squads are known.
   const hasPitch = !!fed?.lineups;
@@ -249,6 +256,85 @@ function LiveView({ d }: { d: Director }) {
   const home = view?.home.id ?? "NGC";
   const away = view?.away.id ?? "KST";
   const you = d.profile.team ?? home;
+
+  // The Matches page's "Now showing" card follows this match while it stays open behind it.
+  const latestGoal = view ? [...view.cards].reverse().find((c) => c.type === "goal") : undefined;
+  useEffect(() => {
+    if (!view || !onSummary) return;
+    onSummary({
+      matchId: view.match_id,
+      score: view.score,
+      minute: view.minute,
+      period: view.period,
+      latest: latestGoal ?? view.cards[view.cards.length - 1] ?? null,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view?.match_id, view?.minute, view?.score.home, view?.score.away, view?.period, view?.cards.length]);
+
+  if (web) {
+    const labels = LABELS[language];
+    const pitch =
+      hasPitch && fed ? (
+        <PitchView reduced={reducedMotion()}>
+          <PitchLayer
+            view={fed}
+            running={running}
+            speed={d.speed}
+            analyst={d.profile.persona === "analyst"}
+            focus={d.profile.player}
+            reduced={reducedMotion()}
+            continuous
+            holdOnPause
+            onGoalLanded={hold.onLanded}
+          />
+        </PitchView>
+      ) : undefined;
+    const kind = (c: LiveCard) =>
+      c.variant === "brief" ? (view?.period === "FT" ? labels.fullTimeLong : labels.tabHalfTime) : labels.insight[c.type];
+    return (
+      <LabelsProvider language={language}>
+        <Frame clubs={[home, away, you]} web>
+          <WebShell
+            profile={d.profile}
+            connection={connection}
+            onLanguage={d.setLanguage}
+            onPersona={d.setPersona}
+          >
+            {view ? (
+              <WebMatch
+                view={view}
+                pitch={pitch}
+                playing={d.playing && running}
+                ended={view.minute >= 90 && !running}
+                speed={d.speed}
+                onPlayPause={d.togglePlay}
+                onRestart={d.restart}
+                onSpeed={(s) => d.setSpeed(s, view.minute)}
+                waitingKickOff={!kicked && view.minute === 0}
+                scoredSide={scoredSide}
+                revealed={revealed}
+                onOpenFacts={openFacts}
+                onCatchUp={() => setCatchUp(true)}
+              />
+            ) : (
+              <Loading />
+            )}
+          </WebShell>
+          {view && facts && <ProofSheet proof={proofOfCard(facts, view, kind(facts), view.projection.note)} onClose={closeFacts} />}
+          {view && catchUp && !facts && (
+            <CatchUpSheet
+              view={view}
+              onClose={() => setCatchUp(false)}
+              onOpenFacts={(c) => {
+                setCatchUp(false);
+                openFacts(c);
+              }}
+            />
+          )}
+        </Frame>
+      </LabelsProvider>
+    );
+  }
 
   return (
     <LabelsProvider language={language}>
@@ -334,6 +420,7 @@ function LivePage() {
   const show = (next: PageView) => {
     if (next !== "live") d.pause();
     setView(next);
+    window.scrollTo(0, 0);
   };
   const pick = (m: { id: string; home: { id: string } }) => {
     d.pick(m.id, m.home.id);
@@ -346,14 +433,49 @@ function LivePage() {
   useEffect(() => {
     if (view === "live") setLiveOpened(true);
   }, [view]);
+  const [now, setNow] = useState<NowShowing | null>(null);
   const live = (view === "live" || liveOpened) && (
     <div className={styles.kept} hidden={view !== "live"}>
       <ViewSwitchContext.Provider value={tabs ? { view, onView: show } : null}>
-        <LiveView key={d.matchId} d={d} />
+        <LiveView key={d.matchId} d={d} web={tabs} onSummary={setNow} />
       </ViewSwitchContext.Provider>
     </div>
   );
   if (view === "live") return live;
+  if (tabs) {
+    return (
+      <>
+        {live}
+        <LabelsProvider language={d.profile.language}>
+          <ViewSwitchContext.Provider value={{ view, onView: show }}>
+            <Frame clubs={[...sidesOf(matches, d.matchId), d.profile.team ?? "NGC"]} web>
+              <WebShell
+                profile={d.profile}
+                connection={PREVIEW ? "preview" : "live"}
+                onLanguage={d.setLanguage}
+                onPersona={d.setPersona}
+              >
+                {view === "matches" ? (
+                  <WebMatches
+                    matches={matches}
+                    moreLoading={moreLoading}
+                    currentId={d.matchId}
+                    now={now}
+                    season={season}
+                    team={d.profile.team}
+                    onPick={(m) => (m.id === d.matchId && liveOpened ? show("live") : pick(m))}
+                    onTable={() => show("table")}
+                  />
+                ) : (
+                  <WebTable report={season} team={d.profile.team} />
+                )}
+              </WebShell>
+            </Frame>
+          </ViewSwitchContext.Provider>
+        </LabelsProvider>
+      </>
+    );
+  }
   const top = (
     <TopBar
       meta={BROWSE_META}
@@ -381,6 +503,12 @@ function LivePage() {
     </LabelsProvider>
     </>
   );
+}
+
+/** The two sides of a listed match, for the club colour slots. */
+function sidesOf(matches: { id: string; home: { id: string }; away: { id: string } }[], id: string): [string, string] {
+  const m = matches.find((x) => x.id === id);
+  return [m?.home.id ?? "NGC", m?.away.id ?? "KST"];
 }
 
 function Loading() {

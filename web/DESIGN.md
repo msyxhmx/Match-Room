@@ -166,6 +166,8 @@ Every design option must have a place for each of these. Their data comes from t
   graphics-safe area**: a 5% margin on every side, so **x 96–1824, y 54–1026**. The action-safe
   margin is 3.5% ([EBU R 95](https://tech.ebu.ch/docs/r/r095.pdf)).
 - Secondary: phone, 390 px wide. Same components, stacked.
+- Plain visits (the shared link) get the web layout instead, at any width (§9.12). The frame
+  is for recordings: director URLs, `?rec=1` and the overlay.
 
 ### 6.2 Type sizes for a video, not a phone
 Apple Sports is a phone app: iOS Body text is 17 pt
@@ -641,6 +643,31 @@ Done 25 Oct. Review them in place in the
   - two goals for soft shadows
   - no stadium, crowd, boards or logos
   - plainly a render, not footage
+
+### 9.12 The web layout (B · Clean Match Card, 27 Oct)
+
+Plain visits (the shared link, judges on their own laptop or phone) get a **scrolling web page**
+instead of the shrunk 1920 × 1080 frame. Director URLs, `?rec=1` and `/overlay` keep the video
+frame exactly as §6 describes, so the demo recording is unchanged. Picked on 27 Oct from three
+mockups (night broadcast, clean match card, matchday poster), then designed screen by screen for
+laptop and phone.
+
+- **Look:** light and calm, like a sports card in search results. Grey ground, white cards
+  (radius 20, a soft card shadow), one column of content up to 1240 px.
+- **Team colours are the only colours.** Menus, tabs and buttons are ink, grey and white; the
+  active item is an ink pill. Signals: green = checked (`--state-positive-*`), red = live
+  (`--state-live-*`), amber = chaos (`--state-chaos-*`, `--chaos-bar`).
+- **Every claim shows its proof:** each card carries a green "N facts checked" link that opens
+  the fact check (a drawer on a laptop, a bottom sheet on a phone): the facts used, the
+  win-chance swing, and the match events with their ids.
+- **Type:** Figtree (`--font-web`, Google Fonts, system fallback) for the web layout only; the
+  video frame stays on the system font (§9.1). Tokens `--type-web-*`, smaller on a phone.
+- **Screens** (`src/screens/web/`): Matches (one-line pitch, now showing, features, storylines,
+  more matches, table peek), the match (score card with tabs Overview / Moments / Stats /
+  Half-time story / Full-time and the controls; the stories open by themselves at the break and
+  at full time), the season table, the fact check and the "Just joined? Catch me up" sheet.
+- **Stats:** the engine's metrics when the stream sends them; otherwise (the saved match) counted
+  from the events with the engine's definitions, minus xG (the saved events round it).
 
 ## 10. Rules from the project and the hackathon
 - **Synthetic data only.** Fictional clubs and players ([sim/teams.py](../sim/teams.py)).

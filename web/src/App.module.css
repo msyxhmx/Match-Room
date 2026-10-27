@@ -43,6 +43,15 @@
   min-height: 100%;
 }
 
+/* The web layout (plain visits): a page that scrolls, at any width. */
+.window[data-web] {
+  display: block;
+}
+.web {
+  width: 100%;
+  min-height: 100%;
+}
+
 .video[data-transparent="true"],
 .phone[data-transparent="true"] {
   background: transparent;

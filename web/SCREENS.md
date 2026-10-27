@@ -6,6 +6,9 @@ disagree. Written 25 Oct 2026.
 
 ## The screen and state map
 
+Plain visits (no `minute`, `speed`, `play` or `rec` in the address) get the web layout
+(DESIGN §9.12, `src/screens/web/`); everything below is the recording path.
+
 Every storyboard shot starts from a URL on the 1920 × 1080 frame. Director keys (hidden, nothing
 on screen reveals them): `Space` play/pause, `L` next language, `P` casual ↔ analyst, `F` facts
 sheet, `1 3 4 5 6 7 8` jump to that shot's start, paused.
