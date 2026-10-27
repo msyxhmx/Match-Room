@@ -20,7 +20,7 @@
 
 import type { Dot, Frame } from "./frame";
 import { strideM } from "./frame";
-import { dist, HALF_L, own, project, type Vec } from "./geometry";
+import { dist, GOAL_HALF, HALF_L, own, project, type Vec } from "./geometry";
 import { hash01, isGoal } from "./moments";
 import { HEAD, loft } from "./plan";
 import type { Palette } from "./render";
@@ -180,7 +180,11 @@ export function figurePose(d: Dot, before: Dot | undefined, f: Frame, still = fa
   const toBall = f.ball ? { x: f.ball.x - d.x, y: f.ball.y - d.y } : { x: 0, y: 0 };
   const nb = Math.hypot(toBall.x, toBall.y) || 1;
   // The ball only decides when he's nearly still; a jog or run looks where it goes.
-  const bw = 1.2 * (1 - smooth(0.4, 2, Math.hypot(velSlow.x, velSlow.y)));
+  // A keeper watches the ball unless he's sprinting (he shuffles and backpedals facing play).
+  const bw =
+    d.role === "GK"
+      ? 3 * (1 - smooth(3.5, 5, Math.hypot(velSlow.x, velSlow.y)))
+      : 1.2 * (1 - smooth(0.4, 2, Math.hypot(velSlow.x, velSlow.y)));
   const vFace = vw ? { x: 0.3 * velSlow.x + 0.7 * vw.x, y: 0.3 * velSlow.y + 0.7 * vw.y } : velSlow;
   let look = { x: vFace.x + (toBall.x / nb) * bw, y: vFace.y + (toBall.y / nb) * bw };
   const dflt: 1 | -1 = d.side === "home" ? 1 : -1;
@@ -254,18 +258,23 @@ export function figurePose(d: Dot, before: Dot | undefined, f: Frame, still = fa
         }
       }
     }
+    // The beaten keeper dives for a shot that crosses his line on target or near it, not for
+    // one that flies well wide.
     if (
       m.kind === "shot" && m.outcome !== "blocked" && m.outcome !== "saved" && m.to &&
-      d.role === "GK" && d.side !== m.side && t >= b.touch
+      d.role === "GK" && d.side !== m.side && t >= b.touch &&
+      Math.abs(m.to.y) < GOAL_HALF + 2.5 && Math.abs(m.to.x) > HALF_L - 4
     ) {
       const p = clamp01((t - b.touch) / Math.max(0.2, b.land - b.touch + 0.15));
       dive = { p: still ? 1 : p, to: { x: d.x, y: m.to.y } };
     }
     if (isGoal(m) && b.actor === d.id && t >= b.land) celebrate = t - b.land;
   }
-  // The keeper, set and ready, while the ball is in his third.
+  // The keeper, set and ready, while the other side has the ball in his third (not when it's at
+  // his own feet: a goal kick, a ball he's gathering).
   const crouch =
-    d.role === "GK" && !dive && caught === null && !!f.ball && own(d.side, f.ball).x < -HALF_L + KEEPER_THIRD && speed < 2.5;
+    d.role === "GK" && !dive && caught === null && kick === null && !!f.ball && own(d.side, f.ball).x < -HALF_L + KEEPER_THIRD &&
+    speed < 2.5 && f.possession !== d.side && dist(d, f.ball) > 5;
   if (crouch && f.ball) look = toBall;
   // Carrying the ball: it's at his feet, on the ground.
   const dribble =

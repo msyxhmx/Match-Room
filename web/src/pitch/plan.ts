@@ -67,6 +67,9 @@ export interface Beat {
   receiver: string | null;
   /** The real tackler/interceptor got there and is the one shown winning the ball. */
   winnerShown: boolean;
+  /** A touch of recorded play between our moments (reel.ts): the bodies act on it, but it
+   *  names nobody and draws no pass line (it isn't one of our events). */
+  ghost?: boolean;
 }
 
 /** One stretch of the ghost ball: at a player's feet, or in flight. A flight with no `from`
