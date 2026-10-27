@@ -743,6 +743,8 @@ for (const speed of [1, 60]) {
 //   cuts      outside a cut's dip nobody moves faster than a real sprint, 11 m/s (no jumps)
 //   stable    a new tick never changes what was already shown (0.5 m)
 //   eleven    at most 11 a side; the ball on screen nearly all the time
+//   ball      the ball shown never jumps (40 m/s) and never ends up in a net but on our goals
+//   keeper    keepers stay within 24.5 m of their goal line (reel.ts eases sweepers home)
 {
   const { decodeLibrary, reelProgram, CAP_M } = await load("/src/pitch/reel.ts");
   const pc = (x) => `${(x * 100).toFixed(0)}%`;
@@ -774,7 +776,8 @@ for (const speed of [1, 60]) {
       const at = all.get(s.moment.minute) + (s.moment.t - s.moment.minute * 60) / speed;
       if (speed <= 2 && Math.abs(s.t - at) > 6.5) fail(`${label}: ${s.moment.minute}' ${s.moment.kind} plays ${(s.t - at).toFixed(1)} s off its time`);
     }
-    let prev = null, fastest = 0, noBall = 0, n = 0, moved = 0;
+    let prev = null, fastest = 0, noBall = 0, n = 0, moved = 0, ballJumps = 0, farKeeper = 0, phantom = 0;
+    const goalsShown = final.shown.filter((x) => isGoal(x.moment)).map((x) => x.t);
     for (let t = 0.05; t < all.get(to) + 60 / speed; t += DT) {
       const sh = shownAt(t);
       const s = sh.shotAt(t);
@@ -788,6 +791,10 @@ for (const speed of [1, 60]) {
         }
       }
       for (const side of ["home", "away"]) if (s.frame.dots.filter((d) => d.side === side).length > 11) fail(`${label}: more than 11 ${side} at ${t.toFixed(1)}`);
+      for (const d of s.frame.dots) if (d.role === "GK" && (d.side === "home" ? d.x : -d.x) + HALF_L > 24.5) farKeeper++;
+      const b = s.frame.ball;
+      if (b && b.a > 0.5 && Math.abs(b.x) > HALF_L + 0.3 && Math.abs(b.y) < 3.66 && b.z < 2.4 && !goalsShown.some((g) => t >= g - 0.5 && t <= g + 25)) phantom++;
+      if (b && prev?.frame.ball && s.opacity === 1 && prev.opacity === 1 && b.a > 0.5 && prev.frame.ball.a > 0.5 && dist(b, prev.frame.ball) / DT > 40) ballJumps++;
       if (prev && s.opacity === 1 && prev.opacity === 1)
         for (const d of s.frame.dots) {
           const e = prev.frame.dots.find((x) => x.id === d.id);
@@ -798,6 +805,9 @@ for (const speed of [1, 60]) {
     // Recorded players sprint up to about 10 m/s (DFL); faster than REAL_TOP is a jump.
     if (fastest > REAL_TOP) fail(`${label}: someone moves at ${fastest.toFixed(1)} m/s outside a cut`);
     if (moved) fail(`${label}: a new tick changed ${moved} frames already shown`);
+    if (ballJumps) fail(`${label}: the ball jumps in ${ballJumps} frames`);
+    if (farKeeper) fail(`${label}: a keeper is over 24.5 m out in ${farKeeper} frames`);
+    if (phantom) fail(`${label}: the ball is in a net with no goal of ours in ${phantom} frames`);
     if (noBall / n > 0.05) fail(`${label}: the ball is off screen ${pc(noBall / n)} of the time`);
     console.log(`${label}: ${final.shown.length} moments shown, ${final.segments.length} clips, every touch within ${worst.toFixed(1)} m, fastest ${fastest.toFixed(1)} m/s, ball off screen ${pc(noBall / n)}`);
   }

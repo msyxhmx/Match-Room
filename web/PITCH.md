@@ -32,6 +32,23 @@ below is the fallback (no library, or `?pitch=planner`).
   (the score waits for it). Between highlights the last clip plays on, unlabelled.
 - **Causal**, like the planner: a moment is used from its tick's arrival, every cut is at or
   after it, so a new tick never changes what was shown (tested).
+- **Keepers and restarts** (Ilham, 27 Oct: "a lot of error in the way the goalkeeper moves,
+  and the goal kick looks weird"):
+  - Out of play the tracking holds the ball where it went out, often off the pitch, then jumps
+    it to the restart. Now a dead ball shows only on the pitch (or rolling out for 0.8 s), never
+    across a jump, and waits on the restart's spot for 4 s before it's played. A recording that
+    ends with the ball out is cut a second later.
+  - Real Bundesliga keepers sweep up to halfway when their side attacks, which reads as a
+    mistake: within 14 m of his line a keeper is as recorded, further out eased toward 24 m.
+    Clips with keepers far up are chosen less.
+  - The recording's own touches between ours are **ghost beats**: legs kick, receivers control,
+    keepers kick goal kicks, dive and gather, with no name and no pass line. Our saved shots are
+    gathered by our keeper. A keeper is set (crouched) only when the other side has the ball in
+    his third, not with it at his feet, and dives only for a shot on target or near it.
+  - Nobody else's goal ever shows: a recording is cut a second before its own goal (any ball
+    in a net, a disallowed one too), no clip starts within 30 s after one, and a real goal only
+    plays one of ours. Shots are anchored only where the ball really leaves the shooter fast
+    (DFL's shot clock can be seconds off).
 - **The figures** were calmed for it: speed, view and facing come from the last 0.25–1 s, not
   1/15 s, and standing to moving blends. View switches fell from 27 to 4.5 a player-minute
   (`node scripts/pose-flicker.mjs`).

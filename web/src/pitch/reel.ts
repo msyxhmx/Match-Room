@@ -21,7 +21,7 @@
 // give the same programme. Data: DFL / Sportec open data (Bassek et al. 2025), CC BY 4.0.
 
 import { allSlots, type Role, type Slot, type SquadPlayer } from "./formation";
-import { dist, HALF_L, type Side, type Vec } from "./geometry";
+import { dist, GOAL_HALF, HALF_L, type Side, type Vec } from "./geometry";
 import { frameAt, type Frame, type FrameOptions } from "./frame";
 import { isGoal, type Moment } from "./moments";
 import type { BallKey, Beat, Key, Timeline, Track } from "./plan";
@@ -29,6 +29,8 @@ import type { Shot } from "./director";
 import type { LiveOptions } from "./schedule";
 
 // ---------------------------------------------------------------- the library
+
+const BALL = 22;
 
 export interface RealEvent {
   /** Frame of the touch (snapped to the ball). */
@@ -52,6 +54,16 @@ export interface Reel {
   alive: string;
   poss: string;
   events: RealEvent[];
+  /** The ball as shown (see shownBall): metres, and its opacity. */
+  bx: Float32Array;
+  by: Float32Array;
+  bz: Float32Array;
+  ba: Float32Array;
+  /** Frames of the recording's own goals: never shown unless one plays ours. */
+  goals: number[];
+  /** The last frame worth showing: a second after its ball was last shown (a recording that
+   *  ends while the ball is out of play is cut there, not left with players and no ball). */
+  last: number;
 }
 
 export interface Library {
@@ -61,7 +73,7 @@ export interface Library {
 
 interface RawLibrary {
   hz: number;
-  reels: (Omit<Reel, "pos" | "z"> & { pos: string; z: string })[];
+  reels: (Omit<Reel, "pos" | "z" | "bx" | "by" | "bz" | "ba" | "goals" | "last"> & { pos: string; z: string })[];
 }
 
 function int16(b64: string): Int16Array {
@@ -75,7 +87,83 @@ function int16(b64: string): Int16Array {
 }
 
 export function decodeLibrary(raw: RawLibrary): Library {
-  return { hz: raw.hz, reels: raw.reels.map((r) => ({ ...r, pos: int16(r.pos), z: int16(r.z) })) };
+  return {
+    hz: raw.hz,
+    reels: raw.reels.map((r) => {
+      const pos = int16(r.pos);
+      const z = int16(r.z);
+      const ball = shownBall(r.n, pos, z, r.alive);
+      let last = r.n - 1;
+      while (last > 0 && ball.ba[last] === 0) last--;
+      return { ...r, pos, z, goals: ownGoals(r, pos, z), ...ball, last: Math.min(r.n - 1, last + 5) };
+    }),
+  };
+}
+
+/** Frames where the recording's ball goes in: its goal events' shots, and any other ball that
+ *  ends up in a net (a goal ruled out has no goal event). A net's shot is the one before it. */
+function ownGoals(r: RawLibrary["reels"][number], pos: Int16Array, z: Int16Array): number[] {
+  const out = new Set(r.events.filter((e) => e.kind === "shot" && e.out === "goal").map((e) => e.f));
+  const inNet = (f: number) =>
+    Math.abs(pos[(f * 23 + BALL) * 2]) > (HALF_L + 0.3) * 10 && Math.abs(pos[(f * 23 + BALL) * 2 + 1]) < GOAL_HALF * 10 && z[f] < 24;
+  for (let f = 1; f < r.n; f++) {
+    if (!inNet(f) || inNet(f - 1)) continue;
+    const shot = [...r.events].reverse().find((e) => e.kind === "shot" && e.f <= f && e.f >= f - 15);
+    out.add(shot ? shot.f : Math.max(0, f - 5));
+  }
+  return [...out].sort((a, b) => a - b);
+}
+
+/**
+ * The ball as the pitch shows it. In play it's the tracked ball. Out of play the tracking can
+ * hold it off the pitch where it went out, then jump it to the restart: so a dead ball shows only
+ * while it's on the pitch (or rolling out, its first 0.8 s), never across a jump, and sits on the
+ * restart's spot for the 4 s before a restart it would otherwise jump to. It fades in and out.
+ */
+function shownBall(n: number, pos: Int16Array, z: Int16Array, alive: string) {
+  const bx = new Float32Array(n);
+  const by = new Float32Array(n);
+  const bz = new Float32Array(n);
+  const vis = new Float32Array(n);
+  for (let f = 0; f < n; f++) {
+    bx[f] = pos[(f * 23 + BALL) * 2] / 10;
+    by[f] = pos[(f * 23 + BALL) * 2 + 1] / 10;
+    bz[f] = Math.max(0, z[f] / 10);
+  }
+  const on = (f: number) => Math.abs(bx[f]) <= HALF_L + 1 && Math.abs(by[f]) <= 35;
+  const jump = (f: number) => f > 0 && Math.hypot(bx[f] - bx[f - 1], by[f] - by[f - 1]) > 3;
+  const ROLL = 4; // frames at 5 Hz
+  const READY = 20;
+  let since = Infinity; // frames since the ball went dead
+  for (let f = 0; f < n; f++) {
+    since = alive[f] === "1" ? -1 : since + 1;
+    vis[f] = alive[f] === "1" || since < ROLL || on(f) ? 1 : 0;
+  }
+  for (let f = 1; f < n; f++)
+    if (jump(f) && !(alive[f] === "1" && alive[f - 1] === "1")) {
+      vis[f - 1] = 0;
+      if (alive[f] !== "1") vis[f] = 0;
+    }
+  // The restart: the ball waits on its spot, rather than jumping there as it's played.
+  for (let d1 = 1; d1 < n; d1++) {
+    if (alive[d1] !== "1" || alive[d1 - 1] === "1") continue;
+    if (Math.hypot(bx[d1] - bx[d1 - 1], by[d1] - by[d1 - 1]) < 2 && vis[d1 - 1]) continue;
+    let d0 = d1;
+    while (d0 > 0 && alive[d0 - 1] !== "1") d0--;
+    const from = Math.max(d0, d1 - READY);
+    for (let f = from; f < d1; f++) {
+      bx[f] = bx[d1];
+      by[f] = by[d1];
+      bz[f] = bz[d1];
+      vis[f] = 1;
+    }
+    if (from > d0) vis[from - 1] = 0;
+  }
+  // Fades: up and down over two frames, never past what's visible.
+  const ba = new Float32Array(vis);
+  for (let f = 1; f < n; f++) ba[f] = Math.min(vis[f], ba[f - 1] + 0.5);
+  for (let f = n - 2; f >= 0; f--) ba[f] = Math.min(ba[f], ba[f + 1] + 0.5);
+  return { bx, by, bz, ba };
 }
 
 let loading: Promise<Library | null> | null = null;
@@ -106,7 +194,6 @@ const FITS: Fit[] = [
   { rot: true, mir: true },
 ];
 
-const BALL = 22;
 const other = (s: Side): Side => (s === "home" ? "away" : "home");
 
 /** Where entity e is at frame f of a reel, on our pitch. */
@@ -173,6 +260,20 @@ function touchFrame(r: Reel, ev: RealEvent, e: number, hz: number): { f: number;
 /** A touch counts when its player is this near the ball. */
 const ON_BALL = 2.5;
 
+/** A shot really struck there: in play, the ball off at a shot's pace (DFL's shot clock can run
+ *  seconds off). */
+function struck(r: Reel, f: number, hz: number): boolean {
+  if (r.alive[f] !== "1" || f + 2 >= r.n) return false;
+  const v = Math.hypot(r.bx[f + 2] - r.bx[f], r.by[f + 2] - r.by[f]) / (2 / hz);
+  return v > 8;
+}
+
+/** A clip never starts this soon (s) after the recording's own goal: its ball is still in the
+ *  net, its scorers still celebrating. */
+const AFTER_GOAL = 30;
+/** No goal of the recording's own between these frames (except `own`, the one playing ours). */
+const clear = (r: Reel, a: number, b: number, own = -1) => !r.goals.some((g) => g >= a && g <= b && g !== own);
+
 /** Real event kinds that can play a moment. */
 function plays(m: Moment, ev: RealEvent): boolean {
   switch (m.kind) {
@@ -228,6 +329,10 @@ function candidates(lib: Library, m: Moment, role: Role, used: Map<string, numbe
         const toucher = toucher0;
         // A keeper's touch is our keeper's, and only his.
         if ((roleOf(toucher) === "GK") !== (role === "GK")) continue;
+        if (m.kind === "shot" && !struck(reel, ev.f, hz)) continue;
+        // A real goal only ever plays one of ours; nobody else's goal shows, before or after.
+        if (ev.kind === "shot" && reel.goals.includes(ev.f) && !isGoal(m)) continue;
+        if (!clear(reel, ev.f - (LEAD_MAX + AFTER_GOAL) * hz, ev.f + TAIL_MIN * hz, ev.f)) continue;
         let cost = off;
         if (roleOf(toucher) !== role) cost += 6;
         if (m.kind === "shot") {
@@ -277,7 +382,12 @@ interface Segment {
 const timeOf = (s: Segment, f: number, hz: number) => (s.hold ?? s.at) + (f - s.f0) / hz;
 const frameOf = (s: Segment, t: number, hz: number) => s.f0 + (t - (s.hold ?? s.at)) * hz;
 /** The last display time a segment's recording can reach. */
-const reelEnd = (s: Segment, hz: number) => timeOf(s, s.reel.n - 1, hz);
+const reelEnd = (s: Segment, hz: number) => {
+  // ...or a second before the recording's own goal, unless that goal plays ours.
+  const own = s.anchors.find((a) => isGoal(a.moment))?.ev.f ?? -1;
+  const g = s.reel.goals.find((f) => f > s.f0 && f !== own);
+  return timeOf(s, Math.min(s.reel.last, g === undefined ? Infinity : Math.max(s.f0, g - hz)), hz);
+};
 
 function defaultMap(slots: Slot[], fit: Fit): Record<string, number> {
   const map: Record<string, number> = {};
@@ -297,6 +407,23 @@ function withActor(map: Record<string, number>, actor: string, toucher: number):
 
 // ---------------------------------------------------------------- the timeline of a segment
 
+/** A keeper as recorded within KEEPER_FREE m of his goal line; further out, eased toward
+ *  KEEPER_MAX (just outside his box). Real Bundesliga keepers sweep up to halfway when their side
+ *  attacks, which reads as a mistake on our pitch (Ilham, 27 Oct). Never faster than recorded. */
+const KEEPER_FREE = 14;
+const KEEPER_MAX = 24;
+function keeperHome(p: Vec, side: Side): Vec {
+  const sign = side === "home" ? 1 : -1;
+  const out = sign * p.x + HALF_L; // metres from his own goal line
+  if (out <= KEEPER_FREE) return p;
+  const span = KEEPER_MAX - KEEPER_FREE;
+  const eased = KEEPER_FREE + span * Math.tanh((out - KEEPER_FREE) / span);
+  return { x: sign * (eased - HALF_L), y: p.y };
+}
+/** How far past KEEPER_FREE a reel's keepers stand at a frame (for choosing clips). */
+const keepersOut = (r: Reel, f: number) =>
+  Math.max(0, r.pos[(f * 23) * 2] / 10 + HALF_L - KEEPER_FREE) + Math.max(0, HALF_L - r.pos[(f * 23 + 11) * 2] / 10 - KEEPER_FREE);
+
 const SHOT_SPEED = 28;
 /** After a touch, how long its beat stays on screen. */
 const HOLD: Record<Moment["kind"], number> = { pass: 0.6, shot: 1.2, corner: 1.2, foul: 1.4, card: 1.8 };
@@ -314,12 +441,10 @@ function segmentTimeline(s: Segment, slots: Slot[], hz: number, sentOff: Map<str
     if (off !== undefined && off <= s.at) continue;
     const e = s.map[slot.id];
     const keys: Key[] = [];
-    if (s.hold !== undefined) {
-      const p = posAt(r, e, s.f0, s.fit);
-      keys.push({ t: s.at, ...p });
-    }
+    const at = (f: number) => (slot.role === "GK" ? keeperHome(posAt(r, e, f, s.fit), slot.side) : posAt(r, e, f, s.fit));
+    if (s.hold !== undefined) keys.push({ t: s.at, ...at(s.f0) });
     for (let f = Math.max(first, s.hold !== undefined ? s.f0 : first); f <= last; f++) {
-      const p = posAt(r, e, held(f), s.fit);
+      const p = at(held(f));
       keys.push({ t: timeOf(s, f, hz), x: p.x, y: p.y });
     }
     tracks[slot.id] = { slot, keys, offAt: off !== undefined && off < s.end ? off : null };
@@ -327,14 +452,24 @@ function segmentTimeline(s: Segment, slots: Slot[], hz: number, sentOff: Map<str
   const entityToSlot = new Map(Object.entries(s.map).map(([id, e]) => [e, id]));
 
   const ball: BallKey[] = [];
-  const pushBall = (t: number, p: Vec, z: number) => ball.push({ t, x: p.x, y: p.y, z, a: 1, ease: "linear", arc: 0 });
-  if (s.hold !== undefined) pushBall(s.at, posAt(r, BALL, s.f0, s.fit), r.z[s.f0] / 10);
+  const pushBall = (t: number, p: Vec, z: number, a = 1) => ball.push({ t, x: p.x, y: p.y, z, a, ease: "linear", arc: 0 });
+  // The ball as shown (shownBall), turned by the fit.
+  const shown = (f: number): Vec => {
+    let x = r.bx[f];
+    let y = r.by[f];
+    if (s.fit.rot) {
+      x = -x;
+      y = -y;
+    }
+    return { x, y: s.fit.mir ? -y : y };
+  };
+  if (s.hold !== undefined) pushBall(s.at, shown(s.f0), r.bz[s.f0], r.ba[s.f0]);
   // A goal the recording didn't score: from the real strike our shot flies on into the net.
   const goal = s.anchors.find((a) => isGoal(a.moment) && a.ev.out !== "goal");
   for (let f = Math.max(first, s.hold !== undefined ? s.f0 : first); f <= last; f++) {
     const t = timeOf(s, f, hz);
     if (goal && t > goal.t) break;
-    pushBall(t, posAt(r, BALL, held(f), s.fit), Math.max(0, r.z[held(f)] / 10));
+    pushBall(t, shown(held(f)), r.bz[held(f)], r.ba[held(f)]);
   }
   let goalLand: number | null = null;
   if (goal) {
@@ -345,34 +480,46 @@ function segmentTimeline(s: Segment, slots: Slot[], hz: number, sentOff: Map<str
     pushBall(Math.max(s.end, goalLand) + 0.5, to, 0);
   }
 
+  // Where a touch's ball goes: a shot over the line or to the first frame it's stopped or
+  // touched; a pass to the next touch.
+  const flight = (ev: RealEvent, shot: boolean): { land: number; to: Vec } => {
+    let f = ev.f + 1;
+    if (shot) {
+      const lim = Math.min(r.n - 1, ev.f + Math.round(2.2 * hz));
+      for (; f < lim; f++) {
+        const p = posAt(r, BALL, f, s.fit);
+        if (Math.abs(p.x) >= HALF_L || dist(p, posAt(r, BALL, f - 1, s.fit)) < 0.6) break;
+      }
+    } else {
+      const next = r.events.find((e) => e.f > ev.f && e.kind !== "card" && e.kind !== "foul");
+      f = Math.min(r.n - 1, next ? next.f : ev.f + Math.round(1.5 * hz));
+    }
+    return { land: timeOf(s, f, hz), to: posAt(r, BALL, f, s.fit) };
+  };
+  const keepersOutOf = (e: number, f: number) => {
+    const p = posAt(r, e, f, s.fit);
+    return dist(p, keeperHome(p, sideOf(e, s.fit)));
+  };
+  // Our keeper of a side (a saved shot is his to gather).
+  const keeperOf = (side: Side) => slots.find((x) => x.side === side && x.role === "GK" && tracks[x.id])?.id ?? null;
+
   const beats: Beat[] = s.anchors.map((a) => {
     const m = a.moment;
     const from = posAt(r, BALL, a.ev.f, s.fit);
     let land = a.t + 0.5;
     let to: Vec | null = null;
-    if (m.kind === "shot") {
-      if (a === goal && goalLand !== null) {
-        land = goalLand;
-        to = m.to;
-      } else {
-        // Where the real ball went: over the line, or the first frame it's stopped or touched.
-        let f = a.ev.f + 1;
-        const lim = Math.min(r.n - 1, a.ev.f + Math.round(2.2 * hz));
-        for (; f < lim; f++) {
-          const p = posAt(r, BALL, f, s.fit);
-          if (Math.abs(p.x) >= HALF_L || dist(p, posAt(r, BALL, f - 1, s.fit)) < 0.6) break;
-        }
-        land = timeOf(s, f, hz);
-        to = posAt(r, BALL, f, s.fit);
-      }
-    } else if (m.kind === "pass" || m.kind === "corner") {
-      const next = r.events.find((e) => e.f > a.ev.f && e.kind !== "card");
-      const f = Math.min(r.n - 1, next ? next.f : a.ev.f + Math.round(1.5 * hz));
-      land = timeOf(s, f, hz);
-      to = posAt(r, BALL, f, s.fit);
+    if (m.kind === "shot" && a === goal && goalLand !== null) {
+      land = goalLand;
+      to = m.to;
+    } else if (m.kind === "shot" || m.kind === "pass" || m.kind === "corner") {
+      ({ land, to } = flight(a.ev, m.kind === "shot"));
     }
     const receiver =
-      (m.kind === "pass" || m.kind === "corner") && a.ev.to !== null && a.ev.ok ? entityToSlot.get(a.ev.to) ?? null : null;
+      (m.kind === "pass" || m.kind === "corner") && a.ev.to !== null && a.ev.ok
+        ? entityToSlot.get(a.ev.to) ?? null
+        : m.kind === "shot" && m.outcome === "saved"
+          ? keeperOf(other(m.side))
+          : null;
     return {
       // The moment where it was played: the pass line and the figures' looks follow the real ball.
       moment: { ...m, from, to },
@@ -386,6 +533,48 @@ function segmentTimeline(s: Segment, slots: Slot[], hz: number, sentOff: Map<str
       winnerShown: false,
     };
   });
+
+  // The recording's own touches between ours: bodies kick, control, dive and gather on them, as
+  // ghosts (no names, no pass line: they aren't our events).
+  const lo = Math.floor(frameOf(s, s.at, hz));
+  const hi = Math.ceil(frameOf(s, s.end, hz));
+  for (const ev of r.events) {
+    if (ev.f < lo || ev.f > hi || ev.by === null || ev.kind === "throwin" || ev.kind === "tackle" || ev.kind === "foul" || ev.kind === "card") continue;
+    if (s.anchors.some((a) => Math.abs(a.ev.f - ev.f) <= 3)) continue;
+    if (r.alive[ev.f] !== "1" || touchFrame(r, ev, ev.by, hz).gap > 2) continue;
+    const shot = ev.kind === "shot";
+    if (shot && (!struck(r, ev.f, hz) || r.goals.includes(ev.f))) continue;
+    const actor = entityToSlot.get(ev.by);
+    if (!actor) continue;
+    if (tracks[actor]?.slot.role === "GK" && keepersOutOf(ev.by, ev.f) > 1) continue;
+    const side = sideOf(ev.by, s.fit);
+    const touch = timeOf(s, ev.f, hz);
+    const { land, to } = flight(ev, shot);
+    const kind: Moment["kind"] = shot ? "shot" : ev.kind === "corner" ? "corner" : "pass";
+    const outcome = shot ? ({ saved: "saved", blocked: "blocked" } as Record<string, string>)[ev.out ?? ""] ?? "off_target" : ev.ok ? "complete" : "incomplete";
+    const receiver = shot
+      ? outcome === "saved"
+        ? keeperOf(other(side))
+        : null
+      : ev.ok && ev.to !== null
+        ? entityToSlot.get(ev.to) ?? null
+        : null;
+    beats.push({
+      moment: {
+        id: `real:${r.id}:${ev.f}`, eventIds: [], t: 0, minute: 0, kind, side, player: "", outcome,
+        from: posAt(r, BALL, ev.f, s.fit), to, speed: 15, winner: null, pressed: false, assistTo: null, priority: 9,
+      },
+      s: touch - 0.45,
+      touch,
+      land,
+      end: Math.min(s.end, land + 0.3),
+      ideal: touch,
+      actor,
+      receiver,
+      winnerShown: false,
+      ghost: true,
+    });
+  }
 
   s.tl = {
     tracks,
@@ -407,7 +596,7 @@ export interface ReelProgram {
   goalsLand: { t: number; moment: Moment }[];
   /** For checks: each shown moment, where and when it was played. */
   shown: { moment: Moment; t: number; spot: Vec; actor: string; highlight: boolean }[];
-  segments: { at: number; end: number; reel: string; label: string | null }[];
+  segments: { at: number; end: number; reel: string; label: string | null; f0: number; hold: number | null }[];
 }
 
 const DIP = 0.18;
@@ -488,9 +677,9 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
     for (const reel of lib.reels) {
       if (reel === not) continue;
       for (let g = 0; g + 20 * hz < reel.n; g += 4 * hz) {
-        if (reel.alive[g] !== "1") continue;
+        if (reel.alive[g] !== "1" || !clear(reel, g - AFTER_GOAL * hz, g + 20 * hz)) continue;
         for (const fit of FITS) {
-          let cost = dist(posAt(reel, BALL, g, fit), ball) + (possAt(reel, g, fit) === side ? 0 : 15);
+          let cost = dist(posAt(reel, BALL, g, fit), ball) + (possAt(reel, g, fit) === side ? 0 : 15) + 0.5 * keepersOut(reel, g);
           cost += 25 * (used.get(`${reel.id}:f${g}`) ?? 0);
           if (!best || cost < best.cost) best = { reel, fit, f0: g, cost };
         }
@@ -605,7 +794,9 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
       if (toucher === null || cur.map[slot.id] !== toucher) continue;
       const spot = posAt(cur.reel, BALL, ev.f, cur.fit);
       if (dist(spot, m.from) > CAP_M) continue;
-      if (m.kind === "shot" && !(SHOT_OUT[m.outcome] ?? []).includes(ev.out ?? "")) continue;
+      if (m.kind === "shot" && (!(SHOT_OUT[m.outcome] ?? []).includes(ev.out ?? "") || !struck(cur.reel, ev.f, hz))) continue;
+      if (cur.reel.goals.includes(ev.f) && !isGoal(m)) continue;
+      if (t > reelEnd(cur, hz)) continue;
       fill(t); // (no-op: the recording reaches t)
       cur.anchors.push({ moment: m, ev, toucher, t });
       shown.push({ moment: m, t, spot, actor: slot.id, highlight: false });
@@ -662,12 +853,12 @@ export function reelProgram(players: SquadPlayer[], moments: Moment[], o: LiveOp
     // The recording's possession, and its ball as the ghost outside our moments.
     const fr = Math.max(0, Math.min(s.reel.n - 1, Math.round(frameOf(s, t, hz))));
     f.possession = possAt(s.reel, fr, s.fit) ?? f.possession;
-    if (f.ball && !f.beat) f.ball = { ...f.ball, ghost: true };
+    if (f.ball && (!f.beat || f.beat.ghost)) f.ball = { ...f.ball, ghost: true };
   };
   return {
     shotAt,
     goalsLand,
     shown,
-    segments: finals.map((s) => ({ at: s.at, end: s.end, reel: s.reel.id, label: s.label ? `${s.label.minute}′ ${s.label.kind}` : null })),
+    segments: finals.map((s) => ({ at: s.at, end: s.end, reel: s.reel.id, label: s.label ? `${s.label.minute}′ ${s.label.kind}` : null, f0: s.f0, hold: s.hold ?? null })),
   };
 }

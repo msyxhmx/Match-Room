@@ -105,6 +105,8 @@ const reel1From = (reel1.shown.find((s) => isGoal(s.moment))?.t ?? 130) - 20;
 export const PITCH_SCENES = {
   reel60: { shot: (t: number): Shot => reel60.shotAt(t), still: 10, length: 106 },
   reel1: { shot: (t: number): Shot => reel1.shotAt(t + reel1From), still: 20, length: 40 },
+  /** The same ×1 programme from its start (72'), for filming any part of it. */
+  reel1all: { shot: (t: number): Shot => reel1.shotAt(t), still: 20, length: 480 },
   equaliser: { shot: (t: number): Shot => loopShot(equaliser, t), still: equaliserGoal.touch + 0.25, length: equaliser.length },
   flow60: { shot: (t: number): Shot => flow.shotAt(t), still: flow.cuts[0] ? flow.cuts[0].at - 1.2 : 2, length: 11 },
   corner: { shot: (t: number): Shot => loopShot(corner, t), still: cornerBeat.touch + 0.6, length: corner.length },
@@ -190,6 +192,7 @@ export default {
     state("calibration", "The plate camera from pitch.py: projected lines over the render", () => <Calibration />),
     state("reel60", "Real play, ×60: the highlights reel from kick-off (DFL recordings, CC BY 4.0)", () => <Scene scene="reel60" persona="casual" />),
     state("reel1", "Real play, ×1: the 74' equaliser in live play (DFL recordings, CC BY 4.0)", () => <Scene scene="reel1" persona="casual" />),
+    state("reel1all", "Real play, ×1 from 72' (seek any instant)", () => <Scene scene="reel1all" persona="casual" />),
     ...PERSONAS.flatMap((p) => [
       state(`equaliser-${p}`, `${NOTES[p]}. S7 paused on 74': the equaliser loops`, () => (
         <Scene scene="equaliser" persona={p} />
