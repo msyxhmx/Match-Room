@@ -8,6 +8,8 @@ import styles from "./browse.module.css";
 
 export interface MatchPickerProps {
   matches: PickerMatch[];
+  /** The organic matches are still loading: "More matches" says so instead of hiding. */
+  moreLoading?: boolean;
   /** The match on the live page now. */
   currentId: string;
   onPick: (match: PickerMatch) => void;
@@ -16,7 +18,7 @@ export interface MatchPickerProps {
 const titleOf = (m: PickerMatch, labels: Labels) => m.title ?? labels.comebackTitle;
 const blurbOf = (m: PickerMatch, labels: Labels) => m.description ?? labels.comebackBlurb;
 
-export function MatchPicker({ matches, currentId, onPick }: MatchPickerProps) {
+export function MatchPicker({ matches, moreLoading = false, currentId, onPick }: MatchPickerProps) {
   const labels = useLabels();
   const scripted = matches.filter((m) => m.scripted);
   const more = matches.filter((m) => !m.scripted);
@@ -50,6 +52,14 @@ export function MatchPicker({ matches, currentId, onPick }: MatchPickerProps) {
           );
         })}
       </ul>
+      {moreLoading && more.length === 0 && (
+        <>
+          <h2 className={styles.heading}>{labels.moreMatches}</h2>
+          <p className={styles.tag} role="status" aria-busy="true">
+            {labels.loadingMatches}
+          </p>
+        </>
+      )}
       {more.length > 0 && (
         <>
           <h2 className={styles.heading}>{labels.moreMatches}</h2>

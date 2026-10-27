@@ -35,3 +35,19 @@ def test_matches_sorted_by_closest_game():
         tops.append(max(report["prediction"]["result"].values()))
     assert tops[0] == min(tops)
     assert tops == sorted(tops)
+
+
+def test_matches_never_builds_stories(monkeypatch):
+    """The list sorts on the prediction alone: a cold call must not run the story agents."""
+    import api.main as main
+    import model.halftime
+
+    def no_story(*_args, **_kwargs):
+        raise AssertionError("/api/matches built a story")
+
+    monkeypatch.setattr(model.halftime, "build_story", no_story)
+    main._cached_prediction.cache_clear()
+    main._cached_report.cache_clear()
+    r = client.get("/api/matches")
+    assert r.status_code == 200 and r.json()
+    assert main._cached_report.cache_info().currsize == 0

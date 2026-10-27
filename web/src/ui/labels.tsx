@@ -79,6 +79,7 @@ const EN = {
   pickMatch: "Pick a match",
   scriptedStoryline: "Scripted storyline",
   moreMatches: "More matches",
+  loadingMatches: "Loading more matches…",
   needsServer: "Needs the live server",
   nowShowing: "Now showing",
   versus: "v",
@@ -183,6 +184,7 @@ const MS: Labels = {
   pickMatch: "Pilih perlawanan",
   scriptedStoryline: "Jalan cerita berskrip",
   moreMatches: "Lagi perlawanan",
+  loadingMatches: "Memuatkan lagi perlawanan…", // confirm
   needsServer: "Perlukan pelayan langsung",
   nowShowing: "Sedang dipaparkan",
   versus: "lwn",
@@ -283,6 +285,7 @@ const ES: Labels = {
   pickMatch: "Elige un partido",
   scriptedStoryline: "Historia guionada",
   moreMatches: "Más partidos",
+  loadingMatches: "Cargando más partidos…",
   needsServer: "Necesita el servidor en vivo",
   nowShowing: "En pantalla",
   versus: "v",

@@ -34,36 +34,52 @@ const SAVED_FALLBACK: PickerMatch = {
   playable: true,
 };
 
-/** Scripted storylines first, then the organic matches. Playable: everything when the server
- *  answers both calls; otherwise only the saved comeback. */
-export function useMatchList(): PickerMatch[] {
-  const [list, setList] = useState<PickerMatch[]>([SAVED_FALLBACK]);
+export interface MatchList {
+  /** Scripted storylines first, then the organic matches. */
+  matches: PickerMatch[];
+  /** The organic matches are still on their way. */
+  moreLoading: boolean;
+}
+
+/** The scripted cards show as soon as /api/scenarios answers; the organic matches follow when
+ *  /api/matches does. Playable: whatever the server listed; with no server, only the saved
+ *  comeback. */
+export function useMatchList(): MatchList {
+  const [scripted, setScripted] = useState<PickerMatch[]>([SAVED_FALLBACK]);
+  const [more, setMore] = useState<PickerMatch[]>([]);
+  const [moreLoading, setMoreLoading] = useState(!PREVIEW);
   useEffect(() => {
     if (PREVIEW) return;
     let live = true;
-    Promise.allSettled([liveApi.scenarios(), api.matches()]).then(([sc, ms]) => {
-      if (!live) return;
-      const all = sc.status === "fulfilled" && ms.status === "fulfilled";
-      const playable = (id: string) => all || id === SAVED_MATCH;
-      const scripted: PickerMatch[] = sc.status === "fulfilled"
-        ? sc.value.map((s) => ({
-            id: s.match_id, home: s.home, away: s.away, title: s.title, description: s.description,
-            scripted: true, playable: playable(s.match_id),
-          }))
-        : [];
-      const more: PickerMatch[] = ms.status === "fulfilled"
-        ? ms.value
+    liveApi
+      .scenarios()
+      .then((sc) => {
+        if (!live) return;
+        const cards: PickerMatch[] = sc.map((s) => ({
+          id: s.match_id, home: s.home, away: s.away, title: s.title, description: s.description,
+          scripted: true, playable: true,
+        }));
+        if (!cards.some((m) => m.id === SAVED_MATCH)) cards.unshift(SAVED_FALLBACK);
+        setScripted(cards);
+      })
+      .catch(() => live && setScripted([SAVED_FALLBACK]));
+    api
+      .matches()
+      .then((ms) => {
+        if (!live) return;
+        setMore(
+          ms
             .filter((m) => m.scenario === null)
-            .map((m) => ({ id: m.match_id, home: m.home, away: m.away, scripted: false, playable: playable(m.match_id) }))
-        : [];
-      if (!scripted.some((m) => m.id === SAVED_MATCH)) scripted.unshift(SAVED_FALLBACK);
-      setList([...scripted, ...more]);
-    });
+            .map((m) => ({ id: m.match_id, home: m.home, away: m.away, scripted: false, playable: true })),
+        );
+      })
+      .catch(() => live && setMore([]))
+      .finally(() => live && setMoreLoading(false));
     return () => {
       live = false;
     };
   }, []);
-  return list;
+  return { matches: [...scripted, ...more], moreLoading };
 }
 
 /** The season table for this viewer, or the saved one when the call fails (or in preview). */

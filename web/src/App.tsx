@@ -321,7 +321,7 @@ function LivePage() {
   const d = useDirector();
   const tabs = !d.director && !d.rec;
   const [view, setView] = useState<PageView>(() => (tabs ? initialView(location.search) : "live"));
-  const matches = useMatchList();
+  const { matches, moreLoading } = useMatchList();
   const season = useSeason(d.profile);
 
   useEffect(() => {
@@ -371,7 +371,7 @@ function LivePage() {
         <Frame clubs={["NGC", "KST", d.profile.team ?? "NGC"]}>
           <BrowseScreen top={top}>
             {view === "matches" ? (
-              <MatchPicker matches={matches} currentId={d.matchId} onPick={pick} />
+              <MatchPicker matches={matches} moreLoading={moreLoading} currentId={d.matchId} onPick={pick} />
             ) : (
               <SeasonScreen report={season} team={d.profile.team} />
             )}
