@@ -296,7 +296,9 @@ players play with it:
   is played to the real spot, landing exactly when the real ball takes over. A pass decided
   before then that can't make it vanishes from that instant.
 - Restarts: after a shot wide the keeper takes a goal kick, after a foul the other side a free
-  kick, after a goal the kick-off. The ghost stays 0.3 m inside the lines.
+  kick. After a goal everyone waits in the kick-off picture, the ball on the centre spot, until
+  the next real moment is known (a feed may restart a minute later): that moment is the kick-off
+  itself, or the ghost kicks off then. The ghost stays 0.3 m inside the lines.
 
 Real touches are unchanged: solid, named, with the real pass line. The ghost never depends on a
 moment before that moment is known, so live replanning stays stable. `ghost.ts` only reads the
