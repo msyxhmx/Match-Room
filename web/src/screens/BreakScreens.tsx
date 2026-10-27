@@ -13,7 +13,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import type { BriefPoint, LiveCard } from "../types/live";
 import { AgentTrace, BriefPanel, FactsSheet, ScoreHeader, Timeline, TopBar } from "../ui";
 import { scorersFrom } from "../ui/format";
-import { useLabels } from "../ui/labels";
+import { useLabels, type Labels } from "../ui/labels";
 import type { MatchView } from "../live/feed";
 import type { Connection } from "../live/useMatchFeed";
 import { useLastFacts } from "./LiveScreen";
@@ -113,11 +113,20 @@ export function HalfTimeScreen(props: BreakProps & { revealed?: number; agentsOp
   );
 }
 
+/** Full time: who controlled the whole match, from the brief's minutes. The live label only
+ *  says who held it in the last minutes, which can be the side that lost. */
+function matchControl(view: MatchView, labels: Labels): string {
+  const cp = view.fulltime!.control_profile;
+  if (cp.home_control === cp.away_control) return labels.balanced;
+  return labels.inControl(cp.home_control > cp.away_control ? view.home.name : view.away.name);
+}
+
 export function FullTimeScreen(props: BreakProps) {
   const { view, facts } = props;
   const sheetCard = useLastFacts(facts);
   const brief = view.fulltime!;
   const note = view.projection.note;
+  const labels = useLabels();
   return (
     <div className={styles.screen} data-screen="fulltime">
       <Bar {...props} />
@@ -148,7 +157,7 @@ export function FullTimeScreen(props: BreakProps) {
           if (card) props.onOpenFacts?.(card);
         }}
         turningPoints={brief.turning_points}
-        title={view.control.label}
+        title={matchControl(view, labels)}
         note={note}
       />
       {sheetCard && <FactsSheet open={!!facts} card={sheetCard} note={note} onClose={props.onCloseFacts} />}

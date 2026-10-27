@@ -83,6 +83,13 @@ def _pct(share: float) -> int:
     return round(100 * share)
 
 
+def _clip(text: str, limit: int) -> str:
+    """Cut a long detail at a word, with an ellipsis, so the trace never shows half a word."""
+    if len(text) <= limit:
+        return text
+    return text[: limit - 1].rsplit(" ", 1)[0].rstrip(" ,.;:") + "…"
+
+
 class StoryTools:
     """The analyst's tools. Everything they return is recorded: a card may only
     cite events and quote numbers and names that came out of here."""
@@ -175,7 +182,7 @@ class StoryAgents:
         self.started = 0.0
 
     def step(self, agent: str, action: str, detail: str) -> None:
-        self.trace.append(AgentStep(agent=agent, action=action, detail=detail[:200]))
+        self.trace.append(AgentStep(agent=agent, action=action, detail=_clip(detail, 200)))
 
     # ---------- LLM plumbing ----------
 

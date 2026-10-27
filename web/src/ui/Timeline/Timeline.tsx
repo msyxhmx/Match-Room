@@ -36,6 +36,9 @@ const x0 = (m: number) => m * SLOT + (m > 45 ? HT_GAP : 0);
 const at = (m: number) => `${(((x0(m) + BAR / 2) / WIDTH) * 100).toFixed(3)}%`;
 const atNum = (m: number) => ((x0(m) + BAR / 2) / WIDTH) * 100;
 const clamp = (v: number) => Math.max(-1, Math.min(1, v));
+/** A turning point's label ("37' · 56% → 83%") spans about this many minutes of the chart. */
+const TP_GAP = 10;
+const swingSize = (t: TurningPoint) => Math.abs(t.win_after - t.win_before);
 
 export function Timeline({
   series, minute, cards, selectedId, onSelect, turningPoints, title, note, loading,
@@ -112,7 +115,13 @@ export function Timeline({
     shifts.set(c.insight_id, `max(0px, calc(${shifts.get(prev.insight_id)} + var(--space-6) - ${d}cqw))`);
   });
   const selected = visible.find((c) => c.insight_id === selectedId);
-  const tps = (turningPoints ?? []).filter((t) => t.minute <= minute);
+  // Labels closer than TP_GAP minutes would print over each other: keep the bigger swing.
+  const tps: TurningPoint[] = [];
+  for (const t of (turningPoints ?? []).filter((t) => t.minute <= minute).sort((a, b) => a.minute - b.minute)) {
+    const prev = tps[tps.length - 1];
+    if (!prev || t.minute - prev.minute >= TP_GAP) tps.push(t);
+    else if (swingSize(t) > swingSize(prev)) tps[tps.length - 1] = t;
+  }
   const tpCards = cards;
 
   const axis: { m: number; text: string; phone: boolean }[] = [
