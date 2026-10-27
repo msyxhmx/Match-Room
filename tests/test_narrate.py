@@ -8,7 +8,7 @@ import pytest
 from contract import Profile
 from live.engine import MatchEngine
 from live.insights import PRIORITY, Fact
-from live.narrate import llm_rewrite, validate
+from live.narrate import FINAL_RESULT_RE, llm_rewrite, validate
 from live.templates import BRIEF, EXTRAS, LANGS, T
 from sim import SCENARIOS, simulate_scenario
 
@@ -115,6 +115,75 @@ def test_llm_rewrite_off_without_keys(monkeypatch):
     for k in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_API_KEY", "AZURE_OPENAI_DEPLOYMENT"):
         monkeypatch.delenv(k, raising=False)
     assert llm_rewrite("draft", FACTS, "en", "casual", "a summary") is None
+
+
+# What the deployed half-time brief for the comeback scenario said at 0-2 (Northgate win 3-2).
+HT_CALLS_RESULT = ("The match saw 15 chaotic minutes without clear control from either side, "
+                   "highlighted by a key moment at 14' when Kingston Vale scored against the run "
+                   "of play. Ultimately, Kingston Vale secured a 2-0 victory over Northgate City.")
+HT_FACTS = {"chaos_minutes": Fact(15, "int"), "turn_minute": Fact(14, "int"),
+            "home": Fact("Northgate City", "team"), "away": Fact("Kingston Vale", "team"),
+            "score": Fact("0-2", "score")}
+
+
+def test_halftime_brief_may_not_call_the_result():
+    assert validate(HT_CALLS_RESULT, HT_FACTS, "en", kind="halftime") == [
+        "final-result wording 'Ultimately' at half-time",
+        "final-result wording 'victory' at half-time"]
+    assert validate("Kingston Vale secured a 2-0 win.", HT_FACTS, "en", kind="halftime")
+    assert validate(HT_CALLS_RESULT, HT_FACTS, "en", kind="fulltime") == []
+    assert validate(HT_CALLS_RESULT, HT_FACTS, "en") == []
+
+
+@pytest.mark.parametrize("lang, text", [
+    ("en", "Kingston Vale won the first half 2-0."),
+    ("en", "The final score was 0-2."),
+    ("ms", "Akhirnya, Kingston Vale meraih kemenangan 2-0."),
+    ("ms", "Northgate City tewas 0-2."),
+    ("es", "Finalmente, Kingston Vale ganó 2-0."),
+    ("es", "Victoria de Kingston Vale por 0-2."),
+])
+def test_final_result_wording_caught_in_every_language(lang, text):
+    assert validate(text, HT_FACTS, lang, kind="halftime")
+    assert validate(text, HT_FACTS, lang, kind="fulltime") == []
+
+
+@pytest.mark.parametrize("lang, text", [
+    ("en", "Kingston Vale lead 0-2 at the break after 15 chaotic minutes."),
+    ("ms", "Kingston Vale mendahului 0-2 pada waktu rehat."),
+    ("es", "Kingston Vale ganan 0-2 al descanso; al final de la primera parte, 15 minutos."),
+])
+def test_halftime_lead_wording_is_allowed(lang, text):
+    assert validate(text, HT_FACTS, lang, kind="halftime") == []
+
+
+def test_llm_rewrite_rejects_result_at_halftime(monkeypatch):
+    _llm_env(monkeypatch)
+    with patch("openai.AzureOpenAI", return_value=_client(HT_CALLS_RESULT)):
+        assert llm_rewrite("draft", HT_FACTS, "en", "analyst", "a summary",
+                           kind="halftime") is None
+        assert llm_rewrite("draft", HT_FACTS, "en", "analyst", "a summary",
+                           kind="fulltime") == HT_CALLS_RESULT
+
+
+def test_halftime_brief_falls_back_to_template(monkeypatch, caplog):
+    _llm_env(monkeypatch)
+    engine = MatchEngine(simulate_scenario("comeback"))
+    profile = Profile(persona="analyst", language="en", team=engine.match.home.id)
+    with patch("openai.AzureOpenAI", return_value=_client(HT_CALLS_RESULT)):
+        brief = engine.brief("halftime", profile)
+    assert brief.summary_source == "template"
+    assert "Ultimately" not in brief.summary
+    assert "final-result wording 'Ultimately' at half-time" in caplog.text
+
+
+@pytest.mark.parametrize("key", list(SCENARIOS))
+def test_halftime_template_summaries_do_not_call_the_result(key):
+    """The template is the fallback, so it must pass the half-time check itself."""
+    engine = MatchEngine(simulate_scenario(key))
+    for lang in LANGS:
+        brief = engine.brief("halftime", Profile(language=lang))
+        assert not FINAL_RESULT_RE[lang].search(brief.summary), (lang, brief.summary)
 
 
 def test_possessive_names_are_not_invented_players():

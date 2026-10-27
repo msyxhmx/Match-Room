@@ -521,7 +521,7 @@ class MatchEngine:
         summary_facts.update({"score": score, "home": team_fact["home"],
                               "away": team_fact["away"]})
         rewritten = llm_rewrite(summary, summary_facts, lang, profile.persona,
-                                "a two-sentence match summary")
+                                "a two-sentence match summary", kind)
         if rewritten:
             summary, summary_source = rewritten, "llm"
 
