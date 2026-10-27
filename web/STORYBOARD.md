@@ -144,7 +144,7 @@ Rubric codes:
   - a trace panel, with one row per agent step: agent, action, and outcome (`accept` / `reject` / `retry`)
 
 ### S6 · 1:07–1:17 · The swing
-- **On screen:** the stream from 46' to 73' at ×60. The momentum bars flip from claret (KST) to blue (NGC). The "Momentum swings to Northgate City" card arrives around 52'. Ferreira's goal at 61' makes it 1-2.
+- **On screen:** the stream from 46' to 73' at ×60. The momentum bars flip from claret (KST) to blue (NGC). The "Northgate City take control" card arrives at 58'. N. Vidal's goal at 61' makes it 1-2.
 - **Data:** websocket `stream?speed=60&from_minute=45`.
 - **VO:** "After the break, the match turns. You can watch Northgate take over, minute by minute."
 - **Serves:** C (Interpret), U.
