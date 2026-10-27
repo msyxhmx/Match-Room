@@ -12,6 +12,8 @@ artifacts/*
 # the trained model is small and committed so the demo works out of the box
 !artifacts/model.joblib
 !artifacts/metrics.json
+!artifacts/live_calibration.json
+!artifacts/xt_grid.json
 
 # Secrets
 .env

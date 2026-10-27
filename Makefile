@@ -1,7 +1,7 @@
 # Common commands. On Windows without make, run the command on the right directly.
 PY ?= .venv/bin/python
 
-.PHONY: setup sim train train-quick schema api web test lint format check
+.PHONY: setup sim train train-quick xt live-calibration schema api web test lint format check
 
 setup:            ## create venv, install Python + web deps
 	python3 -m venv .venv
@@ -17,6 +17,12 @@ train:            ## train on 10k synthetic matches (~7 min)
 
 train-quick:      ## fast smoke-test training
 	$(PY) -m model.train --n 1000 --quick --out data/quick
+
+xt:               ## fit the xT grid on 3,000 simulated matches (~6 min)
+	$(PY) -m live.xt --n 3000
+
+live-calibration: ## score the live win projection minute by minute (~4 min)
+	$(PY) scripts/check_live_calibration.py --n 2000
 
 schema:           ## regenerate contract JSON schema + sample/mock JSON
 	$(PY) scripts/export_contract.py

@@ -4,8 +4,9 @@
     python -m model.train --n 1000 --quick --out data/quick   # smoke test
 
 Writes model.joblib and metrics.json to --out (default artifacts/). Always compares
-against the baseline from the plan (half-time score only), so the pitch can
-show the model actually beats it.
+against baselines, from weakest to strongest: the hand-weighted heuristic, pre-match
+strength only, half-time score only, and a Dixon-Coles model (score + strengths). Every
+model is scored on log loss, accuracy and RPS, with a calibration check.
 """
 
 from __future__ import annotations
@@ -18,14 +19,16 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import joblib
+import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, log_loss
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 
+from model.dixon_coles import DixonColes
+from model.evaluation import calibration, score
 from model.features import FEATURE_COLUMNS, build_dataset
-from model.predict import NEXT_GOAL_CLASSES, RESULT_CLASSES
+from model.predict import NEXT_GOAL_CLASSES, RESULT_CLASSES, HeuristicPredictor
 from sim.simulator import simulate_season
 
 DATA_DIR = Path("data/processed")
@@ -36,7 +39,7 @@ def _code_version() -> str:
     """Short hash of the code that builds the dataset, so a simulator or feature
     change never trains on a stale cache."""
     h = hashlib.sha256()
-    for f in ("sim/simulator.py", "sim/teams.py", "model/features.py"):
+    for f in ("sim/simulator.py", "sim/chain.py", "sim/teams.py", "model/features.py"):
         h.update((Path(__file__).parent.parent / f).read_bytes())
     return h.hexdigest()[:8]
 
@@ -61,9 +64,11 @@ def _xgb(quick: bool) -> XGBClassifier:
     )
 
 
-def _score(y_true, proba) -> dict[str, float]:
-    return {"log_loss": round(log_loss(y_true, proba, labels=[0, 1, 2]), 4),
-            "accuracy": round(accuracy_score(y_true, proba.argmax(axis=1)), 4)}
+def _heuristic_proba(X) -> np.ndarray:
+    h = HeuristicPredictor()
+    rows = [h.predict(r).result for r in X.to_dict("records")]
+    proba = np.array([[r.home_win, r.draw, r.away_win] for r in rows])
+    return proba / proba.sum(axis=1, keepdims=True)  # its rounded outputs can miss 1 slightly
 
 
 def main() -> None:
@@ -79,20 +84,33 @@ def main() -> None:
     y_res = df["result"].map(RESULT_CLASSES.index)
     y_ng = df["next_goal"].map(NEXT_GOAL_CLASSES.index)
     X = df[FEATURE_COLUMNS]
-    X_tr, X_te, yr_tr, yr_te, yn_tr, yn_te = train_test_split(
-        X, y_res, y_ng, test_size=0.2, random_state=args.seed, stratify=y_res)
+    X_tr, X_te, yr_tr, yr_te, yn_tr, yn_te, df_tr, df_te = train_test_split(
+        X, y_res, y_ng, df, test_size=0.2, random_state=args.seed, stratify=y_res)
 
     baseline = LogisticRegression(max_iter=1000).fit(X_tr[["goal_diff"]], yr_tr)
+    strength_only = LogisticRegression(max_iter=1000).fit(X_tr[["strength_diff"]], yr_tr)
+    dixon_coles = DixonColes().fit(df_tr)
     result_model = _xgb(args.quick).fit(X_tr, yr_tr)
     next_goal_model = _xgb(args.quick).fit(X_tr, yn_tr)
 
+    result_proba = {  # weakest to strongest
+        "heuristic": _heuristic_proba(X_te),
+        "baseline_strength_only": strength_only.predict_proba(X_te[["strength_diff"]]),
+        "baseline_score_only": baseline.predict_proba(X_te[["goal_diff"]]),
+        "dixon_coles": dixon_coles.predict_proba(df_te),
+        "xgboost": result_model.predict_proba(X_te),
+    }
+    next_goal_proba = next_goal_model.predict_proba(X_te)
     metrics = {
         "n_matches": int(len(df)),
-        "result": {
-            "baseline_score_only": _score(yr_te, baseline.predict_proba(X_te[["goal_diff"]])),
-            "xgboost": _score(yr_te, result_model.predict_proba(X_te)),
+        "result": {k: score(yr_te, p, ordered=True) for k, p in result_proba.items()},
+        "next_goal": {"xgboost": score(yn_te, next_goal_proba)},
+        "calibration": {
+            "result": {k: calibration(yr_te, p, RESULT_CLASSES)
+                       for k, p in result_proba.items()},
+            "next_goal": {"xgboost": calibration(yn_te, next_goal_proba, NEXT_GOAL_CLASSES)},
         },
-        "next_goal": {"xgboost": _score(yn_te, next_goal_model.predict_proba(X_te))},
+        "dixon_coles_params": dixon_coles.params(),
         "class_balance": df["result"].value_counts(normalize=True).round(3).to_dict(),
     }
     version = f"xgb-{datetime.now(UTC):%Y%m%d-%H%M}"
@@ -102,10 +120,14 @@ def main() -> None:
                 args.out / "model.joblib")
     (args.out / "metrics.json").write_text(json.dumps({"version": version, **metrics},
                                                           indent=2))
-    print(json.dumps(metrics, indent=2))
-    better = (metrics["result"]["xgboost"]["log_loss"]
-              < metrics["result"]["baseline_score_only"]["log_loss"])
-    print(f"\n{version}: XGBoost {'beats' if better else 'DOES NOT beat'} the score-only baseline")
+    print(f"\n{'model':<24}{'log loss':>10}{'RPS':>8}{'accuracy':>10}{'mean ECE':>10}")
+    for k, m in metrics["result"].items():
+        ece = metrics["calibration"]["result"][k]["mean_ece"]
+        print(f"{k:<24}{m['log_loss']:>10.4f}{m['rps']:>8.4f}{m['accuracy']:>10.1%}{ece:>10.4f}")
+    xgb = metrics["result"]["xgboost"]
+    for name in ("baseline_score_only", "dixon_coles"):
+        better = xgb["log_loss"] < metrics["result"][name]["log_loss"]
+        print(f"{version}: XGBoost {'beats' if better else 'DOES NOT beat'} {name}")
 
 
 if __name__ == "__main__":

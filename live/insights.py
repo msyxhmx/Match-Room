@@ -40,9 +40,9 @@ SHOT_SPEED_KMH = 115
 MOMENTUM_LEAD = 0.35
 PASS_DIFFICULTY = 0.50
 PASS_XT = 0.04
-PPDA_INTENSE = 4.8
+PPDA_INTENSE = 4.0  # re-tuned for the v2 simulator (scripts/card_value.py)
 PPDA_DROP = 0.65  # now <= 65% of the previous window
-WIN_SWING = 0.15
+WIN_SWING = 0.10  # the v2 projection moves more slowly; 0.15 almost never fired
 TEMPO_CHANGE = 0.25
 MILESTONE_PASSES = 40
 MILESTONE_BALL_WINS = 8
@@ -347,13 +347,15 @@ class _Detector:
         if abs(deltas[side]) < WIN_SWING:
             return
         rate = self.tl.projection[m][f"{side}_live_rate90"]
+        driver = side if deltas[side] > 0 else OTHER[side]  # whose play moved the projection
+        proof = self.top_threat(driver, lo + 1, m)
         self.emit("win_prob_swing", "up" if deltas[side] > 0 else "down", m, 59, side,
                   {"team": self.team(side), "win_before": Fact(self.win(side, lo), "pct"),
                    "win_after": Fact(self.win(side, m), "pct"), "window": Fact(5, "int"),
                    "xg_rate": Fact(round(rate, 2), "dec2"),
                    "minutes_left": Fact(int(self.tl.projection[m]["minutes_left"]), "int"),
                    "score": Fact(self.score_text(m), "score")},
-                  [])
+                  list(proof["event_id"]))
 
     def tempo(self, m: int) -> None:
         if m < 2 * M.WINDOW or not self.ready("tempo_shift", m):
@@ -361,12 +363,16 @@ class _Detector:
         now, before = self.tl.tempo[m], self.tl.tempo[m - M.WINDOW]
         if before <= 0 or abs(now - before) / before < TEMPO_CHANGE:
             return
+        lo = m - M.WINDOW + 1
+        passes = self.ev[(self.ev["type"] == "pass") & (self.ev["minute"] >= lo)
+                         & (self.ev["minute"] <= m)]
+        proof = [] if passes.empty else list(passes.iloc[[0, -1]]["event_id"].unique())
         self.emit("tempo_shift", "up" if now > before else "down", m, 59, None,
                   {"tempo": Fact(round(float(now), 1), "dec1"),
                    "tempo_before": Fact(round(float(before), 1), "dec1"),
                    "window": Fact(M.WINDOW, "int"),
                    "home": self.team("home"), "away": self.team("away")},
-                  [])
+                  proof)  # first and last pass of the window being counted
 
     def milestone_plan(self) -> dict[int, list[tuple]]:
         """When (minute) the first player reaches each milestone (one per kind)."""

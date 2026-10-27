@@ -81,3 +81,13 @@ def test_season_report():
     assert report.storylines[0].team_id == "MIL"
     points = [r.points for r in report.table]
     assert points == sorted(points, reverse=True)
+
+
+def test_every_card_cites_evidence():
+    from live import metrics as M
+    from live.insights import detect
+    from sim import simulate_season
+
+    for match in simulate_season(6, seed=8):
+        for insight in detect(M.build_timeline(match)):
+            assert insight.evidence, insight.type

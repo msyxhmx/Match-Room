@@ -20,8 +20,8 @@
  "meta": {
   "venue": "Northgate Stadium",
   "referee": "P. Okonjo",
-  "attendance": 23047,
-  "weather": "Clear",
+  "attendance": 43947,
+  "weather": "Light rain",
   "scenario": "comeback",
   "scenario_title": "The comeback",
   "synthetic": true
@@ -71,7 +71,7 @@
    "home": 0.0,
    "away": 0.0,
    "unit": null,
-   "definition": "How much completed passes increased the chance of scoring, from a 12x8 zone grid."
+   "definition": "How much completed passes increased the chance of scoring, from a 12x8 zone grid learned from simulated matches."
   },
   {
    "key": "possession",
@@ -171,9 +171,9 @@
   "label": "Evenly balanced"
  },
  "projection": {
-  "home_win": 0.543,
-  "draw": 0.218,
-  "away_win": 0.24,
+  "home_win": 0.562,
+  "draw": 0.2,
+  "away_win": 0.238,
   "drivers": [
    {
     "key": "score",
@@ -188,12 +188,12 @@
    {
     "key": "home_rate",
     "label": "Northgate City expected goals per 90",
-    "value": "1.98"
+    "value": "2.25"
    },
    {
     "key": "away_rate",
     "label": "Kingston Vale expected goals per 90",
-    "value": "1.25"
+    "value": "1.42"
    },
    {
     "key": "live_weight",
@@ -217,13 +217,13 @@
    0.0
   ],
   "home_win": [
-   0.543
+   0.562
   ],
   "draw": [
-   0.218
+   0.2
   ],
   "away_win": [
-   0.24
+   0.238
   ]
  },
  "cards": [],
