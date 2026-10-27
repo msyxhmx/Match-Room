@@ -7,7 +7,7 @@
 //     few seconds before it at real speed.
 
 import { attackSign, clampToPitch, type Side, type Vec } from "./geometry";
-import { slotId, type SquadPlayer } from "./formation";
+import { allSlots, slotId, type SquadPlayer } from "./formation";
 import { isGoal, type Moment } from "./moments";
 import { plan, type Timeline } from "./plan";
 import { realReplayFor, realTimeline } from "./replays";
@@ -54,22 +54,20 @@ export function replayMoment(
   if (buildUp === 0 && !o.planner) {
     const hit = cutCache.get(target);
     if (hit && hit.players === players) return hit.replay;
-    const replay = playedReal(planReplay(players, moments, target, buildUp), moments, true);
+    const replay = playedReal(players, moments, target, true) ?? planReplay(players, moments, target, buildUp);
     cutCache.set(target, { players, replay });
     return replay;
   }
-  const planned = planReplay(players, moments, target, buildUp);
-  return o.planner ? planned : playedReal(planned, moments);
+  return (!o.planner && playedReal(players, moments, target, false)) || planReplay(players, moments, target, buildUp);
 }
 
 /** A goal with a real move that fits (replays.ts) is replayed by it, the build-up being the real
- *  move's own (a cut: its last seconds); else the planner's replay stands. `planner`: the
- *  planner's, always (the lab). */
-function playedReal(planned: Replay | null, moments: Moment[], cut = false): Replay | null {
-  if (!planned || !isGoal(planned.headline)) return planned;
-  const real = realReplayFor(planned.headline.id);
-  const timeline = real && realTimeline(real, planned.timeline.tracks, moments, cut);
-  return timeline ? { timeline, length: timeline.end, headline: planned.headline, real: true } : planned;
+ *  move's own (a cut: its last seconds); else null, and the planner's replay stands. `planner`:
+ *  the planner's, always (the lab). */
+function playedReal(players: SquadPlayer[], moments: Moment[], target: Moment, cut: boolean): Replay | null {
+  const real = isGoal(target) ? realReplayFor(target.id) : null;
+  const timeline = real && realTimeline(real, allSlots(players), moments, cut);
+  return timeline ? { timeline, length: timeline.end, headline: target, real: true } : null;
 }
 
 const cutCache = new WeakMap<Moment, { players: SquadPlayer[]; replay: Replay | null }>();

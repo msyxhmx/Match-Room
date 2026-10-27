@@ -408,6 +408,14 @@ for (const speed of [1, 60]) {
       check(`real move ${g.minute}' ${how}`, r.timeline, [], 1, { realCap: REAL_CAP });
     }
     for (const tc of real.touches) if (tc.offM > REAL_CAP) fail(`real move: ${tc.id} is ${tc.offM} m from its spot`);
+    // A player sent off before the goal stays off in its real replay (real moves have eleven).
+    const touchers = new Set(moments.filter((m) => real.touches.some((tc) => tc.id === m.id)).map((m) => m.player));
+    const victim = players.find((p) => p.side === g.side && p.position !== "GK" && !touchers.has(p.name));
+    const red = { ...events.find((e) => e.side === g.side && e.type === "pass"), event_id: "TEST-red", type: "card", outcome: "red", player: victim.name, minute: g.minute - 1, second: 0 };
+    const withRed = toMoments([...events, red]);
+    const rr = replayMoment(players, withRed, withRed.find((m) => m.id === g.id), BUILD_UP.loop);
+    const left = frameAt(rr.timeline, 1).dots.filter((d) => d.side === g.side).length;
+    if (!rr.real || left !== 10) fail(`real move: the ${g.minute}' replay shows ${left} of a side with a man sent off`);
     out.push(`${g.minute}' real (${real.touches.length} touches, ${real.how}, up to ${Math.max(...real.touches.map((t) => t.offM))} m off)`);
   }
   console.log("\ngoal replays: " + out.join("; "));

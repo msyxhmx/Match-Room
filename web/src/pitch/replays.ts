@@ -8,6 +8,7 @@
 // makes each touch, in order. The live pitch never does. Anonymised: sides and slot numbers.
 // Data: DFL / Sportec open data (Bassek et al. 2025), CC BY 4.0. See web/PITCH.md.
 
+import type { Slot } from "./formation";
 import type { Moment } from "./moments";
 import type { BallKey, Beat, Key, Timeline, Track } from "./plan";
 import type { Passage } from "./real";
@@ -40,10 +41,10 @@ const CUT_TAIL = 0.4;
 /**
  * The goal's move played by the real one, from display time 0. Every dot follows its matched real
  * player (same side and slot number); each of our touches is a beat at its real touch; the real
- * ball runs until the shot, then our shot flies into the net. `tracks`: the planner's replay's
- * tracks, for each player's slot (name, number, role). `cut`: only the shot's last seconds.
+ * ball runs until the shot, then our shot flies into the net. `slots`: our 22 (formation.ts); a
+ * player sent off before the goal isn't there. `cut`: only the shot's last seconds.
  */
-export function realTimeline(r: RealReplay, tracks: Record<string, Track>, moments: Moment[], cut = false): Timeline | null {
+export function realTimeline(r: RealReplay, slots: Slot[], moments: Moment[], cut = false): Timeline | null {
   const p = r.passage;
   const byId = new Map(moments.map((m) => [m.id, m]));
   const all = r.touches.map((tc) => ({ ...tc, moment: byId.get(tc.id) }));
@@ -65,15 +66,21 @@ export function realTimeline(r: RealReplay, tracks: Record<string, Track>, momen
   const end = Math.max(at(i1), shot.t - off + flight + (cut ? CUT_TAIL : 0.1));
   const touches = all.filter((tc) => tc === shot || tc.t - off >= 0.45).map((tc) => ({ ...tc, t: tc.t - off }));
 
+  const sentOff = new Set(
+    moments
+      .filter((m) => m.kind === "card" && (m.outcome === "red" || m.outcome === "second_yellow") && m.t < shot.moment!.t)
+      .map((m) => `${m.side}:${m.player}`),
+  );
   const out: Record<string, Track> = {};
-  for (const [id, tr] of Object.entries(tracks)) {
-    const k = p.players.findIndex((pl) => pl.side === tr.slot.side && pl.number === tr.slot.number);
+  for (const slot of slots) {
+    if (sentOff.has(slot.id)) continue;
+    const k = p.players.findIndex((pl) => pl.side === slot.side && pl.number === slot.number);
     if (k < 0) return null;
     // Two frames either side of those shown: the curve through the keys eases to a stop on the
     // first and last, which would hurry the frames next to them.
     const keys: Key[] = [];
     for (let i = Math.max(0, i0 - 2); i <= Math.min(last, i1 + 2); i++) keys.push({ t: at(i), x: p.x[k][i] / 10, y: p.y[k][i] / 10 });
-    out[id] = { ...tr, keys, offAt: null };
+    out[slot.id] = { slot, keys, offAt: null };
   }
   const actorOf = (m: Moment) => Object.keys(out).find((id) => out[id].slot.side === m.side && out[id].slot.name === m.player);
   if (touches.some((tc) => !actorOf(tc.moment!))) return null;
