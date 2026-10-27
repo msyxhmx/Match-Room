@@ -10,6 +10,7 @@ import { attackSign, clampToPitch, type Side, type Vec } from "./geometry";
 import { slotId, type SquadPlayer } from "./formation";
 import { isGoal, type Moment } from "./moments";
 import { plan, type Timeline } from "./plan";
+import { realReplayFor, realTimeline } from "./replays";
 
 /** The minute's most important moment: goal, card, shot, corner, foul, won pass, pass. */
 export function headline(moments: Moment[], minute: number): Moment | null {
@@ -30,6 +31,9 @@ const PRE_ROLL = 0.8;
 
 export interface Replay {
   timeline: Timeline;
+  /** Played by a real move (replays.ts): its touches may sit up to REAL_REPLAYS.capM from their
+   *  events' spots. */
+  real?: boolean;
   /** The loop length in display seconds. */
   length: number;
   headline: Moment;
@@ -39,16 +43,33 @@ export interface Replay {
  * A replay of one moment at ×1 from display time 0: the build-up seconds before it, then it.
  * With no build-up (a cut into the ×60 flow) its player starts a few strides from the ball.
  */
-export function replayMoment(players: SquadPlayer[], moments: Moment[], target: Moment, buildUp: number): Replay | null {
+export function replayMoment(
+  players: SquadPlayer[],
+  moments: Moment[],
+  target: Moment,
+  buildUp: number,
+  o: { planner?: boolean } = {},
+): Replay | null {
   // A cut (no build-up) shows its moment alone, so it's the same on every replan: plan it once.
-  if (buildUp === 0) {
+  if (buildUp === 0 && !o.planner) {
     const hit = cutCache.get(target);
     if (hit && hit.players === players) return hit.replay;
-    const replay = planReplay(players, moments, target, buildUp);
+    const replay = playedReal(planReplay(players, moments, target, buildUp), moments, true);
     cutCache.set(target, { players, replay });
     return replay;
   }
-  return planReplay(players, moments, target, buildUp);
+  const planned = planReplay(players, moments, target, buildUp);
+  return o.planner ? planned : playedReal(planned, moments);
+}
+
+/** A goal with a real move that fits (replays.ts) is replayed by it, the build-up being the real
+ *  move's own (a cut: its last seconds); else the planner's replay stands. `planner`: the
+ *  planner's, always (the lab). */
+function playedReal(planned: Replay | null, moments: Moment[], cut = false): Replay | null {
+  if (!planned || !isGoal(planned.headline)) return planned;
+  const real = realReplayFor(planned.headline.id);
+  const timeline = real && realTimeline(real, planned.timeline.tracks, moments, cut);
+  return timeline ? { timeline, length: timeline.end, headline: planned.headline, real: true } : planned;
 }
 
 const cutCache = new WeakMap<Moment, { players: SquadPlayer[]; replay: Replay | null }>();
