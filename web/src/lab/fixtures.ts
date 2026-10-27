@@ -53,23 +53,23 @@ function find(snapshot: LiveSnapshot, minute: number, type: LiveCard["type"]): L
 
 /** The moments the video shows, by storyboard shot. */
 export const cards = {
-  /** S3: K. Quinn, 14', against your team, 22% → 69%. */
+  /** S3: K. Quinn, 14', against your team, 24% → 53%. */
   goalAgainst: find(snapshots.m15, 14, "goal"),
-  /** S1, S7: L. Quinn equalises at 74', your team and your player, 5% → 28%. */
+  /** S1, S7: L. Quinn equalises at 74', your team and your player, 7% → 33%. */
   equaliser: find(snapshots.m75, 74, "goal"),
   equaliserMs: find(snapshots.m75ms, 74, "goal"),
   equaliserEs: find(snapshots.m75es, 74, "goal"),
   equaliserAnalyst: find(snapshots.m75analyst, 74, "goal"),
   /** The longest text the app can show: analyst, Malay. The clipping test. */
   equaliserMsAnalyst: find(snapshots.m75msAnalyst, 74, "goal"),
-  /** S3: the 11' chaos phase, no side. */
-  chaos: find(snapshots.m15, 11, "chaos_phase"),
-  /** S6: momentum swings to Northgate City at 51'. */
-  momentumFlip: find(snapshots.m75, 51, "momentum_flip"),
+  /** The 20' chaos phase, no side. */
+  chaos: find(snapshots.m75, 20, "chaos_phase"),
+  /** S6: momentum swings to Northgate City at 58'. */
+  momentumFlip: find(snapshots.m75, 58, "momentum_flip"),
   /** A card the engine sends with no why-line (`why: []`). */
   noWhy: find(snapshots.m15, 15, "player_focus"),
   /** A priority-3 detail card. */
-  detail: find(snapshots.m75, 67, "shot_speed"),
+  detail: find(snapshots.m75, 47, "shot_speed"),
 };
 
 /** Stoppage time: the 87' winner's text, re-timed to 90+4'. Only the clock changes. */

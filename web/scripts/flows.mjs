@@ -35,7 +35,7 @@
 //   reconnect     a dropped stream shows "Reconnecting", recovers, and the clock keeps moving
 
 import { spawn } from "node:child_process";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { createServer as netServer } from "node:net";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -43,6 +43,9 @@ import { chromium } from "@playwright/test";
 import { createServer } from "vite";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+// The saved match is the API's: S4 checks the facts sheet cites its first goal by id.
+const savedEvents = JSON.parse(readFileSync(resolve(root, "src/live/saved/events.json"), "utf8"));
+const firstGoal = savedEvents.find((e) => e.type === "shot" && e.outcome === "goal");
 const repo = resolve(root, "..");
 const out = resolve(root, "shots", "flows");
 const filter = process.argv[2] ?? "";
@@ -159,7 +162,7 @@ function flows(live, dead, preview) {
         const d = page.getByRole("dialog");
         await d.waitFor({ timeout: 4000 });
         const t = await d.innerText();
-        for (const s of ["SCN-comeback-0208", "Checked by the validator"])
+        for (const s of [firstGoal.event_id, "Checked by the validator"])
           if (!t.includes(s)) throw new Error(`facts sheet is missing "${s}"`);
       },
     },
@@ -174,7 +177,9 @@ function flows(live, dead, preview) {
       name: "S6",
       url: `${live}/?minute=45&speed=60&play=1`,
       async run(page) {
-        await h2(page, "Momentum swings to Northgate City").waitFor({ timeout: 12_000 });
+        // 58:59 brings two second-half cards at once; the newer ("take control") holds the stage.
+        // From 45' at ×60 it shows after about 17 s.
+        await h2(page, /Momentum swings to Northgate City|Northgate City take control/).waitFor({ timeout: 30_000 });
       },
     },
     {
@@ -271,7 +276,7 @@ function flows(live, dead, preview) {
       offline: true,
       async run(page) {
         await page.getByText("Offline · showing saved match").first().waitFor({ timeout: 6000 });
-        await h2(page, "make it count").waitFor({ timeout: 6000 });
+        await h2(page, "level it").waitFor({ timeout: 6000 });
         await pressKey(page, " ");
         await sleep(3000);
         const m = await headerMinute(page);

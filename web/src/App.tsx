@@ -462,11 +462,17 @@ function OverlayPage() {
     return () => clearTimeout(t);
   }, [shown]);
 
-  const message = view ? (running ? (shown?.msg ?? null) : overlayAt(view.overlays, view.minute)) : null;
-
   // The score bug counts a goal only once its alert is up (or would be, unheld).
   const heldKeys = new Set(held.map((h) => goalSeconds(h.msg)));
   const score = view && holds ? heldScore(view, heldKeys) : view?.score;
+
+  // A graphic carries the score from when it was made: one made after a goal still held (it can
+  // arrive in the same tick) shows the held score too.
+  const raw = view ? (running ? (shown?.msg ?? null) : overlayAt(view.overlays, view.minute)) : null;
+  const message =
+    raw && heldKeys.size && score && raw.fields.score !== undefined
+      ? { ...raw, fields: { ...raw.fields, score: `${score.home}-${score.away}` } }
+      : raw;
 
   const pitch =
     view && plate ? (
