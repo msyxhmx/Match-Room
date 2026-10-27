@@ -14,10 +14,10 @@ import savedEvents from "../live/saved/events.json";
 import savedLineups from "../live/saved/lineups.json";
 import { loopShot, program, type Shot } from "../pitch/director";
 import { project, HALF_L, HALF_W } from "../pitch/geometry";
-import { toMoments, type PitchEvent, type Moment } from "../pitch/moments";
+import { isGoal, toMoments, type PitchEvent, type Moment } from "../pitch/moments";
 import { PitchCanvas } from "../pitch/PitchCanvas";
 import { readPalette, type GhostStyle } from "../pitch/render";
-import { replayMinute, replayMoment } from "../pitch/schedule";
+import { BUILD_UP, replayMinute, replayMoment } from "../pitch/schedule";
 import type { SquadPlayer } from "../pitch/formation";
 import { frameAt } from "../pitch/frame";
 import { realTimeline, type Passage } from "../pitch/real";
@@ -29,6 +29,17 @@ const moments: Moment[] = toMoments(savedEvents as unknown as PitchEvent[]);
 /** 74' paused: the equaliser and its build-up, looping. */
 const equaliser = replayMinute(players, moments, 74)!;
 const equaliserGoal = equaliser.timeline.beats.find((b) => b.moment.minute === 74 && b.moment.kind === "shot")!;
+/** Each goal's replay (the frozen-minute loop), played by its real move and by the planner. */
+const GOALS = moments.filter(isGoal);
+const goalReplays = Object.fromEntries(
+  GOALS.flatMap((g) =>
+    (["real", "planner"] as const).map((by) => {
+      const r = replayMoment(players, moments, g, BUILD_UP.loop, { planner: by === "planner" })!;
+      const still = r.timeline.beats[r.timeline.beats.length - 1].touch + 0.25;
+      return [`goal${g.minute}-${by}`, { shot: (t: number): Shot => loopShot(r, t), still, length: r.length }];
+    }),
+  ),
+);
 
 /** ×60 from 70': the live flow, with the 74' goal cut in as a replay. */
 const FROM = 70;
@@ -79,6 +90,7 @@ export const PITCH_SCENES = {
     length: 20,
   },
   ...REAL,
+  ...goalReplays,
 } as const;
 
 /** S7 as filmed: the overlay paused on 74' (score bug, the goal alert) over the moving pitch. */
@@ -88,7 +100,7 @@ const alert74 = overlayAt(view74.overlays, 74);
 type Persona = "casual" | "analyst";
 const PERSONAS: Persona[] = ["casual", "analyst"];
 
-function Scene({ scene, persona, ghost }: { scene: keyof typeof PITCH_SCENES | `real-${string}`; persona: Persona; ghost?: GhostStyle }) {
+function Scene({ scene, persona, ghost }: { scene: keyof typeof PITCH_SCENES | `real-${string}` | `goal${number}-${"real" | "planner"}`; persona: Persona; ghost?: GhostStyle }) {
   const s = (PITCH_SCENES as Record<string, (typeof PITCH_SCENES)["equaliser"]>)[scene];
   const pitch = <PitchCanvas shot={s.shot} analyst={persona === "analyst"} focus="L. Quinn" at={s.still} ghost={ghost} />;
   if (scene !== "equaliser") return pitch;
@@ -161,6 +173,13 @@ export default {
       )),
       state(`corner-${p}`, `${NOTES[p]}. A corner set-up`, () => <Scene scene="corner" persona={p} />),
     ]),
+    ...GOALS.flatMap((g) =>
+      (["real", "planner"] as const).map((by) =>
+        state(`goal${g.minute}-${by}`, `The ${g.minute}' goal's replay loop, ${by === "real" ? "played by its real move (DFL, CC BY 4.0)" : "by the planner"}`, () => (
+          <Scene scene={`goal${g.minute}-${by}`} persona="casual" />
+        )),
+      ),
+    ),
     ...realPassages.flatMap((p) =>
       PERSONAS.map((persona) =>
         state(`real-${p.kind}-${persona}`, `Real football (DFL open data, CC BY 4.0, anonymised): a ${p.kind} passage at 5 Hz, through our figures`, () => (

@@ -9,6 +9,10 @@ decisions behind it. Code: `src/pitch/`. Proof: `npm run test:pitch`. Clips: `np
 - **Real:** every touch the pitch shows is a real event, at its real coordinates, with its real
   player, in match order. That covers passes (start, end and speed), shots, corners, fouls,
   cards, and the tackle or interception that won a failed pass.
+- **One exception, goal replays (Ilham's call, 27 Oct):** a goal's replay may be played by a
+  real recorded move (below, "Goal replays played by a real move"). Then each touch is still
+  made by the right player, in order, but where the real move made it: up to 25 m from the
+  event's spot. The live pitch never does this; its touches stay exact.
 - **Illustrative:** everything between touches, now drawn from real movement (below, "Real
   movement"). That means where the 21 other players stand,
   who receives a completed pass (the data doesn't name a receiver), and where a shot ends (the
@@ -180,6 +184,46 @@ and the spread of speeds no further from real than 95% of real windows. Around t
 2,922 real completed passes: the nearest opponent to the passer (real 2.7–9.1 m; ours 4.0), the
 receiver's speed (1.5–3.7 m/s; ours 2.8) and approach (real receivers don't run onto the pass:
 −1.8 to 0.9 m/s toward it; ours −1.5), and the lofted share by length (within 15 points).
+
+### Goal replays played by a real move (27 Oct)
+
+The planner's replays are exact but look planned. A real recorded move looks like football, so
+a goal's replay is now played by one when it fits.
+
+- **Finding the move.** `make real-replays` (`web/scripts/goal-moves.mjs`, then
+  `scripts/dfl_match.py`) takes each goal's move from the saved match: the scoring side's passes
+  back to the other side's last touch, and the shot. It searches all 167 open-play shots in the
+  7 matches for a real move with the same touches in the same order, by the same pattern of
+  players (who touches twice), each within 2.5 s of ours. A keeper on the ball must be our keeper.
+  It turns the move so the scoring side attacks our way, mirrors it if that fits better, and
+  stretches the pitch (15% at most) to put the real shot on ours when it can.
+- **The cap.** Every real touch must land within **25 m** of our event's spot (Ilham chose 25 m
+  over 15 m, which fitted only the last 2–3 touches of each goal). Both sides must have eleven
+  throughout, and nobody may move faster than 9 m/s (faster is a tracking glitch). The move
+  with the most of our touches wins.
+- **Playing it** (`replays.ts`). Each dot follows a real player: our touchers are the real
+  touchers, the keepers the keepers, the rest the slot nearest their place in the team's shape.
+  Each of our touches is a beat at its real touch; the real ball runs to the shot, then our shot
+  flies into the net. Real players overrunning a line are kept within 0.5 m of it. The frozen
+  minute's loop and the replay cut into ×60 both use it; a goal with no fitting move keeps the
+  planner's replay, and so do cards.
+- **On the saved match** (`real/replays.json`, 53 KB, shipped):
+
+  | Goal | Real touches | How far from our spots |
+  |---|---|---|
+  | 14′ | 2 of 3 | 11, 8 m |
+  | 37′ | 3 of 3 | 5, 17, 10 m |
+  | 61′ | 3 of 3 | 19, 18, 2 m |
+  | 74′ | 3 of 7 | 16, 14, 19 m |
+  | 87′ | 2 of 4 | 10, 8 m |
+
+  A replay shows only the real move's touches, so it's shorter than the planner's: the 74′ loop
+  is 8 s (Quinn, Ekwueme, Quinn's goal) instead of about 20. Other matches have no real moves
+  and keep the planner's replays.
+- **Proof.** `test:pitch` "real move": every goal with a fitting move is replayed by it (cut and
+  loop), each touch by the right player, on the ball, within 25 m of its spot. The other checks
+  (speed, on-pitch, eleven, continuity) run on the real replays too. Lab: `Pitch--goal<min>-real`
+  and `-planner`, side by side.
 
 ### Not done
 
