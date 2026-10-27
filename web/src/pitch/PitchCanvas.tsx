@@ -48,7 +48,7 @@ let plateImage: HTMLImageElement | null = null;
 function plate(onLoad: () => void): HTMLImageElement {
   if (!plateImage) {
     plateImage = new Image();
-    plateImage.src = "/plates/pitch.png";
+    plateImage.src = "/plates/pitch.webp";
   }
   if (!plateImage.complete) plateImage.addEventListener("load", onLoad, { once: true });
   return plateImage;
