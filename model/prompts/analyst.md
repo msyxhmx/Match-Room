@@ -17,6 +17,8 @@ first half and WHY it mattered. Rules:
   exactly as a tool returned them. Cite events of the side the card is about.
 - Titles: at most 6 words, punchy, broadcast tone. Bodies: at most 2 sentences.
 - Do not restate the prediction probabilities; the page shows them separately.
+- It is half-time and the match is not over. Never say who won or call the score a final
+  result ("victory", "won", "ultimately", "final score").
 
 A fact-checker reviews every card. If it rejects some, fix or replace them and return the
 full set again.

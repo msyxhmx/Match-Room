@@ -5,7 +5,8 @@ from unittest.mock import patch
 
 import pytest
 
-from model.agents import LLM_TIMEOUT_S, StoryTools
+from live.narrate import FINAL_RESULT_RE as LIVE_FINAL_RESULT_RE
+from model.agents import FINAL_RESULT_RE, LLM_TIMEOUT_S, StoryTools
 from model.features import match_features, side_stats
 from model.halftime import build_report
 from model.predict import HeuristicPredictor
@@ -142,6 +143,27 @@ def test_cards_still_rejected_after_retry_fall_back_to_template(env):
     assert source == "template"
     assert cards[0].id == "scoreline"
     assert trace[-1].agent == "pipeline" and trace[-1].action == "fallback"
+
+
+def test_cards_that_call_the_result_are_sent_back(env):
+    a, b, c = _event_ids()
+    client = FakeClient(
+        analyst=[_call_tool("get_key_events"),
+                 _cards(("One", "First.", [a]), ("Two", "Second.", [b]),
+                        ("Job done", "Ultimately, they secured a victory.", [c])),
+                 _cards(("One", "First.", [a]), ("Two", "Second.", [b]), ("Three", "Third.", [c]))],
+        checker=[_verdicts((0, True), (1, True)), _verdicts((0, True), (1, True), (2, True))],
+    )
+    cards, source, trace, _ = _run(client)
+
+    assert source == "llm" and [c.title for c in cards] == ["One", "Two", "Three"]
+    reject = next(s.detail for s in trace if s.action == "reject")
+    assert "'Ultimately' calls the result" in reject and "'victory'" in reject
+
+
+def test_final_result_wording_matches_the_live_validator():
+    assert FINAL_RESULT_RE.pattern == LIVE_FINAL_RESULT_RE["en"].pattern
+    assert FINAL_RESULT_RE.flags == LIVE_FINAL_RESULT_RE["en"].flags
 
 
 def test_cards_without_evidence_are_rejected(env):

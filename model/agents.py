@@ -5,7 +5,8 @@ Two Azure OpenAI agents write the story together:
     momentum, prediction factors) and drafts 3-5 cards;
   * the fact-checker reviews every card: hard rules first (each cited event id
     was really returned by a tool, every number, player and team appears in the
-    tool output), then an LLM check that the cited events support the claim.
+    tool output, no wording that calls the result), then an LLM check that the cited
+    events support the claim.
 
 Rejected cards go back to the analyst once, with the reasons; cards that still
 fail are dropped. Fewer than 3 surviving cards, a timeout or any error raises,
@@ -42,6 +43,13 @@ MAX_EVENTS = 25
 
 NUM_RE = re.compile(r"\d+(?:\.\d+)?")
 PLAYER_RE = re.compile(r"\b[A-Z]\. [A-Z][A-Za-z\-]*(?:'[A-Z][A-Za-z\-]*)?")  # O'Brien, not Quinn's
+# Wording that calls the result; the match is not over at half-time. Kept identical to
+# live.narrate.FINAL_RESULT_RE["en"] (tests/test_agents.py checks it).
+FINAL_RESULT_RE = re.compile(
+    r"\b(?:victor(?:y|ies|ious)|won|winners?|defeated|triumph\w*|ultimately|in the end"
+    r"|final (?:score|result|whistle)|full[- ]time|(?:match|game) (?:ended|finished|is over)"
+    r"|(?:secured|sealed|clinched|claimed|earned|grabbed) (?:an? |the )?(?:[\w-]+ )?wins?)\b",
+    re.IGNORECASE)
 
 TOOL_SPECS = [
     {"type": "function", "function": {
@@ -228,6 +236,8 @@ class StoryAgents:
                      if round(float(n), 2) not in allowed]
         problems += [f"player {p!r} is not in the data" for p in PLAYER_RE.findall(text)
                      if p not in corpus]
+        problems += [f"{w!r} calls the result, but it is only half-time"
+                     for w in FINAL_RESULT_RE.findall(text)]
         playing = {self.match.home.id, self.match.away.id}
         for t in LEAGUE:
             if t.id not in playing and (t.name in text
