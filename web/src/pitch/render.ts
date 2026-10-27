@@ -51,6 +51,10 @@ export interface DrawOptions {
   prev?: Frame | null;
   /** The frame 2 × figures.PREV_DT earlier: speeding up and braking (the lean). */
   earlier?: Frame | null;
+  /** The frames QUARTER_DT and HALF_DT earlier (figures.ts): calm speed, view and facing. */
+  quarter?: Frame | null;
+  half?: Frame | null;
+  full?: Frame | null;
   /** Reduced motion: the players hold their poses (no stride, no hop). */
   still?: boolean;
 }
@@ -100,7 +104,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
 
   // ---- the real pass, while it travels and rests ----
   const b = f.beat;
-  if (b && b.moment.to && f.t >= b.touch) {
+  if (b && !b.ghost && b.moment.to && f.t >= b.touch) {
     const m = b.moment;
     const fade = Math.max(0, Math.min(1, (b.end - f.t) / 0.4));
     const k = Math.min(1, (f.t - b.touch) / Math.max(0.01, b.land - b.touch));
@@ -145,12 +149,12 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
   };
 
   // ---- the players, far to near ----
-  drawFigures(ctx, f, { palette: P, boost: k, focus: o.focus, prev: o.prev, earlier: o.earlier, still: o.still });
+  drawFigures(ctx, f, { palette: P, boost: k, focus: o.focus, prev: o.prev, earlier: o.earlier, quarter: o.quarter, half: o.half, full: o.full, still: o.still });
   // The ball last: always visible, even at a player's feet.
   drawBall();
 
-  // ---- who's on the ball: the real event's player ----
-  if (b) {
+  // ---- who's on the ball: the real event's player (recorded play between them names nobody) ----
+  if (b && !b.ghost) {
     const names: { id: string; at: number }[] = [{ id: b.actor, at: b.touch - 0.45 }];
     if (b.winnerShown && b.receiver) names.push({ id: b.receiver, at: b.land - 0.15 });
     let shownTag = false;

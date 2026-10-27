@@ -18,6 +18,7 @@ import type { SquadPlayer } from "./formation";
 import { toMoments, type Moment, type PitchEvent } from "./moments";
 import { PitchCanvas } from "./PitchCanvas";
 import { plan } from "./plan";
+import { loadLibrary, reelProgram, type Library } from "./reel";
 import { replayMinute } from "./schedule";
 
 export interface PitchLayerProps {
@@ -35,6 +36,9 @@ export interface PitchLayerProps {
 }
 
 const now = () => performance.now() / 1000;
+
+/** `?pitch=planner` keeps the planner's movement (the real-play library is the default). */
+const PLANNER = typeof location !== "undefined" && new URLSearchParams(location.search).get("pitch") === "planner";
 
 /** The shape around the latest moment up to a minute: the picture to start from. */
 function initialAt(moments: Moment[], minute: number) {
@@ -101,19 +105,26 @@ export function PitchLayer({ view, running, speed, analyst, focus, reduced, cont
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, view.minute, epoch, holdOnPause, speed]);
 
+  // Real play (reel.ts) once its library is in; the planner until then, or if it can't load.
+  const [lib, setLib] = useState<Library | null>(null);
+  useEffect(() => {
+    if (PLANNER) return;
+    let on = true;
+    loadLibrary().then((l) => on && setLib(l));
+    return () => {
+      on = false;
+    };
+  }, []);
+
   const live = useMemo(() => {
     const s = session.current;
     if (!(running || holdOnPause) || !s || !players) return null;
     const arrived = moments.filter((m) => s.arrivals.has(m.minute));
-    return program(players, arrived, {
-      speed,
-      arrivals: s.arrivals,
-      start: s.start,
-      initial: initialAt(moments, s.startMinute),
-    });
+    const o = { speed, arrivals: s.arrivals, start: s.start, initial: initialAt(moments, s.startMinute) };
+    return lib ? reelProgram(players, arrived, o, lib) : program(players, arrived, o);
     // arrivedCount changes with each new tick's arrival.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [running, holdOnPause, arrivedCount, players, moments, speed]);
+  }, [running, holdOnPause, arrivedCount, players, moments, speed, lib]);
 
   // ---- paused: loop the minute's headline ----
   const loop = useMemo(() => {
