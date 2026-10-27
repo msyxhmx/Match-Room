@@ -15,7 +15,7 @@ import { useLabels } from "../ui/labels";
 import { cameraAt, FOLLOW_SCALE, type ShotOptions } from "./camera";
 import type { Shot } from "./director";
 import { PitchScale } from "./PitchView";
-import { PREV_DT } from "./figures";
+import { FULL_DT, HALF_DT, PREV_DT, QUARTER_DT } from "./figures";
 import { drawFrame, readPalette, type GhostStyle, type Palette } from "./render";
 import styles from "./pitch.module.css";
 
@@ -92,6 +92,9 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
       // A moment earlier, for the players' speed and facing, and one more for the lean (figures.ts).
       const prev = s(t - PREV_DT).frame;
       const earlier = s(t - 2 * PREV_DT).frame;
+      const quarter = s(t - QUARTER_DT).frame;
+      const half = s(t - HALF_DT).frame;
+      const full = s(t - FULL_DT).frame;
       if (fol) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, el.width, el.height);
@@ -110,11 +113,14 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
           bounds: { x0: cam.x0, x1: cam.x0 + cam.width },
           prev,
           earlier,
+          quarter,
+          half,
+          full,
           still: r,
         });
         ctx.setTransform(1, 0, 0, 1, 0, 0);
       } else {
-        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k, prev, earlier, still: r });
+        drawFrame(ctx, sh.frame, { analyst: lines, palette, focus: f, ghost: g, boost: k, prev, earlier, quarter, half, full, still: r });
       }
       el.style.opacity = r ? "1" : String(sh.opacity);
       const rm = sh.replayOf ? sh.replayOf.minute : null;

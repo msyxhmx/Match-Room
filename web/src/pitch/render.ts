@@ -51,6 +51,10 @@ export interface DrawOptions {
   prev?: Frame | null;
   /** The frame 2 × figures.PREV_DT earlier: speeding up and braking (the lean). */
   earlier?: Frame | null;
+  /** The frames QUARTER_DT and HALF_DT earlier (figures.ts): calm speed, view and facing. */
+  quarter?: Frame | null;
+  half?: Frame | null;
+  full?: Frame | null;
   /** Reduced motion: the players hold their poses (no stride, no hop). */
   still?: boolean;
 }
@@ -145,7 +149,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, f: Frame, o: DrawOption
   };
 
   // ---- the players, far to near ----
-  drawFigures(ctx, f, { palette: P, boost: k, focus: o.focus, prev: o.prev, earlier: o.earlier, still: o.still });
+  drawFigures(ctx, f, { palette: P, boost: k, focus: o.focus, prev: o.prev, earlier: o.earlier, quarter: o.quarter, half: o.half, full: o.full, still: o.still });
   // The ball last: always visible, even at a player's feet.
   drawBall();
 
