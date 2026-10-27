@@ -28,7 +28,8 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.live import router as live_router
-from contract import Event, HalftimeReport, MatchSummary, Team
+from contract import Event, HalftimeReport, MatchSummary, Prediction, Team
+from model.features import match_features
 from model.halftime import build_report
 from model.predict import load_predictor
 from model.story import llm_available
@@ -90,11 +91,10 @@ def list_matches() -> list[MatchSummary]:
                               title=SCENARIOS[m.scenario].title if m.scenario else None)
                  for m in demo_matches().values()]
 
+    # Prediction only: building the full report would run the story agents for every match.
     def top_result_prob(summary: MatchSummary) -> float:
-        report = _cached_report(summary.match_id)
-        return max(report.prediction.result.home_win,
-                   report.prediction.result.draw,
-                   report.prediction.result.away_win)
+        result = _cached_prediction(summary.match_id).result
+        return max(result.home_win, result.draw, result.away_win)
 
     summaries.sort(key=lambda s: (top_result_prob(s), s.match_id))
     return summaries
@@ -106,6 +106,12 @@ def match_events(match_id: str, until: int = Query(45, ge=1, le=90)) -> list[Eve
 
     ev = get_match(match_id).events
     return to_events(ev[ev["minute"] <= until])
+
+
+@lru_cache(maxsize=64)
+def _cached_prediction(match_id: str) -> Prediction:
+    """The same prediction the half-time report carries, without the story."""
+    return predictor().predict(match_features(get_match(match_id)))
 
 
 @lru_cache(maxsize=64)
