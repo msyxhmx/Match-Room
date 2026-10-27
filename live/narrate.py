@@ -79,13 +79,39 @@ def allowed_tokens(facts: dict[str, Fact], lang: str) -> tuple[set[str], set[str
     return numbers, players, teams
 
 
-def validate(text: str, facts: dict[str, Fact], lang: str) -> list[str]:
-    """Problems with `text`: numbers, players or teams the facts do not support."""
+# Wording that calls the result. At half-time the match is not over, so a brief that
+# says "victory" or "ultimately" states something no fact can prove. Spanish "ganan"
+# and Malay "mendahului" mean "lead" and stay allowed (the ht_lead headline uses them).
+FINAL_RESULT_RE = {
+    "en": re.compile(
+        r"\b(?:victor(?:y|ies|ious)|won|winners?|defeated|triumph\w*|ultimately|in the end"
+        r"|final (?:score|result|whistle)|full[- ]time|(?:match|game) (?:ended|finished|is over)"
+        r"|(?:secured|sealed|clinched|claimed|earned|grabbed) (?:an? |the )?(?:[\w-]+ )?wins?)\b",
+        re.IGNORECASE),
+    "ms": re.compile(
+        r"\b(?:kemenangan|memenangi|(?:telah|berjaya) menang|tewas|akhirnya|keputusan akhir"
+        r"|skor akhir|wisel penamat|perlawanan (?:berakhir|tamat|selesai))\b",
+        re.IGNORECASE),
+    "es": re.compile(
+        r"\b(?:victoria|ganó|ganaron|venció|vencieron|triunf\w*|derrot\w*|finalmente"
+        r"|resultado final|marcador final|pitido final|al final del partido|se impus(?:o|ieron)"
+        r"|el partido (?:terminó|acabó))\b",
+        re.IGNORECASE),
+}
+
+
+def validate(text: str, facts: dict[str, Fact], lang: str,
+             kind: str | None = None) -> list[str]:
+    """Problems with `text`: numbers, players or teams the facts do not support,
+    and, in a half-time brief (`kind="halftime"`), wording that calls the result."""
     numbers, players, teams = allowed_tokens(facts, lang)
     problems = [f"number {n!r} not in facts" for n in NUM_RE.findall(text) if n not in numbers]
     problems += [f"player {p!r} not in facts" for p in PLAYER_RE.findall(text)
                  if p not in players]
     problems += [f"team {t!r} not in facts" for t in TEAM_NAMES if t in text and t not in teams]
+    if kind == "halftime":
+        problems += [f"final-result wording {w!r} at half-time"
+                     for w in FINAL_RESULT_RE[lang].findall(text)]
     return problems
 
 
@@ -210,10 +236,10 @@ def llm_enabled() -> bool:
 
 
 def llm_rewrite(text: str, facts: dict[str, Fact], lang: str, persona: str,
-                purpose: str) -> str | None:
+                purpose: str, kind: str | None = None) -> str | None:
     """Ask Azure OpenAI to rewrite `text` for the persona and language, using only
     the facts. Returns None (keep the template) on any error or if the result
-    fails validation."""
+    fails validation (`kind` as in `validate()`)."""
     if not llm_enabled():
         return None
     try:
@@ -233,6 +259,9 @@ def llm_rewrite(text: str, facts: dict[str, Fact], lang: str, persona: str,
             "and name you write must appear exactly as in the facts. Do not add any statistic, "
             "minute, player or team that is not listed. Return JSON: {\"text\": \"...\"}."
         )
+        if kind == "halftime":
+            system += (" It is half-time and the match is not over: the score is the score at "
+                       "the break. Never say who won or what the final result was.")
         kwargs = {
             "model": os.environ["AZURE_OPENAI_DEPLOYMENT"],
             "response_format": {"type": "json_object"},
@@ -249,7 +278,7 @@ def llm_rewrite(text: str, facts: dict[str, Fact], lang: str, persona: str,
         return None
     if not out:
         return None
-    problems = validate(out, facts, lang)
+    problems = validate(out, facts, lang, kind)
     if problems:
         log.warning("LLM rewrite rejected: %s", problems)
         return None
