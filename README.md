@@ -79,28 +79,62 @@ curl "localhost:8000/api/matches/SCN-comeback/brief/fulltime?persona=analyst"
 
 ```
 contract/   API contracts (Pydantic) + JSON schemas + real samples          ← both
-sim/        synthetic match simulator + scripted scenarios                 ← Ingest
-live/       metrics, insights, narration + validator, engine, season       ← Interpret, Explain, Personalise
+sim/        possession-chain simulator, scenarios, kloppy adapter          ← Ingest
+live/       metrics, fitted xT, insights, narration + validator, engine    ← Interpret, Explain, Personalise
 model/      half-time features, XGBoost + SHAP, half-time story + agents   ← Interpret, Explain
 api/        FastAPI backend: REST + websocket stream                       ← Render
 web/        React + Vite site                                              ← Render
 tests/      pytest suite
-scripts/    export_contract.py (schemas + mocks), calibrate_live.py
+scripts/    schemas + mocks, live calibration, card value check, VAEP prototype
 docs/       live engine, frontend guide, architecture, API contract, workflow, deploy, demo
 ```
 
 ## Model performance (half-time model)
 
 Trained on 10,000 synthetic matches, evaluated on a held-out 20%
-(from `artifacts/metrics.json`; regenerate with `make train`):
+(from `artifacts/metrics.json`; regenerate with `make train`). Lower is better for log loss,
+RPS (ranked probability score, the standard for home / draw / away) and calibration error
+(the average gap between the probability we said and how often it happened).
 
-| Final result | Log loss (lower is better) | Accuracy |
+| Final result | Log loss | RPS | Accuracy | Calibration error |
+|---|---|---|---|---|
+| Heuristic fallback | 0.757 | 0.133 | 65.1% | 0.048 |
+| Baseline: pre-match strength only | 0.974 | 0.196 | 53.6% | 0.015 |
+| Baseline: half-time score only | 0.822 | 0.152 | 61.9% | 0.016 |
+| Baseline: Dixon-Coles (score + strengths) | 0.782 | 0.143 | 64.4% | 0.022 |
+| XGBoost on first-half features | **0.729** | **0.129** | **66.6%** | 0.016 |
+
+XGBoost beats every baseline, including Dixon-Coles, a classic football model that knows the
+half-time score and team strengths but not how the first half was played. On the v1 simulator
+they tied (0.666 vs 0.664): first-half play carried no information. The v2 possession-chain
+simulator fixed that, so the model's "why" factors now point at something real.
+
+Next-goal model (home / away / none): log loss 0.996, accuracy 53.8%.
+Simulated outcomes: 40.4% home wins, 25.3% draws, 34.3% away wins, ~3.1 goals per match.
+
+**Live win projection** (`make live-calibration`, 2,000 fresh matches,
+`artifacts/live_calibration.json`): calibration error 0.011-0.043 from minute 10 to 85. It still
+under-predicts draws a little (about 21-23% said, 24% real).
+
+## Methodology and roadmap
+
+How we know the numbers mean something, all on synthetic matches:
+
+| Piece | Method | Check |
 |---|---|---|
-| Baseline: half-time score only | 0.730 | 65.8% |
-| XGBoost on first-half features | **0.665** | **69.1%** |
+| Simulator (`sim/chain.py`) | Possession chain: the ball moves from event to event; xG from shot distance and angle; hidden form on the day and momentum that persists | Totals near the v1 simulator (~3.1 goals, ~820 passes, ~27 shots); first-half play now predicts the second half |
+| Half-time model | XGBoost on 13 first-half features, SHAP for the "why" | Beats four baselines, including Dixon-Coles, on log loss, RPS and calibration (`make train`) |
+| Live win projection | Poisson, blending pre-match strength with live xG; two settings fitted | Calibration error 0.011-0.043 from minute 10 to 85 (`make live-calibration`) |
+| xT | Karun Singh's value iteration on 3,000 simulated matches (`make xt`) | Predicts whether a possession scores better than a hand-drawn grid, on fresh matches |
+| Live cards | Thresholds, re-tuned on one set of matches and checked on another | `scripts/card_value.py`: does the named side score next more often than strength predicts? |
+| Real feeds | `sim/kloppy_io.py` converts to and from kloppy's event model, so any provider kloppy reads can drive the live engine | Exact round trip on simulated matches (no real data in this repo) |
 
-Next-goal model (home / away / none): log loss 1.016, accuracy 51.6%.
-Simulated outcomes: 44.9% home wins, 20.7% draws, 34.4% away wins, ~3.1 goals per match.
+Tried and not kept: change-point detection for momentum cards (no lift on held-out matches),
+VAEP as a live metric (our simulator gives defenders no real decisions to credit).
+
+Next, in order: a "clearly on top" card built on momentum level (which does predict the next
+goal); a draw adjustment for the live projection (it says ~21-23%, simulated matches give 24%);
+player positions in the simulator, which would make pitch control and VAEP worth adding.
 
 ## Docs
 

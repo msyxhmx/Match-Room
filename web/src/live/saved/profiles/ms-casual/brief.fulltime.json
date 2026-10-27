@@ -19,8 +19,8 @@
  "meta": {
   "venue": "Northgate Stadium",
   "referee": "P. Okonjo",
-  "attendance": 23047,
-  "weather": "Clear",
+  "attendance": 43947,
+  "weather": "Light rain",
   "scenario": "comeback",
   "scenario_title": "The comeback",
   "synthetic": true
@@ -32,77 +32,27 @@
   "player": "L. Quinn"
  },
  "headline": "Northgate City bangkit daripada ketinggalan untuk menang 3-2",
- "summary": "Northgate City lebih menguasai permainan: 47 minit berbanding 2. Detik penting berlaku pada minit ke-87: Northgate City akhirnya berjaya.",
+ "summary": "Northgate City lebih menguasai permainan: 29 minit berbanding 7. Detik penting berlaku pada minit ke-87: Northgate City mendahului di saat-saat akhir.",
  "summary_source": "template",
  "what_happened": [
   {
-   "insight_id": "SCN-comeback-1159-chaos_phase-0",
-   "type": "chaos_phase",
-   "variant": "chaos",
-   "minute": 11,
-   "second": 59,
-   "clock": "11:59",
-   "priority": 2,
-   "side": null,
-   "team_id": null,
-   "players": [],
-   "headline": "Fasa huru-hara",
-   "body": "Permainan menjadi terbuka: bola sering bertukar tangan dan peluang datang silih berganti.",
-   "why": [
-    "Northgate City dan Kingston Vale sama-sama tidak dapat mengawal bola."
-   ],
-   "facts_used": [
-    {
-     "key": "home",
-     "label": "Tuan rumah",
-     "value": "Northgate City"
-    },
-    {
-     "key": "away",
-     "label": "Pelawat",
-     "value": "Kingston Vale"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0122",
-     "minute": 7,
-     "description": "7' N. Vidal (NGC) rembatan disekat (0.04 xG)"
-    },
-    {
-     "event_id": "SCN-comeback-0147",
-     "minute": 10,
-     "description": "10' N. Vidal (NGC) rembatan disekat (0.05 xG)"
-    },
-    {
-     "event_id": "SCN-comeback-0158",
-     "minute": 11,
-     "description": "11' G. Ferreira (NGC) rembatan tersasar (0.05 xG)"
-    }
-   ],
-   "tags": [],
-   "language": "ms",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1413-goal-2",
+   "insight_id": "SCN-comeback-1420-goal-0",
    "type": "goal",
    "variant": "against_run",
    "minute": 14,
-   "second": 13,
-   "clock": "14:13",
+   "second": 20,
+   "clock": "14:20",
    "priority": 1,
    "side": "away",
    "team_id": "KST",
    "players": [
     "K. Quinn",
-    "K. Kovac"
+    "H. Carter"
    ],
-   "headline": "Di luar jangkaan: Kingston Vale menjaringkan gol",
-   "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-1. Hantaran daripada K. Kovac.",
+   "headline": "Kingston Vale menjaringkan gol walaupun ditekan",
+   "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-1. Hantaran daripada H. Carter.",
    "why": [
-    "Peluang mereka untuk menang berubah daripada 22% kepada 69%."
+    "Peluang mereka untuk menang berubah daripada 24% kepada 53%."
    ],
    "facts_used": [
     {
@@ -123,29 +73,29 @@
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "22%"
+     "value": "24%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "69%"
+     "value": "53%"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "K. Kovac"
+     "value": "H. Carter"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0206",
-     "minute": 13,
-     "description": "13' K. Kovac (KST) hantaran 26 m"
+     "event_id": "SCN-comeback-0200",
+     "minute": 14,
+     "description": "14' H. Carter (KST) hantaran 31 m"
     },
     {
-     "event_id": "SCN-comeback-0208",
+     "event_id": "SCN-comeback-0201",
      "minute": 14,
-     "description": "14' K. Quinn (KST) menjaringkan gol (0.52 xG)"
+     "description": "14' K. Quinn (KST) menjaringkan gol (0.26 xG)"
     }
    ],
    "tags": [
@@ -156,29 +106,87 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-3713-goal-8",
+   "insight_id": "SCN-comeback-1500-player_focus-L. Quinn",
+   "type": "player_focus",
+   "variant": "focus",
+   "minute": 15,
+   "second": 0,
+   "clock": "15:00",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "L. Quinn"
+   ],
+   "headline": "L. Quinn setakat ini",
+   "body": "L. Quinn telah menyentuh bola 14 kali dan merampas semula bola 0 kali.",
+   "why": [],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Pemain",
+     "value": "L. Quinn"
+    },
+    {
+     "key": "touches",
+     "label": "Sentuhan",
+     "value": "14"
+    },
+    {
+     "key": "ball_wins",
+     "label": "Rampasan bola",
+     "value": "0"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0147",
+     "minute": 11,
+     "description": "11' L. Quinn (NGC) hantaran 15 m"
+    },
+    {
+     "event_id": "SCN-comeback-0160",
+     "minute": 12,
+     "description": "12' L. Quinn (NGC) hantaran 18 m"
+    },
+    {
+     "event_id": "SCN-comeback-0206",
+     "minute": 15,
+     "description": "15' L. Quinn (NGC) hantaran 8 m"
+    }
+   ],
+   "tags": [
+    "your_team",
+    "focus_player"
+   ],
+   "language": "ms",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-3714-goal-9",
    "type": "goal",
    "variant": "neutral",
    "minute": 37,
-   "second": 13,
-   "clock": "37:13",
+   "second": 14,
+   "clock": "37:14",
    "priority": 1,
    "side": "away",
    "team_id": "KST",
    "players": [
-    "K. Quinn",
-    "D. Ekwueme"
+    "K. Yilmaz",
+    "J. Ibrahim"
    ],
    "headline": "Gol untuk Kingston Vale",
-   "body": "K. Quinn menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-2. Hantaran daripada D. Ekwueme. Itu gol ke-2 untuk K. Quinn hari ini.",
+   "body": "K. Yilmaz menjaringkan gol untuk Kingston Vale. Kedudukan kini 0-2. Hantaran daripada J. Ibrahim.",
    "why": [
-    "Peluang mereka untuk menang berubah daripada 61% kepada 88%."
+    "Peluang mereka untuk menang berubah daripada 56% kepada 83%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Pemain",
-     "value": "K. Quinn"
+     "value": "K. Yilmaz"
     },
     {
      "key": "team",
@@ -193,34 +201,29 @@
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "61%"
+     "value": "56%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "88%"
-    },
-    {
-     "key": "player_goals",
-     "label": "Gol pemain",
-     "value": "2"
+     "value": "83%"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "D. Ekwueme"
+     "value": "J. Ibrahim"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0519",
+     "event_id": "SCN-comeback-0577",
      "minute": 37,
-     "description": "37' D. Ekwueme (KST) hantaran 8 m"
+     "description": "37' J. Ibrahim (KST) hantaran 26 m"
     },
     {
-     "event_id": "SCN-comeback-0520",
+     "event_id": "SCN-comeback-0578",
      "minute": 37,
-     "description": "37' K. Quinn (KST) menjaringkan gol (0.48 xG)"
+     "description": "37' K. Yilmaz (KST) menjaringkan gol (0.49 xG)"
     }
    ],
    "tags": [
@@ -231,29 +234,29 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-6143-goal-13",
+   "insight_id": "SCN-comeback-6111-goal-17",
    "type": "goal",
    "variant": "deserved",
    "minute": 61,
-   "second": 43,
-   "clock": "61:43",
+   "second": 11,
+   "clock": "61:11",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
-    "G. Ferreira",
-    "N. Ekwueme"
+    "N. Vidal",
+    "L. Gallo"
    ],
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "G. Ferreira menjaringkan gol untuk Northgate City. Kedudukan kini 1-2. Hantaran daripada N. Ekwueme.",
+   "headline": "Gol yang wajar buat Northgate City",
+   "body": "N. Vidal menjaringkan gol untuk Northgate City. Kedudukan kini 1-2. Hantaran daripada L. Gallo.",
    "why": [
-    "Peluang mereka untuk menang berubah daripada 1% kepada 10%."
+    "Peluang mereka untuk menang berubah daripada 2% kepada 12%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Pemain",
-     "value": "G. Ferreira"
+     "value": "N. Vidal"
     },
     {
      "key": "team",
@@ -268,29 +271,29 @@
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "1%"
+     "value": "2%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "10%"
+     "value": "12%"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "N. Ekwueme"
+     "value": "L. Gallo"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0855",
+     "event_id": "SCN-comeback-0909",
      "minute": 61,
-     "description": "61' N. Ekwueme (NGC) hantaran 15 m"
+     "description": "61' L. Gallo (NGC) hantaran 11 m"
     },
     {
-     "event_id": "SCN-comeback-0856",
+     "event_id": "SCN-comeback-0910",
      "minute": 61,
-     "description": "61' G. Ferreira (NGC) menjaringkan gol (0.45 xG)"
+     "description": "61' N. Vidal (NGC) menjaringkan gol (0.34 xG)"
     }
    ],
    "tags": [
@@ -301,23 +304,23 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-7410-goal-17",
+   "insight_id": "SCN-comeback-7409-goal-22",
    "type": "goal",
-   "variant": "deserved",
+   "variant": "equaliser",
    "minute": 74,
-   "second": 10,
-   "clock": "74:10",
+   "second": 9,
+   "clock": "74:09",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
     "L. Quinn",
-    "H. Novak"
+    "N. Ekwueme"
    ],
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "L. Quinn menjaringkan gol untuk Northgate City. Kedudukan kini 2-2. Hantaran daripada H. Novak.",
+   "headline": "Northgate City menyamakan kedudukan",
+   "body": "L. Quinn menjaringkan gol untuk Northgate City. Kedudukan kini 2-2. Hantaran daripada N. Ekwueme.",
    "why": [
-    "Peluang mereka untuk menang berubah daripada 5% kepada 28%."
+    "Peluang mereka untuk menang berubah daripada 7% kepada 33%."
    ],
    "facts_used": [
     {
@@ -338,29 +341,29 @@
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "5%"
+     "value": "7%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "28%"
+     "value": "33%"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "H. Novak"
+     "value": "N. Ekwueme"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-1041",
+     "event_id": "SCN-comeback-1073",
      "minute": 74,
-     "description": "74' H. Novak (NGC) hantaran 22 m"
+     "description": "74' N. Ekwueme (NGC) hantaran 7 m"
     },
     {
-     "event_id": "SCN-comeback-1042",
+     "event_id": "SCN-comeback-1074",
      "minute": 74,
-     "description": "74' L. Quinn (NGC) menjaringkan gol (0.22 xG)"
+     "description": "74' L. Quinn (NGC) menjaringkan gol (0.43 xG)"
     }
    ],
    "tags": [
@@ -372,23 +375,23 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-8701-goal-21",
+   "insight_id": "SCN-comeback-8714-goal-24",
    "type": "goal",
-   "variant": "deserved",
+   "variant": "late_go_ahead",
    "minute": 87,
-   "second": 1,
-   "clock": "87:01",
+   "second": 14,
+   "clock": "87:14",
    "priority": 1,
    "side": "home",
    "team_id": "NGC",
    "players": [
     "J. Okafor",
-    "F. Moreau"
+    "L. Gallo"
    ],
-   "headline": "Northgate City akhirnya berjaya",
-   "body": "J. Okafor menjaringkan gol untuk Northgate City. Kedudukan kini 3-2. Hantaran daripada F. Moreau.",
+   "headline": "Northgate City mendahului di saat-saat akhir",
+   "body": "J. Okafor menjaringkan gol untuk Northgate City. Kedudukan kini 3-2. Hantaran daripada L. Gallo.",
    "why": [
-    "Peluang mereka untuk menang berubah daripada 10% kepada 96%."
+    "Peluang mereka untuk menang berubah daripada 12% kepada 95%."
    ],
    "facts_used": [
     {
@@ -409,29 +412,29 @@
     {
      "key": "win_before",
      "label": "Peluang menang sebelum",
-     "value": "10%"
+     "value": "12%"
     },
     {
      "key": "win_after",
      "label": "Peluang menang selepas",
-     "value": "96%"
+     "value": "95%"
     },
     {
      "key": "assist",
      "label": "Bantuan",
-     "value": "F. Moreau"
+     "value": "L. Gallo"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-1225",
-     "minute": 86,
-     "description": "86' F. Moreau (NGC) hantaran 13 m"
+     "event_id": "SCN-comeback-1260",
+     "minute": 87,
+     "description": "87' L. Gallo (NGC) hantaran 33 m"
     },
     {
-     "event_id": "SCN-comeback-1229",
+     "event_id": "SCN-comeback-1261",
      "minute": 87,
-     "description": "87' J. Okafor (NGC) menjaringkan gol (0.47 xG)"
+     "description": "87' J. Okafor (NGC) menjaringkan gol (0.34 xG)"
     }
    ],
    "tags": [
@@ -445,7 +448,7 @@
  "why": [
   {
    "title": "Siapa yang menguasai",
-   "body": "Northgate City menguasai selama 47 minit, Kingston Vale selama 2 minit; 15 minit huru-hara.",
+   "body": "Northgate City menguasai selama 29 minit, Kingston Vale selama 7 minit; 20 minit huru-hara.",
    "facts_used": [
     {
      "key": "home",
@@ -460,24 +463,24 @@
     {
      "key": "home_minutes",
      "label": "Minit kawalan tuan rumah",
-     "value": "47"
+     "value": "29"
     },
     {
      "key": "away_minutes",
      "label": "Minit kawalan pelawat",
-     "value": "2"
+     "value": "7"
     },
     {
      "key": "chaos_minutes",
      "label": "Minit huru-hara",
-     "value": "15"
+     "value": "20"
     }
    ],
    "evidence": []
   },
   {
    "title": "Kualiti peluang",
-   "body": "Northgate City mencipta lebih banyak peluang, 3.21 xG berbanding 1.43, dan kedudukan mencerminkannya.",
+   "body": "Northgate City mencipta lebih banyak peluang, 4.18 xG berbanding 1.69, dan kedudukan mencerminkannya.",
    "facts_used": [
     {
      "key": "team",
@@ -487,77 +490,99 @@
     {
      "key": "team_xg",
      "label": "xG pasukan",
-     "value": "3.21"
+     "value": "4.18"
     },
     {
      "key": "opp_xg",
      "label": "xG lawan",
-     "value": "1.43"
+     "value": "1.69"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0208",
-     "minute": 14,
-     "description": "14' K. Quinn (KST) menjaringkan gol (0.52 xG)"
+     "event_id": "SCN-comeback-0292",
+     "minute": 20,
+     "description": "20' H. Novak (NGC) rembatan diselamatkan (0.65 xG)"
     },
     {
-     "event_id": "SCN-comeback-0520",
+     "event_id": "SCN-comeback-0934",
+     "minute": 63,
+     "description": "63' N. Ekwueme (NGC) rembatan disekat (0.60 xG)"
+    },
+    {
+     "event_id": "SCN-comeback-0578",
      "minute": 37,
-     "description": "37' K. Quinn (KST) menjaringkan gol (0.48 xG)"
-    },
-    {
-     "event_id": "SCN-comeback-1229",
-     "minute": 87,
-     "description": "87' J. Okafor (NGC) menjaringkan gol (0.47 xG)"
+     "description": "37' K. Yilmaz (KST) menjaringkan gol (0.49 xG)"
     }
    ]
+  },
+  {
+   "title": "Tekanan",
+   "body": "Northgate City menekan lebih kuat: PPDA 5.4 berbanding 10.1.",
+   "facts_used": [
+    {
+     "key": "team",
+     "label": "Pasukan",
+     "value": "Northgate City"
+    },
+    {
+     "key": "ppda",
+     "label": "PPDA",
+     "value": "5.4"
+    },
+    {
+     "key": "opp_ppda",
+     "label": "PPDA lawan",
+     "value": "10.1"
+    }
+   ],
+   "evidence": []
   }
  ],
  "what_to_watch": [],
  "turning_points": [
   {
-   "insight_id": "SCN-comeback-1413-goal-2",
+   "insight_id": "SCN-comeback-1420-goal-0",
    "minute": 14,
-   "clock": "14:13",
-   "title": "Di luar jangkaan: Kingston Vale menjaringkan gol",
+   "clock": "14:20",
+   "title": "Kingston Vale menjaringkan gol walaupun ditekan",
    "side": "away",
-   "win_before": 0.219,
-   "win_after": 0.685
+   "win_before": 0.239,
+   "win_after": 0.528
   },
   {
-   "insight_id": "SCN-comeback-3713-goal-8",
+   "insight_id": "SCN-comeback-3714-goal-9",
    "minute": 37,
-   "clock": "37:13",
+   "clock": "37:14",
    "title": "Gol untuk Kingston Vale",
    "side": "away",
-   "win_before": 0.607,
-   "win_after": 0.885
+   "win_before": 0.556,
+   "win_after": 0.829
   },
   {
-   "insight_id": "SCN-comeback-7410-goal-17",
-   "minute": 74,
-   "clock": "74:10",
-   "title": "Northgate City akhirnya berjaya",
-   "side": "home",
-   "win_before": 0.054,
-   "win_after": 0.283
+   "insight_id": "SCN-comeback-3859-momentum_flip-10",
+   "minute": 38,
+   "clock": "38:59",
+   "title": "Momentum beralih kepada Kingston Vale",
+   "side": "away",
+   "win_before": 0.545,
+   "win_after": 0.816
   },
   {
-   "insight_id": "SCN-comeback-8701-goal-21",
+   "insight_id": "SCN-comeback-8714-goal-24",
    "minute": 87,
-   "clock": "87:01",
-   "title": "Northgate City akhirnya berjaya",
+   "clock": "87:14",
+   "title": "Northgate City mendahului di saat-saat akhir",
    "side": "home",
-   "win_before": 0.098,
-   "win_after": 0.961
+   "win_before": 0.121,
+   "win_after": 0.954
   }
  ],
  "control_profile": {
-  "home_control": 47,
-  "away_control": 2,
-  "chaos": 15,
-  "balanced": 26
+  "home_control": 29,
+  "away_control": 7,
+  "chaos": 20,
+  "balanced": 34
  },
  "metrics": [
   {
@@ -571,23 +596,23 @@
   {
    "key": "xg",
    "label": "Jangkaan gol (xG)",
-   "home": 3.21,
-   "away": 1.43,
+   "home": 4.18,
+   "away": 1.69,
    "unit": null,
    "definition": "Jumlah kualiti peluang bagi setiap rembatan: kebarangkalian rembatan itu menjadi gol."
   },
   {
    "key": "shots",
    "label": "Rembatan",
-   "home": 25.0,
-   "away": 8.0,
+   "home": 23.0,
+   "away": 9.0,
    "unit": null,
    "definition": "Semua percubaan ke arah gol."
   },
   {
    "key": "sot",
    "label": "Rembatan tepat",
-   "home": 10.0,
+   "home": 9.0,
    "away": 4.0,
    "unit": null,
    "definition": "Rembatan yang menjadi gol atau diselamatkan."
@@ -595,125 +620,125 @@
   {
    "key": "xt",
    "label": "Jangkaan ancaman (xT)",
-   "home": 3.93,
-   "away": 2.48,
+   "home": 1.06,
+   "away": 0.68,
    "unit": null,
    "definition": "Sejauh mana hantaran berjaya menaikkan peluang menjaringkan gol, daripada grid zon padang."
   },
   {
    "key": "possession",
    "label": "Penguasaan bola",
-   "home": 64.0,
-   "away": 36.0,
+   "home": 51.0,
+   "away": 49.0,
    "unit": "%",
    "definition": "Bahagian daripada semua hantaran."
   },
   {
    "key": "field_tilt",
    "label": "Kecondongan padang",
-   "home": 79.0,
-   "away": 21.0,
+   "home": 68.0,
+   "away": 32.0,
    "unit": "%",
    "definition": "Bahagian hantaran di sepertiga akhir."
   },
   {
    "key": "pass_accuracy",
    "label": "Ketepatan hantaran",
-   "home": 74.0,
-   "away": 82.0,
+   "home": 81.0,
+   "away": 78.0,
    "unit": "%",
    "definition": "Hantaran berjaya / hantaran dicuba."
   },
   {
    "key": "avg_pass_length",
    "label": "Purata jarak hantaran",
-   "home": 20.3,
-   "away": 20.0,
+   "home": 17.8,
+   "away": 20.2,
    "unit": "m",
    "definition": "Purata jarak hantaran yang dicuba."
   },
   {
    "key": "pass_difficulty",
    "label": "Purata kesukaran hantaran",
-   "home": 20.0,
-   "away": 17.0,
+   "home": 15.0,
+   "away": 15.0,
    "unit": "%",
    "definition": "Satu tolak kebarangkalian jangkaan hantaran berjaya."
   },
   {
    "key": "ppda",
    "label": "PPDA (tekanan)",
-   "home": 9.5,
-   "away": 10.0,
+   "home": 5.4,
+   "away": 10.1,
    "unit": null,
    "definition": "Hantaran lawan yang dibenarkan bagi setiap tindakan bertahan di kawasan tinggi. Lebih rendah = tekanan lebih kuat."
   },
   {
    "key": "pressures",
    "label": "Tekanan",
-   "home": 103.0,
-   "away": 202.0,
+   "home": 133.0,
+   "away": 149.0,
    "unit": null,
    "definition": "Kali pemain menekan pembawa bola."
   },
   {
    "key": "ball_wins",
    "label": "Rampasan bola",
-   "home": 49.0,
-   "away": 124.0,
+   "home": 86.0,
+   "away": 78.0,
    "unit": null,
    "definition": "Terjahan dan pintasan."
   },
   {
    "key": "top_shot_speed",
    "label": "Rembatan terpantas",
-   "home": 132.0,
-   "away": 131.2,
+   "home": 124.0,
+   "away": 132.0,
    "unit": "km/h",
    "definition": "Kelajuan bola tertinggi bagi rembatan."
   },
   {
    "key": "corners",
    "label": "Sepakan sudut",
-   "home": 8.0,
-   "away": 5.0,
+   "home": 5.0,
+   "away": 2.0,
    "unit": null,
    "definition": "Sepakan sudut diperoleh."
   },
   {
    "key": "fouls",
    "label": "Kekasaran",
-   "home": 7.0,
-   "away": 9.0,
+   "home": 13.0,
+   "away": 10.0,
    "unit": null,
    "definition": "Kekasaran dilakukan."
   }
  ],
  "projection": null,
  "player_of_the_match": {
-  "name": "L. Quinn",
-  "number": 8,
+  "name": "J. Okafor",
+  "number": 6,
   "position": "MF",
   "team_id": "NGC",
   "side": "home",
-  "touches": 84,
-  "passes": 60,
-  "passes_completed": 40,
-  "pass_accuracy": 67,
-  "xt_added": 0.854,
+  "touches": 88,
+  "passes": 63,
+  "passes_completed": 55,
+  "pass_accuracy": 87,
+  "xt_added": 0.252,
   "shots": 2,
   "goals": 1,
-  "xg": 0.28,
-  "ball_wins": 2,
-  "pressures": 17,
-  "top_shot_speed_kmh": 89.0,
+  "xg": 0.48,
+  "ball_wins": 8,
+  "pressures": 12,
+  "top_shot_speed_kmh": 81.9,
   "involvement": [
+   13,
+   13,
+   14,
    18,
-   9,
-   11,
-   19,
-   15,
-   12
+   16,
+   14
   ],
   "cards": []
  },
@@ -723,24 +748,24 @@
   "position": "MF",
   "team_id": "NGC",
   "side": "home",
-  "touches": 84,
-  "passes": 60,
+  "touches": 79,
+  "passes": 57,
   "passes_completed": 40,
-  "pass_accuracy": 67,
-  "xt_added": 0.854,
+  "pass_accuracy": 70,
+  "xt_added": 0.118,
   "shots": 2,
   "goals": 1,
-  "xg": 0.28,
-  "ball_wins": 2,
-  "pressures": 17,
-  "top_shot_speed_kmh": 89.0,
+  "xg": 0.53,
+  "ball_wins": 12,
+  "pressures": 7,
+  "top_shot_speed_kmh": 118.9,
   "involvement": [
-   18,
+   14,
+   16,
    9,
-   11,
-   19,
+   12,
    15,
-   12
+   13
   ],
   "cards": []
  }

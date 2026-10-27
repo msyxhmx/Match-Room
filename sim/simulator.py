@@ -16,16 +16,22 @@ v1.1 (25 Oct): a red card's defence penalty now lasts the rest of the match (it 
 undone a minute later), and a card shares its foul's second and player. Both keep the
 random stream, so only matches with a red card play out differently; retrained after.
 
+v2 (26 Oct): the default engine is now the possession-chain simulator in `sim/chain.py`,
+where the ball moves from event to event and xG comes from the shot's location. This file's
+minute-by-minute engine is kept as `engine="minute"` (or SIM_ENGINE=minute) for comparison.
+
 Output rows follow contract.Event.
 """
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 
 import numpy as np
 import pandas as pd
 
+from sim import chain
 from sim.scenarios import Scenario
 from sim.teams import LEAGUE, REFEREES, VENUES, TeamProfile
 
@@ -43,6 +49,8 @@ EVENT_COLUMNS = [
 ]
 CORE_COLUMNS = EVENT_COLUMNS[:12]
 PITCH_LENGTH_M, PITCH_WIDTH_M = 105.0, 68.0
+ENGINES = ("chain", "minute")
+DEFAULT_ENGINE = os.getenv("SIM_ENGINE", "chain")
 
 
 @dataclass
@@ -89,9 +97,19 @@ def simulate_match(
     seed: int | None = None,
     match_id: str | None = None,
     scenario: Scenario | None = None,
+    engine: str | None = None,
 ) -> SimulatedMatch:
+    engine = engine or DEFAULT_ENGINE
+    if engine not in ENGINES:
+        raise ValueError(f"unknown simulator engine {engine!r}; use one of {ENGINES}")
     rng = np.random.default_rng(seed)
     match_id = match_id or f"SIM-{seed if seed is not None else rng.integers(1e9)}"
+    if engine == "chain":
+        events = chain.play(home, away, rng, match_id, scenario)[EVENT_COLUMNS]
+        events["event_id"] = [f"{match_id}-{i:04d}" for i in range(len(events))]
+        meta = match_meta(home, np.random.default_rng(None if seed is None else [seed, 7919]))
+        return SimulatedMatch(match_id, home, away, events, meta=meta,
+                              scenario=scenario.key if scenario else None)
     teams = {"home": home, "away": away}
     attack = {"home": home.attack * HOME_ADVANTAGE, "away": away.attack}
     goals = {"home": 0, "away": 0}
@@ -300,20 +318,22 @@ def enrich(core: pd.DataFrame, teams: dict[str, TeamProfile],
     return ev[EVENT_COLUMNS]
 
 
-def simulate_scenario(key: str) -> SimulatedMatch:
+def simulate_scenario(key: str, engine: str | None = None) -> SimulatedMatch:
     from sim.scenarios import SCENARIOS, scenario_teams
 
     sc = SCENARIOS[key]
     home, away = scenario_teams(sc)
-    return simulate_match(home, away, seed=sc.seed, match_id=f"SCN-{key}", scenario=sc)
+    return simulate_match(home, away, seed=sc.seed, match_id=f"SCN-{key}", scenario=sc,
+                          engine=engine)
 
 
-def simulate_season(n_matches: int, seed: int = 0) -> list[SimulatedMatch]:
+def simulate_season(n_matches: int, seed: int = 0,
+                    engine: str | None = None) -> list[SimulatedMatch]:
     """Random fixtures between league teams; deterministic for a given seed."""
     rng = np.random.default_rng(seed)
     matches = []
     for i in range(n_matches):
         h, a = rng.choice(len(LEAGUE), size=2, replace=False)
         matches.append(simulate_match(LEAGUE[h], LEAGUE[a], seed=seed * 1_000_003 + i,
-                                      match_id=f"SIM-{seed}-{i:05d}"))
+                                      match_id=f"SIM-{seed}-{i:05d}", engine=engine))
     return matches

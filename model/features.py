@@ -99,10 +99,27 @@ def labels(match: SimulatedMatch) -> dict[str, str]:
     return {"result": result, "next_goal": next_goal}
 
 
+def baseline_inputs(match: SimulatedMatch) -> dict[str, float]:
+    """What the Dixon-Coles baseline needs: pre-match strengths, the half-time score, and
+    (as its training target only) second-half goals. Not model features."""
+    goals = match.events[(match.events["type"] == "shot") & (match.events["outcome"] == "goal")]
+    first = goals[goals["minute"] <= HALF]
+    second = goals[goals["minute"] > HALF]
+    return {
+        "home_attack": match.home.attack, "home_defence": match.home.defence,
+        "away_attack": match.away.attack, "away_defence": match.away.defence,
+        "ht_home": float((first["side"] == "home").sum()),
+        "ht_away": float((first["side"] == "away").sum()),
+        "h2_home": float((second["side"] == "home").sum()),
+        "h2_away": float((second["side"] == "away").sum()),
+    }
+
+
 def build_dataset(matches: list[SimulatedMatch]) -> pd.DataFrame:
     rows = []
     for m in matches:
-        rows.append({"match_id": m.match_id, **match_features(m), **labels(m)})
+        rows.append({"match_id": m.match_id, **match_features(m), **labels(m),
+                     **baseline_inputs(m)})
     df = pd.DataFrame(rows)
     df[FEATURE_COLUMNS] = df[FEATURE_COLUMNS].astype(np.float64)
     return df

@@ -20,8 +20,8 @@
  "meta": {
   "venue": "Northgate Stadium",
   "referee": "P. Okonjo",
-  "attendance": 23047,
-  "weather": "Clear",
+  "attendance": 43947,
+  "weather": "Light rain",
   "scenario": "comeback",
   "scenario_title": "The comeback",
   "synthetic": true
@@ -44,16 +44,16 @@
   {
    "key": "xg",
    "label": "Expected goals (xG)",
-   "home": 0.63,
-   "away": 1.12,
+   "home": 0.87,
+   "away": 1.58,
    "unit": null,
    "definition": "Sum of the chance quality of every shot: the probability each shot is scored."
   },
   {
    "key": "shots",
    "label": "Shots",
-   "home": 9.0,
-   "away": 4.0,
+   "home": 5.0,
+   "away": 7.0,
    "unit": null,
    "definition": "All attempts on goal."
   },
@@ -61,23 +61,23 @@
    "key": "sot",
    "label": "Shots on target",
    "home": 3.0,
-   "away": 2.0,
+   "away": 4.0,
    "unit": null,
    "definition": "Shots that were scored or saved."
   },
   {
    "key": "xt",
    "label": "Expected threat added (xT)",
-   "home": 1.15,
-   "away": 1.7,
+   "home": 0.41,
+   "away": 0.6,
    "unit": null,
-   "definition": "How much completed passes increased the chance of scoring, from a 12x8 zone grid."
+   "definition": "How much completed passes increased the chance of scoring, from a 12x8 zone grid learned from simulated matches."
   },
   {
    "key": "possession",
    "label": "Possession",
-   "home": 52.0,
-   "away": 48.0,
+   "home": 48.0,
+   "away": 52.0,
    "unit": "%",
    "definition": "Share of all passes played."
   },
@@ -100,48 +100,48 @@
   {
    "key": "avg_pass_length",
    "label": "Average pass length",
-   "home": 20.1,
-   "away": 20.3,
+   "home": 18.6,
+   "away": 19.6,
    "unit": "m",
    "definition": "Mean distance of attempted passes."
   },
   {
    "key": "pass_difficulty",
    "label": "Average pass difficulty",
-   "home": 18.0,
-   "away": 17.0,
+   "home": 15.0,
+   "away": 15.0,
    "unit": "%",
    "definition": "1 - expected completion probability, from length, depth and pressure."
   },
   {
    "key": "ppda",
    "label": "PPDA (pressing)",
-   "home": 8.5,
-   "away": 9.4,
+   "home": 7.0,
+   "away": 11.6,
    "unit": null,
    "definition": "Opponent build-up passes allowed per defensive action high up the pitch. Lower = more intense pressing."
   },
   {
    "key": "pressures",
    "label": "Pressures",
-   "home": 71.0,
-   "away": 72.0,
+   "home": 82.0,
+   "away": 69.0,
    "unit": null,
    "definition": "Times a player closed down the ball carrier."
   },
   {
    "key": "ball_wins",
    "label": "Ball wins",
-   "home": 35.0,
-   "away": 45.0,
+   "home": 42.0,
+   "away": 46.0,
    "unit": null,
    "definition": "Tackles and interceptions."
   },
   {
    "key": "top_shot_speed",
    "label": "Fastest shot",
-   "home": 115.8,
-   "away": 95.4,
+   "home": 124.0,
+   "away": 93.7,
    "unit": "km/h",
    "definition": "Highest ball speed of any shot."
   },
@@ -149,31 +149,31 @@
    "key": "corners",
    "label": "Corners",
    "home": 3.0,
-   "away": 4.0,
+   "away": 0.0,
    "unit": null,
    "definition": "Corners won."
   },
   {
    "key": "fouls",
    "label": "Fouls",
-   "home": 6.0,
+   "home": 7.0,
    "away": 2.0,
    "unit": null,
    "definition": "Fouls committed."
   }
  ],
  "control": {
-  "home_share": 0.613,
-  "chaos": 0.663,
-  "tempo": 8.1,
-  "momentum": -0.148,
-  "phase": "home_control",
-  "label": "Northgate City in control"
+  "home_share": 0.38,
+  "chaos": 0.667,
+  "tempo": 8.2,
+  "momentum": -0.588,
+  "phase": "away_control",
+  "label": "Kingston Vale in control"
  },
  "projection": {
-  "home_win": 0.02,
-  "draw": 0.069,
-  "away_win": 0.911,
+  "home_win": 0.041,
+  "draw": 0.098,
+  "away_win": 0.861,
   "drivers": [
    {
     "key": "score",
@@ -188,17 +188,17 @@
    {
     "key": "home_rate",
     "label": "Northgate City expected goals per 90",
-    "value": "1.54"
+    "value": "2.08"
    },
    {
     "key": "away_rate",
     "label": "Kingston Vale expected goals per 90",
-    "value": "1.84"
+    "value": "2.00"
    },
    {
     "key": "live_weight",
     "label": "Weight on live data",
-    "value": "60%"
+    "value": "33%"
    }
   ],
   "note": "A projection from the score, time left and chance creation, not betting odds."
@@ -254,291 +254,291 @@
   ],
   "momentum": [
    0.0,
-   -0.681,
-   -0.613,
-   -0.73,
-   -0.549,
-   -0.388,
-   -0.497,
-   -0.082,
-   -0.386,
-   0.232,
-   0.291,
-   0.353,
-   0.169,
-   0.307,
-   -0.219,
-   -0.282,
-   -0.276,
-   -0.194,
-   -0.22,
-   -0.317,
-   -0.216,
-   -0.18,
-   -0.132,
-   -0.131,
-   -0.204,
-   0.012,
-   0.028,
-   -0.157,
-   0.057,
-   0.206,
-   0.016,
-   0.015,
-   -0.092,
-   -0.173,
-   -0.158,
-   -0.029,
+   0.289,
+   0.287,
+   0.044,
+   -0.01,
+   -0.086,
+   -0.06,
+   -0.115,
+   -0.181,
+   -0.02,
+   0.288,
+   0.166,
+   0.244,
+   0.255,
+   -0.632,
+   -0.154,
+   -0.168,
+   -0.142,
    -0.028,
-   -0.488,
-   -0.504,
-   -0.534,
-   -0.368,
-   -0.366,
-   -0.332,
-   -0.322,
-   -0.323,
-   -0.148
+   -0.035,
+   0.688,
+   0.68,
+   0.698,
+   0.7,
+   0.661,
+   0.415,
+   0.384,
+   0.42,
+   0.373,
+   0.385,
+   0.315,
+   0.384,
+   0.345,
+   -0.452,
+   -0.338,
+   -0.337,
+   -0.338,
+   -0.732,
+   -0.396,
+   -0.393,
+   -0.406,
+   -0.406,
+   -0.666,
+   -0.667,
+   -0.657,
+   -0.588
   ],
   "control_home": [
    0.5,
-   0.282,
-   0.293,
-   0.495,
+   0.734,
+   0.743,
+   0.55,
+   0.566,
+   0.558,
+   0.555,
    0.53,
-   0.557,
-   0.513,
-   0.543,
-   0.528,
-   0.551,
-   0.557,
-   0.557,
-   0.538,
-   0.52,
-   0.535,
-   0.524,
-   0.547,
-   0.527,
-   0.518,
-   0.486,
-   0.463,
-   0.473,
-   0.494,
-   0.539,
-   0.487,
-   0.465,
-   0.475,
-   0.492,
-   0.541,
-   0.571,
-   0.593,
-   0.591,
-   0.564,
-   0.51,
-   0.533,
-   0.54,
-   0.534,
-   0.465,
-   0.447,
+   0.476,
+   0.466,
+   0.495,
    0.451,
-   0.445,
-   0.455,
-   0.524,
+   0.461,
+   0.506,
+   0.513,
+   0.56,
+   0.581,
+   0.593,
+   0.641,
+   0.646,
+   0.657,
+   0.69,
+   0.715,
+   0.699,
+   0.642,
+   0.556,
+   0.548,
+   0.56,
+   0.502,
+   0.508,
+   0.473,
+   0.52,
+   0.463,
+   0.431,
+   0.519,
+   0.561,
    0.565,
-   0.588,
-   0.613
+   0.531,
+   0.59,
+   0.58,
+   0.562,
+   0.492,
+   0.444,
+   0.423,
+   0.31,
+   0.38
   ],
   "chaos": [
    0.0,
-   0.213,
-   0.24,
-   0.547,
-   0.547,
-   0.629,
-   0.638,
-   0.752,
-   0.75,
-   0.825,
-   0.797,
-   0.816,
-   0.846,
-   0.84,
-   0.945,
-   0.951,
-   0.881,
-   0.904,
-   0.868,
+   0.34,
+   0.262,
+   0.276,
+   0.329,
+   0.333,
+   0.352,
+   0.402,
+   0.414,
+   0.399,
+   0.413,
+   0.402,
+   0.428,
+   0.47,
+   0.618,
+   0.645,
+   0.664,
+   0.656,
+   0.697,
+   0.696,
+   0.88,
+   0.896,
+   0.926,
+   0.926,
+   0.937,
+   0.936,
+   0.873,
    0.836,
-   0.869,
-   0.824,
-   0.745,
-   0.524,
-   0.409,
-   0.447,
-   0.481,
-   0.517,
-   0.537,
-   0.554,
-   0.563,
-   0.553,
-   0.581,
-   0.598,
-   0.568,
-   0.529,
-   0.528,
-   0.637,
-   0.745,
-   0.76,
-   0.733,
-   0.715,
+   0.754,
+   0.753,
+   0.593,
+   0.609,
+   0.522,
+   0.748,
+   0.804,
+   0.809,
+   0.849,
+   0.956,
+   0.926,
+   0.867,
+   0.793,
+   0.759,
+   0.659,
    0.686,
-   0.669,
-   0.684,
-   0.663
+   0.659,
+   0.667
   ],
   "home_win": [
-   0.543,
-   0.536,
-   0.529,
-   0.49,
-   0.484,
-   0.479,
-   0.474,
-   0.493,
-   0.487,
-   0.482,
-   0.504,
-   0.525,
-   0.519,
-   0.513,
-   0.141,
-   0.138,
-   0.135,
-   0.132,
-   0.129,
-   0.126,
-   0.137,
-   0.133,
-   0.13,
-   0.126,
-   0.123,
-   0.157,
-   0.153,
-   0.142,
-   0.159,
-   0.177,
-   0.183,
-   0.177,
-   0.172,
-   0.167,
-   0.161,
-   0.161,
-   0.156,
-   0.033,
-   0.031,
-   0.029,
-   0.028,
-   0.026,
-   0.025,
-   0.023,
-   0.022,
-   0.02
+   0.562,
+   0.558,
+   0.555,
+   0.552,
+   0.549,
+   0.545,
+   0.542,
+   0.539,
+   0.535,
+   0.534,
+   0.53,
+   0.527,
+   0.523,
+   0.52,
+   0.248,
+   0.243,
+   0.239,
+   0.235,
+   0.23,
+   0.226,
+   0.321,
+   0.315,
+   0.309,
+   0.305,
+   0.299,
+   0.286,
+   0.28,
+   0.274,
+   0.269,
+   0.263,
+   0.257,
+   0.251,
+   0.245,
+   0.215,
+   0.21,
+   0.205,
+   0.2,
+   0.058,
+   0.064,
+   0.061,
+   0.058,
+   0.055,
+   0.047,
+   0.045,
+   0.043,
+   0.041
   ],
   "draw": [
-   0.218,
-   0.224,
-   0.23,
-   0.236,
-   0.242,
-   0.248,
-   0.254,
-   0.252,
-   0.258,
-   0.264,
-   0.26,
-   0.255,
-   0.261,
-   0.268,
-   0.173,
-   0.175,
-   0.177,
-   0.179,
-   0.181,
-   0.183,
-   0.19,
-   0.192,
-   0.193,
-   0.195,
-   0.196,
+   0.2,
+   0.203,
+   0.206,
+   0.209,
    0.212,
-   0.213,
-   0.207,
-   0.216,
-   0.224,
-   0.228,
-   0.229,
+   0.215,
+   0.218,
+   0.222,
+   0.225,
+   0.227,
    0.231,
+   0.234,
+   0.238,
+   0.241,
+   0.224,
+   0.226,
+   0.227,
+   0.229,
+   0.23,
    0.232,
-   0.233,
-   0.236,
    0.237,
-   0.082,
-   0.081,
-   0.079,
-   0.078,
-   0.076,
-   0.074,
-   0.073,
-   0.071,
-   0.069
+   0.239,
+   0.241,
+   0.243,
+   0.245,
+   0.244,
+   0.246,
+   0.247,
+   0.249,
+   0.251,
+   0.253,
+   0.254,
+   0.256,
+   0.24,
+   0.241,
+   0.243,
+   0.244,
+   0.113,
+   0.12,
+   0.118,
+   0.117,
+   0.115,
+   0.103,
+   0.101,
+   0.1,
+   0.098
   ],
   "away_win": [
+   0.238,
+   0.238,
+   0.239,
+   0.239,
+   0.239,
    0.24,
    0.24,
    0.24,
-   0.274,
-   0.274,
-   0.273,
-   0.272,
-   0.255,
-   0.255,
-   0.254,
-   0.236,
-   0.22,
-   0.22,
-   0.219,
-   0.685,
-   0.686,
-   0.688,
-   0.689,
-   0.69,
-   0.692,
-   0.673,
-   0.675,
-   0.677,
-   0.679,
-   0.681,
-   0.631,
-   0.634,
-   0.651,
-   0.625,
-   0.6,
-   0.59,
-   0.593,
-   0.597,
-   0.601,
-   0.605,
-   0.602,
-   0.607,
-   0.885,
-   0.888,
-   0.891,
-   0.894,
-   0.898,
-   0.901,
-   0.904,
-   0.907,
-   0.911
+   0.24,
+   0.239,
+   0.239,
+   0.239,
+   0.239,
+   0.239,
+   0.528,
+   0.531,
+   0.534,
+   0.537,
+   0.54,
+   0.543,
+   0.442,
+   0.446,
+   0.45,
+   0.452,
+   0.456,
+   0.47,
+   0.474,
+   0.478,
+   0.482,
+   0.486,
+   0.49,
+   0.495,
+   0.499,
+   0.545,
+   0.548,
+   0.552,
+   0.556,
+   0.829,
+   0.816,
+   0.821,
+   0.825,
+   0.83,
+   0.85,
+   0.853,
+   0.857,
+   0.861
   ]
  },
  "cards": [
@@ -556,7 +556,7 @@
     "L. Quinn"
    ],
    "headline": "L. Quinn so far",
-   "body": "L. Quinn has had 38 touches and won the ball back 2 times.",
+   "body": "L. Quinn has had 39 touches and won the ball back 6 times.",
    "why": [],
    "facts_used": [
     {
@@ -567,29 +567,29 @@
     {
      "key": "touches",
      "label": "Touches",
-     "value": "38"
+     "value": "39"
     },
     {
      "key": "ball_wins",
      "label": "Ball wins",
-     "value": "2"
+     "value": "6"
     }
    ],
    "evidence": [
     {
+     "event_id": "SCN-comeback-0561",
+     "minute": 36,
+     "description": "36' L. Quinn (NGC) pass 38 m"
+    },
+    {
      "event_id": "SCN-comeback-0597",
-     "minute": 42,
-     "description": "42' L. Quinn (NGC) pass 10 m"
+     "minute": 40,
+     "description": "40' L. Quinn (NGC) pass 6 m"
     },
     {
-     "event_id": "SCN-comeback-0633",
+     "event_id": "SCN-comeback-0690",
      "minute": 45,
-     "description": "45' L. Quinn (NGC) pass 15 m"
-    },
-    {
-     "event_id": "SCN-comeback-0635",
-     "minute": 45,
-     "description": "45' L. Quinn (NGC) pass 23 m"
+     "description": "45' L. Quinn (NGC) pass 10 m"
     }
    ],
    "tags": [
@@ -601,29 +601,140 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-3713-goal-8",
+   "insight_id": "SCN-comeback-4159-player_milestone-11",
+   "type": "player_milestone",
+   "variant": "ball_wins",
+   "minute": 41,
+   "second": 59,
+   "clock": "41:59",
+   "priority": 3,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "F. Moreau"
+   ],
+   "headline": "F. Moreau: 8 ball wins",
+   "body": "F. Moreau keeps winning the ball back for Northgate City.",
+   "why": [],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "F. Moreau"
+    },
+    {
+     "key": "team",
+     "label": "Team",
+     "value": "Northgate City"
+    },
+    {
+     "key": "count",
+     "label": "Count",
+     "value": "8"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0553",
+     "minute": 35,
+     "description": "35' F. Moreau (NGC) tackle"
+    },
+    {
+     "event_id": "SCN-comeback-0593",
+     "minute": 39,
+     "description": "39' F. Moreau (NGC) tackle"
+    },
+    {
+     "event_id": "SCN-comeback-0618",
+     "minute": 41,
+     "description": "41' F. Moreau (NGC) tackle"
+    }
+   ],
+   "tags": [
+    "your_team"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-3859-momentum_flip-10",
+   "type": "momentum_flip",
+   "variant": "flip",
+   "minute": 38,
+   "second": 59,
+   "clock": "38:59",
+   "priority": 2,
+   "side": "away",
+   "team_id": "KST",
+   "players": [
+    "K. Yilmaz"
+   ],
+   "headline": "Momentum swings to Kingston Vale",
+   "body": "Kingston Vale are on top now. K. Yilmaz is driving it.",
+   "why": [
+    "Most of the dangerous play is now coming from Kingston Vale."
+   ],
+   "facts_used": [
+    {
+     "key": "team",
+     "label": "Team",
+     "value": "Kingston Vale"
+    },
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "K. Yilmaz"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0576",
+     "minute": 37,
+     "description": "37' L. Novak (KST) pass 24 m"
+    },
+    {
+     "event_id": "SCN-comeback-0577",
+     "minute": 37,
+     "description": "37' J. Ibrahim (KST) pass 26 m"
+    },
+    {
+     "event_id": "SCN-comeback-0578",
+     "minute": 37,
+     "description": "37' K. Yilmaz (KST) scores (0.49 xG)"
+    }
+   ],
+   "tags": [
+    "against_your_team"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-3714-goal-9",
    "type": "goal",
    "variant": "neutral",
    "minute": 37,
-   "second": 13,
-   "clock": "37:13",
+   "second": 14,
+   "clock": "37:14",
    "priority": 1,
    "side": "away",
    "team_id": "KST",
    "players": [
-    "K. Quinn",
-    "D. Ekwueme"
+    "K. Yilmaz",
+    "J. Ibrahim"
    ],
    "headline": "Goal for Kingston Vale",
-   "body": "K. Quinn scores for Kingston Vale. It's 0-2. Set up by D. Ekwueme. That's 2 for K. Quinn today.",
+   "body": "K. Yilmaz scores for Kingston Vale. It's 0-2. Set up by J. Ibrahim.",
    "why": [
-    "Their chance of winning moves from 61% to 88%."
+    "Their chance of winning moves from 56% to 83%."
    ],
    "facts_used": [
     {
      "key": "player",
      "label": "Player",
-     "value": "K. Quinn"
+     "value": "K. Yilmaz"
     },
     {
      "key": "team",
@@ -638,34 +749,29 @@
     {
      "key": "win_before",
      "label": "Win chance before",
-     "value": "61%"
+     "value": "56%"
     },
     {
      "key": "win_after",
      "label": "Win chance after",
-     "value": "88%"
-    },
-    {
-     "key": "player_goals",
-     "label": "Player's goals",
-     "value": "2"
+     "value": "83%"
     },
     {
      "key": "assist",
      "label": "Assist",
-     "value": "D. Ekwueme"
+     "value": "J. Ibrahim"
     }
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0519",
+     "event_id": "SCN-comeback-0577",
      "minute": 37,
-     "description": "37' D. Ekwueme (KST) pass 8 m"
+     "description": "37' J. Ibrahim (KST) pass 26 m"
     },
     {
-     "event_id": "SCN-comeback-0520",
+     "event_id": "SCN-comeback-0578",
      "minute": 37,
-     "description": "37' K. Quinn (KST) scores (0.48 xG)"
+     "description": "37' K. Yilmaz (KST) scores (0.49 xG)"
     }
    ],
    "tags": [
@@ -676,389 +782,12 @@
    "source": "template"
   },
   {
-   "insight_id": "SCN-comeback-3159-control_shift-7",
-   "type": "control_shift",
-   "variant": "control",
-   "minute": 31,
-   "second": 59,
-   "clock": "31:59",
-   "priority": 2,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [],
-   "headline": "Northgate City take control",
-   "body": "Northgate City have the ball and the territory.",
-   "why": [
-    "They are dictating where the game is played."
-   ],
-   "facts_used": [
-    {
-     "key": "team",
-     "label": "Team",
-     "value": "Northgate City"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0354",
-     "minute": 25,
-     "description": "25' J. Okafor (NGC) shot blocked (0.15 xG)"
-    },
-    {
-     "event_id": "SCN-comeback-0400",
-     "minute": 28,
-     "description": "28' N. Vidal (NGC) shot wide (0.10 xG)"
-    },
-    {
-     "event_id": "SCN-comeback-0411",
-     "minute": 29,
-     "description": "29' N. Vidal (NGC) shot saved (0.10 xG)"
-    }
-   ],
-   "tags": [
-    "your_team"
-   ],
-   "language": "en",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-3004-shot_speed-6",
-   "type": "shot_speed",
-   "variant": "saved",
-   "minute": 30,
-   "second": 4,
-   "clock": "30:04",
-   "priority": 3,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "N. Ekwueme"
-   ],
-   "headline": "116 km/h strike from N. Ekwueme",
-   "body": "N. Ekwueme hits one at 116 km/h from 38 m out.",
-   "why": [],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Player",
-     "value": "N. Ekwueme"
-    },
-    {
-     "key": "speed",
-     "label": "Ball speed",
-     "value": "116 km/h"
-    },
-    {
-     "key": "distance",
-     "label": "Distance",
-     "value": "38 m"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0413",
-     "minute": 30,
-     "description": "30' N. Ekwueme (NGC) shot saved (0.05 xG)"
-    }
-   ],
-   "tags": [
-    "your_team"
-   ],
-   "language": "en",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-3000-player_focus-L. Quinn",
-   "type": "player_focus",
-   "variant": "focus",
-   "minute": 30,
-   "second": 0,
-   "clock": "30:00",
-   "priority": 2,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "L. Quinn"
-   ],
-   "headline": "L. Quinn so far",
-   "body": "L. Quinn has had 27 touches and won the ball back 2 times.",
-   "why": [],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Player",
-     "value": "L. Quinn"
-    },
-    {
-     "key": "touches",
-     "label": "Touches",
-     "value": "27"
-    },
-    {
-     "key": "ball_wins",
-     "label": "Ball wins",
-     "value": "2"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0365",
-     "minute": 26,
-     "description": "26' L. Quinn (NGC) presses"
-    },
-    {
-     "event_id": "SCN-comeback-0388",
-     "minute": 27,
-     "description": "27' L. Quinn (NGC) pass 4 m"
-    },
-    {
-     "event_id": "SCN-comeback-0425",
-     "minute": 30,
-     "description": "30' L. Quinn (NGC) presses"
-    }
-   ],
-   "tags": [
-    "your_team",
-    "focus_player"
-   ],
-   "language": "en",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-2659-pressure_spike-5",
-   "type": "pressure_spike",
-   "variant": "press",
-   "minute": 26,
-   "second": 59,
-   "clock": "26:59",
-   "priority": 2,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [],
-   "headline": "Northgate City turn up the press",
-   "body": "Northgate City are hunting the ball high up the pitch.",
-   "why": [
-    "They are winning the ball back quickly."
-   ],
-   "facts_used": [
-    {
-     "key": "team",
-     "label": "Team",
-     "value": "Northgate City"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0355",
-     "minute": 25,
-     "description": "25' H. Novak (NGC) foul"
-    },
-    {
-     "event_id": "SCN-comeback-0358",
-     "minute": 25,
-     "description": "25' G. Ferreira (NGC) tackle"
-    },
-    {
-     "event_id": "SCN-comeback-0364",
-     "minute": 26,
-     "description": "26' H. Moreau (NGC) interception"
-    }
-   ],
-   "tags": [
-    "your_team"
-   ],
-   "language": "en",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1500-player_focus-L. Quinn",
-   "type": "player_focus",
-   "variant": "focus",
-   "minute": 15,
-   "second": 0,
-   "clock": "15:00",
-   "priority": 2,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "L. Quinn"
-   ],
-   "headline": "L. Quinn so far",
-   "body": "L. Quinn has had 18 touches and won the ball back 2 times.",
-   "why": [],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Player",
-     "value": "L. Quinn"
-    },
-    {
-     "key": "touches",
-     "label": "Touches",
-     "value": "18"
-    },
-    {
-     "key": "ball_wins",
-     "label": "Ball wins",
-     "value": "2"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0160",
-     "minute": 11,
-     "description": "11' L. Quinn (NGC) pass 12 m"
-    },
-    {
-     "event_id": "SCN-comeback-0172",
-     "minute": 12,
-     "description": "12' L. Quinn (NGC) presses"
-    },
-    {
-     "event_id": "SCN-comeback-0207",
-     "minute": 13,
-     "description": "13' L. Quinn (NGC) pass 45 m"
-    }
-   ],
-   "tags": [
-    "your_team",
-    "focus_player"
-   ],
-   "language": "en",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1413-goal-2",
-   "type": "goal",
-   "variant": "against_run",
-   "minute": 14,
-   "second": 13,
-   "clock": "14:13",
-   "priority": 1,
-   "side": "away",
-   "team_id": "KST",
-   "players": [
-    "K. Quinn",
-    "K. Kovac"
-   ],
-   "headline": "Against the run of play: Kingston Vale score",
-   "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by K. Kovac.",
-   "why": [
-    "Their chance of winning moves from 22% to 69%."
-   ],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Player",
-     "value": "K. Quinn"
-    },
-    {
-     "key": "team",
-     "label": "Team",
-     "value": "Kingston Vale"
-    },
-    {
-     "key": "score",
-     "label": "Score",
-     "value": "0-1"
-    },
-    {
-     "key": "win_before",
-     "label": "Win chance before",
-     "value": "22%"
-    },
-    {
-     "key": "win_after",
-     "label": "Win chance after",
-     "value": "69%"
-    },
-    {
-     "key": "assist",
-     "label": "Assist",
-     "value": "K. Kovac"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0206",
-     "minute": 13,
-     "description": "13' K. Kovac (KST) pass 26 m"
-    },
-    {
-     "event_id": "SCN-comeback-0208",
-     "minute": 14,
-     "description": "14' K. Quinn (KST) scores (0.52 xG)"
-    }
-   ],
-   "tags": [
-    "against_your_team"
-   ],
-   "language": "en",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1357-pass_of_the_moment-1",
-   "type": "pass_of_the_moment",
-   "variant": "pass",
-   "minute": 13,
-   "second": 57,
-   "clock": "13:57",
-   "priority": 3,
-   "side": "home",
-   "team_id": "NGC",
-   "players": [
-    "L. Quinn"
-   ],
-   "headline": "Pass of the moment: L. Quinn",
-   "body": "L. Quinn picks out a 45 m pass most players wouldn't try.",
-   "why": [
-    "It moved Northgate City much closer to a scoring chance."
-   ],
-   "facts_used": [
-    {
-     "key": "player",
-     "label": "Player",
-     "value": "L. Quinn"
-    },
-    {
-     "key": "team",
-     "label": "Team",
-     "value": "Northgate City"
-    },
-    {
-     "key": "length",
-     "label": "Pass length",
-     "value": "45 m"
-    }
-   ],
-   "evidence": [
-    {
-     "event_id": "SCN-comeback-0207",
-     "minute": 13,
-     "description": "13' L. Quinn (NGC) pass 45 m"
-    }
-   ],
-   "tags": [
-    "your_team",
-    "focus_player"
-   ],
-   "language": "en",
-   "persona": "casual",
-   "source": "template"
-  },
-  {
-   "insight_id": "SCN-comeback-1159-chaos_phase-0",
+   "insight_id": "SCN-comeback-3459-chaos_phase-8",
    "type": "chaos_phase",
    "variant": "chaos",
-   "minute": 11,
+   "minute": 34,
    "second": 59,
-   "clock": "11:59",
+   "clock": "34:59",
    "priority": 2,
    "side": null,
    "team_id": null,
@@ -1082,22 +811,494 @@
    ],
    "evidence": [
     {
-     "event_id": "SCN-comeback-0122",
-     "minute": 7,
-     "description": "7' N. Vidal (NGC) shot blocked (0.04 xG)"
+     "event_id": "SCN-comeback-0362",
+     "minute": 25,
+     "description": "25' D. Ekwueme (KST) shot blocked (0.03 xG)"
     },
     {
-     "event_id": "SCN-comeback-0147",
-     "minute": 10,
-     "description": "10' N. Vidal (NGC) shot blocked (0.05 xG)"
+     "event_id": "SCN-comeback-0366",
+     "minute": 25,
+     "description": "25' L. Novak (KST) shot blocked (0.04 xG)"
     },
     {
-     "event_id": "SCN-comeback-0158",
-     "minute": 11,
-     "description": "11' G. Ferreira (NGC) shot wide (0.05 xG)"
+     "event_id": "SCN-comeback-0521",
+     "minute": 33,
+     "description": "33' L. Novak (KST) shot saved (0.36 xG)"
     }
    ],
    "tags": [],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-3350-big_chance-6",
+   "type": "big_chance",
+   "variant": "saved",
+   "minute": 33,
+   "second": 50,
+   "clock": "33:50",
+   "priority": 2,
+   "side": "away",
+   "team_id": "KST",
+   "players": [
+    "L. Novak"
+   ],
+   "headline": "Big chance for Kingston Vale",
+   "body": "L. Novak is denied by the keeper.",
+   "why": [
+    "That was a real chance to score."
+   ],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "L. Novak"
+    },
+    {
+     "key": "team",
+     "label": "Team",
+     "value": "Kingston Vale"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0521",
+     "minute": 33,
+     "description": "33' L. Novak (KST) shot saved (0.36 xG)"
+    }
+   ],
+   "tags": [
+    "against_your_team"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-3000-player_focus-L. Quinn",
+   "type": "player_focus",
+   "variant": "focus",
+   "minute": 30,
+   "second": 0,
+   "clock": "30:00",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "L. Quinn"
+   ],
+   "headline": "L. Quinn so far",
+   "body": "L. Quinn has had 30 touches and won the ball back 4 times.",
+   "why": [],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "L. Quinn"
+    },
+    {
+     "key": "touches",
+     "label": "Touches",
+     "value": "30"
+    },
+    {
+     "key": "ball_wins",
+     "label": "Ball wins",
+     "value": "4"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0454",
+     "minute": 30,
+     "description": "30' L. Quinn (NGC) pass 30 m"
+    },
+    {
+     "event_id": "SCN-comeback-0456",
+     "minute": 30,
+     "description": "30' L. Quinn (NGC) pass 21 m"
+    },
+    {
+     "event_id": "SCN-comeback-0465",
+     "minute": 30,
+     "description": "30' L. Quinn (NGC) presses"
+    }
+   ],
+   "tags": [
+    "your_team",
+    "focus_player"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-2338-shot_speed-5",
+   "type": "shot_speed",
+   "variant": "off_target",
+   "minute": 23,
+   "second": 38,
+   "clock": "23:38",
+   "priority": 3,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "R. Mensah"
+   ],
+   "headline": "124 km/h strike from R. Mensah",
+   "body": "R. Mensah hits one at 124 km/h from 35 m out.",
+   "why": [],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "R. Mensah"
+    },
+    {
+     "key": "speed",
+     "label": "Ball speed",
+     "value": "124 km/h"
+    },
+    {
+     "key": "distance",
+     "label": "Distance",
+     "value": "35 m"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0341",
+     "minute": 23,
+     "description": "23' R. Mensah (NGC) shot wide (0.01 xG)"
+    }
+   ],
+   "tags": [
+    "your_team"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-2159-momentum_flip-4",
+   "type": "momentum_flip",
+   "variant": "first",
+   "minute": 21,
+   "second": 59,
+   "clock": "21:59",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "H. Novak"
+   ],
+   "headline": "Northgate City take the initiative",
+   "body": "Northgate City are on top now. H. Novak is driving it.",
+   "why": [
+    "Most of the dangerous play is now coming from Northgate City."
+   ],
+   "facts_used": [
+    {
+     "key": "team",
+     "label": "Team",
+     "value": "Northgate City"
+    },
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "H. Novak"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0257",
+     "minute": 18,
+     "description": "18' N. Vidal (NGC) pass 22 m"
+    },
+    {
+     "event_id": "SCN-comeback-0291",
+     "minute": 20,
+     "description": "20' J. Okafor (NGC) pass 13 m"
+    },
+    {
+     "event_id": "SCN-comeback-0292",
+     "minute": 20,
+     "description": "20' H. Novak (NGC) shot saved (0.65 xG)"
+    }
+   ],
+   "tags": [
+    "your_team"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-2059-pressure_spike-3",
+   "type": "pressure_spike",
+   "variant": "press",
+   "minute": 20,
+   "second": 59,
+   "clock": "20:59",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [],
+   "headline": "Northgate City turn up the press",
+   "body": "Northgate City are hunting the ball high up the pitch.",
+   "why": [
+    "They are winning the ball back quickly."
+   ],
+   "facts_used": [
+    {
+     "key": "team",
+     "label": "Team",
+     "value": "Northgate City"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0263",
+     "minute": 18,
+     "description": "18' F. Moreau (NGC) interception"
+    },
+    {
+     "event_id": "SCN-comeback-0286",
+     "minute": 20,
+     "description": "20' L. Gallo (NGC) interception"
+    },
+    {
+     "event_id": "SCN-comeback-0294",
+     "minute": 20,
+     "description": "20' L. Quinn (NGC) interception"
+    }
+   ],
+   "tags": [
+    "your_team"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-2059-chaos_phase-2",
+   "type": "chaos_phase",
+   "variant": "chaos",
+   "minute": 20,
+   "second": 59,
+   "clock": "20:59",
+   "priority": 2,
+   "side": null,
+   "team_id": null,
+   "players": [],
+   "headline": "Chaos phase",
+   "body": "The game has broken up: the ball keeps changing hands and chances are flying in.",
+   "why": [
+    "Neither Northgate City nor Kingston Vale can keep the ball."
+   ],
+   "facts_used": [
+    {
+     "key": "home",
+     "label": "Home",
+     "value": "Northgate City"
+    },
+    {
+     "key": "away",
+     "label": "Away",
+     "value": "Kingston Vale"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0201",
+     "minute": 14,
+     "description": "14' K. Quinn (KST) scores (0.26 xG)"
+    },
+    {
+     "event_id": "SCN-comeback-0292",
+     "minute": 20,
+     "description": "20' H. Novak (NGC) shot saved (0.65 xG)"
+    },
+    {
+     "event_id": "SCN-comeback-0296",
+     "minute": 20,
+     "description": "20' N. Ekwueme (NGC) shot saved (0.02 xG)"
+    }
+   ],
+   "tags": [],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-2026-big_chance-1",
+   "type": "big_chance",
+   "variant": "saved",
+   "minute": 20,
+   "second": 26,
+   "clock": "20:26",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "H. Novak"
+   ],
+   "headline": "Big chance for Northgate City",
+   "body": "H. Novak is denied by the keeper.",
+   "why": [
+    "That was a real chance to score."
+   ],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "H. Novak"
+    },
+    {
+     "key": "team",
+     "label": "Team",
+     "value": "Northgate City"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0292",
+     "minute": 20,
+     "description": "20' H. Novak (NGC) shot saved (0.65 xG)"
+    }
+   ],
+   "tags": [
+    "your_team"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-1500-player_focus-L. Quinn",
+   "type": "player_focus",
+   "variant": "focus",
+   "minute": 15,
+   "second": 0,
+   "clock": "15:00",
+   "priority": 2,
+   "side": "home",
+   "team_id": "NGC",
+   "players": [
+    "L. Quinn"
+   ],
+   "headline": "L. Quinn so far",
+   "body": "L. Quinn has had 14 touches and won the ball back 0 times.",
+   "why": [],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "L. Quinn"
+    },
+    {
+     "key": "touches",
+     "label": "Touches",
+     "value": "14"
+    },
+    {
+     "key": "ball_wins",
+     "label": "Ball wins",
+     "value": "0"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0147",
+     "minute": 11,
+     "description": "11' L. Quinn (NGC) pass 15 m"
+    },
+    {
+     "event_id": "SCN-comeback-0160",
+     "minute": 12,
+     "description": "12' L. Quinn (NGC) pass 18 m"
+    },
+    {
+     "event_id": "SCN-comeback-0206",
+     "minute": 15,
+     "description": "15' L. Quinn (NGC) pass 8 m"
+    }
+   ],
+   "tags": [
+    "your_team",
+    "focus_player"
+   ],
+   "language": "en",
+   "persona": "casual",
+   "source": "template"
+  },
+  {
+   "insight_id": "SCN-comeback-1420-goal-0",
+   "type": "goal",
+   "variant": "against_run",
+   "minute": 14,
+   "second": 20,
+   "clock": "14:20",
+   "priority": 1,
+   "side": "away",
+   "team_id": "KST",
+   "players": [
+    "K. Quinn",
+    "H. Carter"
+   ],
+   "headline": "Against the run of play: Kingston Vale score",
+   "body": "K. Quinn scores for Kingston Vale. It's 0-1. Set up by H. Carter.",
+   "why": [
+    "Their chance of winning moves from 24% to 53%."
+   ],
+   "facts_used": [
+    {
+     "key": "player",
+     "label": "Player",
+     "value": "K. Quinn"
+    },
+    {
+     "key": "team",
+     "label": "Team",
+     "value": "Kingston Vale"
+    },
+    {
+     "key": "score",
+     "label": "Score",
+     "value": "0-1"
+    },
+    {
+     "key": "win_before",
+     "label": "Win chance before",
+     "value": "24%"
+    },
+    {
+     "key": "win_after",
+     "label": "Win chance after",
+     "value": "53%"
+    },
+    {
+     "key": "assist",
+     "label": "Assist",
+     "value": "H. Carter"
+    }
+   ],
+   "evidence": [
+    {
+     "event_id": "SCN-comeback-0200",
+     "minute": 14,
+     "description": "14' H. Carter (KST) pass 31 m"
+    },
+    {
+     "event_id": "SCN-comeback-0201",
+     "minute": 14,
+     "description": "14' K. Quinn (KST) scores (0.26 xG)"
+    }
+   ],
+   "tags": [
+    "against_your_team"
+   ],
    "language": "en",
    "persona": "casual",
    "source": "template"
@@ -1105,7 +1306,7 @@
  ],
  "overlays": [
   {
-   "seq": 18,
+   "seq": 22,
    "match_id": "SCN-comeback",
    "minute": 45,
    "second": 0,
@@ -1117,7 +1318,7 @@
    "language": "en",
    "fields": {
     "headline": "L. Quinn so far",
-    "body": "L. Quinn has had 38 touches and won the ball back 2 times.",
+    "body": "L. Quinn has had 39 touches and won the ball back 6 times.",
     "clock": "45:00",
     "minute": "45",
     "type": "player_focus",
@@ -1129,11 +1330,11 @@
     "player": "L. Quinn",
     "number": "8",
     "stat_label": "Touches",
-    "stat_value": "38"
+    "stat_value": "39"
    }
   },
   {
-   "seq": 19,
+   "seq": 23,
    "match_id": "SCN-comeback",
    "minute": 45,
    "second": 59,
@@ -1149,11 +1350,11 @@
     "home": "NGC",
     "away": "KST",
     "score": "0-2",
-    "momentum": "-0.15",
-    "control_home": "0.61",
-    "chaos": "0.66",
-    "phase": "home_control",
-    "phase_label": "Northgate City in control"
+    "momentum": "-0.59",
+    "control_home": "0.38",
+    "chaos": "0.67",
+    "phase": "away_control",
+    "phase_label": "Kingston Vale in control"
    }
   }
  ],
@@ -1163,21 +1364,21 @@
   "position": "MF",
   "team_id": "NGC",
   "side": "home",
-  "touches": 38,
-  "passes": 20,
-  "passes_completed": 15,
-  "pass_accuracy": 75,
-  "xt_added": 0.24,
+  "touches": 39,
+  "passes": 26,
+  "passes_completed": 18,
+  "pass_accuracy": 69,
+  "xt_added": 0.071,
   "shots": 0,
   "goals": 0,
   "xg": 0.0,
-  "ball_wins": 2,
-  "pressures": 13,
+  "ball_wins": 6,
+  "pressures": 6,
   "top_shot_speed_kmh": null,
   "involvement": [
-   18,
+   14,
+   16,
    9,
-   11,
    0,
    0,
    0
@@ -1186,39 +1387,75 @@
  },
  "recent_events": [
   {
-   "event_id": "SCN-comeback-0520",
+   "event_id": "SCN-comeback-0578",
    "match_id": "SCN-comeback",
    "minute": 37,
-   "second": 13,
+   "second": 14,
    "side": "away",
    "team_id": "KST",
-   "player": "K. Quinn",
+   "player": "K. Yilmaz",
    "type": "shot",
-   "x": 87.9,
-   "y": 57.1,
+   "x": 93.4,
+   "y": 45.9,
    "outcome": "goal",
-   "xg": 0.481,
+   "xg": 0.487,
    "end_x": null,
    "end_y": null,
-   "speed_kmh": 85.4,
+   "speed_kmh": 75.8,
    "under_pressure": null
   },
   {
-   "event_id": "SCN-comeback-0527",
+   "event_id": "SCN-comeback-0583",
    "match_id": "SCN-comeback",
-   "minute": 37,
-   "second": 19,
+   "minute": 38,
+   "second": 49,
    "side": "home",
    "team_id": "NGC",
-   "player": "H. Novak",
-   "type": "card",
-   "x": 79.8,
-   "y": 50.0,
-   "outcome": "yellow",
-   "xg": null,
+   "player": "N. Ekwueme",
+   "type": "shot",
+   "x": 97.0,
+   "y": 65.2,
+   "outcome": "saved",
+   "xg": 0.182,
    "end_x": null,
    "end_y": null,
-   "speed_kmh": null,
+   "speed_kmh": 79.3,
+   "under_pressure": null
+  },
+  {
+   "event_id": "SCN-comeback-0639",
+   "match_id": "SCN-comeback",
+   "minute": 42,
+   "second": 17,
+   "side": "away",
+   "team_id": "KST",
+   "player": "H. Carter",
+   "type": "shot",
+   "x": 89.2,
+   "y": 33.4,
+   "outcome": "blocked",
+   "xg": 0.101,
+   "end_x": null,
+   "end_y": null,
+   "speed_kmh": 87.9,
+   "under_pressure": null
+  },
+  {
+   "event_id": "SCN-comeback-0650",
+   "match_id": "SCN-comeback",
+   "minute": 42,
+   "second": 52,
+   "side": "away",
+   "team_id": "KST",
+   "player": "L. Novak",
+   "type": "shot",
+   "x": 93.6,
+   "y": 42.3,
+   "outcome": "saved",
+   "xg": 0.298,
+   "end_x": null,
+   "end_y": null,
+   "speed_kmh": 90.1,
    "under_pressure": null
   }
  ]
