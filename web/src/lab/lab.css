@@ -143,7 +143,7 @@ body {
 }
 
 .lab-frame.bg-plate {
-  background: #0b3d1e url("/plates/pitch.png") center / cover no-repeat;
+  background: #0b3d1e url("/plates/pitch.webp") center / cover no-repeat;
 }
 
 .lab-frame.bg-transparent {

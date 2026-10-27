@@ -20,6 +20,9 @@
   --surface-fill-strong: #d1d1d6;
   --separator: #c6c6c8; /* rare; prefer space over lines */
   --scrim: rgb(0 0 0 / 0.2); /* behind an open sheet */
+  /* The pitch plate's average grass: fills the pitch until /plates/pitch.webp has loaded, so the
+     players never stand on a blank page (slow network, a blocked image). */
+  --pitch-grass: #74b072;
 
   --text-primary: #1d1d1f;
   --text-secondary: #6e6e73;

@@ -634,7 +634,9 @@ Done 25 Oct. Review them in place in the
     "A score doesn't say why", then the name. Like every chance figure, it carries the
     `projection.note` (§7). It passes the shrink test at 320×180, though the note itself can't be
     read at that size.
-- **Pitch plate** (`public/plates/pitch.png`, from `assets-src/pitch.py` in Blender 5.2, Eevee):
+- **Pitch plate** (`public/plates/pitch.png`, from `assets-src/pitch.py` in Blender 5.2, Eevee; the
+  app loads `public/plates/pitch.webp`, the same render as WebP at quality 90, 35 KB instead of
+  1.7 MB; re-export it after a new render, and `--pitch-grass` fills the pitch until it loads):
   - a 105×68 m pitch with FIFA markings and 18 stripes
   - two goals for soft shadows
   - no stadium, crowd, boards or logos

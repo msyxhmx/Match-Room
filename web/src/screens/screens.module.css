@@ -107,7 +107,7 @@
 
 /* The pitch plate for the video (S7). The real page in OBS stays transparent. */
 .overlay[data-plate="true"] {
-  background: url("/plates/pitch.png") center / cover no-repeat;
+  background: var(--pitch-grass) url("/plates/pitch.webp") center / cover no-repeat;
 }
 
 /* No graphic up: the score bug alone, where the graphics put it. */

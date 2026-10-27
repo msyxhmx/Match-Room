@@ -82,9 +82,9 @@
   font: var(--type-caption1);
 }
 
-/* Follow camera: the box is the plate; the canvas draws it. */
+/* Follow camera: the box is the plate; the canvas draws it (grass until the image loads). */
 .view[data-follow="true"] {
-  background: var(--surface-fill);
+  background: var(--pitch-grass);
 }
 
 .viewInner {
@@ -94,7 +94,7 @@
   width: 1920px;
   height: 1080px;
   transform-origin: 0 0;
-  background: url("/plates/pitch.png") 0 0 / 1920px 1080px no-repeat;
+  background: var(--pitch-grass) url("/plates/pitch.webp") 0 0 / 1920px 1080px no-repeat;
 }
 
 /* Inside a page the labels sit just under the crop's top edge. */
