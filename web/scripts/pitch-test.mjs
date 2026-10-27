@@ -23,6 +23,9 @@
 //               500 plate px/s) and even a switch of play across the pitch stays under 1,600
 //               (about two screen widths a second, no jumps); it snaps (no sweep) at a replay cut
 //   replay      the frozen 74' loops the real equaliser (L. Quinn's goal) with its build-up
+//   real move   every goal with a real move that fits (replays.ts) is replayed by it, cut in or
+//               frozen: each touch by the right player, on the ball, at most 25 m from its event's
+//               spot (Ilham's rule for replays; the live pitch stays exact: real-spot above)
 //   figures     on the 74' loop: the striker of every shown pass and shot kicks at its touch and
 //               nobody else does; the beaten keeper dives toward the ball's side of his line, the
 //               scorer's own keeper doesn't; the scorer celebrates once it's in; a runner faces
@@ -54,6 +57,8 @@ const { frameAt } = await load("/src/pitch/frame.ts");
 const { liveTimeline, replayMinute } = await load("/src/pitch/schedule.ts");
 const { isForced } = await load("/src/pitch/plan.ts");
 const { HALF_L, HALF_W, dist } = await load("/src/pitch/geometry.ts");
+const { REAL_REPLAYS, realReplayFor } = await load("/src/pitch/replays.ts");
+const REAL_CAP = REAL_REPLAYS.capM;
 
 const events = JSON.parse(readFileSync(resolve(root, "src/live/saved/events.json"), "utf8"));
 const lineups = JSON.parse(readFileSync(resolve(root, "src/live/saved/lineups.json"), "utf8"));
@@ -74,7 +79,9 @@ function arrivalsAt(speed, from = 0) {
   return a;
 }
 
-function check(label, tl, moments, speed) {
+// A replay played by a real move (replays.ts) keeps its touches where they were really played,
+// up to `realCap` m from the events' spots, with the named player on the ball.
+function check(label, tl, moments, speed, { realCap } = {}) {
   console.log(`\n${label}: ${tl.beats.length} moments shown, ${tl.dropped.length} skipped, ${tl.end.toFixed(1)} s`);
   const prev = new Map();
   let maxV = 0;
@@ -106,9 +113,14 @@ function check(label, tl, moments, speed) {
   for (const b of tl.beats) {
     const m = b.moment;
     const f = frameAt(tl, b.touch);
-    if (!f.ball || dist(f.ball, m.from) > 0.05) fail(`${label} real-spot: ball not at ${m.id} at its touch`);
     const actor = f.dots.find((d) => d.id === b.actor);
-    if (!actor || dist(actor, m.from) > 1.2) fail(`${label} real-spot: ${m.player} not on the ball for ${m.id}`);
+    if (realCap) {
+      if (!f.ball || dist(f.ball, m.from) > realCap) fail(`${label} real-spot: ball over ${realCap} m from ${m.id} at its touch`);
+      else if (!actor || dist(actor, f.ball) > 1.5) fail(`${label} real-spot: ${m.player} not on the ball for ${m.id}`);
+    } else {
+      if (!f.ball || dist(f.ball, m.from) > 0.05) fail(`${label} real-spot: ball not at ${m.id} at its touch`);
+      if (!actor || dist(actor, m.from) > 1.2) fail(`${label} real-spot: ${m.player} not on the ball for ${m.id}`);
+    }
     if (b.winnerShown) {
       const g = frameAt(tl, b.land);
       const w = g.dots.find((d) => d.id === b.receiver);
@@ -149,7 +161,7 @@ for (const speed of [1, 60]) {
 }
 
 // Continuous play: the ghost ball between real moments.
-function checkContinuous(label, tl, until = tl.end) {
+function checkContinuous(label, tl, until = tl.end, { realCap } = {}) {
   let seen = 0;
   let total = 0;
   let jumps = 0;
@@ -172,7 +184,7 @@ function checkContinuous(label, tl, until = tl.end) {
   }
   for (const b of tl.beats) {
     const f = frameAt(tl, b.touch, { continuous: true });
-    if (!f.ball || f.ball.ghost || dist(f.ball, b.moment.from) > 0.05) fail(`${label} continuous: ${b.moment.id} touch isn't the real ball`);
+    if (!f.ball || f.ball.ghost || dist(f.ball, b.moment.from) > (realCap ?? 0.05)) fail(`${label} continuous: ${b.moment.id} touch isn't the real ball`);
   }
   const share = seen / total;
   console.log(`\n${label} continuous: ball on screen ${(share * 100).toFixed(0)}% of the time, ${jumps} jumps, fastest ${worst.toFixed(0)} m/s, ghost off the pitch in ${out} frames`);
@@ -345,7 +357,7 @@ for (const speed of [1, 60]) {
     if (!b) fail(`forced: no replay for the ${m.minute}' ${m.kind}`);
     else {
       out.push(`${m.minute}' ${m.kind} lands ${b.land.toFixed(1)} s in`);
-      check(`replay ${m.minute}' cut`, r.timeline, [], 1);
+      check(`replay ${m.minute}' cut`, r.timeline, [], 1, { realCap: r.real ? REAL_CAP : undefined });
     }
   }
   console.log("\nx60 replays: " + out.join(", "));
@@ -358,18 +370,47 @@ for (const speed of [1, 60]) {
   if (!r || !goal || goal.moment.player !== "L. Quinn") fail("replay: 74' doesn't loop L. Quinn's goal");
   else {
     const pass = r.timeline.beats.find((x) => x.moment.assistTo === "L. Quinn");
-    if (!pass) fail("assist: the 74' loop doesn't show H. Novak's pass to L. Quinn");
+    if (!pass) fail("assist: the 74' loop doesn't show the credited pass to L. Quinn");
     else {
       // The ball stays with Quinn from Novak's pass to his shot: visible the whole way.
       for (let t = pass.land; t <= goal.touch; t += 0.1)
         if (!frameAt(r.timeline, t).ball) fail(`assist: the ball vanishes at t=${t.toFixed(1)} between the pass and the shot`);
     }
-    checkContinuous("replay 74' (one loop)", r.timeline, r.length);
+    checkContinuous("replay 74' (one loop)", r.timeline, r.length, { realCap: r.real ? REAL_CAP : undefined });
     console.log(
       `\nreplay 74': ${r.timeline.beats.map((b) => `${b.moment.player} ${b.moment.kind}`).join(" → ")}; loop ${r.length.toFixed(1)} s`,
     );
-    check("replay 74'", r.timeline, moments.filter((m) => r.timeline.beats.some((b) => b.moment === m)), 1);
+    check("replay 74'", r.timeline, moments.filter((m) => r.timeline.beats.some((b) => b.moment === m)), 1, { realCap: r.real ? REAL_CAP : undefined });
   }
+}
+
+// Goal replays played by a real move.
+{
+  const { BUILD_UP, replayMoment } = await load("/src/pitch/schedule.ts");
+  const out = [];
+  for (const g of moments.filter(isGoal)) {
+    const real = realReplayFor(g.id);
+    if (!real) {
+      out.push(`${g.minute}' planner`);
+      continue;
+    }
+    for (const [how, buildUp] of [["cut", BUILD_UP.cut], ["loop", BUILD_UP.loop]]) {
+      const r = replayMoment(players, moments, g, buildUp);
+      if (!r?.real) {
+        fail(`real move: the ${g.minute}' ${how} isn't played by its real move`);
+        continue;
+      }
+      // The loop shows every touch of the real move; the cut (kept short for ×60) its last seconds.
+      const shown = new Set(r.timeline.beats.map((b) => b.moment.id));
+      for (const tc of how === "loop" ? real.touches : real.touches.slice(-1))
+        if (!shown.has(tc.id)) fail(`real move: the ${g.minute}' ${how} misses ${tc.id}`);
+      if (how === "cut" && r.length > 4.5) fail(`real move: the ${g.minute}' cut runs ${r.length.toFixed(1)} s (×60 cuts stay short)`);
+      check(`real move ${g.minute}' ${how}`, r.timeline, [], 1, { realCap: REAL_CAP });
+    }
+    for (const tc of real.touches) if (tc.offM > REAL_CAP) fail(`real move: ${tc.id} is ${tc.offM} m from its spot`);
+    out.push(`${g.minute}' real (${real.touches.length} touches, ${real.how}, up to ${Math.max(...real.touches.map((t) => t.offM))} m off)`);
+  }
+  console.log("\ngoal replays: " + out.join("; "));
 }
 
 // The standing figures (figures.ts): poses from the frame and one PREV_DT earlier.
@@ -596,7 +637,10 @@ for (const speed of [1, 60]) {
     console.log(`  real passage, ${p.kind}: ${said(m)}; spread ${tv(m.bands, pooled).toFixed(2)}`);
   }
 
-  const r74 = replayMinute(players, moments, 74).timeline;
+  // The planner's own loop: a real move's replay is real movement already.
+  const { replayMoment: replayOf } = await load("/src/pitch/schedule.ts");
+  const g74 = moments.find((m) => m.minute === 74 && isGoal(m));
+  const r74 = replayOf(players, moments, g74, 10, { planner: true }).timeline;
   const live70 = liveTimeline(players, moments.filter((m) => m.minute > 70 && m.minute <= 80), {
     speed: 1,
     arrivals: arrivalsAt(1, 71),
