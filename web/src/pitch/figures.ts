@@ -13,13 +13,14 @@
 //     and the scorer running off with his arms out.
 //
 // Positions are still frame.ts's illustrative choreography: only the drawing changes. The pose
-// is pure: it comes from this frame and up to two a moment earlier (the caller's), so a replay,
+// is pure: it comes from this frame and several earlier ones (the caller's: 1/15, 2/15, 0.25, 0.5
+// and 1 s back; speed, view and facing use the long windows so bodies stay calm), so a replay,
 // the film script and the tests all get the same picture. Reduced motion: held poses, no stride,
 // bob or hop, the dive shown already made.
 
 import type { Dot, Frame } from "./frame";
 import { strideM } from "./frame";
-import { dist, HALF_L, own, project, type Vec } from "./geometry";
+import { dist, GOAL_HALF, HALF_L, own, project, type Vec } from "./geometry";
 import { hash01, isGoal } from "./moments";
 import { HEAD, loft } from "./plan";
 import type { Palette } from "./render";
@@ -27,10 +28,30 @@ import type { Palette } from "./render";
 /** How far back the caller's earlier frame is, in display seconds (the one before that is twice
  *  as far). */
 export const PREV_DT = 1 / 15;
+/** The longer look-backs that keep the body calm: speed and view from QUARTER_DT, facing when
+ *  slow from HALF_DT. Pass those frames' dots as `past` (without them the short window is used). */
+export const QUARTER_DT = 0.25;
+export const HALF_DT = 0.5;
+/** And a full second back: the stand-vs-moving blend rides over a short pause between runs. */
+export const FULL_DT = 1;
+export interface Past {
+  /** The dot QUARTER_DT earlier. */
+  q?: Dot;
+  /** The dot HALF_DT earlier. */
+  h?: Dot;
+  /** The dot FULL_DT earlier. */
+  w?: Dot;
+}
 /** Figure height in metres before the boost: drawn larger than life, as the discs were. */
 export const FIGURE_H_M = 3.1;
 /** Faster than this between the two frames is a cut (a replay starts), not a run. */
 const CUT_SPEED = 30;
+/** Slower than this (m/s) the body stays side on; faster, front/back only inside a narrow cone
+ *  toward or away from the camera (|dv| > FRONT_BACK × |du| on screen), so diagonals don't toggle. */
+const SIDE_BELOW = 2;
+const FRONT_BACK = 2;
+/** A look is clearly left or right when |du| > FACE_CLEAR × |dv| on screen. */
+const FACE_CLEAR = 0.8;
 /** The kick: starts this long before the touch and lasts this long. */
 const KICK_LEAD = 0.3;
 const KICK_LEN = 0.65;
@@ -49,6 +70,11 @@ export type View = "side" | "front" | "back";
 export const gaitOf = (v: number): Gait => (v < 0.5 ? "stand" : v < 2.5 ? "walk" : v < 4.5 ? "jog" : "sprint");
 
 export interface FigurePose {
+  /** 0..1: standing to moving, a blend over 0.3..0.8 m/s of the speed over the last second
+   *  (a short pause between runs doesn't drop the body back to its idle pose). */
+  move: number;
+  /** 0..1: the same blend on the quarter-second speed: how much the legs and arms swing. */
+  swing: number;
   /** Which way the figure looks on screen: 1 right, -1 left. */
   facing: 1 | -1;
   /** Seen from the side, from the front (coming toward the camera) or from the back. */
@@ -97,22 +123,26 @@ const smooth = (a: number, b: number, v: number) => {
 /** 0..1 through [a, b), or null outside it. */
 const through = (t: number, a: number, b: number) => (t >= a && t < b ? (t - a) / (b - a) : null);
 
-/** Screen direction (left or right) of a world-plane direction from a point. */
-function screenSide(at: Vec, dir: Vec): 1 | -1 {
+/** Left or right on screen. Mirrors only when the screen direction is clearly sideways; a look
+ *  toward or away from the camera (or hardly anywhere) keeps the team's default way, so a jog
+ *  down the pitch doesn't flip a player on every wobble. */
+function faceOf(at: Vec, dir: Vec, dflt: 1 | -1): 1 | -1 {
   const a = project(at.x, at.y);
   const b = project(at.x + dir.x, at.y + dir.y);
-  return b.u >= a.u ? 1 : -1;
+  const du = b.u - a.u;
+  const dv = b.v - a.v;
+  return Math.abs(du) > FACE_CLEAR * Math.abs(dv) ? (du > 0 ? 1 : -1) : dflt;
 }
 
 /** Side, front or back, from a direction on the ground as seen on screen. */
-function viewOf(at: Vec, dir: Vec): View {
+function viewOf(at: Vec, dir: Vec, speed: number): View {
   const n = Math.hypot(dir.x, dir.y);
-  if (n < 1e-9) return "side";
+  if (n < 1e-9 || speed < SIDE_BELOW) return "side";
   const a = project(at.x, at.y);
   const b = project(at.x + dir.x / n, at.y + dir.y / n);
   const du = b.u - a.u;
   const dv = b.v - a.v;
-  if (Math.abs(dv) <= 1.2 * Math.abs(du)) return "side";
+  if (Math.abs(dv) <= FRONT_BACK * Math.abs(du)) return "side";
   return dv < 0 ? "back" : "front";
 }
 
@@ -123,21 +153,48 @@ function velocity(d: Dot, before: Dot | undefined): Vec | null {
   return Math.hypot(v.x, v.y) > CUT_SPEED ? null : v;
 }
 
-export function figurePose(d: Dot, before: Dot | undefined, f: Frame, still = false, earlier?: Dot): FigurePose {
-  const vel = velocity(d, before) ?? { x: 0, y: 0 };
+/** Velocity (m/s) over a longer window of dt seconds, or null at a cut or without the dot. */
+function velocityOver(d: Dot, then: Dot | undefined, dt: number): Vec | null {
+  if (!then) return null;
+  const v = { x: (d.x - then.x) / dt, y: (d.y - then.y) / dt };
+  return Math.hypot(v.x, v.y) > CUT_SPEED ? null : v;
+}
+
+export function figurePose(d: Dot, before: Dot | undefined, f: Frame, still = false, earlier?: Dot, past?: Past): FigurePose {
+  // Speed and view from the longer window (the short one jitters); facing when slow from the longest.
+  const vShort = velocity(d, before) ?? { x: 0, y: 0 };
+  const vq = velocityOver(d, past?.q, QUARTER_DT);
+  const vh = velocityOver(d, past?.h, HALF_DT);
+  const vLong = vq && vh ? { x: (vq.x + vh.x) / 2, y: (vq.y + vh.y) / 2 } : vq ?? vh;
+  const vel = past?.q || past?.h ? vLong ?? { x: 0, y: 0 } : vShort;
+  const velSlow = past?.h ? vh ?? vel : vel;
   const speed = Math.hypot(vel.x, vel.y);
   const gait = gaitOf(speed);
+  const swing = smooth(0.3, 0.8, speed);
+  const vw = velocityOver(d, past?.w, FULL_DT);
+  // Ground covered over the last second (path length, so a turn or a pause in it still counts).
+  const sw0 = past?.w ? (d.run - past.w.run) / FULL_DT : 0;
+  const sw = sw0 >= 0 && sw0 <= 12 ? sw0 : 0; // a cut (a replay starts) isn't ground covered
+  const move = past?.h ? smooth(0.3, 0.8, Math.max(Math.hypot(velSlow.x, velSlow.y), sw)) : swing;
   // Facing: the run, blended with the ball so a jog doesn't flip a player who's watching it.
   const toBall = f.ball ? { x: f.ball.x - d.x, y: f.ball.y - d.y } : { x: 0, y: 0 };
   const nb = Math.hypot(toBall.x, toBall.y) || 1;
-  let look = { x: vel.x + (toBall.x / nb) * 1.2, y: vel.y + (toBall.y / nb) * 1.2 };
-  if (look.x === 0 && look.y === 0) look = { x: d.side === "home" ? 1 : -1, y: 0 };
-  let view = viewOf(d, speed >= 0.5 ? vel : look);
+  // The ball only decides when he's nearly still; a jog or run looks where it goes.
+  // A keeper watches the ball unless he's sprinting (he shuffles and backpedals facing play).
+  const bw =
+    d.role === "GK"
+      ? 3 * (1 - smooth(3.5, 5, Math.hypot(velSlow.x, velSlow.y)))
+      : 1.2 * (1 - smooth(0.4, 2, Math.hypot(velSlow.x, velSlow.y)));
+  const vFace = vw ? { x: 0.3 * velSlow.x + 0.7 * vw.x, y: 0.3 * velSlow.y + 0.7 * vw.y } : velSlow;
+  let look = { x: vFace.x + (toBall.x / nb) * bw, y: vFace.y + (toBall.y / nb) * bw };
+  const dflt: 1 | -1 = d.side === "home" ? 1 : -1;
+  if (look.x === 0 && look.y === 0) look = { x: dflt, y: 0 };
+  let view = viewOf(d, vFace, Math.hypot(vFace.x, vFace.y));
 
   // The stride: phase from the strides covered; the swing that matches it is the drawing's.
-  const moving = !still && speed >= 0.5;
+  const moving = !still && swing > 0;
   const phase = moving ? 2 * Math.PI * d.strides + hash01(d.id) * 0.4 : 0;
-  const step = moving ? strideM(speed) / 2 : 0;
+  const step = moving ? (strideM(speed) / 2) * swing : 0;
   const legM = ((THIGH + SHIN) * FIGURE_H_M) / 2.6;
   const stride = moving ? Math.asin(Math.min(0.75, step / (2 * legM))) * Math.sin(phase) : 0;
 
@@ -201,18 +258,23 @@ export function figurePose(d: Dot, before: Dot | undefined, f: Frame, still = fa
         }
       }
     }
+    // The beaten keeper dives for a shot that crosses his line on target or near it, not for
+    // one that flies well wide.
     if (
       m.kind === "shot" && m.outcome !== "blocked" && m.outcome !== "saved" && m.to &&
-      d.role === "GK" && d.side !== m.side && t >= b.touch
+      d.role === "GK" && d.side !== m.side && t >= b.touch &&
+      Math.abs(m.to.y) < GOAL_HALF + 2.5 && Math.abs(m.to.x) > HALF_L - 4
     ) {
       const p = clamp01((t - b.touch) / Math.max(0.2, b.land - b.touch + 0.15));
       dive = { p: still ? 1 : p, to: { x: d.x, y: m.to.y } };
     }
     if (isGoal(m) && b.actor === d.id && t >= b.land) celebrate = t - b.land;
   }
-  // The keeper, set and ready, while the ball is in his third.
+  // The keeper, set and ready, while the other side has the ball in his third (not when it's at
+  // his own feet: a goal kick, a ball he's gathering).
   const crouch =
-    d.role === "GK" && !dive && caught === null && !!f.ball && own(d.side, f.ball).x < -HALF_L + KEEPER_THIRD && speed < 2.5;
+    d.role === "GK" && !dive && caught === null && kick === null && !!f.ball && own(d.side, f.ball).x < -HALF_L + KEEPER_THIRD &&
+    speed < 2.5 && f.possession !== d.side && dist(d, f.ball) > 5;
   if (crouch && f.ball) look = toBall;
   // Carrying the ball: it's at his feet, on the ground.
   const dribble =
@@ -221,7 +283,9 @@ export function figurePose(d: Dot, before: Dot | undefined, f: Frame, still = fa
     view = "side";
 
   return {
-    facing: screenSide(d, look),
+    move: still ? 0 : move,
+    swing: still ? 0 : swing,
+    facing: faceOf(d, look, dflt),
     view,
     speed,
     gait,
@@ -252,6 +316,10 @@ export interface FigureOptions {
   prev?: Frame | null;
   /** The frame 2 × PREV_DT earlier, for speeding up and braking (the lean). */
   earlier?: Frame | null;
+  /** The frames QUARTER_DT and HALF_DT earlier: the calm speed, view and facing. */
+  quarter?: Frame | null;
+  half?: Frame | null;
+  full?: Frame | null;
   /** Reduced motion: held poses. */
   still?: boolean;
 }
@@ -260,8 +328,14 @@ export interface FigureOptions {
 export function drawFigures(ctx: CanvasRenderingContext2D, f: Frame, o: FigureOptions) {
   const before = new Map((o.prev?.dots ?? []).map((d) => [d.id, d]));
   const earlier = new Map((o.earlier?.dots ?? []).map((d) => [d.id, d]));
+  const quarter = new Map((o.quarter?.dots ?? []).map((d) => [d.id, d]));
+  const half = new Map((o.half?.dots ?? []).map((d) => [d.id, d]));
+  const full = new Map((o.full?.dots ?? []).map((d) => [d.id, d]));
   const dots = [...f.dots].sort((a, b) => b.y - a.y);
-  for (const d of dots) drawFigure(ctx, d, figurePose(d, before.get(d.id), f, o.still, earlier.get(d.id)), o);
+  for (const d of dots) {
+    const past = { q: quarter.get(d.id), h: half.get(d.id), w: full.get(d.id) };
+    drawFigure(ctx, d, figurePose(d, before.get(d.id), f, o.still, earlier.get(d.id), past), o);
+  }
 }
 
 /** A leg as two angles from straight down (forward positive): thigh, and shin. */
@@ -312,8 +386,8 @@ function drawFigure(ctx: CanvasRenderingContext2D, d: Dot, pose: FigurePose, o: 
   let far: Leg = legAt(ph + Math.PI);
   const armAmp = still ? 0 : 0.25 + 0.75 * smooth(1, 7, v);
   const elbow = 0.2 + 1.3 * smooth(1.5, 6, v);
-  let nearArm: Leg = [-armAmp * Math.sin(ph) * (v >= 0.5 ? 1 : 0), 0];
-  let farArm: Leg = [armAmp * Math.sin(ph) * (v >= 0.5 ? 1 : 0), 0];
+  let nearArm: Leg = [-armAmp * Math.sin(ph) * pose.swing, 0];
+  let farArm: Leg = [armAmp * Math.sin(ph) * pose.swing, 0];
   nearArm[1] = nearArm[0] + elbow;
   farArm[1] = farArm[0] + elbow;
   let lean = pose.lean;
@@ -323,13 +397,16 @@ function drawFigure(ctx: CanvasRenderingContext2D, d: Dot, pose: FigurePose, o: 
   // Standing: weight shifting from foot to foot, the chest rising and falling.
   let sway = 0;
   let breathe = 0;
-  if (pose.gait === "stand" && !still) {
-    sway = 0.035 * Math.sin(pose.t * 0.9 + pose.seed * 20);
-    breathe = 0.018 * Math.sin(pose.t * 2.3 + pose.seed * 13);
-    near = [0.06 + sway, 0.06 + sway];
-    far = [-0.06 + sway, -0.06 + sway];
-    nearArm = [0.08, 0.25];
-    farArm = [-0.05, 0.2];
+  if (pose.move < 1 && !still) {
+    // Standing blends into the gait over 0.3..0.8 m/s: no snap between the two poses.
+    const k = 1 - pose.move;
+    const mix = (a: Leg, b: Leg): Leg => [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k];
+    sway = 0.035 * Math.sin(pose.t * 0.9 + pose.seed * 20) * k;
+    breathe = 0.018 * Math.sin(pose.t * 2.3 + pose.seed * 13) * k;
+    near = mix(near, [0.06 + sway, 0.06 + sway]);
+    far = mix(far, [-0.06 + sway, -0.06 + sway]);
+    nearArm = mix(nearArm, [0.08, 0.25]);
+    farArm = mix(farArm, [-0.05, 0.2]);
   }
   if (pose.dribble && !still) {
     // A touch every other stride: the near foot reaches for the ball.

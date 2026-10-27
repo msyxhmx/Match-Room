@@ -1,7 +1,7 @@
 # Common commands. On Windows without make, run the command on the right directly.
 PY ?= .venv/bin/python
 
-.PHONY: setup sim train train-quick xt live-calibration schema motion-data real-replays api web test lint format check
+.PHONY: setup sim train train-quick xt live-calibration schema motion-data reel-data real-replays api web test lint format check
 
 setup:            ## create venv, install Python + web deps
 	python3 -m venv .venv
@@ -29,6 +29,9 @@ schema:           ## regenerate contract JSON schema + sample/mock JSON
 
 motion-data:      ## real movement for the pitch from DFL tracking in data/dfl/ (see the script)
 	$(PY) scripts/dfl_extract.py
+
+reel-data:        ## the library of real play the live pitch cuts clips from, to web/public/pitch/reel.json
+	$(PY) scripts/dfl_reel.py
 
 real-replays:     ## the goal replays' real moves from DFL tracking, for the saved match
 	cd web && node scripts/goal-moves.mjs > ../data/goal-moves.json

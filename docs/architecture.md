@@ -43,6 +43,12 @@ Details of every metric and rule: [live-engine.md](live-engine.md).
   event no tool returned, or a number, player or team missing from the tool output, then asks an
   LLM whether the evidence supports the claim. One retry; fewer than 3 cards → templates.
 - **Evidence or it didn't happen.** Every card cites event IDs.
+- **The pitch plays real events with real football.** The live pitch (`web/src/pitch/reel.ts`)
+  plays recorded DFL tracking data (CC BY 4.0), cut so the match's moments happen in it. Each
+  shown moment is made by its real player, in match order, at about its time, by a real touch of
+  the same kind within 25 m of its event's spot (Ilham's call, 27 Oct). Score, cards, names and
+  text stay exact, and the "Positions illustrative" note stays on screen. With no library the
+  planner (`plan.ts`) plays instead, with every touch on its exact spot.
 - **A simulator change means a retrain.** Any change to `sim/` changes the matches, so retrain
   (`make train`), rerun `make live-calibration` and `scripts/calibrate_live.py`, and recheck
   the scenarios. The training cache is keyed on a hash of the simulator code.

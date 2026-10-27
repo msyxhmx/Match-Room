@@ -4,7 +4,60 @@ The broadcast page on the plate (`/overlay?plate=1`) shows 22 players and the ba
 with the match as it streams. This note records what we borrowed, the choreography, and the
 decisions behind it. Code: `src/pitch/`. Proof: `npm run test:pitch`. Clips: `npm run film:pitch`.
 
-## The honesty rule, as built
+## Real play: the live pitch since 27 Oct (night)
+
+The planner's movement passed every number against real football and still read as "a bunch
+of different movements at the same time" (Ilham, 27 Oct). Recorded players move like players, so
+the live pitch now plays **recorded DFL football** at both speeds (`reel.ts`), and the planner
+below is the fallback (no library, or `?pitch=planner`).
+
+- **The library.** `make reel-data` (`scripts/dfl_reel.py`) cuts the 7 DFL matches into reels
+  around their shots, kick-offs, cards, corners and fouls (15 s before to 25 s after, merged),
+  at 5 Hz, both elevens fitted to our slots by where they stand, any formation. It writes
+  `public/pitch/reel.json` (about 5 MB, fetched once when the pitch mounts, not bundled).
+- **The rule** (Ilham's call, 27 Oct, extending the replay rule to live play): each shown moment
+  is made by its player, in match order, at about its time, by a real touch of the same kind that
+  lands within **25 m** of its event's spot, with its player on the ball (2.5 m). Between moments
+  the recording plays on, its ball drawn as the ghost (half strength, no names).
+- **Clips join with a cut** (the 0.18 s dip), never by blending two recordings: blended players
+  slide, and that's what read as animation. A recording turns four ways (ends swapped, mirrored)
+  to fit; our player making a touch takes the real toucher's track for that clip.
+- **×1.** One recording plays on. Each forced moment (goal, card, shot, corner, foul) is played by
+  the recording on screen when it has a fitting touch in time, else by a cut to a clip that leads
+  into one, the touch landing at its time. After a goal the celebration plays, then a cut to a
+  real kick-off. At the break a kick-off picture holds until the second half's first tick.
+- **×60, a highlights reel** (Ilham's pick). A minute a second is too fast for real-speed play,
+  so the pitch plays goals, cards and shots back to back, each a short clip labelled with its
+  minute ("Replay 61′"). A lesser one is skipped once the reel falls 2–5 s behind; a goal cuts in
+  (the score waits for it). Between highlights the last clip plays on, unlabelled.
+- **Causal**, like the planner: a moment is used from its tick's arrival, every cut is at or
+  after it, so a new tick never changes what was shown (tested).
+- **Keepers and restarts** (Ilham, 27 Oct: "a lot of error in the way the goalkeeper moves,
+  and the goal kick looks weird"):
+  - Out of play the tracking holds the ball where it went out, often off the pitch, then jumps
+    it to the restart. Now a dead ball shows only on the pitch (or rolling out for 0.8 s), never
+    across a jump, and waits on the restart's spot for 4 s before it's played. A recording that
+    ends with the ball out is cut a second later.
+  - Real Bundesliga keepers sweep up to halfway when their side attacks, which reads as a
+    mistake: within 14 m of his line a keeper is as recorded, further out eased toward 24 m.
+    Clips with keepers far up are chosen less.
+  - The recording's own touches between ours are **ghost beats**: legs kick, receivers control,
+    keepers kick goal kicks, dive and gather, with no name and no pass line. Our saved shots are
+    gathered by our keeper. A keeper is set (crouched) only when the other side has the ball in
+    his third, not with it at his feet, and dives only for a shot on target or near it.
+  - Nobody else's goal ever shows: a recording is cut a second before its own goal (any ball
+    in a net, a disallowed one too), no clip starts within 30 s after one, and a real goal only
+    plays one of ours. Shots are anchored only where the ball really leaves the shooter fast
+    (DFL's shot clock can be seconds off).
+- **The figures** were calmed for it: speed, view and facing come from the last 0.25–1 s, not
+  1/15 s, and standing to moving blends. View switches fell from 27 to 4.5 a player-minute
+  (`node scripts/pose-flicker.mjs`).
+
+Proof: `test:pitch` "reel". Lab: `Pitch--reel60` (the reel from kick-off) and `Pitch--reel1`
+(×1 around the 74′ equaliser). Everything below describes the planner, which still plays the
+paused loops, the replays and the fallback.
+
+## The honesty rule, as built (the planner)
 
 - **Real:** every touch the pitch shows is a real event, at its real coordinates, with its real
   player, in match order. That covers passes (start, end and speed), shots, corners, fouls,

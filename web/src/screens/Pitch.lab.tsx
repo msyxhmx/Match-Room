@@ -22,6 +22,8 @@ import type { SquadPlayer } from "../pitch/formation";
 import { frameAt } from "../pitch/frame";
 import { realTimeline, type Passage } from "../pitch/real";
 import realSlice from "../pitch/real/slice.json";
+import { decodeLibrary, reelProgram } from "../pitch/reel";
+import reelData from "../../public/pitch/reel.json";
 
 const players = (savedLineups as unknown as { players: SquadPlayer[] }).players;
 const moments: Moment[] = toMoments(savedEvents as unknown as PitchEvent[]);
@@ -80,7 +82,31 @@ const REAL = Object.fromEntries(
   }),
 );
 
+/** Real play (reel.ts) as the live page plays it: ×60 from kick-off (the highlights reel, the
+ *  break 15 s), and ×1 from 72' (the session starting there) around the 74' equaliser. */
+const reelLib = decodeLibrary(reelData as unknown as Parameters<typeof decodeLibrary>[0]);
+const liveMoments = toMoments(savedEvents as unknown as PitchEvent[], { live: true });
+const reel60 = reelProgram(players, liveMoments, {
+  speed: 60,
+  arrivals: new Map(Array.from({ length: 90 }, (_, i) => [i + 1, i + 1 + (i + 1 > 45 ? 15 : 0)] as [number, number])),
+  start: 0,
+  initial: { kind: "kickoff", kicking: "home" },
+}, reelLib);
+const REEL1_FROM = 72;
+const reel1 = reelProgram(players, liveMoments.filter((m) => m.minute > REEL1_FROM && m.minute <= 80), {
+  speed: 1,
+  arrivals: new Map(Array.from({ length: 8 }, (_, i) => [REEL1_FROM + 1 + i, 60 * (i + 1)] as [number, number])),
+  start: 0,
+  initial: { kind: "shape", ball: { x: 0, y: 0 }, side: "home" },
+}, reelLib);
+/** ×1: from 20 s before the equaliser's touch. */
+const reel1From = (reel1.shown.find((s) => isGoal(s.moment))?.t ?? 130) - 20;
+
 export const PITCH_SCENES = {
+  reel60: { shot: (t: number): Shot => reel60.shotAt(t), still: 10, length: 106 },
+  reel1: { shot: (t: number): Shot => reel1.shotAt(t + reel1From), still: 20, length: 40 },
+  /** The same ×1 programme from its start (72'), for filming any part of it. */
+  reel1all: { shot: (t: number): Shot => reel1.shotAt(t), still: 20, length: 480 },
   equaliser: { shot: (t: number): Shot => loopShot(equaliser, t), still: equaliserGoal.touch + 0.25, length: equaliser.length },
   flow60: { shot: (t: number): Shot => flow.shotAt(t), still: flow.cuts[0] ? flow.cuts[0].at - 1.2 : 2, length: 11 },
   corner: { shot: (t: number): Shot => loopShot(corner, t), still: cornerBeat.touch + 0.6, length: corner.length },
@@ -164,6 +190,9 @@ export default {
   summary: "The live pitch: 22 players and the ball from the real events, casual and analyst.",
   states: [
     state("calibration", "The plate camera from pitch.py: projected lines over the render", () => <Calibration />),
+    state("reel60", "Real play, ×60: the highlights reel from kick-off (DFL recordings, CC BY 4.0)", () => <Scene scene="reel60" persona="casual" />),
+    state("reel1", "Real play, ×1: the 74' equaliser in live play (DFL recordings, CC BY 4.0)", () => <Scene scene="reel1" persona="casual" />),
+    state("reel1all", "Real play, ×1 from 72' (seek any instant)", () => <Scene scene="reel1all" persona="casual" />),
     ...PERSONAS.flatMap((p) => [
       state(`equaliser-${p}`, `${NOTES[p]}. S7 paused on 74': the equaliser loops`, () => (
         <Scene scene="equaliser" persona={p} />

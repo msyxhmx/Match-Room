@@ -734,6 +734,85 @@ for (const speed of [1, 60]) {
   }
 }
 
+// ---- real play (reel.ts): the live pitch played by recorded DFL football, as the page plays it
+// (a programme per tick, each frame from the newest), ×60 over the whole match and ×1 for the
+// first 30 minutes:
+//   rule      every shown moment is made by its player, on the ball (2.5 m), within 25 m of its
+//             event's spot; ×1 plays each forced moment, at its time; ×60 shows every goal
+//   lands     every goal reports when its ball crosses the line (the score waits for it)
+//   cuts      outside a cut's dip nobody moves faster than a real sprint, 11 m/s (no jumps)
+//   stable    a new tick never changes what was already shown (0.5 m)
+//   eleven    at most 11 a side; the ball on screen nearly all the time
+//   ball      the ball shown never jumps (40 m/s) and never ends up in a net but on our goals
+//   keeper    keepers stay within 24.5 m of their goal line (reel.ts eases sweepers home)
+{
+  const { decodeLibrary, reelProgram, CAP_M } = await load("/src/pitch/reel.ts");
+  const pc = (x) => `${(x * 100).toFixed(0)}%`;
+  const REAL_TOP = 11;
+  const lib = decodeLibrary(JSON.parse(readFileSync(resolve(root, "public/pitch/reel.json"), "utf8")));
+  const live = toMoments(events, { live: true });
+  for (const [speed, to] of [[60, 90], [1, 30]]) {
+    const label = `reel ×${speed} 0–${to}'`;
+    const all = arrivalsAt(speed);
+    const progs = [];
+    for (let m = 1; m <= to; m++) {
+      const arrivals = new Map([...all].filter(([k]) => k <= m));
+      progs.push({ at: all.get(m), p: reelProgram(players, live.filter((x) => arrivals.has(x.minute)), { speed, arrivals, start: 0, initial: { kind: "kickoff", kicking: "home" } }, lib) });
+    }
+    const final = progs[progs.length - 1].p;
+    const shownAt = (t) => progs.reduce((p, q) => (q.at <= t ? q.p : p), progs[0].p);
+    const want = live.filter((m) => m.minute <= to && (speed > 2 ? isGoal(m) : m.kind !== "pass"));
+    for (const m of want) if (!final.shown.some((s) => s.moment.id === m.id)) fail(`${label}: ${m.minute}' ${m.kind} not shown`);
+    for (const g of live.filter((m) => m.minute <= to && isGoal(m)))
+      if (!final.goalsLand.some((x) => x.moment.id === g.id)) fail(`${label}: the ${g.minute}' goal never lands`);
+    let worst = 0;
+    for (const s of final.shown) {
+      const off = dist(s.spot, s.moment.from);
+      worst = Math.max(worst, off);
+      if (off > CAP_M) fail(`${label}: ${s.moment.minute}' ${s.moment.kind} played ${off.toFixed(1)} m from its spot`);
+      const f = final.shotAt(s.t + 0.001).frame;
+      const d = f.dots.find((x) => x.id === s.actor);
+      if (!d || !f.ball || dist(d, f.ball) > 2.5) fail(`${label}: ${s.moment.minute}' ${s.moment.kind}: ${s.moment.player} isn't on the ball at the touch`);
+      const at = all.get(s.moment.minute) + (s.moment.t - s.moment.minute * 60) / speed;
+      if (speed <= 2 && Math.abs(s.t - at) > 6.5) fail(`${label}: ${s.moment.minute}' ${s.moment.kind} plays ${(s.t - at).toFixed(1)} s off its time`);
+    }
+    let prev = null, fastest = 0, noBall = 0, n = 0, moved = 0, ballJumps = 0, farKeeper = 0, phantom = 0;
+    const goalsShown = final.shown.filter((x) => isGoal(x.moment)).map((x) => x.t);
+    for (let t = 0.05; t < all.get(to) + 60 / speed; t += DT) {
+      const sh = shownAt(t);
+      const s = sh.shotAt(t);
+      n++;
+      if (!s.frame.ball) noBall++;
+      if (sh !== final) {
+        const later = final.shotAt(t).frame;
+        for (const d of s.frame.dots) {
+          const e = later.dots.find((x) => x.id === d.id);
+          if (e && dist(d, e) > 0.5) { moved++; break; }
+        }
+      }
+      for (const side of ["home", "away"]) if (s.frame.dots.filter((d) => d.side === side).length > 11) fail(`${label}: more than 11 ${side} at ${t.toFixed(1)}`);
+      for (const d of s.frame.dots) if (d.role === "GK" && (d.side === "home" ? d.x : -d.x) + HALF_L > 24.5) farKeeper++;
+      const b = s.frame.ball;
+      if (b && b.a > 0.5 && Math.abs(b.x) > HALF_L + 0.3 && Math.abs(b.y) < 3.66 && b.z < 2.4 && !goalsShown.some((g) => t >= g - 0.5 && t <= g + 25)) phantom++;
+      if (b && prev?.frame.ball && s.opacity === 1 && prev.opacity === 1 && b.a > 0.5 && prev.frame.ball.a > 0.5 && dist(b, prev.frame.ball) / DT > 40) ballJumps++;
+      if (prev && s.opacity === 1 && prev.opacity === 1)
+        for (const d of s.frame.dots) {
+          const e = prev.frame.dots.find((x) => x.id === d.id);
+          if (e) fastest = Math.max(fastest, dist(d, e) / DT);
+        }
+      prev = s;
+    }
+    // Recorded players sprint up to about 10 m/s (DFL); faster than REAL_TOP is a jump.
+    if (fastest > REAL_TOP) fail(`${label}: someone moves at ${fastest.toFixed(1)} m/s outside a cut`);
+    if (moved) fail(`${label}: a new tick changed ${moved} frames already shown`);
+    if (ballJumps) fail(`${label}: the ball jumps in ${ballJumps} frames`);
+    if (farKeeper) fail(`${label}: a keeper is over 24.5 m out in ${farKeeper} frames`);
+    if (phantom) fail(`${label}: the ball is in a net with no goal of ours in ${phantom} frames`);
+    if (noBall / n > 0.05) fail(`${label}: the ball is off screen ${pc(noBall / n)} of the time`);
+    console.log(`${label}: ${final.shown.length} moments shown, ${final.segments.length} clips, every touch within ${worst.toFixed(1)} m, fastest ${fastest.toFixed(1)} m/s, ball off screen ${pc(noBall / n)}`);
+  }
+}
+
 await server.close();
 console.log(failures ? `\n${failures} failure(s)` : "\nall pitch checks pass");
 process.exit(failures ? 1 : 0);
