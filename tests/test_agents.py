@@ -227,3 +227,14 @@ def test_no_keys_means_template_and_empty_trace(monkeypatch):
 
     assert report.meta.story_source == "template"
     assert report.meta.agent_trace == []
+
+
+def test_long_trace_detail_is_cut_at_a_word():
+    from model.agents import _clip
+
+    text = "The card claims Kingston Vale had slightly less possession, " * 5
+    out = _clip(text, 200)
+    assert len(out) <= 200
+    assert out.endswith("…")
+    assert text.startswith(out[:-1])
+    assert _clip("short", 200) == "short"

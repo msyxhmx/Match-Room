@@ -13,8 +13,9 @@
   position: sticky;
   top: calc(var(--space-2) * -1);
   z-index: 1;
-  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) var(--space-1);
-  padding: var(--space-2) var(--space-2) 0;
+  /* The gap under the title is padding, not margin, so scrolled steps pass behind it. */
+  margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) 0;
+  padding: var(--space-2);
   background: var(--surface-card);
   font: var(--type-title3);
 }
@@ -70,12 +71,15 @@
   padding-top: var(--space-half);
 }
 
-/* A reject is visibly heavier. */
+/* A reject is visibly heavier, and stacks: the pill, then the struck claim and the reason at the
+   column's full width. Beside the pill, an LLM's long reason ran a few words to a line. */
 .row[data-action="reject"] {
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--space-half);
   background: var(--state-muted-tint);
   padding: var(--space-1);
 }
-.row[data-action="reject"] .detail {
+.row[data-action="reject"] .claim {
   font: var(--type-headline);
 }
 .bigIcon {
