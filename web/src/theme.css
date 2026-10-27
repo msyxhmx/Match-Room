@@ -13,19 +13,19 @@
   color-scheme: light;
 
   /* Neutrals. Base layer is the grey ground; cards and sheets are the elevated white layer. */
-  --surface-ground: #f2f2f7;
+  --surface-ground: #f1f3f4;
   --surface-card: #ffffff;
   --surface-sheet: #ffffff;
-  --surface-fill: #e5e5ea; /* pills, empty timeline minutes, chance-bar track */
-  --surface-fill-strong: #d1d1d6;
-  --separator: #c6c6c8; /* rare; prefer space over lines */
+  --surface-fill: #e8eaed; /* pills, empty timeline minutes, chance-bar track */
+  --surface-fill-strong: #dadce0;
+  --separator: #e3e5e8; /* rare; prefer space over lines */
   --scrim: rgb(0 0 0 / 0.2); /* behind an open sheet */
   /* The pitch plate's average grass: fills the pitch until /plates/pitch.webp has loaded, so the
      players never stand on a blank page (slow network, a blocked image). */
   --pitch-grass: #74b072;
 
-  --text-primary: #1d1d1f;
-  --text-secondary: #6e6e73;
+  --text-primary: #202124;
+  --text-secondary: #5f6368;
   --text-dimmed-large: #8e8e93; /* losing score at full time; large text only */
 
   /* Club slots. Set these on the match root from clubColours.ts; defaults are the demo pair.
@@ -49,17 +49,20 @@
   /* Semantic states (STORYBOARD §6). Colour is never the only signal: each state also has
      its label or icon, listed in DESIGN §9.10. Green is the one extra hue; everything else
      uses the club slots or neutrals so red keeps meaning "live". */
-  --state-positive-text: #1f7a35; /* checked, accepted */
+  --state-positive-text: #137333; /* checked, accepted */
   --state-positive-tint: #e6f4ea;
-  --state-neutral-text: #1d1d1f; /* chaos phase, HT/FT */
-  --state-neutral-tint: #e5e5ea;
-  --state-muted-text: #6e6e73; /* goal against, rejected/retry, offline */
-  --state-muted-tint: #f2f2f7;
-  --you-tag-fill: #1d1d1f; /* "your player" tag */
+  --state-neutral-text: #202124; /* chaos phase, HT/FT */
+  --state-neutral-tint: #e8eaed;
+  --state-muted-text: #5f6368; /* goal against, rejected/retry, offline */
+  --state-muted-tint: #f1f3f4;
+  --you-tag-fill: #202124; /* "your player" tag */
   --you-tag-on-fill: #ffffff;
 
-  /* Type. One family, the system font; never ship a font file (DESIGN §9.1). */
+  /* Type. The video frame: one family, the system font; never ship a font file (DESIGN §9.1).
+     The web layout: Figtree from Google Fonts (index.html), the system font when it can't load. */
   --font-sans: -apple-system, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-web: "Figtree", var(--font-sans);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --numeric: tabular-nums; /* font-variant-numeric for every number that updates */
   --score-stretch: 75%; /* font-stretch for scores; Windows falls back to normal width */
 
@@ -109,6 +112,65 @@
   --stagger: 120ms;
   /* A firmer spring (about 4% overshoot): the score roll, a moment landing, the swing. */
   --ease-spring-firm: cubic-bezier(0.3, 1.3, 0.5, 1);
+
+  /* ---- The web layout (B · Clean Match Card, Oct 27): a scrolling page for plain visits on any
+     screen. The video frame (.video) keeps its own sizes. Team colours are the only colours:
+     controls are ink, grey and white; green means "checked"; red means "live". ---- */
+  --line: #e3e5e8;
+  --line-soft: #f1f3f4;
+  --surface-subtle: #f8f9fa;
+  --border-control: #dadce0;
+  --ink-fill: #202124; /* the active menu item, the main button */
+  --ink-on-fill: #ffffff;
+  --state-live-text: #c5221f; /* "Live · 67'" */
+  --state-live-tint: #fce8e6;
+  --state-chaos-text: #8a4b00; /* "Chaos: wild" */
+  --state-chaos-tint: #fef3e0;
+  --state-reject-text: #a50e0e; /* the fact-checker's "Rejected" row */
+  --state-reject-tint: #fce8e6;
+  --chaos-bar: #f9ab00; /* chaos minutes in a bar; never text */
+  --scrim-strong: rgb(32 33 36 / 0.5);
+
+  --shadow-card: 0 1px 2px rgb(60 64 67 / 0.15), 0 1px 3px 1px rgb(60 64 67 / 0.08);
+  --shadow-raised: 0 1px 2px rgb(60 64 67 / 0.15), 0 2px 6px 2px rgb(60 64 67 / 0.08);
+  --shadow-drawer: -8px 0 32px rgb(32 33 36 / 0.18);
+
+  --radius-tile: 12px;
+  --radius-item: 16px;
+  --radius-hero: 24px;
+  --tap: 44px; /* the smallest thing a finger presses */
+  --page-max: 1240px;
+  --page-pad: 32px;
+
+  --type-web-display: 800 52px/1.04 var(--font-web);
+  --type-web-title: 800 42px/1.08 var(--font-web);
+  --type-web-score: 500 76px/1 var(--font-web);
+  --type-web-big: 800 26px/1.12 var(--font-web);
+  --type-web-section: 800 22px/1.25 var(--font-web);
+  --type-web-card: 800 18px/1.3 var(--font-web);
+  --type-web-stat: 800 20px/1.15 var(--font-web);
+  --type-web-lead: 400 18px/1.55 var(--font-web);
+  --type-web-strong: 700 16px/1.35 var(--font-web);
+  --type-web-body: 400 15px/1.5 var(--font-web);
+  --type-web-body-strong: 700 15px/1.5 var(--font-web);
+  --type-web-small: 400 14px/1.45 var(--font-web);
+  --type-web-label: 600 13px/1.35 var(--font-web);
+  --type-web-label-strong: 700 13px/1.35 var(--font-web);
+  --type-web-micro: 600 12px/1.3 var(--font-web);
+  --type-web-mono: 500 12px/1.4 var(--font-mono);
+}
+
+/* The web layout on a phone: tighter page, smaller headlines. */
+@media (max-width: 700px) {
+  :root {
+    --page-pad: 12px;
+    --type-web-display: 800 34px/1.06 var(--font-web);
+    --type-web-title: 800 30px/1.1 var(--font-web);
+    --type-web-score: 500 50px/1 var(--font-web);
+    --type-web-big: 800 23px/1.12 var(--font-web);
+    --type-web-section: 800 20px/1.25 var(--font-web);
+    --type-web-lead: 400 16px/1.55 var(--font-web);
+  }
 }
 
 /* Gentle spring: damping 0.8, about 1.5% overshoot, settled by the end of the duration. */

@@ -31,7 +31,7 @@ export interface Direction {
   rec: boolean;
 }
 
-const LANGUAGES: Language[] = ["en", "ms", "es"];
+export const LANGUAGES: Language[] = ["en", "ms", "es"];
 
 /** Where each storyboard shot starts. Paused, so the take begins on a key press. */
 export const SCENES: Record<string, { minute: number; speed: number; note: string }> = {
@@ -115,6 +115,15 @@ export function useDirector() {
       })),
     [update],
   );
+  /** The web header's menus: pick a language or a depth directly. */
+  const setLanguage = useCallback(
+    (language: Language) => update((x) => ({ ...x, profile: { ...x.profile, language } })),
+    [update],
+  );
+  const setPersona = useCallback(
+    (persona: Persona) => update((x) => ({ ...x, profile: { ...x.profile, persona } })),
+    [update],
+  );
   const setFacts = useCallback((open: boolean) => update((x) => ({ ...x, factsOpen: open })), [update]);
   // The on-page controls (25 Oct: "every button on the page").
   const togglePlay = useCallback(() => update((x) => ({ ...x, playing: !x.playing })), [update]);
@@ -176,5 +185,5 @@ export function useDirector() {
 
   useEffect(() => writeUrl(d), [d]);
 
-  return { ...d, nextLanguage, togglePersona, setFacts, togglePlay, restart, setSpeed, pick, pause };
+  return { ...d, nextLanguage, togglePersona, setLanguage, setPersona, setFacts, togglePlay, restart, setSpeed, pick, pause };
 }

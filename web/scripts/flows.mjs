@@ -24,11 +24,11 @@
 //   goal-hold     on the plate at ×60 the 61' goal alert and the score wait for the pitch's replay
 //                 to show the goal; the score never runs ahead of the alert
 //   offline-plate with the API dead the pitch still plays, from the saved events
-//   phone         the preview on a phone (390 × 844, touch): the bare link plays from kick-off at
-//                 ×60, the follow-camera pitch draws, no sideways scroll, tapping pause / ×1 /
-//                 restart / Casual / EN works, the address stays bare, and the page's end clears
-//                 the controls bar
-//   phone-landscape  a phone held sideways (844 × 390) gets the phone layout, not the shrunk frame
+//   phone         the preview on a phone (390 × 844, touch), web layout: the bare link plays from
+//                 kick-off at ×60, the follow-camera pitch draws, no sideways scroll, tapping pause /
+//                 ×1 / restart works, the menu's Analyst and language switches work, a green tick
+//                 opens the fact check, and the address stays bare
+//   phone-landscape  a phone held sideways (844 × 390) gets the web layout, not the shrunk frame
 //   offline       with the API dead the saved match shows, and plays on
 //   preview       the VITE_PREVIEW build: "Preview · synthetic match" pill (no "Offline"), Space plays
 //                 the saved match, L switches it to Malay with no API
@@ -308,7 +308,7 @@ function flows(live, dead, preview) {
         await page.locator('[data-pitch][data-follow="true"]').waitFor({ timeout: 4000 });
         await pitchDrawing(page);
         // The bare link waits on its Kick off button, then plays.
-        const kick = page.locator("[data-role=kick-off]");
+        const kick = page.locator("[data-role=kick-off]:visible");
         await kick.waitFor({ timeout: 4000 });
         await sleep(1500);
         const clock = page.locator('section[data-period] [class*="minute"]');
@@ -320,7 +320,7 @@ function flows(live, dead, preview) {
         const m1 = await headerMinute(page);
         if (!(m1 > m0)) throw new Error(`Kick off didn't start the match (${m0}' → ${m1}')`);
         if (await kick.count()) throw new Error("the Kick off button stayed after kick-off");
-        if (!(await body(page)).includes("×60")) throw new Error("no ×60 pill on the bare link");
+        if ((await bar.getByRole("button", { name: "×60" }).getAttribute("aria-pressed")) !== "true") throw new Error("the bare link isn't at ×60");
         const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if (wide > 0) throw new Error(`the page scrolls sideways by ${wide} px`);
         // Pause holds the clock.
@@ -334,33 +334,31 @@ function flows(live, dead, preview) {
         await sleep(1500);
         if ((await frames()) !== f0) throw new Error("the pitch kept moving while paused");
         await bar.getByRole("button", { name: "Play" }).tap();
-        // ×1: the speed pill goes (speed honesty: it shows only above ×1).
+        // ×1: the speed control says so (speed honesty).
         await bar.getByRole("button", { name: "×1" }).tap();
         await sleep(1500);
-        const status = await page.locator("section[data-period]").first().innerText();
-        if (status.includes("×60")) throw new Error("the ×60 pill stayed after ×1");
+        if ((await page.locator("[data-role=match-controls]:visible").getByRole("button", { name: "×1" }).getAttribute("aria-pressed")) !== "true")
+          throw new Error("×1 isn't shown as the speed");
         // Restart: back to kick-off, playing.
         await bar.getByRole("button", { name: /Restart/ }).tap();
         await sleep(2500);
         if ((await headerMinute(page)) > 3) throw new Error("restart didn't go back to kick-off");
-        // The top bar's buttons: persona, then language.
-        await page.getByRole("button", { name: /Change depth/ }).tap();
-        await page.getByText("Analyst view").first().waitFor({ timeout: 3000 }).catch(() => undefined);
-        await page.locator("header").getByText("Analyst").first().waitFor({ timeout: 3000 });
-        await page.getByRole("button", { name: /Change language/ }).tap();
+        await bar.getByRole("button", { name: "×60" }).tap();
+        // A green tick opens the fact check with its validator line, and closes again.
+        // (the restart above put us back at kick-off: the first card lands at 14', about 14 s at ×60)
+        const tick = page.locator("button", { hasText: /facts? checked/ }).first();
+        await tick.waitFor({ timeout: 25_000 });
+        await tick.tap();
+        await page.getByRole("dialog").getByText("Checked by the validator").waitFor({ timeout: 3000 });
+        await page.getByRole("dialog").getByRole("button", { name: "Close" }).tap();
+        await page.getByRole("dialog").waitFor({ state: "detached", timeout: 3000 });
+        // The header's menu: persona, then language.
+        await page.locator("summary").tap();
+        await page.getByRole("button", { name: "Analyst", exact: true }).locator("visible=true").tap();
+        await page.getByText("Analyst view").first().waitFor({ timeout: 4000 });
+        await page.locator("select:visible").selectOption("ms");
         await page.getByText("Pratonton").first().waitFor({ timeout: 4000 });
         if (/minute=|play=/.test(page.url())) throw new Error(`the address isn't bare: ${page.url()}`);
-        // The end of the page clears the bar.
-        await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-        await sleep(400);
-        const clear = await page.evaluate(() => {
-          const barTop = [...document.querySelectorAll("[data-role=match-controls]")]
-            .map((b) => b.getBoundingClientRect())
-            .find((r) => r.height > 0).top;
-          const kids = [...document.querySelectorAll("[data-screen] > *")].map((e) => e.getBoundingClientRect().bottom);
-          return barTop - Math.max(...kids);
-        });
-        if (clear < 0) throw new Error(`the page's end hides ${-clear} px behind the controls`);
       },
     },
     {
@@ -370,6 +368,7 @@ function flows(live, dead, preview) {
       async run(page) {
         await page.locator("[data-role=match-controls]:visible").waitFor({ timeout: 4000 });
         if (await page.locator(".video").count()) throw new Error("a sideways phone got the shrunk video frame");
+        if (!(await page.locator("[data-screen=web]").count())) throw new Error("a sideways phone didn't get the web layout");
         const w = await page.locator("[data-pitch-view]").first().evaluate((e) => e.getBoundingClientRect().width);
         if (w < 700) throw new Error(`the pitch is only ${Math.round(w)} px wide`);
         await pitchDrawing(page);
@@ -385,7 +384,7 @@ function flows(live, dead, preview) {
         await page.locator("button[data-match]:not([disabled])").nth(5).waitFor({ timeout: 6000 });
         const wide = () => page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if ((await wide()) > 0) throw new Error(`the picker scrolls sideways by ${await wide()} px`);
-        if ((await page.locator("[data-screen=matches] li button").count()) < 5) throw new Error("the picker lists too few matches");
+        if ((await page.locator("[data-screen=matches] button[data-match]").count()) < 5) throw new Error("the picker lists too few matches");
         // Table view fits the phone.
         await page.getByRole("button", { name: "Table", exact: true }).tap();
         await page.locator("[data-screen=table] tbody tr").first().waitFor({ timeout: 4000 });
@@ -393,8 +392,8 @@ function flows(live, dead, preview) {
         if (!/view=table/.test(page.url())) throw new Error(`the view isn't in the address: ${page.url()}`);
         await page.getByRole("button", { name: "Matches", exact: true }).tap();
         // Pick another storyline: kick-off, paused behind the Kick off button, its own teams.
-        await page.locator("button[data-match=SCN-red-card]").tap();
-        await page.locator("[data-role=kick-off]").waitFor({ timeout: 6000 });
+        await page.locator("button[data-match=SCN-red-card]").first().tap();
+        await page.locator("[data-role=kick-off]:visible").waitFor({ timeout: 6000 });
         if (!/match=SCN-red-card/.test(page.url()) || !/view=live/.test(page.url())) throw new Error(`bad address: ${page.url()}`);
         if (await page.locator('section[data-period] [class*="minute"]').count()) throw new Error("a picked match didn't open at kick-off");
         if ((await body(page)).includes("Northgate")) throw new Error("the old match's teams are still on screen");
@@ -406,7 +405,7 @@ function flows(live, dead, preview) {
       device: { viewport: { width: 375, height: 800 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true },
       async run(page) {
         // No server: the comeback alone, playable.
-        await page.locator("button[data-match=SCN-comeback]:not([disabled])").waitFor({ timeout: 6000 });
+        await page.locator("button[data-match=SCN-comeback]:not([disabled])").first().waitFor({ timeout: 6000 });
         const wide = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if (wide > 0) throw new Error(`the picker scrolls sideways by ${wide} px`);
         await page.getByRole("button", { name: "Table", exact: true }).tap();

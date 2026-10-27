@@ -25,11 +25,15 @@ export interface PitchViewport {
   follow: boolean;
   /** Where labels go when they don't fit in the picture (null: in the picture). */
   caption: HTMLElement | null;
+  /** Multiplies the players' and ball's drawn size (1: as on the video frame). */
+  marks: number;
 }
 
-export const PitchScale = createContext<PitchViewport>({ scale: 1, follow: false, caption: null });
+export const PitchScale = createContext<PitchViewport>({ scale: 1, follow: false, caption: null, marks: 1 });
 
-export function PitchView({ children, reduced }: { children: ReactNode; reduced?: boolean }) {
+/** `marks`: the players and ball a little smaller or larger than the frame's (the web layout's
+ *  card draws them at 0.8: at its size the legibility boost made them read too big). */
+export function PitchView({ children, reduced, marks = 1 }: { children: ReactNode; reduced?: boolean; marks?: number }) {
   const outer = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(1920);
   const [caption, setCaption] = useState<HTMLElement | null>(null);
@@ -46,7 +50,7 @@ export function PitchView({ children, reduced }: { children: ReactNode; reduced?
   const follow = width < FOLLOW_UNDER && !reduced;
   const scale = width / 1920;
   const small = follow || scale < SMALL;
-  const ctx: PitchViewport = { scale, follow, caption: small ? caption : null };
+  const ctx: PitchViewport = { scale, follow, caption: small ? caption : null, marks };
 
   return (
     <div ref={outer}>
