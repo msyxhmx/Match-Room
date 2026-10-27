@@ -64,8 +64,8 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
     : Math.min(1.9, Math.max(1, 0.92 / view.scale));
   const canvas = useRef<HTMLCanvasElement>(null);
   const [replayMinute, setReplayMinute] = useState<number | null>(null);
-  const latest = useRef({ shot, analyst, focus, reduced, ghost, boost, follow });
-  latest.current = { shot, analyst, focus, reduced, ghost, boost, follow };
+  const latest = useRef({ shot, analyst, focus, reduced, ghost, boost, follow, marks: view.marks });
+  latest.current = { shot, analyst, focus, reduced, ghost, boost, follow, marks: view.marks };
 
   useEffect(() => {
     const el = canvas.current;
@@ -83,7 +83,9 @@ export function PitchCanvas({ shot, analyst, focus, at, epoch, reduced, ghost }:
 
     const paint = (t: number, animate: boolean) => {
       lastPainted = t;
-      const { shot: s, analyst: a, focus: f, reduced: r, ghost: g, boost: k, follow: fol } = latest.current;
+      const { shot: s, analyst: a, focus: f, reduced: r, ghost: g, boost: b, follow: fol, marks } = latest.current;
+      // The players and ball; the labels keep the plain boost so names stay readable.
+      const k = b * marks;
       const target = a ? 1 : 0;
       if (!animate || r || lastT === null) lines = target;
       else lines += Math.sign(target - lines) * Math.min(Math.abs(target - lines), Math.max(0, t - lastT) / LINES_FADE);

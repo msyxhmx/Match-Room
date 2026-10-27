@@ -275,7 +275,7 @@ function LiveView({ d, web, onSummary }: { d: Director; web?: boolean; onSummary
     const labels = LABELS[language];
     const pitch =
       hasPitch && fed ? (
-        <PitchView reduced={reducedMotion()}>
+        <PitchView reduced={reducedMotion()} marks={0.8}>
           <PitchLayer
             view={fed}
             running={running}
