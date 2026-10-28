@@ -6,7 +6,7 @@
 
 > Explain the match, don't just score it.
 
-**[Demo video (2 min)](https://youtu.be/REPLACE_ME)** · **[Live preview](https://match-room-preview.pages.dev)** (no install) · **[Full app on Azure](https://victorious-sand-01b516100.2.azurestaticapps.net)** · [API docs](https://halftime-api.reddesert-2b0a0b71.southeastasia.azurecontainerapps.io/docs)
+**[Demo video (2 min)](https://youtu.be/L0p9Ns09ak4)** · **[Live preview](https://match-room-preview.pages.dev)** (no install) · **[Full app on Azure](https://victorious-sand-01b516100.2.azurestaticapps.net)** · [API docs](https://halftime-api.reddesert-2b0a0b71.southeastasia.azurecontainerapps.io/docs)
 
 > [!NOTE]
 > Our entry for the Microsoft × Premier League **Inside the Game** developer hackathon:
