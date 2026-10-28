@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../src/theme.css" />
+    <script src="common.js"></script>
+    <title>How it's built</title>
+    <style>
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--surface-ground); font-family: var(--font-web); }
+      h1 { position: absolute; left: 120px; top: 56px; margin: 0; font-size: 72px; font-weight: 800; line-height: 1.1; color: var(--text-primary); }
+      .box { position: absolute; width: 480px; height: 220px; box-sizing: border-box; padding: 30px 36px; border-radius: var(--radius-card);
+        background: var(--surface-card); box-shadow: var(--shadow-card); border-top: 10px solid var(--home-primary); }
+      .box.agents { border-top-color: var(--state-positive-text); }
+      .box .name { font-size: 40px; font-weight: 800; line-height: 1.15; color: var(--text-primary); }
+      .box .sub { margin-top: 10px; font-size: 30px; font-weight: 500; line-height: 1.25; color: var(--text-secondary); }
+      svg { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+      .arrow { fill: none; stroke: var(--text-secondary); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+      .fallback { stroke: var(--state-chaos-text); stroke-dasharray: 18 14; }
+      #fbLabel { position: absolute; padding: 4px 22px; background: var(--surface-ground); color: var(--state-chaos-text);
+        font-size: 30px; font-weight: 700; white-space: nowrap; transform: translate(-50%, -50%); }
+      #band { position: absolute; left: 120px; top: 820px; width: 1680px; display: flex; gap: 12px; }
+      .verb { flex: 1; box-sizing: border-box; padding: 16px 22px 18px; border-radius: var(--radius-tile); background: var(--home-primary); color: var(--surface-card); }
+      .verb b { display: block; font-size: 34px; font-weight: 800; letter-spacing: 0.04em; }
+      .verb span { display: block; margin-top: 2px; font-size: 28px; font-weight: 500; line-height: 1.2; }
+      #foot { position: absolute; left: 120px; top: 1000px; font-size: 28px; font-weight: 600; color: var(--text-secondary); }
+    </style>
+  </head>
+  <body>
+    <h1>How it's built</h1>
+    <svg id="svg"></svg>
+    <div id="boxes"></div>
+    <div id="fbLabel">Template fallback</div>
+    <div id="band"></div>
+    <div id="foot">Synthetic data</div>
+    <script>
+      // ---- tune here: when each box appears, in seconds (voiceover word times) ----
+      const REVEAL = [1.3, 2.6, 4.0, 5.0, 6.3, 7.0]; // simulator, insight engine, validator, agents, API, web
+      const FALLBACK_AT = 8.0; // dashed "Template fallback" arrow
+      window.__length = 12.6;
+
+      const X = [120, 720, 1320], ROW1 = 190, ROW2 = 520, W = 480, H = 220;
+      const BOXES = [
+        { name: "Match simulator", sub: "synthetic events", x: X[0], y: ROW1 },
+        { name: "Live insight engine", sub: "win model · momentum", x: X[1], y: ROW1 },
+        { name: "Validator", sub: "every number traced to an event ID", x: X[2], y: ROW1 },
+        { name: "Analyst + Fact-checker agents", sub: "Azure OpenAI", x: X[2], y: ROW2, cls: "agents" },
+        { name: "API + live stream", sub: "Azure Container Apps", x: X[1], y: ROW2 },
+        { name: "Web + broadcast overlay", sub: "Azure Static Web Apps", x: X[0], y: ROW2 },
+      ];
+      // verb band: [verb, stage, index of the box that reveals it]
+      const VERBS = [["INGEST", "simulator", 0], ["INTERPRET", "insight engine", 1], ["EXPLAIN", "validator + agents", 2],
+        ["RENDER", "API + web", 4], ["PERSONALISE", "fan · analyst · language", 5]];
+      // arrows INTO box i (from box i-1): [points], solid, drawn just before box i appears
+      const mid = (b) => ({ l: b.x, r: b.x + W, t: b.y, b: b.y + H, cx: b.x + W / 2, cy: b.y + H / 2 });
+      const m = BOXES.map(mid);
+      const ARROWS = [
+        null,
+        [[m[0].r + 8, m[0].cy], [m[1].l - 8, m[1].cy]],
+        [[m[1].r + 8, m[1].cy], [m[2].l - 8, m[2].cy]],
+        [[m[2].cx + 150, m[2].b + 8], [m[3].cx + 150, m[3].t - 8]],
+        [[m[3].l - 8, m[3].cy], [m[4].r + 8, m[4].cy]],
+        [[m[4].l - 8, m[4].cy], [m[5].r + 8, m[5].cy]],
+      ];
+      // dashed bypass: Validator -> API, running through the gap between the rows, around the agents box
+      const GAPY = (m[2].b + m[3].t) / 2;
+      const FB = [[m[2].l + 70, m[2].b + 8], [m[2].l + 70, GAPY], [m[4].cx, GAPY], [m[4].cx, m[4].t - 8]];
+
+      const boxesEl = document.getElementById("boxes"), svg = document.getElementById("svg");
+      const NS = "http://www.w3.org/2000/svg";
+      const boxEls = BOXES.map((b) => {
+        const el = document.createElement("div");
+        el.className = "box " + (b.cls ?? "");
+        el.style.left = b.x + "px"; el.style.top = b.y + "px";
+        el.innerHTML = `<div class="name">${b.name}</div><div class="sub">${b.sub}</div>`;
+        boxesEl.appendChild(el);
+        return el;
+      });
+      const path = (pts, cls) => {
+        const p = document.createElementNS(NS, "path");
+        p.setAttribute("class", "arrow " + (cls ?? ""));
+        p.setAttribute("d", "M" + pts.map((q) => q.join(",")).join(" L"));
+        svg.appendChild(p);
+        return p;
+      };
+      // an arrowhead is a chevron at the last point, pointing along the last segment
+      const head = (pts, cls) => {
+        const [a, b] = pts.slice(-2), ang = Math.atan2(b[1] - a[1], b[0] - a[0]), s = 22;
+        const p = (da) => [b[0] - s * Math.cos(ang + da), b[1] - s * Math.sin(ang + da)];
+        return path([p(0.5), b, p(-0.5)], cls);
+      };
+      const lens = (pts) => pts.slice(1).reduce((n, q, i) => n + Math.hypot(q[0] - pts[i][0], q[1] - pts[i][1]), 0);
+      const arrows = ARROWS.map((pts) => pts && { pts, line: path(pts), head: head(pts), len: lens(pts) });
+      const fbLine = path(FB, "fallback"), fbHead = head(FB, "fallback"), fbLen = lens(FB);
+      // reveal the dashed line with a mask so the dashes themselves stay intact
+      const mask = document.createElementNS(NS, "mask");
+      mask.id = "fbMask";
+      mask.setAttribute("maskUnits", "userSpaceOnUse");
+      mask.setAttribute("x", "0"); mask.setAttribute("y", "0"); mask.setAttribute("width", "1920"); mask.setAttribute("height", "1080");
+      const maskPath = document.createElementNS(NS, "path");
+      maskPath.setAttribute("d", fbLine.getAttribute("d"));
+      maskPath.setAttribute("style", "fill:none;stroke:white;stroke-width:20");
+      mask.appendChild(maskPath);
+      svg.prepend(mask);
+      fbLine.setAttribute("mask", "url(#fbMask)");
+      const fbLabel = document.getElementById("fbLabel");
+      fbLabel.style.left = (FB[1][0] + FB[2][0]) / 2 + "px"; fbLabel.style.top = GAPY + "px";
+
+      const band = document.getElementById("band");
+      const verbEls = VERBS.map(([v, s]) => {
+        const el = document.createElement("div");
+        el.className = "verb";
+        el.innerHTML = `<b>${v}</b><span>${s}</span>`;
+        band.appendChild(el);
+        return el;
+      });
+
+      window.__seek = (t) => {
+        const title = ramp(t, 0.2, 0.6);
+        const h1 = document.querySelector("h1");
+        h1.style.opacity = title; h1.style.transform = `translateY(${(1 - title) * 16}px)`;
+        document.getElementById("foot").style.opacity = title;
+
+        BOXES.forEach((_, i) => {
+          const p = ramp(t, REVEAL[i], 0.5);
+          boxEls[i].style.opacity = p;
+          boxEls[i].style.transform = `translateY(${(1 - p) * 22}px)`;
+          const a = arrows[i];
+          if (a) {
+            const d = ramp(t, REVEAL[i] - 0.35, 0.45);
+            a.line.style.strokeDasharray = a.len;
+            a.line.style.strokeDashoffset = a.len * (1 - d);
+            a.line.style.opacity = d > 0 ? 1 : 0;
+            a.head.style.opacity = d >= 1 ? 1 : 0;
+          }
+        });
+        VERBS.forEach(([, , i], k) => {
+          const p = ramp(t, REVEAL[i] + 0.1, 0.5);
+          verbEls[k].style.opacity = p;
+          verbEls[k].style.transform = `translateY(${(1 - p) * 16}px)`;
+        });
+        const f = ramp(t, FALLBACK_AT, 0.9);
+        maskPath.style.strokeDasharray = fbLen;
+        maskPath.style.strokeDashoffset = fbLen * (1 - f);
+        fbLine.style.opacity = f > 0 ? 1 : 0;
+        fbHead.style.opacity = f >= 1 ? 1 : 0;
+        fbLabel.style.opacity = ramp(t, FALLBACK_AT + 0.3, 0.5);
+      };
+      document.fonts.ready.then(() => window.__seek(0));
+      window.__seek(0);
+    </script>
+  </body>
+</html>

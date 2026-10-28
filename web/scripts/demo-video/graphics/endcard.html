@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../src/theme.css" />
+    <script src="common.js"></script>
+    <title>End card</title>
+    <style>
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--surface-ground); font-family: var(--font-web); }
+      #col { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+      .item { opacity: 0; }
+      svg { width: 150px; height: 150px; }
+      .name { margin-top: 28px; font-size: 112px; font-weight: 800; line-height: 1.05; color: var(--text-primary); }
+      .tag { margin-top: 22px; font-size: 52px; font-weight: 600; color: var(--home-text); }
+      .url { margin-top: 64px; font-size: 44px; font-weight: 700; color: var(--text-primary); }
+      .repo { margin-top: 14px; font-size: 36px; font-weight: 500; color: var(--text-secondary); }
+      .pill { margin-top: 56px; padding: 10px 30px; border-radius: var(--radius-pill); background: var(--surface-fill);
+        font-size: 30px; font-weight: 600; color: var(--text-secondary); }
+    </style>
+  </head>
+  <body>
+    <div id="col">
+      <div class="item">
+        <svg viewBox="0 0 64 64" role="img" aria-label="Match-Room Live"><circle cx="32" cy="32" r="27" fill="var(--surface-card)" stroke="var(--text-primary)" stroke-width="6"/><path d="M32 32V11.5A20.5 20.5 0 1 1 13.57 23.01Z" fill="var(--home-primary)"/><rect x="29.5" y="2" width="5" height="11.3" fill="var(--text-primary)"/><circle cx="7.73" cy="20.16" r="6.5" fill="var(--home-primary)" stroke="var(--surface-card)" stroke-width="3"/></svg>
+      </div>
+      <div class="item name">Match-Room Live</div>
+      <div class="item tag">Explain the match, don't just score it</div>
+      <div class="item url">victorious-sand-01b516100.2.azurestaticapps.net</div>
+      <div class="item repo">github.com/msyxhmx/Match-Room</div>
+      <div class="item pill">Synthetic data</div>
+    </div>
+    <script>
+      window.__length = 6.5;
+      const items = [...document.querySelectorAll(".item")];
+      window.__seek = (t) => {
+        items.forEach((el, i) => {
+          const p = ramp(t, 0.2 + i * 0.28, 0.6);
+          el.style.opacity = p;
+          el.style.transform = `translateY(${(1 - p) * 24}px)`;
+        });
+      };
+      window.__seek(0);
+    </script>
+  </body>
+</html>
