@@ -41,7 +41,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     console.error("usage: render-graphics.mjs <page[?query]> <outdir> [fps=30]");
     process.exit(1);
   }
-  const browser = await chromium.launch({ channel: "chrome" });
+  const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : { channel: "chrome" });
   try {
     const n = await renderGraphic(browser, pageQuery, resolve(outDir), Number(fps ?? 30));
     console.log(`rendered ${n} frames of ${pageQuery} to ${outDir}`);

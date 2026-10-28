@@ -17,7 +17,7 @@
 //   <take>.mp4   2880×2160, 30 fps, H.264 CRF 12
 //   <take>.json  { scale, size, events: [{ t, kind, ... }] }: t is seconds into the mp4; clicks are
 //                in CSS pixels of the viewport; state events log period, score, minute, play state
-// Needs ffmpeg and Google Chrome. Not part of `make check`.
+// Needs ffmpeg and Google Chrome (or set CHROME_PATH to another Chromium). Not part of `make check`.
 
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
@@ -131,7 +131,7 @@ class Take {
 
 // ---- the page ----
 
-const browser = await chromium.launch({ channel: "chrome", args: [`--force-device-scale-factor=${SCALE}`] });
+const browser = await chromium.launch({ ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : { channel: "chrome" }), args: [`--force-device-scale-factor=${SCALE}`] });
 
 async function open(size) {
   const ctx = await browser.newContext({ viewport: size, deviceScaleFactor: SCALE });
@@ -297,10 +297,10 @@ async function matchRun() {
     await until(w, (s) => s.period === "FT", "full time", 120_000);
     await sleep(2500);
     const tab = page.getByRole("button", { name: /^Full-time/ }).or(page.getByRole("tab", { name: /^Full-time/ }));
-    const story = page.getByText("come from behind to win 3-2").first();
+    const story = page.getByText(/come from behind to win 3.2/).first();
     if (!(await story.isVisible().catch(() => false)) && (await tab.count())) await click(w, tab.first(), "Full-time tab");
     // The headline is split across elements, so match on the page's text, not one node.
-    await page.waitForFunction(() => document.body.innerText.includes("come from behind to win 3-2"), null, { timeout: 20_000 });
+    await page.waitForFunction(() => /come from behind to win 3.2/.test(document.body.innerText), null, { timeout: 20_000 });
     await sleep(10_000);
   });
   writeFileSync(resolve(out, "s8-text.txt"), await page.evaluate(() => document.body.innerText));
