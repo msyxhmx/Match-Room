@@ -18,7 +18,7 @@ Split agreed 23 Oct: Syahmi owns the backend, Ilham owns the frontend.
 | API (REST + websocket) | Syahmi | `api/` |
 | Contract | Both | `contract/`, `web/src/types/` |
 | Website, overlay page, typed client | Ilham | `web/` |
-| Azure deployment | Ilham (pair with Syahmi) | `Dockerfile`, `docs/deploy-azure.md` |
+| Azure deployment | Syahmi | `Dockerfile`, `docs/deploy-azure.md` |
 | Demo video and script | Ilham (handed over 25 Oct) | `docs/demo-script.md`, `web/STORYBOARD.md` |
 | README, write-up | Syahmi | `docs/` |
 

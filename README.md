@@ -168,4 +168,4 @@ docs/       live engine, frontend guide, architecture, API contract, workflow, d
 
 ## Team
 
-**Syahmi**: simulator, live engine, model, API · **Ilham**: website, design, Azure deployment, demo video
+**Syahmi**: simulator, live engine, model, API, Azure deployment · **Ilham**: website, design, demo video
