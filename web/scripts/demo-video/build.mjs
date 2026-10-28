@@ -100,7 +100,8 @@ function shots(D) {
     // At ×60 the 14' card and the 0–1 wait for the pitch's replay, so both land at 17'. The
     // punch-in settles on the card just before then: the Chance to win panel turns 54% as it lands.
     const card = at("s3", (e) => e.kind === "score" && e.value?.includes("0–1"), "0–1");
-    const c = phraseAt("s3", "and Kingston's chance", D.s3);
+    // 8 s in puts the header at 13' on "fourteen minutes" and the 14' tick just after "score".
+    const c = 8.0;
     const inT = card - c;
     S.s3 = [{ take: "s3", in: inT, len, cam: [[0, 0, 0, 1920], [c - 1.6, 0, 0, 1920], [c - 0.2, ...CAM.s3card], [len, ...CAM.s3cardEnd]], dipIn: true }];
   }
@@ -116,8 +117,9 @@ function shots(D) {
   // S5: placeholder until the API is updated: the animatic's still, a slow zoom to the agents.
   S.s5 = [{ still: resolve(DIR, "stills", "s5.jpg"), len: D.s5 + GAP, cam: CAM.s5(D.s5 + GAP) }];
 
-  // S6: 58' → 65' at plain ×60, untouched: the momentum card and N. Vidal's 61' goal.
-  S.s6 = [{ take: "s6", in: firstMinute("s6", 58) - 0.2, len: D.s6 + GAP, cam: [[0, 0, 0, 1920]], dipOut: true }];
+  // S6: the take's last 6.85 s at plain ×60, untouched. N. Vidal's 61' goal reaches the score at
+  // 66' (it waits for the pitch's replay), so the 1–2 lands about 5 s in, on "minute by minute".
+  S.s6 = [{ take: "s6", in: take("s6").length - (D.s6 + GAP) - 0.05, len: D.s6 + GAP, cam: [[0, 0, 0, 1920]], dipOut: true }];
 
   // S7: back at 74' (a dip), then Malay, Analyst, and the broadcast graphic; a label per beat.
   {
@@ -159,8 +161,8 @@ const CAM = {
   s7wide: [0, 0, 1920],
   s7ms: [420, 596, 1500], // the chance panel, momentum and the Malay 74' card
   s7msEnd: [430, 600, 1480],
-  s7an: [200, 420, 1700], // the pitch's team-shape lines and the analyst card
-  s7anEnd: [210, 430, 1680],
+  s7an: [282, 448, 1371], // 140%: the pitch's team-shape lines and the analyst card's xG and km/h
+  s7anEnd: [290, 452, 1355],
   s8delay: 3.5,
   s8: (len) => [[0, 0, 0, 1920], [1.0, 0, 0, 1920], [2.4, 380, 430, 1371], [3.8, 380, 430, 1371], [6.0, 300, 660, 1371], [len, 300, 660, 1371]],
 };
