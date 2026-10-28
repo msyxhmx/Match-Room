@@ -12,7 +12,7 @@
 // Every camera move is a list of keyframes [t, x, y, w] in the take's CSS pixels: the frame shows
 // the region (x, y) of width w (height w × 9/16), eased in-out between keyframes. 1920 wide is
 // 100%; 1371 wide is 140%, the most a 1.5× take allows before it softens.
-// Needs ffmpeg and Google Chrome. Not part of `make check`.
+// Needs ffmpeg and Google Chrome (or set CHROME_PATH to another Chromium). Not part of `make check`.
 
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -275,7 +275,7 @@ async function renderPart(browser, id, i, part) {
 
 const rendered = new Map();
 async function gfx(browser, query) {
-  const name = query.replace(/[^a-z0-9]+/gi, "-").slice(0, 80);
+  const name = query.replace(/\.html/, "").replace(/[^a-z0-9]+/gi, "-").slice(0, 80);
   if (!rendered.has(name)) {
     rendered.set(name, renderGraphic(browser, query, resolve(WORK, "graphics", name), FPS));
   }
@@ -345,7 +345,7 @@ for (const k of KEYLINES) {
   }
 }
 
-const browser = await chromium.launch({ channel: "chrome" });
+const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : { channel: "chrome" });
 const files = [];
 const starts = {};
 let clock = 0;

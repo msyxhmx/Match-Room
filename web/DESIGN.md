@@ -106,7 +106,7 @@ What each means for the screen:
    ([HIG: Sheets](https://developer.apple.com/design/human-interface-guidelines/sheets)). *So we*
    put Facts used, evidence and metric definitions in sheets, not on the main view.
 3. **Trust is visible.** Fans fear AI errors, and AI sports recaps have shipped wrong winners
-   ([docs/research/landscape.md](../docs/research/landscape.md)). *So we* show where each sentence
+   (our research notes). *So we* show where each sentence
    came from (template or AI, checked by the fact-checker) and which events prove it.
 4. **One vocabulary.** The screen uses the same words as the engine's text. *So we* take labels
    from [§8](#8-words-on-screen) and never invent a synonym in the UI.
@@ -451,8 +451,7 @@ It adds two requirements to [§5](#5-required-elements):
 Done 25 Oct. Method: a priority guide per screen
 ([A List Apart](https://alistapart.com/article/priority-guides-a-content-first-alternative-to-wireframes/)),
 eight rough sketches of the live screen (Crazy 8s), then three grey candidates at 1920×1080 with
-real API text, measured against each other. The sketches and chosen layout can be edited in
-[wireframes/match-room.excalidraw](wireframes/match-room.excalidraw).
+real API text, measured against each other.
 
 **Locked 25 Oct (Ilham): B · Centre stage.** Top to bottom:
 - a full-width score header
@@ -707,8 +706,7 @@ These don't depend on our taste. They are step 9 of the playbook.
 - **Under 2:00:** the storyboard runs against the live stream within time.
 
 ## Sources
-- Our own research: [PL Studios gaps and ideas](../docs/research/pl-studios-gaps-and-ideas.md),
-  [landscape](../docs/research/landscape.md).
+- Our own research: [PL Studios gaps and ideas](../docs/research/pl-studios-gaps-and-ideas.md).
 - Apple: [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines)
   (typography, sheets, materials, dark mode, motion, accessibility, lists, charts, SF Symbols);
   [Apple Sports launch](https://www.apple.com/newsroom/2024/02/introducing-apple-sports-a-new-app-for-sports-fans/),
