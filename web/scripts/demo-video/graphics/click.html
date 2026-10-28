@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../src/theme.css" />
+    <script src="common.js"></script>
+    <title>Click highlight</title>
+    <style>
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: transparent; }
+      .ring { position: absolute; border-radius: 50%; box-sizing: border-box; transform: translate(-50%, -50%); }
+      #ring { border: 8px solid var(--home-primary); }
+      #dot { width: 28px; height: 28px; background: var(--home-primary); }
+    </style>
+  </head>
+  <body>
+    <div id="ring" class="ring"></div><div id="dot" class="ring"></div>
+    <script>
+      window.__length = 0.6;
+      const x = Number(params.get("x") ?? 960), y = Number(params.get("y") ?? 540);
+      for (const id of ["ring", "dot"]) Object.assign(document.getElementById(id).style, { left: x + "px", top: y + "px" });
+      window.__seek = (t) => {
+        const p = ramp(t, 0, window.__length);
+        const size = 24 + 136 * p;
+        const ring = document.getElementById("ring");
+        ring.style.width = ring.style.height = size + "px";
+        ring.style.opacity = 1 - p ** 2;
+        document.getElementById("dot").style.opacity = 0.6 * (1 - ramp(t, 0.05, 0.3));
+      };
+      window.__seek(0);
+    </script>
+  </body>
+</html>

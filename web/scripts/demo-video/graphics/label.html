@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../src/theme.css" />
+    <script src="common.js"></script>
+    <title>Label chip</title>
+    <style>
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: transparent; font-family: var(--font-web); }
+      #chip { position: absolute; left: 96px; top: 96px; padding: 14px 34px; border-radius: var(--radius-pill);
+        background: var(--surface-card); box-shadow: var(--shadow-raised); color: var(--text-primary);
+        font-size: 34px; font-weight: 700; line-height: 1.2; white-space: nowrap; display: flex; align-items: center; gap: 16px; }
+      #chip::before { content: ""; width: 16px; height: 16px; border-radius: 50%; background: var(--home-primary); }
+    </style>
+  </head>
+  <body>
+    <div id="chip"></div>
+    <script>
+      document.getElementById("chip").textContent = params.get("text") ?? "";
+      window.__length = Number(params.get("len") ?? 3.6);
+      if (params.get("top")) document.getElementById("chip").style.top = `${Number(params.get("top"))}px`;
+      window.__seek = (t) => {
+        const a = ramp(t, 0, 0.3) * (1 - ramp(t, window.__length - 0.3, 0.3));
+        const chip = document.getElementById("chip");
+        chip.style.opacity = a;
+        chip.style.transform = `translateY(${(1 - a) * -10}px)`;
+      };
+      window.__seek(0);
+    </script>
+  </body>
+</html>

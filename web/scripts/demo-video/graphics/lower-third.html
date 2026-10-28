@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../src/theme.css" />
+    <script src="common.js"></script>
+    <title>Lower third</title>
+    <style>
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: transparent; font-family: var(--font-web); }
+      #card { position: absolute; left: 96px; bottom: 110px; display: flex; background: var(--surface-card);
+        border-radius: var(--radius-card); box-shadow: var(--shadow-raised); overflow: hidden; }
+      .bar { width: 14px; background: var(--home-primary); }
+      .text { padding: 26px 48px 28px 34px; }
+      .title { font-size: 60px; font-weight: 800; line-height: 1.1; color: var(--text-primary); }
+      .sub { margin-top: 6px; font-size: 34px; font-weight: 500; line-height: 1.25; color: var(--text-secondary); }
+    </style>
+  </head>
+  <body>
+    <div id="card"><div class="bar"></div><div class="text">
+      <div class="title">Match-Room Live</div><div class="sub">Explains the match as it happens</div></div></div>
+    <script>
+      window.__length = 9.3;
+      window.__seek = (t) => {
+        const inP = ramp(t, 0.3, 0.6), outP = ramp(t, window.__length - 0.5, 0.5);
+        const card = document.getElementById("card");
+        card.style.opacity = inP * (1 - outP);
+        card.style.transform = `translateX(${-80 * (1 - inP) - 80 * outP}px)`;
+      };
+      window.__seek(0);
+    </script>
+  </body>
+</html>
